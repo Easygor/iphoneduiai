@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <RestKit/RestKit.h>
 
 @implementation AppDelegate
 
@@ -25,12 +26,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    // register the apns
+    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user"];
+    
+    
+//    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
+    [self configRestKit];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -153,6 +161,41 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+#pragma mark - custom methods
+- (void)configRestKit
+{
+//    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
+//    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+    
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://api.duiai.com"];
+    [objectManager.client setValue:@"Application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    // Enable automatic network activity indicator management
+    objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
+    
+    // Mapping config
+    
+//    [RKObjectMapping addDefaultDateFormatterForString:@"E MMM d HH:mm:ss Z y" inTimeZone:nil];
+    
+}
+
+#pragma mark - register apns
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *devTokenStr = [[[deviceToken description]
+                              stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
+                             stringByReplacingOccurrencesOfString:@" "
+                             withString:@""];
+    
+    NSLog(@"device token: %@", devTokenStr);
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"Error in registration. Error: %@", error);
 }
 
 @end

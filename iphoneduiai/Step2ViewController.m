@@ -1,0 +1,347 @@
+//
+//  Step2ViewController.m
+//  iphoneduiai
+//
+//  Created by Cloud Dai on 12-9-9.
+//  Copyright (c) 2012年 duiai.com. All rights reserved.
+//
+
+#import "Step2ViewController.h"
+#import "Step3ViewController.h"
+#import "CustomBarButtonItem.h"
+#import "HZSementedControl.h"
+#import "HZAreaPickerView.h"
+#import "HZDatePickerView.h"
+#import "HZDegreePickerView.h"
+#import "HZLocation.h"
+#import "Utils.h"
+#import "RegexKitLite.h"
+#import "SVProgressHUD.h"
+
+static NSString *const wRegex = @"\\w+";
+
+@interface Step2ViewController () <HZSementdControlDelegate, HZAreaPickerDelegate, HZDatePickerDelegate, HZDegreePickerDelegate, HZAreaPickerDatasource>
+@property (retain, nonatomic) IBOutlet HZSementedControl *sexSegemnter;
+@property (retain, nonatomic) IBOutlet UITextField *birthdayText;
+@property (retain, nonatomic) IBOutlet UITextField *areaText;
+@property (retain, nonatomic) IBOutlet UITextField *heighText;
+@property (retain, nonatomic) IBOutlet UITextField *eduText;
+@property (retain, nonatomic) IBOutlet UITextField *salaryText;
+@property (strong, nonatomic) NSString *sex;
+@property (strong, nonatomic) NSDate *birthday;
+@property (strong, nonatomic) HZAreaPickerView *locatePicker;
+@property (strong, nonatomic) HZDatePickerView *datePicker;
+@property (strong, nonatomic) HZDegreePickerView *degreePicker;
+@property (strong, nonatomic) HZLocation *location;
+@property (retain, nonatomic) IBOutlet UIView *containerView;
+@property (strong, nonatomic) NSString *eduNum;
+
+@end
+
+@implementation Step2ViewController
+@synthesize sexSegemnter;
+@synthesize birthdayText;
+@synthesize areaText;
+@synthesize heighText;
+@synthesize eduText;
+@synthesize salaryText;
+@synthesize sex=_sex;
+@synthesize locatePicker=_locatePicker;
+@synthesize datePicker=_datePicker;
+@synthesize location=_location;
+@synthesize containerView;
+@synthesize eduNum;
+
+
+- (void)dealloc {
+    [_datePicker release];
+    [_location release];
+    [_sex release];
+    [sexSegemnter release];
+    [birthdayText release];
+    [areaText release];
+    [heighText release];
+    [eduText release];
+    [salaryText release];
+    [_locatePicker release];
+    [containerView release];
+    [super dealloc];
+}
+
+-(void)setLocation:(HZLocation *)location
+{
+    _location = [location retain];
+    NSString *str = [NSString stringWithFormat:@"%@ %@ %@", location.state, location.city, location.district];
+    if (![str isEqualToString:self.areaText.text]) {
+        self.areaText.text = str;
+    }
+}
+
+-(void)setBirthday:(NSDate *)birthday
+{
+    if (![_birthday isEqual:birthday]) {
+        _birthday = [birthday retain];
+        self.birthdayText.text = [Utils dateDescWithDate:birthday];
+    }
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    self.navigationItem.title = @"创建帐号";
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+    
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"下一步"
+                                                                                                target:self
+                                                                                                action:@selector(nextAction)] autorelease];
+//    self.navigationItem.rightBarButtonItem.enabled = NO;
+    
+    NSDictionary *d = [[NSUserDefaults standardUserDefaults] objectForKey:@"step2"];
+    if (d) {
+        NSString *sex = [d objectForKey:@"sex"];
+        if ([sex isEqualToString:@"m"]) {
+            [self.sexSegemnter selectSegmentAtIndex:0];
+        } else if ([sex isEqualToString:@"w"]) {
+            [self.sexSegemnter selectSegmentAtIndex:1];
+        }
+        HZLocation *loc = [[[HZLocation alloc] init] autorelease];
+        [loc fromDictionary:[d objectForKey:@"location"]];
+        self.location =loc;
+        self.birthday = [d objectForKey:@"birthday"];
+        self.eduText.text = [d objectForKey:@"edu"];
+        self.eduNum = [d objectForKey:@"degree"];
+        self.heighText.text = [d objectForKey:@"height"];
+        self.salaryText.text = [d objectForKey:@"income"];
+        
+//        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+}
+
+- (void)viewDidUnload
+{
+    [self setSexSegemnter:nil];
+    [self setBirthdayText:nil];
+    [self setAreaText:nil];
+    [self setHeighText:nil];
+    [self setEduText:nil];
+    [self setSalaryText:nil];
+    [self setContainerView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification object:self.view.window];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    NSMutableDictionary *d = [NSMutableDictionary dictionaryWithCapacity:7];
+    if (self.sex) {
+        [d setObject:self.sex forKey:@"sex"];
+    }
+    if (self.birthday) {
+        [d setObject:self.birthday forKey:@"birthday"];
+    }
+    if (self.location) {
+        [d setObject:[self.location toDictionary] forKey:@"location"];
+    }
+    if ([self.heighText.text isMatchedByRegex:wRegex]) {
+        [d setObject:self.heighText.text  forKey:@"height"];
+    }
+    if (self.eduNum) {
+        [d setObject:self.eduNum forKey:@"degree"];
+        [d setObject:self.eduText.text forKey:@"edu"];
+    }
+    if ([self.salaryText.text isMatchedByRegex:wRegex]) {
+        [d setObject:self.salaryText.text forKey:@"income"];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:d forKey:@"step2"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    
+    [super viewWillDisappear:animated];
+}
+
+#pragma mark - actions
+-(void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    //    [self.presentedViewController dismissModalViewControllerAnimated:YES];
+}
+
+- (void)nextAction
+{
+    if ([self checkinputs]) {
+        Step3ViewController *s3vc = [[Step3ViewController alloc] initWithNibName:@"Step3ViewController" bundle:nil];
+        [self.navigationController pushViewController:s3vc animated:YES];
+        [s3vc release];
+    } else{
+        [SVProgressHUD showErrorWithStatus:@"请填写信息"];
+    }
+
+}
+
+- (BOOL)checkinputs
+{
+    if (self.birthday && self.location &&
+        [self.heighText.text isMatchedByRegex:wRegex] && self.eduNum &&
+        [self.salaryText.text isMatchedByRegex:wRegex] && self.sex) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.heighText] || [textField isEqual:self.salaryText]) {
+        return YES;
+    } else{
+        [self.heighText resignFirstResponder];
+        [self.salaryText resignFirstResponder];
+        if ([textField isEqual:self.birthdayText]){
+            // date picker
+            [self cancelDatePicker];
+            self.datePicker = [[[HZDatePickerView alloc] initWithDelegate:self] autorelease];
+            [self.datePicker showInView:self.view];
+        } else if ([textField isEqual:self.areaText]){
+            // area
+            [self cancelLocatePicker];
+            self.locatePicker = [[[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self] autorelease];
+            [self.locatePicker showInView:self.view];
+        } else if ([textField isEqual:self.eduText]){
+            // edu
+            [self cancelDegreePicker];
+            self.degreePicker = [[[HZDegreePickerView alloc] initWithDelegate:self] autorelease];
+            [self.degreePicker showInView:self.view];
+        }
+
+        return NO;
+        
+    }
+}
+
+
+#pragma mark HZ segment 
+-(void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
+{
+    if (index == 0) {
+        self.sex = @"m";
+    }else if(index == 1){
+        self.sex = @"w";
+    }else{
+        self.sex = @"";
+    }
+}
+
+#pragma mark - HZAreaPicker delegate
+-(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+{
+    if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
+        self.location = picker.locate;
+    }
+}
+
+-(NSArray *)areaPickerData:(HZAreaPickerView *)picker
+{
+    NSArray *data;
+    if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
+        data = [[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]] autorelease];
+    } else {
+        data = [[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil]] autorelease];
+    }
+    
+    return data;
+}
+
+-(void)datePickerDidChangeStatus:(HZDatePickerView *)picker withDate:(NSDate *)date
+{
+    self.birthday = date;
+}
+
+-(void)dgreePickerDidChangeStatus:(HZDegreePickerView *)picker withNum:(NSString *)numStr withDesc:(NSString *)desc
+{
+    self.eduNum = numStr;
+    self.eduText.text = desc;
+}
+
+-(void)cancelLocatePicker
+{
+    [self.locatePicker cancelPicker];
+    self.locatePicker.delegate = nil;
+    self.locatePicker = nil;
+}
+
+-(void)cancelDatePicker
+{
+    [self.datePicker cancelPicker];
+    self.datePicker.delegate = nil;
+    self.datePicker = nil;
+}
+
+-(void)cancelDegreePicker
+{
+    [self.degreePicker cancelPicker];
+    self.degreePicker.delegate = nil;
+    self.degreePicker = nil;
+}
+
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+    [self.heighText resignFirstResponder];
+    [self.salaryText resignFirstResponder];
+    
+    [self cancelLocatePicker];
+    [self cancelDatePicker];
+    [self cancelDegreePicker];
+}
+
+# pragma mark - keyboard show event for resize the UI
+- (void)keyboardWillShow:(NSNotification *)notif
+{
+    //keyboard will be shown now. depending for which textfield is active, move up or move down the view appropriately
+    
+    NSValue *endingFrame = [[notif userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect frame;
+    [endingFrame getValue:&frame];
+    
+    CGRect containerFrame = self.containerView.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - (frame.size.height + containerFrame.size.height);
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.containerView.frame = containerFrame;
+    }];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notif
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.containerView.frame = CGRectMake(0, 0, self.containerView.bounds.size.width, self.containerView.bounds.size.height);
+    }];
+}
+
+@end

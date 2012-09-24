@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1</key>
+	<dict>
+		<key>no</key>
+		<integer>1</integer>
+		<key>name</key>
+		<string>高中以下</string>
+	</dict>
+	<key>2</key>
+	<dict>
+		<key>no</key>
+		<integer>2</integer>
+		<key>name</key>
+		<string>高中</string>
+	</dict>
+	<key>3</key>
+	<dict>
+		<key>no</key>
+		<integer>3</integer>
+		<key>name</key>
+		<string>大专</string>
+	</dict>
+	<key>4</key>
+	<dict>
+		<key>no</key>
+		<integer>4</integer>
+		<key>name</key>
+		<string>本科</string>
+	</dict>
+	<key>5</key>
+	<dict>
+		<key>no</key>
+		<integer>5</integer>
+		<key>name</key>
+		<string>硕士</string>
+	</dict>
+	<key>6</key>
+	<dict>
+		<key>no</key>
+		<integer>6</integer>
+		<key>name</key>
+		<string>博士</string>
+	</dict>
+</dict>
+</plist>

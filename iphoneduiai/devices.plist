@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>pengyou</key>
+	<string>来自朋友网</string>
+	<key>qplus</key>
+	<string>来自Q+</string>
+	<key>sinaweibo</key>
+	<string>来自新浪微博</string>
+	<key>qzone</key>
+	<string>来自QQ空间</string>
+	<key>tianya</key>
+	<string>来自天涯</string>
+	<key>360</key>
+	<string>来自360</string>
+	<key>iphone4</key>
+	<string>来自iPhone4</string>
+	<key>iphone4s</key>
+	<string>来自iPhone4S</string>
+	<key>iphone5</key>
+	<string>来自iPhone5</string>
+	<key>samsung</key>
+	<string>来自三星手机</string>
+	<key>xiaomi</key>
+	<string>来自小米手机</string>
+	<key>android</key>
+	<string>来自Android手机</string>
+</dict>
+</plist>

@@ -13,6 +13,8 @@
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
+        // Swizzle the nav bar
+        
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
