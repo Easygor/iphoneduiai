@@ -17,6 +17,7 @@
 + (void)tellNotification:(NSString *)message;
 
 + (NSString *)descriptionForTime:(NSDate *)date;
++ (NSString *)descriptionForDistance:(NSInteger)d;
 
 + (UIImage *)thumbnailWithImage:(UIImage *)image size:(CGSize)asize;
 + (NSString *)genRandStringLength:(int)len;
@@ -24,5 +25,5 @@
 
 + (NSString *)curDateParam;
 + (NSString *)dateDescWithDate:(NSDate*)date;
-
++ (NSMutableDictionary*)queryParams;
 @end

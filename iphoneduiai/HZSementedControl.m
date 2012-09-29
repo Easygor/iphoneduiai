@@ -44,27 +44,15 @@
     return _controls;
 }
 
-- (void)awakeFromNib
-{
-    
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (IBAction)btnAction:(UIButton *)btn
 {
     for (UIButton *b in self.controls) {
         if ([b isEqual:btn]) {
             b.selected = YES;
+            b.backgroundColor = [UIColor whiteColor];
         } else{
             b.selected = NO;
+            b.backgroundColor = RGBCOLOR(238, 238, 238);
         }
     }
     
@@ -81,14 +69,4 @@
         [self btnAction:[self.controls objectAtIndex:index]];
     }
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 @end

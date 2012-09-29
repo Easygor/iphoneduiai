@@ -76,6 +76,17 @@
 		6141A71D15FB800700985257 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71B15FB800700985257 /* bg.png */; };
 		6141A71E15FB800700985257 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71C15FB800700985257 /* bg@2x.png */; };
 		6153D9AA16104E3100AC4A2D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6153D9A916104E3100AC4A2D /* Default-568h@2x.png */; };
+		6153D9BE1610941900AC4A2D /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6153D9BD1610941900AC4A2D /* CustomCell.xib */; };
+		6153D9C1161099BC00AC4A2D /* UserInfoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */; };
+		6153D9C7161099F800AC4A2D /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9C3161099F700AC4A2D /* AsyncImageView.m */; };
+		6153D9C8161099F800AC4A2D /* FullyLoaded.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9C5161099F700AC4A2D /* FullyLoaded.m */; };
+		6153D9D91610B49200AC4A2D /* UserCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9D81610B49200AC4A2D /* UserCardView.m */; };
+		6153D9DC1610B61700AC4A2D /* UserCardTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9DB1610B61700AC4A2D /* UserCardTableCell.m */; };
+		6153D9EC161126A200AC4A2D /* NSString+Date.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9EB161126A200AC4A2D /* NSString+Date.m */; };
+		6159B12A1615710600705835 /* ConditionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6159B1281615710600705835 /* ConditionViewController.m */; };
+		6159B12B1615710600705835 /* ConditionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6159B1291615710600705835 /* ConditionViewController.xib */; };
+		6159B12F16158D6200705835 /* UserDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6159B12D16158D6200705835 /* UserDetailViewController.m */; };
+		6159B13016158D6200705835 /* UserDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6159B12E16158D6200705835 /* UserDetailViewController.xib */; };
 		6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */; };
 		6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67D15FEA70A00BEBD00 /* Security.framework */; };
 		6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67F15FEA71A00BEBD00 /* MobileCoreServices.framework */; };
@@ -135,6 +146,7 @@
 		61CB40DA1604BD7400888317 /* HZDegreePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB40D91604BD7400888317 /* HZDegreePickerView.m */; };
 		61CB40DD1604CB6600888317 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61CB40DB1604CB6600888317 /* city.plist */; };
 		61CB40DE1604CB6600888317 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61CB40DC1604CB6600888317 /* area.plist */; };
+		61EC9F041611370A00C9DC6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EC9F031611370A00C9DC6E /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,6 +277,26 @@
 		6141A71B15FB800700985257 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6141A71C15FB800700985257 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
 		6153D9A916104E3100AC4A2D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		6153D9BD1610941900AC4A2D /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		6153D9BF161099BC00AC4A2D /* UserInfoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoTableCell.h; sourceTree = "<group>"; };
+		6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableCell.m; sourceTree = "<group>"; };
+		6153D9C2161099F700AC4A2D /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		6153D9C3161099F700AC4A2D /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		6153D9C4161099F700AC4A2D /* FullyLoaded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullyLoaded.h; sourceTree = "<group>"; };
+		6153D9C5161099F700AC4A2D /* FullyLoaded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullyLoaded.m; sourceTree = "<group>"; };
+		6153D9C6161099F700AC4A2D /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
+		6153D9D71610B49200AC4A2D /* UserCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCardView.h; sourceTree = "<group>"; };
+		6153D9D81610B49200AC4A2D /* UserCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCardView.m; sourceTree = "<group>"; };
+		6153D9DA1610B61600AC4A2D /* UserCardTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCardTableCell.h; sourceTree = "<group>"; };
+		6153D9DB1610B61700AC4A2D /* UserCardTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCardTableCell.m; sourceTree = "<group>"; };
+		6153D9EA161126A200AC4A2D /* NSString+Date.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Date.h"; sourceTree = "<group>"; };
+		6153D9EB161126A200AC4A2D /* NSString+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Date.m"; sourceTree = "<group>"; };
+		6159B1271615710600705835 /* ConditionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConditionViewController.h; sourceTree = "<group>"; };
+		6159B1281615710600705835 /* ConditionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConditionViewController.m; sourceTree = "<group>"; };
+		6159B1291615710600705835 /* ConditionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConditionViewController.xib; sourceTree = "<group>"; };
+		6159B12C16158D6100705835 /* UserDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailViewController.h; sourceTree = "<group>"; };
+		6159B12D16158D6200705835 /* UserDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailViewController.m; sourceTree = "<group>"; };
+		6159B12E16158D6200705835 /* UserDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserDetailViewController.xib; sourceTree = "<group>"; };
 		6199D66615FEA6BB00BEBD00 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Externals/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6199D67D15FEA70A00BEBD00 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -345,6 +377,8 @@
 		61CB40D91604BD7400888317 /* HZDegreePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZDegreePickerView.m; sourceTree = "<group>"; };
 		61CB40DB1604CB6600888317 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
 		61CB40DC1604CB6600888317 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		61EC9F021611370A00C9DC6E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		61EC9F031611370A00C9DC6E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,6 +456,8 @@
 				61CB3F2F1602AF4B00888317 /* LocationController.m */,
 				61CB3F4A1602F04E00888317 /* NSDate-Utilities.h */,
 				61CB3F4B1602F04F00888317 /* NSDate-Utilities.m */,
+				6153D9EA161126A200AC4A2D /* NSString+Date.h */,
+				6153D9EB161126A200AC4A2D /* NSString+Date.m */,
 				6141A6D815FB68BA00985257 /* UIImage+mergeImages.h */,
 				6141A6D915FB68BA00985257 /* UIImage+mergeImages.m */,
 				61CB3F331602B59000888317 /* UIDevice+UIDeviceAppIndentifier.h */,
@@ -477,6 +513,48 @@
 			name = "navigation & tabbar ";
 			sourceTree = "<group>";
 		};
+		6153D9BC161093F200AC4A2D /* Custom Cell */ = {
+			isa = PBXGroup;
+			children = (
+				6153D9BD1610941900AC4A2D /* CustomCell.xib */,
+				6153D9BF161099BC00AC4A2D /* UserInfoTableCell.h */,
+				6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */,
+				6153D9D71610B49200AC4A2D /* UserCardView.h */,
+				6153D9D81610B49200AC4A2D /* UserCardView.m */,
+				6153D9DA1610B61600AC4A2D /* UserCardTableCell.h */,
+				6153D9DB1610B61700AC4A2D /* UserCardTableCell.m */,
+			);
+			name = "Custom Cell";
+			sourceTree = "<group>";
+		};
+		6153D9C9161099FC00AC4A2D /* Async Images */ = {
+			isa = PBXGroup;
+			children = (
+				6153D9C2161099F700AC4A2D /* AsyncImageView.h */,
+				6153D9C3161099F700AC4A2D /* AsyncImageView.m */,
+				6153D9C4161099F700AC4A2D /* FullyLoaded.h */,
+				6153D9C5161099F700AC4A2D /* FullyLoaded.m */,
+				6153D9C6161099F700AC4A2D /* SynthesizeSingleton.h */,
+			);
+			name = "Async Images";
+			sourceTree = "<group>";
+		};
+		6159B1261615703100705835 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				6141A6F915FB72CF00985257 /* SearchListViewController.h */,
+				6141A6FA15FB72CF00985257 /* SearchListViewController.m */,
+				6141A6FB15FB72D000985257 /* SearchListViewController.xib */,
+				6159B1271615710600705835 /* ConditionViewController.h */,
+				6159B1281615710600705835 /* ConditionViewController.m */,
+				6159B1291615710600705835 /* ConditionViewController.xib */,
+				6159B12C16158D6100705835 /* UserDetailViewController.h */,
+				6159B12D16158D6200705835 /* UserDetailViewController.m */,
+				6159B12E16158D6200705835 /* UserDetailViewController.xib */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		6199D66415FEA6AD00BEBD00 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +578,8 @@
 		6199D68915FEB29000BEBD00 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				61EC9F021611370A00C9DC6E /* User.h */,
+				61EC9F031611370A00C9DC6E /* User.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -567,12 +647,10 @@
 				6199D68915FEB29000BEBD00 /* Models */,
 				61BB2B7E15FA158700AA82CC /* Views */,
 				61AA9C0C15FBCE3F009D67AD /* login & register */,
+				6159B1261615703100705835 /* Search */,
 				61BB2B6815F9DB0800AA82CC /* AppDelegate.h */,
 				61BB2B6915F9DB0800AA82CC /* AppDelegate.m */,
 				6141A6ED15FB6D9800985257 /* MainWindow.xib */,
-				6141A6F915FB72CF00985257 /* SearchListViewController.h */,
-				6141A6FA15FB72CF00985257 /* SearchListViewController.m */,
-				6141A6FB15FB72D000985257 /* SearchListViewController.xib */,
 				6141A6FE15FB72E200985257 /* MessageListViewController.h */,
 				6141A6FF15FB72E200985257 /* MessageListViewController.m */,
 				6141A70015FB72E300985257 /* MessageListViewController.xib */,
@@ -616,6 +694,8 @@
 		61BB2B7E15FA158700AA82CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6153D9C9161099FC00AC4A2D /* Async Images */,
+				6153D9BC161093F200AC4A2D /* Custom Cell */,
 				61397A901607F95D009FDAF9 /* picker views */,
 				6141A6DB15FB691A00985257 /* CustomBarButtonItem.h */,
 				6141A6DC15FB691A00985257 /* CustomBarButtonItem.m */,
@@ -841,6 +921,9 @@
 				61CB40DE1604CB6600888317 /* area.plist in Resources */,
 				61397A921607FC2A009FDAF9 /* degree.plist in Resources */,
 				6153D9AA16104E3100AC4A2D /* Default-568h@2x.png in Resources */,
+				6153D9BE1610941900AC4A2D /* CustomCell.xib in Resources */,
+				6159B12B1615710600705835 /* ConditionViewController.xib in Resources */,
+				6159B13016158D6200705835 /* UserDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -884,6 +967,15 @@
 				61CB40D41604ADCE00888317 /* HZDatePickerView.m in Sources */,
 				61CB40D71604B96600888317 /* BottomPopView.m in Sources */,
 				61CB40DA1604BD7400888317 /* HZDegreePickerView.m in Sources */,
+				6153D9C1161099BC00AC4A2D /* UserInfoTableCell.m in Sources */,
+				6153D9C7161099F800AC4A2D /* AsyncImageView.m in Sources */,
+				6153D9C8161099F800AC4A2D /* FullyLoaded.m in Sources */,
+				6153D9D91610B49200AC4A2D /* UserCardView.m in Sources */,
+				6153D9DC1610B61700AC4A2D /* UserCardTableCell.m in Sources */,
+				6153D9EC161126A200AC4A2D /* NSString+Date.m in Sources */,
+				61EC9F041611370A00C9DC6E /* User.m in Sources */,
+				6159B12A1615710600705835 /* ConditionViewController.m in Sources */,
+				6159B12F16158D6200705835 /* UserDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

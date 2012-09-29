@@ -56,31 +56,31 @@
     NSString *dateString = nil;
     if (timePassed < 60){
         dateString = [NSString stringWithFormat:@"%d秒前", timePassed];
-    }else{
-        if (timePassed < 60*60){
-            dateString = [NSString stringWithFormat:@"%d分钟前", timePassed/60];
-        }else{
-            NSDateFormatter *dateFormat = [NSDateFormatter alloc];
-            [dateFormat setLocale:[NSLocale currentLocale]];
-            
-            NSString *dateFormatString = nil;
-            
-            // compare the now and then time.
-            NSDateComponents *curDateComp = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:[NSDate date]];
-            NSDateComponents *dateComp = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit fromDate:date];
-            
-            if (timePassed < 24*60*60 && curDateComp.day == dateComp.day ){
-                dateFormatString = [NSString stringWithFormat:@"%@", [NSDateFormatter dateFormatFromTemplate:@"h:mm a" options:0 locale:[NSLocale currentLocale]]];
-            }else{
-                dateFormatString = [NSDateFormatter dateFormatFromTemplate:@"M-d H:m" options:0 locale:[NSLocale currentLocale]];
-            }
-            [dateFormat setDateFormat:dateFormatString];
-            dateString = [dateFormat stringFromDate:date];
-            
-            [dateFormat release];
-        }
+    } else if(timePassed < 60*60){
+        dateString = [NSString stringWithFormat:@"%d分钟前", timePassed/60];
+    } else if(timePassed < 60*60*24){
+        dateString = [NSString stringWithFormat:@"%d小时前", timePassed/60];
+    } else if(timePassed < 60*60*24*7){
+        dateString = [NSString stringWithFormat:@"%d天前", timePassed/60];
+    } else {
+        dateString = @"1星期前";
     }
+    
     return dateString;
+}
+
++ (NSString *)descriptionForDistance:(NSInteger)d
+{
+    NSString *desc;
+    if (d < 1000) {
+        desc = [NSString stringWithFormat:@"%dm", d];
+    } else if(d < 1000*1000){
+        desc = [NSString stringWithFormat:@"%dkm", d];
+    } else{
+        desc = @"NA";
+    }
+    
+    return desc;
 }
 
 + (NSString *)curDateParam
@@ -105,6 +105,23 @@
     //    NSLog(@"date: %@", str);
     
     return str;
+}
+
++ (NSMutableDictionary*)queryParams
+{
+    NSMutableDictionary *d = [NSMutableDictionary dictionary];
+    [d setObject:APPID forKey:@"appid"];
+    [d setObject:KEY forKey:@"key"];
+    [d setObject:PASS forKey:@"pass"];
+    [d setObject:[[self class] curDateParam] forKey:@"date"];
+    [d setObject:@"1.0" forKey:@"version"];
+    NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+
+    if (user) {
+        [d setObject:user[@"accesskey"] forKey:@"accesskey"];
+    }
+    
+    return d;
 }
 
 #pragma mark - thumbnail image

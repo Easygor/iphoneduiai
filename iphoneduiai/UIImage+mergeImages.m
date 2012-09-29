@@ -25,6 +25,7 @@
     [lImg drawInRect:CGRectMake(0, 0, lImg.size.width, height)];
     [rImg drawInRect:CGRectMake(width-rImg.size.width, 0, rImg.size.width, height)];
     UIImage *stretchedImg = [bodyImg stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+
     [stretchedImg drawInRect:CGRectMake(lImg.size.width, 0, width-lImg.size.width-rImg.size.width, height)];
     
     UIImage *bgImg = UIGraphicsGetImageFromCurrentImageContext();

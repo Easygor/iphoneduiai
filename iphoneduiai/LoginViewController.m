@@ -13,7 +13,7 @@
 #import "LocationController.h"
 #import "UIDevice+UIDeviceAppIndentifier.h"
 #import "RegexKitLite.h"
-#import <RestKit/RKClient.h>
+#import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 #import "LocationController.h"
@@ -137,7 +137,7 @@
     [self.emailText resignFirstResponder];
 }
 
-#define email_error_msg @"email格式错误"
+#define email_error_msg @"Email格式错误"
 #define pass_error_msg @"密码不能为空"
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
@@ -218,7 +218,7 @@
     RKParams *params = [RKParams paramsWithDictionary:data];
     
     // per
-    [[RKClient sharedClient] post:[@"/login?" stringByAppendingFormat:@"appid=%@&key=%@&pass=%@&date=%@", APPID, KEY, PASS, [Utils curDateParam]]
+    [[RKClient sharedClient] post:[@"/login" stringByAppendingQueryParameters:[Utils queryParams]]
                        usingBlock:^(RKRequest *request){
                            // set params
                            [request setParams:params];
@@ -229,9 +229,15 @@
                            [request setOnDidLoadResponse:^(RKResponse *response){
                                if (response.isOK && response.isJSON) {
                                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-//                                   NSLog(@"res: %@", data);
+                                   NSLog(@"res: %@", data);
                                    if ([[data objectForKey:@"error"] intValue] == 0) {
-                                       [[NSUserDefaults standardUserDefaults] setObject:[data objectForKey:@"accesskey"] forKey:@"user"];
+                                       NSDictionary *userinfo = @{
+                                       @"accesskey": data[@"accesskey"],
+                                       @"username":data[@"data"][@"username"],
+                                       @"info": data[@"data"][@"userinfo"]};
+                                       
+//                                       [[NSUserDefaults standardUserDefaults] setObject:[data objectForKey:@"accesskey"] forKey:@"accesskey"];
+                                       [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
                                        [[NSUserDefaults standardUserDefaults] synchronize];
                                        [SVProgressHUD dismiss];
                                        [self dismissModalViewControllerAnimated:YES];

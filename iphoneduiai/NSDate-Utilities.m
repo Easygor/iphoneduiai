@@ -348,4 +348,18 @@
 	NSDateComponents *components = [CURRENT_CALENDAR components:DATE_COMPONENTS fromDate:self];
 	return components.year;
 }
+
+// add by @cloud_dai 2012-09-16
+- (NSString *)stringWithPattern:(NSString *)tstr
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setLocale:[NSLocale currentLocale]];
+    [dateFormat setDateFormat:tstr];
+    NSString *str = [dateFormat stringFromDate:[NSDate date]];
+    [dateFormat release];
+    //    NSLog(@"date: %@", str);
+    
+    return str;
+    
+}
 @end
