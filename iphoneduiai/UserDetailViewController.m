@@ -7,6 +7,7 @@
 //
 
 #import "UserDetailViewController.h"
+#import "CustomTabBarController.h"
 
 @interface UserDetailViewController ()
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
@@ -32,11 +33,7 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,6 +69,12 @@
     // Configure the cell...
     
     return cell;
+}
+
+-(BOOL)hidesBottomBarWhenPushed
+{
+    [(CustomTabBarController*)self.tabBarController hideNewTabBar];
+    return YES;
 }
 
 /*

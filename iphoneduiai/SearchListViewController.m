@@ -17,6 +17,7 @@
 #import "UserInfoTableCell.h"
 #import "Utils.h"
 #import "ConditionViewController.h"
+#import "UserDetailViewController.h"
 
 @interface SearchListViewController () <HZSementdControlDelegate>
 {
@@ -147,10 +148,10 @@
     // Return the number of rows in the section.
     if ([tableView isEqual:self.infoTableView]) {
         if (self.totalPage <= self.curPage) {
-            NSLog(@"hah hah");
+
             return self.users.count;
         } else{
-            NSLog(@"hah plus");
+
             return self.users.count+1;
 
         }
@@ -160,7 +161,7 @@
         if (self.totalPage <= self.curPage) {
             return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1);
         } else{
-            NSLog(@"hah plus");
+
             return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1)+1;
         }
     }
@@ -327,14 +328,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    if ([tableView isEqual:self.infoTableView]) {
+        
+        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+        [self.navigationController pushViewController:udvc animated:YES];
+        [udvc release];
+        
+    } else{
+        
+        
+    }
+
 }
 
 #pragma mark - Other
