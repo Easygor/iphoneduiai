@@ -7,6 +7,7 @@
 //
 
 #import "ProfileListViewController.h"
+#import "CustomBarButtonItem.h"
 
 @interface ProfileListViewController ()
 
@@ -27,11 +28,15 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.leftBarButtonItem = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"
+                                                                                              target:self
+                                                                                              action:@selector(settingAction)];
+}
+
+- (void)settingAction
+{
+    NSLog(@"jump to setting");
 }
 
 - (void)viewDidUnload

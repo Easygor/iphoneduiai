@@ -89,6 +89,10 @@
 				<object class="IBUINavigationController" key="IBUISelectedViewController" id="300974558">
 					<object class="IBUITabBarItem" key="IBUITabBarItem" id="396615048">
 						<string key="IBUITitle">我</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">tabbar_more.png</string>
+						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<reference key="IBUIParentViewController" ref="238039477"/>
@@ -128,6 +132,10 @@
 					<object class="IBUINavigationController" id="601096850">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="374985100">
 							<string key="IBUITitle">搜索</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">tabbar_home.png</string>
+							</object>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIParentViewController" ref="238039477"/>
@@ -166,6 +174,10 @@
 					<object class="IBUINavigationController" id="957472713">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="477869721">
 							<string key="IBUITitle">消息</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">tabbar_message_center.png</string>
+							</object>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIParentViewController" ref="238039477"/>
@@ -204,6 +216,10 @@
 					<object class="IBUINavigationController" id="114859905">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="127406873">
 							<string key="IBUITitle">微语</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">tabbar_profile.png</string>
+							</object>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIParentViewController" ref="238039477"/>
@@ -242,6 +258,10 @@
 					<object class="IBUINavigationController" id="410777034">
 						<object class="IBUITabBarItem" key="IBUITabBarItem" id="759214420">
 							<string key="IBUITitle">靠谱榜</string>
+							<object class="NSCustomResource" key="IBUIImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">tabbar_discover.png</string>
+							</object>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						</object>
 						<reference key="IBUIParentViewController" ref="238039477"/>
@@ -587,7 +607,6 @@
 				<string key="37.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.CustomClassName">AppDelegate</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="7.CustomClassName">CustomTabBarController</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -606,6 +625,13 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="tabbar_discover.png">{30, 30}</string>
+			<string key="tabbar_home.png">{30, 30}</string>
+			<string key="tabbar_message_center.png">{30, 30}</string>
+			<string key="tabbar_more.png">{30, 30}</string>
+			<string key="tabbar_profile.png">{30, 30}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>
