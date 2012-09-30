@@ -7,7 +7,7 @@
 //
 
 #import "UserDetailViewController.h"
-#import "CustomTabBarController.h"
+
 
 @interface UserDetailViewController ()
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
@@ -34,6 +34,7 @@
     [super viewDidLoad];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.tableView.alwaysBounceVertical = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +74,6 @@
 
 -(BOOL)hidesBottomBarWhenPushed
 {
-    [(CustomTabBarController*)self.tabBarController hideNewTabBar];
     return YES;
 }
 
