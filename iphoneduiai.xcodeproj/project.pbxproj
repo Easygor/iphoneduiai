@@ -179,6 +179,7 @@
 		6159B1E316180F9700705835 /* weiyu_headbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B1AF16180F9700705835 /* weiyu_headbox@2x.png */; };
 		6159B1E61618370400705835 /* AvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6159B1E51618370400705835 /* AvatarView.m */; };
 		6159B1E91618428A00705835 /* CountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6159B1E81618428900705835 /* CountView.m */; };
+		6159B1FC16193D0F00705835 /* settingEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6159B1FB16193D0E00705835 /* settingEntries.plist */; };
 		6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */; };
 		6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67D15FEA70A00BEBD00 /* Security.framework */; };
 		6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67F15FEA71A00BEBD00 /* MobileCoreServices.framework */; };
@@ -486,6 +487,7 @@
 		6159B1E51618370400705835 /* AvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarView.m; sourceTree = "<group>"; };
 		6159B1E71618428900705835 /* CountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountView.h; sourceTree = "<group>"; };
 		6159B1E81618428900705835 /* CountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountView.m; sourceTree = "<group>"; };
+		6159B1FB16193D0E00705835 /* settingEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settingEntries.plist; sourceTree = "<group>"; };
 		6199D66615FEA6BB00BEBD00 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Externals/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6199D67D15FEA70A00BEBD00 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1005,6 +1007,7 @@
 				61BB2B6515F9DB0800AA82CC /* main.m */,
 				61BB2B6715F9DB0800AA82CC /* iphoneduiai-Prefix.pch */,
 				619CFAE515FCA4E0002A122D /* devices.plist */,
+				6159B1FB16193D0E00705835 /* settingEntries.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1337,6 +1340,7 @@
 				5A376EDA161849F2003B2C14 /* line@2x.png in Resources */,
 				5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */,
 				5A3770041618ADD9003B2C14 /* statusdetail_header_arrow.png in Resources */,
+				6159B1FC16193D0F00705835 /* settingEntries.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

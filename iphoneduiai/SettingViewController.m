@@ -9,52 +9,56 @@
 #import "SettingViewController.h"
 
 @interface SettingViewController ()
-@property (nonatomic,strong)NSArray *section1DataArray;
-@property (nonatomic,strong)NSArray *section2DataArray;
-@property (nonatomic,strong)NSArray *section3DataArray;
-@property (nonatomic,strong)NSArray *section4DataArray;
+
+@property (strong, nonatomic) NSArray *entries;
+//@property (nonatomic,strong)NSArray *section1DataArray;
+//@property (nonatomic,strong)NSArray *section2DataArray;
+//@property (nonatomic,strong)NSArray *section3DataArray;
+//@property (nonatomic,strong)NSArray *section4DataArray;
 
 @end
 
 @implementation SettingViewController
-@synthesize section1DataArray,section2DataArray,section3DataArray,section4DataArray;
-- (id)initWithStyle:(UITableViewStyle)style
+//@synthesize section1DataArray,section2DataArray,section3DataArray,section4DataArray;
+
+- (void)dealloc
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    [_entries release];
+    [super dealloc];
+}
+
+- (NSArray *)entries
+{
+    if (_entries == nil) {
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"settingEntries" withExtension:@"plist"];
+        _entries = [[NSArray alloc] initWithContentsOfURL:url];
     }
-    return self;
+    
+    return _entries;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-       self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.section1DataArray = [[NSArray alloc]initWithObjects:@"设置头像",@"我的照片", nil];
-    self.section2DataArray = [[NSArray alloc]initWithObjects:@"我赞过的人", nil];
-    self.section3DataArray = [[NSArray alloc]initWithObjects:@"提醒设置",@"防打扰设置",@"黑名单管理", nil];
-    self.section4DataArray = [[NSArray alloc]initWithObjects:@"修改密码",@"停用账号",@"给我们意见",@"求评价~",@"关于对爱", nil];
+//    self.section1DataArray = [[NSArray alloc]initWithObjects:@"设置头像",@"我的照片", nil];
+//    self.section2DataArray = [[NSArray alloc]initWithObjects:@"我赞过的人", nil];
+//    self.section3DataArray = [[NSArray alloc]initWithObjects:@"提醒设置",@"防打扰设置",@"黑名单管理", nil];
+//    self.section4DataArray = [[NSArray alloc]initWithObjects:@"修改密码",@"停用账号",@"给我们意见",@"求评价~",@"关于对爱", nil];
 
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
-    
-    UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    exitButton.frame = CGRectMake(10, 50, 300, 44);
-    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
-    
-    [exitButton setTitle:@"退出" forState:UIControlStateNormal];
-    //exitButton.titleLabel.text = @"退出";
-    exitButton.titleLabel.textColor = [UIColor whiteColor];
-    [footView addSubview:exitButton];
-    self.tableView.tableFooterView = footView;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+//    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
+//    
+//    UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    exitButton.frame = CGRectMake(10, 50, 300, 44);
+//    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
+//    
+//    [exitButton setTitle:@"退出" forState:UIControlStateNormal];
+//    //exitButton.titleLabel.text = @"退出";
+//    exitButton.titleLabel.textColor = [UIColor whiteColor];
+//    [footView addSubview:exitButton];
+//    self.tableView.tableFooterView = footView;
 }
 
 #pragma mark - Table view data source
@@ -63,26 +67,15 @@
 {
 
     // Return the number of sections.
-    return 4;
+    return self.entries.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    int num;
-    if (section == 0) {
-        num = 2;
-    }else if(section ==1)
-    {
-        num = 1;
-    }else if(section ==2)
-    {
-        num = 3;
-    }else if(section ==3)
-    {
-        num = 5;
-    }
-    return num;
+    
+    return [[self.entries objectAtIndex:section] count];
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -110,6 +103,7 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         
         bgView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
         bgView.backgroundColor = [UIColor whiteColor];
@@ -136,7 +130,7 @@
         bigLabel.tag=bigLabelTag;
         [bgView addSubview:bigLabel];
                 
-        smallLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 10, 50, 14)];
+        smallLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 15, 50, 14)];
         smallLabel.backgroundColor=[UIColor clearColor];
         [bgView addSubview:smallLabel];
         smallLabel.tag=smallImgTag;
@@ -145,7 +139,7 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        arrowImgView = [[UIImageView alloc]initWithFrame:CGRectMake(280, 8, 14, 14)];
+        arrowImgView = [[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)];
         arrowImgView.tag = arrowTag;
         [bgView addSubview:arrowImgView];
     }
@@ -170,72 +164,50 @@
     if (arrowImgView ==nil) {
         arrowImgView = (UIImageView*)[cell viewWithTag:arrowTag];
     }
+    
+    NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     UIImage *img = nil;
     UIImage *headImg = nil;
     UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
-    if ([indexPath section]==0) {
+    
+    if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
         bigLabel.frame = CGRectMake(40, 0, 200, 44);
-        bigLabel.text=[section1DataArray objectAtIndex:indexPath.row];
-        [bgView addSubview:lineView];
-        
-        img = [UIImage imageNamed:@"bolg_icon.png"];
-        frontImg.image = img;
-        [bgView addSubview:frontImg];
-        if ([indexPath row]==0) {
-            headImg = [UIImage imageNamed:@"tweibo_icon.png"];
-            behindImg.image = headImg;
-        }else if([indexPath row]==1)
-        {
-            smallLabel.text = @"共2张";
-        }
-        arrowImgView.image = arrowImg;
-    }else if([indexPath section]==1)
-    {
-        bigLabel.frame = CGRectMake(40, 0, 200, 44);
-        bigLabel.text=[section2DataArray objectAtIndex:indexPath.row];
-        [bgView addSubview:lineView];
+        img = [UIImage imageNamed:[data objectForKey:@"logo"]];
 
-        img = [UIImage imageNamed:@"bolg_icon.png"];
-         frontImg.image = img;
-        [bgView addSubview:frontImg];
-
-        behindImg.image = headImg;
-
-        smallLabel.text = @"共13人";
-        arrowImgView.image = arrowImg;
-
-    }else if([indexPath section]==2)
-    {
-        bigLabel.frame = CGRectMake(40, 0, 200, 44);
-        bigLabel.text=[section3DataArray objectAtIndex:indexPath.row];
-        [bgView addSubview:lineView];
-
-        img = [UIImage imageNamed:@"bolg_icon.png"];
-         frontImg.image = img;
-        [bgView addSubview:frontImg];
-        
-        behindImg.image = headImg;
-        smallLabel.text = @"";  
-        arrowImgView.image = arrowImg;
-
-    }else if([indexPath section]==3)
-    {
+    } else{
         bigLabel.frame = CGRectMake(10, 0, 200, 44);
-        bigLabel.text=[section4DataArray objectAtIndex:indexPath.row];
-        [bgView addSubview:lineView];
-        frontImg.image = img;
-        [bgView addSubview:frontImg];
-        
-        behindImg.image = headImg;
-       smallLabel.text = @"";
-        if ([indexPath row]<3) {
-            arrowImgView.image = arrowImg;
-
-        }
     }
+    
+    bigLabel.text = [data objectForKey:@"text"];
+    [bgView addSubview:lineView];
+    frontImg.image = img;
+    [bgView addSubview:frontImg];
+    
+    if ([[data objectForKey:@"haveNext"] boolValue]) {
+        arrowImgView.image = arrowImg;
+    } else{
+        arrowImgView.image = nil;
+    }
+    
+    if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
+        headImg = [UIImage imageNamed:@"tweibo_icon.png"];
+    }else if([[data objectForKey:@"label"] isEqualToString:@"my_photo"])
+    {
+        smallLabel.text = @"共2张";
+    }else if([[data objectForKey:@"label"] isEqualToString:@"up_person"])
+    {
+        smallLabel.text = @"共13人";
+    } else{
+        smallLabel.text = @"";
+       
+    }
+    
+    behindImg.image = headImg;
     
     return cell;
 }
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if(section == 0)
         return 15;
@@ -253,49 +225,12 @@
     return header;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSLog(@"hah : %@", [data objectForKey:@"label"]);
     // Navigation logic may go here. Create and push another view controller.
     /*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
@@ -304,6 +239,8 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
