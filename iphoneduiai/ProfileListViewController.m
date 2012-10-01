@@ -8,6 +8,7 @@
 
 #import "ProfileListViewController.h"
 #import "CustomBarButtonItem.h"
+#import "SettingViewController.h"
 
 @interface ProfileListViewController ()
 
@@ -37,7 +38,8 @@
 - (void)settingAction
 {
     NSLog(@"jump to setting");
-}
+    SettingViewController *settingViewController = [[SettingViewController alloc]initWithStyle:UITableViewStylePlain];
+     [self.navigationController pushViewController:settingViewController animated:YES];}
 
 - (void)viewDidUnload
 {
