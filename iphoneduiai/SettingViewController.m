@@ -115,11 +115,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        UIView *selectedView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
+        UIView *colorView = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
+        colorView.backgroundColor = [UIColor lightGrayColor];
+        [selectedView addSubview:colorView];
+        cell.selectedBackgroundView = selectedView;
         
         bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:bgView];
-        
         
         frontImg = [[[UIImageView alloc] initWithFrame: CGRectMake(10, 13, 18, 18)] autorelease];
         frontImg.tag = frontImgTag;
@@ -148,11 +152,9 @@
         smallLabel.font = [UIFont systemFontOfSize:12];
         smallLabel.textColor = [UIColor grayColor];
         
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         arrowImgView.tag = arrowTag;
-        cell.accessoryView  = arrowImgView; 
+        [cell addSubview:arrowImgView];
     }
     
     if (bgView == nil)

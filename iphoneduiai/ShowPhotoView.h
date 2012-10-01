@@ -13,7 +13,5 @@
 @interface ShowPhotoView : UIView
 
 @property (strong, nonatomic) NSArray *photos;
-@property (strong, nonatomic) IBOutlet AsyncImageView *showImageView;
-@property (strong, nonatomic) IBOutlet CountView *viewCountView;
 
 @end

@@ -37,14 +37,15 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        AsyncImageView *center = [[[AsyncImageView alloc] initWithFrame:frame] autorelease];
+        AsyncImageView *center = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)] autorelease];
         [center loadImage:imageUrl];
-        center.layer.cornerRadius = 50;
+        center.layer.cornerRadius = 30;
         center.layer.masksToBounds = YES;
+        center.clipsToBounds = YES;
         [self addSubview:center];
         self.roundCenterView = center;
         
-        UIImageView *view = [[[UIImageView alloc] initWithFrame:frame] autorelease];
+        UIImageView *view = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)] autorelease];
         view.image = [UIImage imageNamed:@"picbox.png"];
         [self addSubview:view];
         self.roundImageView = view;

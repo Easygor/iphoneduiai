@@ -39,13 +39,15 @@
         selfFrame.size.width = size.width + self.logo.frame.size.width + 15;
         selfFrame.origin.x = 320 - 5 - selfFrame.size.width;
         self.frame = selfFrame;
+        
+        self.countLabel.text = count;
     }
 }
 
 
 - (void)doInitWork
 {
-    self.layer.cornerRadius = 4.0f;
+    self.layer.cornerRadius = 3.0f;
 }
 
 - (void)awakeFromNib
