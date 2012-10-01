@@ -7,7 +7,7 @@
 //
 
 #import "SettingViewController.h"
-
+#define kActionChooseImageTag 201
 @interface SettingViewController ()
 @property (nonatomic,strong)NSArray *section1DataArray;
 @property (nonatomic,strong)NSArray *section2DataArray;
@@ -147,7 +147,7 @@
         
         arrowImgView = [[UIImageView alloc]initWithFrame:CGRectMake(280, 8, 14, 14)];
         arrowImgView.tag = arrowTag;
-        [bgView addSubview:arrowImgView];
+        cell.accessoryView  = arrowImgView; 
     }
 
     if (bgView == nil)
@@ -303,7 +303,39 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
-     */
-}
+    */
+    if ([indexPath section]==0) {
+        if ([indexPath row]==0) {
+            UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                          initWithTitle:nil
+                                          delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          destructiveButtonTitle:nil
+                                          otherButtonTitles:@"从资源库",@"拍照",nil];
+            actionSheet.tag=kActionChooseImageTag;
+            [actionSheet showInView:self.view];
 
+        }
+    }
+}
+#pragma mark - ActionSheet Delegate Methods
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag==kActionChooseImageTag) {
+        UIImagePickerController* imagePickerController = [[UIImagePickerController alloc] init];
+        
+        if (buttonIndex == 0)
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        else  if(buttonIndex==1)
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        else if(buttonIndex==2)
+            return;
+        
+        imagePickerController.delegate=self;
+        //        imagePickerController.allowsEditing = YES;
+        [self presentModalViewController: imagePickerController
+                                animated: YES];
+    }
+}
 @end
