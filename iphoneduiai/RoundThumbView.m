@@ -8,10 +8,10 @@
 
 #import "RoundThumbView.h"
 #import "AsyncImageView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface RoundThumbView ()
 
-@property (nonatomic) BOOL selected;
 @property (strong, nonatomic) UIImageView *roundImageView;
 @property (strong, nonatomic) AsyncImageView *roundCenterView;
 
@@ -32,22 +32,26 @@
     }
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame image:(NSString*)imageUrl target:(id)delegate forSelector:(SEL)gestureAction
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        AsyncImageView *center = [[[AsyncImageView alloc] initWithFrame:frame] autorelease];
+        [center loadImage:imageUrl];
+        center.layer.cornerRadius = 50;
+        center.layer.masksToBounds = YES;
+        [self addSubview:center];
+        self.roundCenterView = center;
+        
+        UIImageView *view = [[[UIImageView alloc] initWithFrame:frame] autorelease];
+        view.image = [UIImage imageNamed:@"picbox.png"];
+        [self addSubview:view];
+        self.roundImageView = view;
+        
+        [self addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:delegate action:gestureAction] autorelease]];
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

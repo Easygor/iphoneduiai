@@ -329,11 +329,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([tableView isEqual:self.infoTableView]) {
-        
-        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
-        [self.navigationController pushViewController:udvc animated:YES];
-        [udvc release];
-        
+        if (indexPath.row < self.users.count) {
+            UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+            udvc.user = [self.users objectAtIndex:indexPath.row];
+            [self.navigationController pushViewController:udvc animated:YES];
+            [udvc release];
+        }
     } else{
         
         

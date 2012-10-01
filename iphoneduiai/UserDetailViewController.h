@@ -10,4 +10,6 @@
 
 @interface UserDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) NSDictionary *user;
+
 @end

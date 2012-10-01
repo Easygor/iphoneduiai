@@ -171,6 +171,8 @@
 		6159B1E116180F9700705835 /* weiyu_btn_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B1AD16180F9700705835 /* weiyu_btn_bg@2x.png */; };
 		6159B1E216180F9700705835 /* weiyu_headbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B1AE16180F9700705835 /* weiyu_headbox.png */; };
 		6159B1E316180F9700705835 /* weiyu_headbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B1AF16180F9700705835 /* weiyu_headbox@2x.png */; };
+		6159B1E61618370400705835 /* AvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6159B1E51618370400705835 /* AvatarView.m */; };
+		6159B1E91618428A00705835 /* CountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6159B1E81618428900705835 /* CountView.m */; };
 		6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */; };
 		6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67D15FEA70A00BEBD00 /* Security.framework */; };
 		6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67F15FEA71A00BEBD00 /* MobileCoreServices.framework */; };
@@ -467,6 +469,10 @@
 		6159B1AD16180F9700705835 /* weiyu_btn_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weiyu_btn_bg@2x.png"; sourceTree = "<group>"; };
 		6159B1AE16180F9700705835 /* weiyu_headbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weiyu_headbox.png; sourceTree = "<group>"; };
 		6159B1AF16180F9700705835 /* weiyu_headbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weiyu_headbox@2x.png"; sourceTree = "<group>"; };
+		6159B1E41618370400705835 /* AvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvatarView.h; sourceTree = "<group>"; };
+		6159B1E51618370400705835 /* AvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvatarView.m; sourceTree = "<group>"; };
+		6159B1E71618428900705835 /* CountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountView.h; sourceTree = "<group>"; };
+		6159B1E81618428900705835 /* CountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountView.m; sourceTree = "<group>"; };
 		6199D66615FEA6BB00BEBD00 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Externals/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6199D67D15FEA70A00BEBD00 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -992,6 +998,10 @@
 				6159B1761617FFED00705835 /* ShowPhotoView.m */,
 				6159B1781618004300705835 /* RoundThumbView.h */,
 				6159B1791618004300705835 /* RoundThumbView.m */,
+				6159B1E41618370400705835 /* AvatarView.h */,
+				6159B1E51618370400705835 /* AvatarView.m */,
+				6159B1E71618428900705835 /* CountView.h */,
+				6159B1E81618428900705835 /* CountView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1332,6 +1342,8 @@
 				6159B12F16158D6200705835 /* UserDetailViewController.m in Sources */,
 				6159B1771617FFED00705835 /* ShowPhotoView.m in Sources */,
 				6159B17A1618004300705835 /* RoundThumbView.m in Sources */,
+				6159B1E61618370400705835 /* AvatarView.m in Sources */,
+				6159B1E91618428A00705835 /* CountView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
