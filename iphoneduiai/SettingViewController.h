@@ -2,7 +2,7 @@
 //  SettingViewController.h
 //  iphoneduiai
 //
-//  Created by yinliping on 12-9-30.
+//  Created by Cloud Dai on 12-10-1.
 //  Copyright (c) 2012年 duiai.com. All rights reserved.
 //
 

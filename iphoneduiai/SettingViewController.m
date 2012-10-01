@@ -21,6 +21,7 @@
 @implementation SettingViewController
 //@synthesize section1DataArray,section2DataArray,section3DataArray,section4DataArray;
 
+
 - (void)dealloc
 {
     [_entries release];
@@ -37,35 +38,44 @@
     return _entries;
 }
 
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    self.section1DataArray = [[NSArray alloc]initWithObjects:@"设置头像",@"我的照片", nil];
-//    self.section2DataArray = [[NSArray alloc]initWithObjects:@"我赞过的人", nil];
-//    self.section3DataArray = [[NSArray alloc]initWithObjects:@"提醒设置",@"防打扰设置",@"黑名单管理", nil];
-//    self.section4DataArray = [[NSArray alloc]initWithObjects:@"修改密码",@"停用账号",@"给我们意见",@"求评价~",@"关于对爱", nil];
-
-//    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
-//    
-//    UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    exitButton.frame = CGRectMake(10, 50, 300, 44);
-//    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
-//    
-//    [exitButton setTitle:@"退出" forState:UIControlStateNormal];
-//    //exitButton.titleLabel.text = @"退出";
-//    exitButton.titleLabel.textColor = [UIColor whiteColor];
-//    [footView addSubview:exitButton];
-//    self.tableView.tableFooterView = footView;
+    //    self.section1DataArray = [[NSArray alloc]initWithObjects:@"设置头像",@"我的照片", nil];
+    //    self.section2DataArray = [[NSArray alloc]initWithObjects:@"我赞过的人", nil];
+    //    self.section3DataArray = [[NSArray alloc]initWithObjects:@"提醒设置",@"防打扰设置",@"黑名单管理", nil];
+    //    self.section4DataArray = [[NSArray alloc]initWithObjects:@"修改密码",@"停用账号",@"给我们意见",@"求评价~",@"关于对爱", nil];
+    
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
+    
+    UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    exitButton.frame = CGRectMake(10, 50, 300, 44);
+    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
+    //
+    [exitButton setTitle:@"退出" forState:UIControlStateNormal];
+    exitButton.titleLabel.text = @"退出";
+    exitButton.titleLabel.textColor = [UIColor whiteColor];
+    [footView addSubview:exitButton];
+    self.tableView.tableFooterView = footView;
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
+    
     // Return the number of sections.
     return self.entries.count;
 }
@@ -75,7 +85,7 @@
     // Return the number of rows in the section.
     
     return [[self.entries objectAtIndex:section] count];
-
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,7 +107,7 @@
     UIImageView* lineView=nil;
     UIView* bgView = nil;
     UIImageView* arrowImgView = nil;
-
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil)
     {
@@ -105,32 +115,32 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         
-        bgView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
+        bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:bgView];
-
         
-        frontImg = [[UIImageView alloc] initWithFrame: CGRectMake(10, 13, 18, 18)];
+        
+        frontImg = [[[UIImageView alloc] initWithFrame: CGRectMake(10, 13, 18, 18)] autorelease];
         frontImg.tag = frontImgTag;
-                
+        
         lineView= [[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)];
         lineView.image =  [UIImage imageNamed:@"line.png"];
         lineView.tag = lineTag;
         [bgView addSubview:lineView];
         
-        behindImg = [[UIImageView alloc]initWithFrame:CGRectZero];
+        behindImg = [[[UIImageView alloc]initWithFrame:CGRectZero] autorelease];
         behindImg.tag=behindImgTag;
-       // [cell.contentView addSubview:behindImg];
+        // [cell.contentView addSubview:behindImg];
         behindImg.frame = CGRectMake(230, 2, 40,40);
         [bgView addSubview:behindImg];
-
         
-        bigLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+        
+        bigLabel = [[[UILabel alloc]initWithFrame:CGRectZero] autorelease];
         bigLabel.backgroundColor=[UIColor clearColor];
         bigLabel.tag=bigLabelTag;
         [bgView addSubview:bigLabel];
-                
-        smallLabel = [[UILabel alloc]initWithFrame:CGRectMake(230, 15, 50, 14)];
+        
+        smallLabel = [[[UILabel alloc]initWithFrame:CGRectMake(230, 15, 50, 14)] autorelease];
         smallLabel.backgroundColor=[UIColor clearColor];
         [bgView addSubview:smallLabel];
         smallLabel.tag=smallImgTag;
@@ -139,11 +149,11 @@
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        arrowImgView = [[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)];
+        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         arrowImgView.tag = arrowTag;
         [bgView addSubview:arrowImgView];
     }
-
+    
     if (bgView == nil)
         bgView = (UIView*)[cell viewWithTag:bgViewTag];
     
@@ -173,7 +183,7 @@
     if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
         bigLabel.frame = CGRectMake(40, 0, 200, 44);
         img = [UIImage imageNamed:[data objectForKey:@"logo"]];
-
+        
     } else{
         bigLabel.frame = CGRectMake(10, 0, 200, 44);
     }
@@ -199,7 +209,7 @@
         smallLabel.text = @"共13人";
     } else{
         smallLabel.text = @"";
-       
+        
     }
     
     behindImg.image = headImg;
@@ -241,6 +251,11 @@
      */
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (IBAction)resginAction
+{
+    NSLog(@"log out");
 }
 
 @end
