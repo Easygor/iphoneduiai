@@ -7,7 +7,7 @@
 //
 
 #import "SettingViewController.h"
-
+#define kActionChooseImageTag 201
 @interface SettingViewController ()
 
 @property (strong, nonatomic) NSArray *entries;
@@ -67,6 +67,7 @@
     [exitButton setTitle:@"退出" forState:UIControlStateNormal];
     exitButton.titleLabel.text = @"退出";
     exitButton.titleLabel.textColor = [UIColor whiteColor];
+    [exitButton addTarget:self action:@selector(resginAction) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:exitButton];
     self.tableView.tableFooterView = footView;
 }
@@ -151,7 +152,7 @@
         
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         arrowImgView.tag = arrowTag;
-        [bgView addSubview:arrowImgView];
+        cell.accessoryView  = arrowImgView; 
     }
     
     if (bgView == nil)
@@ -241,14 +242,20 @@
 {
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     NSLog(@"hah : %@", [data objectForKey:@"label"]);
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+
+    if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
+
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"从资源库",@"拍照",nil];
+        actionSheet.tag=kActionChooseImageTag;
+        [actionSheet showInView:self.view];
+        
+
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -258,4 +265,24 @@
     NSLog(@"log out");
 }
 
+#pragma mark - ActionSheet Delegate Methods
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag==kActionChooseImageTag) {
+        UIImagePickerController* imagePickerController = [[UIImagePickerController alloc] init];
+        
+        if (buttonIndex == 0)
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        else  if(buttonIndex==1)
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        else if(buttonIndex==2)
+            return;
+        
+        imagePickerController.delegate=self;
+        //        imagePickerController.allowsEditing = YES;
+        [self presentModalViewController: imagePickerController
+                                animated: YES];
+    }
+}
 @end
