@@ -244,16 +244,25 @@
     NSLog(@"hah : %@", [data objectForKey:@"label"]);
 
     if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+            UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                          initWithTitle:nil
+                                          delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          destructiveButtonTitle:nil
+                                          otherButtonTitles:@"从资源库",@"拍照",nil];
+            actionSheet.tag=kActionChooseImageTag;
+            [actionSheet showInView:self.view];
+            
+        } else {
+  
+            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            [self presentModalViewController:picker animated:YES];
 
-        UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                      initWithTitle:nil
-                                      delegate:self
-                                      cancelButtonTitle:@"取消"
-                                      destructiveButtonTitle:nil
-                                      otherButtonTitles:@"从资源库",@"拍照",nil];
-        actionSheet.tag=kActionChooseImageTag;
-        [actionSheet showInView:self.view];
-        
+        } 
 
     }
     
