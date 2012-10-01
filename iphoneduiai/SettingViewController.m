@@ -7,20 +7,16 @@
 //
 
 #import "SettingViewController.h"
+#import "RemindViewController.h"
+#import "PreventSetViewController.h"
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 
 @property (strong, nonatomic) NSArray *entries;
-//@property (nonatomic,strong)NSArray *section1DataArray;
-//@property (nonatomic,strong)NSArray *section2DataArray;
-//@property (nonatomic,strong)NSArray *section3DataArray;
-//@property (nonatomic,strong)NSArray *section4DataArray;
-
 @end
 
 @implementation SettingViewController
-//@synthesize section1DataArray,section2DataArray,section3DataArray,section4DataArray;
-
+@synthesize entries = _entries;
 
 - (void)dealloc
 {
@@ -53,17 +49,14 @@
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    //    self.section1DataArray = [[NSArray alloc]initWithObjects:@"设置头像",@"我的照片", nil];
-    //    self.section2DataArray = [[NSArray alloc]initWithObjects:@"我赞过的人", nil];
-    //    self.section3DataArray = [[NSArray alloc]initWithObjects:@"提醒设置",@"防打扰设置",@"黑名单管理", nil];
-    //    self.section4DataArray = [[NSArray alloc]initWithObjects:@"修改密码",@"停用账号",@"给我们意见",@"求评价~",@"关于对爱", nil];
+    
     
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
     
     UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
     exitButton.frame = CGRectMake(10, 50, 300, 44);
     exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
-    //
+    
     [exitButton setTitle:@"退出" forState:UIControlStateNormal];
     exitButton.titleLabel.text = @"退出";
     exitButton.titleLabel.textColor = [UIColor whiteColor];
@@ -76,8 +69,6 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
-    // Return the number of sections.
     return self.entries.count;
 }
 
@@ -86,7 +77,6 @@
     // Return the number of rows in the section.
     
     return [[self.entries objectAtIndex:section] count];
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,12 +104,8 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         
-        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-        UIView *selectedView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)] autorelease];
-        UIView *colorView = [[[UIView alloc] initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
-        colorView.backgroundColor = [UIColor lightGrayColor];
-        [selectedView addSubview:colorView];
-        cell.selectedBackgroundView = selectedView;
+        //cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+
         
         bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
@@ -155,6 +141,7 @@
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         arrowImgView.tag = arrowTag;
         [cell addSubview:arrowImgView];
+
     }
     
     if (bgView == nil)
@@ -242,33 +229,56 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    NSLog(@"hah : %@", [data objectForKey:@"label"]);
-
-    if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-            UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                          initWithTitle:nil
-                                          delegate:self
-                                          cancelButtonTitle:@"取消"
-                                          destructiveButtonTitle:nil
-                                          otherButtonTitles:@"从资源库",@"拍照",nil];
-            actionSheet.tag=kActionChooseImageTag;
-            [actionSheet showInView:self.view];
+    if ([indexPath section]==0) {
+        if ([indexPath row]==0) {
+            NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+            NSLog(@"hah : %@", [data objectForKey:@"label"]);
             
-        } else {
-  
-            UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            picker.delegate = self;
-            picker.allowsEditing = YES;
-            [self presentModalViewController:picker animated:YES];
-
-        } 
-
+            if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
+                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+                    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                                  initWithTitle:nil
+                                                  delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"从资源库",@"拍照",nil];
+                    actionSheet.tag=kActionChooseImageTag;
+                    [actionSheet showInView:self.view];
+                    
+                } else {
+                    
+                    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                    picker.delegate = self;
+                    picker.allowsEditing = YES;
+                    [self presentModalViewController:picker animated:YES];
+                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                }
+                
+            }
+            
+        }
+    }else if([indexPath section]==1)
+    {
+        
+    }else if([indexPath section]==2)
+    {
+        if ([indexPath row]==0) {
+            RemindViewController *remindViewController = [[RemindViewController alloc]initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:remindViewController animated:YES];
+        }else if([indexPath row]==1)
+        {
+            PreventSetViewController *preventSetViewController = [[PreventSetViewController alloc]initWithStyle:UITableViewStylePlain];
+            [self.navigationController pushViewController:preventSetViewController animated:YES];
+            
+        }
+        
+    }else if([indexPath section]==3)
+    {
+        
     }
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 - (IBAction)resginAction

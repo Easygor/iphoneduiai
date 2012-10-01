@@ -11,6 +11,11 @@
 		5A376EDA161849F2003B2C14 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED8161849F2003B2C14 /* line@2x.png */; };
 		5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */; };
 		5A3770041618ADD9003B2C14 /* statusdetail_header_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */; };
+		5A62E8841619755100BD3958 /* RemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E8821619755100BD3958 /* RemindViewController.m */; };
+		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
+		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
+		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
+		5A62E88D1619DC4100BD3958 /* HZTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88C1619DC4100BD3958 /* HZTimePickerView.m */; };
 		6116856415FE1CF600D4A203 /* ShadowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116856315FE1CF600D4A203 /* ShadowLabel.m */; };
 		6116856815FE20C400D4A203 /* topbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116856615FE20C400D4A203 /* topbg.png */; };
 		6116856915FE20C400D4A203 /* topbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116856715FE20C400D4A203 /* topbg@2x.png */; };
@@ -294,6 +299,14 @@
 		5A376ED8161849F2003B2C14 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusdetail_header_arrow@2x.png"; sourceTree = "<group>"; };
 		5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusdetail_header_arrow.png; sourceTree = "<group>"; };
+		5A62E8811619755100BD3958 /* RemindViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindViewController.h; sourceTree = "<group>"; };
+		5A62E8821619755100BD3958 /* RemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindViewController.m; sourceTree = "<group>"; };
+		5A62E8831619755100BD3958 /* RemindViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindViewController.xib; sourceTree = "<group>"; };
+		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
+		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
+		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
+		5A62E88B1619DC4100BD3958 /* HZTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTimePickerView.h; sourceTree = "<group>"; };
+		5A62E88C1619DC4100BD3958 /* HZTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimePickerView.m; sourceTree = "<group>"; };
 		6116856215FE1CF600D4A203 /* ShadowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowLabel.h; sourceTree = "<group>"; };
 		6116856315FE1CF600D4A203 /* ShadowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowLabel.m; sourceTree = "<group>"; };
 		6116856615FE20C400D4A203 /* topbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbg.png; sourceTree = "<group>"; };
@@ -677,6 +690,8 @@
 				61CB40D31604ADCD00888317 /* HZDatePickerView.m */,
 				61CB40D81604BD7300888317 /* HZDegreePickerView.h */,
 				61CB40D91604BD7400888317 /* HZDegreePickerView.m */,
+				5A62E88B1619DC4100BD3958 /* HZTimePickerView.h */,
+				5A62E88C1619DC4100BD3958 /* HZTimePickerView.m */,
 				61CB404F160386CF00888317 /* HZAreaPickerView.xib */,
 			);
 			name = "picker views";
@@ -1001,6 +1016,12 @@
 				61240BC416195FB7005C4E6C /* SettingViewController.h */,
 				61240BC516195FB7005C4E6C /* SettingViewController.m */,
 				61240BC616195FB7005C4E6C /* SettingViewController.xib */,
+				5A62E8811619755100BD3958 /* RemindViewController.h */,
+				5A62E8821619755100BD3958 /* RemindViewController.m */,
+				5A62E8831619755100BD3958 /* RemindViewController.xib */,
+				5A62E88616198EF600BD3958 /* PreventSetViewController.h */,
+				5A62E88716198EF600BD3958 /* PreventSetViewController.m */,
+				5A62E88816198EF600BD3958 /* PreventSetViewController.xib */,
 				61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */,
 				61BB2B6015F9DB0800AA82CC /* Supporting Files */,
 			);
@@ -1359,6 +1380,8 @@
 				5A3770041618ADD9003B2C14 /* statusdetail_header_arrow.png in Resources */,
 				6159B1FC16193D0F00705835 /* settingEntries.plist in Resources */,
 				61240BC816195FB7005C4E6C /* SettingViewController.xib in Resources */,
+				5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */,
+				5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1418,6 +1441,9 @@
 				61240BC716195FB7005C4E6C /* SettingViewController.m in Sources */,
 				61240BDD1619C4A7005C4E6C /* MarrayReqView.m in Sources */,
 				61240BE41619D8D6005C4E6C /* MoreUserInfoView.m in Sources */,
+				5A62E8841619755100BD3958 /* RemindViewController.m in Sources */,
+				5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */,
+				5A62E88D1619DC4100BD3958 /* HZTimePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
