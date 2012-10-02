@@ -1410,13 +1410,13 @@
 						<reference key="NSNextResponder" ref="504564550"/>
 						<int key="NSvFlags">292</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUILabel" id="282075896">
+							<object class="IBUILabel" id="100019921">
 								<reference key="NSNextResponder" ref="1045392532"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrameSize">{320, 1}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="974829934"/>
+								<reference key="NSNextKeyView" ref="283677914"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -1435,7 +1435,7 @@
 								<reference key="IBUIFont" ref="888483955"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
-							<object class="IBUILabel" id="974829934">
+							<object class="IBUILabel" id="283677914">
 								<reference key="NSNextResponder" ref="1045392532"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{0, 1}, {320, 1}}</string>
@@ -1463,7 +1463,7 @@
 								<string key="NSFrame">{{0, 2}, {159, 48}}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="505851615"/>
+								<reference key="NSNextKeyView" ref="663496471"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -1546,13 +1546,13 @@
 								<reference key="IBUIFontDescription" ref="704789771"/>
 								<reference key="IBUIFont" ref="366734182"/>
 							</object>
-							<object class="IBUILabel" id="505851615">
+							<object class="IBUILabel" id="663496471">
 								<reference key="NSNextResponder" ref="1045392532"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{159, 0}, {1, 50}}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="445669381"/>
+								<reference key="NSNextKeyView" ref="587859484"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
@@ -1571,7 +1571,7 @@
 								<reference key="IBUIFont" ref="888483955"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
-							<object class="IBUILabel" id="445669381">
+							<object class="IBUILabel" id="587859484">
 								<reference key="NSNextResponder" ref="1045392532"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{160, 1}, {1, 49}}</string>
@@ -1600,7 +1600,7 @@
 						<string key="NSFrame">{{0, 366}, {320, 50}}</string>
 						<reference key="NSSuperview" ref="504564550"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="282075896"/>
+						<reference key="NSNextKeyView" ref="100019921"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<reference key="IBUIBackgroundColor" ref="1067977386"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -3059,10 +3059,10 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="199574038"/>
 							<reference ref="590158960"/>
-							<reference ref="282075896"/>
-							<reference ref="974829934"/>
-							<reference ref="445669381"/>
-							<reference ref="505851615"/>
+							<reference ref="100019921"/>
+							<reference ref="283677914"/>
+							<reference ref="587859484"/>
+							<reference ref="663496471"/>
 						</array>
 						<reference key="parent" ref="504564550"/>
 					</object>
@@ -3831,22 +3831,22 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">214</int>
-						<reference key="object" ref="282075896"/>
+						<reference key="object" ref="100019921"/>
 						<reference key="parent" ref="1045392532"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">215</int>
-						<reference key="object" ref="974829934"/>
+						<reference key="object" ref="283677914"/>
 						<reference key="parent" ref="1045392532"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">216</int>
-						<reference key="object" ref="445669381"/>
+						<reference key="object" ref="587859484"/>
 						<reference key="parent" ref="1045392532"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">217</int>
-						<reference key="object" ref="505851615"/>
+						<reference key="object" ref="663496471"/>
 						<reference key="parent" ref="1045392532"/>
 					</object>
 				</array>
@@ -4003,30 +4003,18 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">AsyncImageView</string>
-					<string key="superclassName">UIImageView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/AsyncImageView.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">AvatarView</string>
-					<string key="superclassName">UIView</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="imageView">AsyncImageView</string>
-						<string key="sexView">UIImageView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="imageView">
-							<string key="name">imageView</string>
-							<string key="candidateClassName">AsyncImageView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="sexView">
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">sexView</string>
+						<string key="NS.object.0">UIImageView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">sexView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">sexView</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-					</dictionary>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AvatarView.h</string>
@@ -4034,7 +4022,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">CountView</string>
-					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="countLabel">UILabel</string>
 						<string key="logo">UIImageView</string>
@@ -4056,7 +4043,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MarrayReqView</string>
-					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="ageLabel">UILabel</string>
 						<string key="areaLabel">UILabel</string>
@@ -4103,7 +4089,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MoreUserInfoView</string>
-					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="aihaoLabel">UILabel</string>
 						<string key="attentionLabel">UILabel</string>
@@ -4150,7 +4135,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">ShowPhotoView</string>
-					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="containerView">UIView</string>
 						<string key="scrollView">UIScrollView</string>
@@ -4182,7 +4166,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">UserDetailViewController</string>
-					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addressLabel">UILabel</string>
 						<string key="areaLabel">UILabel</string>
@@ -4309,20 +4292,20 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="andriod_icon.png">{22, 25}</string>
-			<string key="bolg_icon.png">{18, 18}</string>
-			<string key="choice_icon.png">{18, 18}</string>
-			<string key="detail_icon.png">{18, 18}</string>
-			<string key="focus_icon.png">{18, 18}</string>
-			<string key="headbox.png">{100, 100}</string>
-			<string key="info_bg.png">{310, 42}</string>
-			<string key="intro_icon.png">{18, 18}</string>
-			<string key="more.png">{12, 13}</string>
-			<string key="msg_icon.png">{30, 30}</string>
-			<string key="qq_icon.png">{30, 30}</string>
-			<string key="tweibo_icon.png">{42, 42}</string>
-			<string key="weibo_icon.png">{42, 42}</string>
-			<string key="weixin_icon.png">{42, 42}</string>
+			<string key="andriod_icon.png">{16, 16}</string>
+			<string key="bolg_icon.png">{16, 16}</string>
+			<string key="choice_icon.png">{16, 16}</string>
+			<string key="detail_icon.png">{16, 16}</string>
+			<string key="focus_icon.png">{16, 16}</string>
+			<string key="headbox.png">{16, 16}</string>
+			<string key="info_bg.png">{16, 16}</string>
+			<string key="intro_icon.png">{16, 16}</string>
+			<string key="more.png">{16, 16}</string>
+			<string key="msg_icon.png">{16, 16}</string>
+			<string key="qq_icon.png">{16, 16}</string>
+			<string key="tweibo_icon.png">{16, 16}</string>
+			<string key="weibo_icon.png">{16, 16}</string>
+			<string key="weixin_icon.png">{16, 16}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

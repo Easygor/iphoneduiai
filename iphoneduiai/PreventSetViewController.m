@@ -9,9 +9,17 @@
 #import "PreventSetViewController.h"
 
 @interface PreventSetViewController ()
+@property (strong, nonatomic) HZTimePickerView *datePicker;
 @end
 
 @implementation PreventSetViewController
+@synthesize datePicker = _datePicker;
+
+- (void)dealloc
+{
+    [_datePicker release];
+    [super dealloc];
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -35,9 +43,6 @@
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
-    self.tableView.allowsSelection = NO;
-    
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -191,6 +196,13 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+    if ([indexPath section]==0) {
+        if ([indexPath row]==0) {
+            self.datePicker = [[[HZTimePickerView alloc] initWithDelegate:self] autorelease];
+            [self.datePicker showInView:self.view];
+        }
+    }
+
 }
 
 @end
