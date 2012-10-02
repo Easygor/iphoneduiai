@@ -64,6 +64,7 @@
 		61240BC816195FB7005C4E6C /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61240BC616195FB7005C4E6C /* SettingViewController.xib */; };
 		61240BDD1619C4A7005C4E6C /* MarrayReqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BDC1619C4A7005C4E6C /* MarrayReqView.m */; };
 		61240BE41619D8D6005C4E6C /* MoreUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BE31619D8D6005C4E6C /* MoreUserInfoView.m */; };
+		61240BF41619F1E8005C4E6C /* WeiyuWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */; };
 		61397A921607FC2A009FDAF9 /* degree.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61397A911607FC2A009FDAF9 /* degree.plist */; };
 		6141A6D215FB512400985257 /* tabbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6D015FB512400985257 /* tabbar-bg.png */; };
 		6141A6D315FB512400985257 /* tabbar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6D115FB512400985257 /* tabbar-bg@2x.png */; };
@@ -360,6 +361,9 @@
 		61240BDC1619C4A7005C4E6C /* MarrayReqView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MarrayReqView.m; sourceTree = "<group>"; };
 		61240BE21619D8D6005C4E6C /* MoreUserInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreUserInfoView.h; sourceTree = "<group>"; };
 		61240BE31619D8D6005C4E6C /* MoreUserInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreUserInfoView.m; sourceTree = "<group>"; };
+		61240BF21619F1E8005C4E6C /* WeiyuWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuWordCell.h; sourceTree = "<group>"; };
+		61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuWordCell.m; sourceTree = "<group>"; };
+		61240BF51619F7A5005C4E6C /* CustomCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellDelegate.h; sourceTree = "<group>"; };
 		61397A911607FC2A009FDAF9 /* degree.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = degree.plist; sourceTree = "<group>"; };
 		6141A6D015FB512400985257 /* tabbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-bg.png"; sourceTree = "<group>"; };
 		6141A6D115FB512400985257 /* tabbar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-bg@2x.png"; sourceTree = "<group>"; };
@@ -777,6 +781,9 @@
 				6153D9D81610B49200AC4A2D /* UserCardView.m */,
 				6153D9DA1610B61600AC4A2D /* UserCardTableCell.h */,
 				6153D9DB1610B61700AC4A2D /* UserCardTableCell.m */,
+				61240BF21619F1E8005C4E6C /* WeiyuWordCell.h */,
+				61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */,
+				61240BF51619F7A5005C4E6C /* CustomCellDelegate.h */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -1444,6 +1451,7 @@
 				5A62E8841619755100BD3958 /* RemindViewController.m in Sources */,
 				5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */,
 				5A62E88D1619DC4100BD3958 /* HZTimePickerView.m in Sources */,
+				61240BF41619F1E8005C4E6C /* WeiyuWordCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

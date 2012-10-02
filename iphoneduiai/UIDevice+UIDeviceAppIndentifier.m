@@ -22,7 +22,9 @@
         [defaults setObject: value forKey: name];
         [defaults synchronize];
     }
+    
     return value;
+    
 }
 
 @end

@@ -15,11 +15,13 @@
 #import "AvatarView.h"
 #import "MarrayReqView.h"
 #import "MoreUserInfoView.h"
+#import "WeiyuWordCell.h"
+#import "CustomBarButtonItem.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 
-@interface UserDetailViewController ()
+@interface UserDetailViewController () <CustomCellDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
@@ -46,6 +48,11 @@ static CGFloat dHeight2 = 0.0f;
 @property (retain, nonatomic) IBOutlet UIView *move2View;
 @property (retain, nonatomic) IBOutlet UIView *move1View;
 @property (retain, nonatomic) IBOutlet UILabel *dySexLabel;
+
+@property (strong, nonatomic) NSMutableArray *weiyus;
+@property (strong, nonatomic) UITableViewCell *moreCell;
+@property (nonatomic) NSInteger curPage, totalPage;
+@property (nonatomic) BOOL loading;
 
 @end
 
@@ -83,7 +90,22 @@ static CGFloat dHeight2 = 0.0f;
     [_move1View release];
     [_dySexLabel release];
     [_moreUserInfoView release];
+    [_weiyus release];
+    [_moreCell release];
     [super dealloc];
+}
+
+- (void)setWeiyus:(NSMutableArray *)weiyus
+{
+    if (![_weiyus isEqualToArray:weiyus]) {
+        if (self.curPage > 1) {
+            [_weiyus addObjectsFromArray:weiyus];
+        } else{
+            _weiyus = [[NSMutableArray alloc] initWithArray:weiyus];
+        }
+        
+        [self.tableView reloadData];
+    }
 }
 
 - (void)setMarrayReq:(NSDictionary *)marrayReq
@@ -127,6 +149,8 @@ static CGFloat dHeight2 = 0.0f;
         self.careerLabel.text = [userInfo objectForKey:@"industry"];
         
         self.dySexLabel.text = [NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]];
+        
+        self.navigationItem.title = [userInfo objectForKey:@"niname"];
     }
 }
 
@@ -173,12 +197,21 @@ static CGFloat dHeight2 = 0.0f;
     dHeight2 = self.moreUserInfoView.frame.size.height;
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.alwaysBounceVertical = YES;
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+}
+
+- (void)backAction
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self grabUserInfoDetailRequest];
+    [self grabMyWeiyuListReqeustWithPage:1];
 }
 
 #pragma mark - Table view data source
@@ -186,20 +219,98 @@ static CGFloat dHeight2 = 0.0f;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    if (self.totalPage <= self.curPage) {
+        return self.weiyus.count;
+    } else{
+        return self.weiyus.count + 1;
+    }
+
+}
+
+-(UITableViewCell *)createMoreCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"moretag"] autorelease];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
+	UILabel *labelNumber = [[UILabel alloc] initWithFrame:CGRectMake(110, 10, 100, 20)];
+    labelNumber.textAlignment = UITextAlignmentCenter;
+    
+    if (self.totalPage <= self.curPage){
+        labelNumber.text = @"";
+    } else {
+        labelNumber.text = @"更多";
+    }
+    
+	[labelNumber setTag:1];
+	labelNumber.backgroundColor = [UIColor clearColor];
+	labelNumber.font = [UIFont boldSystemFontOfSize:18];
+	[cell.contentView addSubview:labelNumber];
+	[labelNumber release];
+	
+    self.moreCell = cell;
+    
+    return self.moreCell;
+}
+
+- (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"weiyuWordCell";
+    WeiyuWordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:2];
+        cell.delegate = self;
+    }
+    
+    // Configure the cell...
+    cell.weiyu = [self.weiyus objectAtIndex:indexPath.row];
+    
+    return cell;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    if (indexPath.row == self.weiyus.count) {
+        return [self createMoreCell:tableView cellForRowAtIndexPath:indexPath];
+    }else {
+        return [self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == self.weiyus.count) {
+        
+        return 40.0f;
+    }else {
+        WeiyuWordCell *cell = (WeiyuWordCell *)[self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
+        return [cell requiredHeight];
+        
+    }
+}
+
+- (void)loadNextInfoList
+{
+    UILabel *label = (UILabel*)[self.moreCell.contentView viewWithTag:1];
+    label.text = @"正在加载..."; // bug no reload table not show it.
+    
+    if (!self.loading) {
+        [self grabMyWeiyuListReqeustWithPage:self.curPage+1];
+        self.loading = YES;
     }
     
-    // Configure the cell...
-    
-    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == self.weiyus.count) {
+        double delayInSeconds = 0.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self loadNextInfoList];
+        });
+    }
 }
 
 -(BOOL)hidesBottomBarWhenPushed
@@ -249,6 +360,33 @@ static CGFloat dHeight2 = 0.0f;
     }];
 }
 
+- (void)grabMyWeiyuListReqeustWithPage:(NSInteger)page
+{
+    NSMutableDictionary *dParams = [Utils queryParams];
+//    [dParams setObject:@"photo" forKey:@"a"];
+    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [dParams setObject:@"10" forKey:@"pagesize"];
+    
+    [[RKClient sharedClient] get:[@"/v" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+                NSLog(@"data: %@", data);
+                self.loading = NO;
+                self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                // 此行须在前两行后面
+                self.weiyus = [data objectForKey:@"data"];
+            }
+        }];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"error: %@", [error description]);
+        }];
+        
+    }];
+}
+
 #pragma mark - event actions
 
 - (IBAction)sendMsgAction
@@ -263,7 +401,7 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)moreDetailAction:(UIButton *)sender
 {
-    NSLog(@"more detail");
+
     if (sender.tag == 0) {
         UIView *view = sender.superview;
         [UIView animateWithDuration:0.3 animations:^{
@@ -323,7 +461,7 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)friendConditionAction:(UIButton *)sender
 {
-    NSLog(@"condition detail");
+
     if (sender.tag == 0) {  
         UIView *view = sender.superview;
         [UIView animateWithDuration:0.3 animations:^{
@@ -367,5 +505,13 @@ static CGFloat dHeight2 = 0.0f;
         sender.tag = 0;
     }
     
+}
+
+#pragma mark - cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
+    NSLog(@"status: %@", status);
 }
 @end

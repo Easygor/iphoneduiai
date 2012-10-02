@@ -10,4 +10,18 @@
 
 @implementation UserInfoTableCell
 
+- (void)dealloc
+{
+    [_avatarImageView release];
+    [_nameLabel release];
+    [_graphLabel release];
+    [_ageHightLabel release];
+    [_timeDistanceLabel release];
+    [_iconL release];
+    [_iconR release];
+    [_iconM release];
+    [_pictureNum release];
+    [super dealloc];
+}
+
 @end

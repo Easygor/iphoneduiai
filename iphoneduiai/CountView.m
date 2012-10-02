@@ -47,6 +47,7 @@
 
 - (void)doInitWork
 {
+    self.clipsToBounds = YES;
     self.layer.cornerRadius = 3.0f;
 }
 

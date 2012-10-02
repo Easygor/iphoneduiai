@@ -67,12 +67,12 @@
     [super viewDidLoad];
     self.waterTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.infoTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.leftBarButtonItem = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"换"
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"换"
                                                                                               target:self
-                                                                                              action:@selector(exchangeAction)];
-    self.navigationItem.rightBarButtonItem = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"搜索条件"
+                                                                                              action:@selector(exchangeAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"搜索条件"
                                                                                               target:self
-                                                                                              action:@selector(jumpAction)];
+                                                                                              action:@selector(jumpAction)] autorelease];
   
 }
 
@@ -171,8 +171,6 @@
 
 -(UITableViewCell *)createMoreCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    NSLog(@"i'm in");
 	
 	UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"moretag"] autorelease];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -213,7 +211,6 @@
 
         // do on here
         cell.nameLabel.text = [user objectForKey:@"niname"];
-        NSLog(@"photo address: %@", [user objectForKey:@"photo"]);
         [cell.avatarImageView loadImage:[user objectForKey:@"photo"]];
         cell.ageHightLabel.text = [NSString stringWithFormat:@"%@岁·%@cm", [user objectForKey:@"age"], [user objectForKey:@"height"]];
         NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
@@ -228,7 +225,6 @@
         NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*3, MIN(3, self.users.count-indexPath.row*3))]];
         static NSString *CellIdentifier = @"userCardCell";
         UserCardTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        
         // Configure the cell...
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
@@ -364,9 +360,7 @@
 - (void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
 {
     NSLog(@"text: %@", text);
-    if (index == 0) {
-        // default
-    }
+
     switch (index) {
         case 0:
             // go next
@@ -429,7 +423,6 @@
                   // 此行须在前两行后面
                 self.users = [data objectForKey:@"data"];
 
-                NSLog(@"total, page:%d,%d", self.totalPage, self.curPage);
             }
         }];
         [request setOnDidFailLoadWithError:^(NSError *error){

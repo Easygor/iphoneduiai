@@ -30,16 +30,17 @@
     [super viewDidLoad];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.leftBarButtonItem = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"
                                                                                               target:self
-                                                                                              action:@selector(settingAction)];
+                                                                                              action:@selector(settingAction)] autorelease];
 }
 
 - (void)settingAction
 {
     NSLog(@"jump to setting");
-    SettingViewController *settingViewController = [[SettingViewController alloc]initWithStyle:UITableViewStylePlain];
-     [self.navigationController pushViewController:settingViewController animated:YES];}
+    SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+     [self.navigationController pushViewController:settingViewController animated:YES];
+}
 
 - (void)viewDidUnload
 {

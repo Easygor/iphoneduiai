@@ -12,10 +12,23 @@
 @interface UserCardTableCell ()
 
 @property (strong, nonatomic) NSArray *arry;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel, *contentLabel;
 
 @end
 
 @implementation UserCardTableCell
+
+- (void)dealloc
+{
+    [_arry release];
+    [_timeLabel release];
+    [_contentLabel release];
+    [_leftCard release];
+    [_middleCard release];
+    [_rightCard release];
+    [_users release];
+    [super dealloc];
+}
 
 - (NSArray *)arry
 {

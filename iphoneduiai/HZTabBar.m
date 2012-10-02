@@ -105,7 +105,7 @@
         
         self.frame = backgroundImageView.frame;
         
-        self.buttons = [[NSMutableArray alloc] initWithCapacity:images.count];
+        self.buttons = [[[NSMutableArray alloc] initWithCapacity:images.count] autorelease];
         
         CGFloat offsetX = 0;
         

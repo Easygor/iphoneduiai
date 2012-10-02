@@ -11,8 +11,18 @@
 
 @implementation UserCardView
 
+
+- (void)dealloc
+{
+    [_imageView release];
+    [_picNumLabel release];
+    [_infoLabel release];
+    [super dealloc];
+}
+
 - (void)doRadius
 {
+    self.picNumLabel.clipsToBounds = YES;
     self.picNumLabel.layer.cornerRadius = 3;
 }
 
