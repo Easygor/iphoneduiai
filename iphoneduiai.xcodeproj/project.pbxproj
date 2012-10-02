@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A07DF6E161AAEF600A50998 /* HZTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A07DF6D161AAEF600A50998 /* HZTimePickerView.m */; };
 		5A376ED9161849F2003B2C14 /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED7161849F2003B2C14 /* line.png */; };
 		5A376EDA161849F2003B2C14 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED8161849F2003B2C14 /* line@2x.png */; };
 		5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */; };
@@ -15,7 +16,6 @@
 		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
 		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
-		5A62E88D1619DC4100BD3958 /* HZTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88C1619DC4100BD3958 /* HZTimePickerView.m */; };
 		6116856415FE1CF600D4A203 /* ShadowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116856315FE1CF600D4A203 /* ShadowLabel.m */; };
 		6116856815FE20C400D4A203 /* topbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116856615FE20C400D4A203 /* topbg.png */; };
 		6116856915FE20C400D4A203 /* topbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116856715FE20C400D4A203 /* topbg@2x.png */; };
@@ -295,6 +295,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A07DF6C161AAEF600A50998 /* HZTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTimePickerView.h; sourceTree = "<group>"; };
+		5A07DF6D161AAEF600A50998 /* HZTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimePickerView.m; sourceTree = "<group>"; };
 		5A376ED7161849F2003B2C14 /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		5A376ED8161849F2003B2C14 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusdetail_header_arrow@2x.png"; sourceTree = "<group>"; };
@@ -305,8 +307,6 @@
 		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
 		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
 		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
-		5A62E88B1619DC4100BD3958 /* HZTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTimePickerView.h; sourceTree = "<group>"; };
-		5A62E88C1619DC4100BD3958 /* HZTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimePickerView.m; sourceTree = "<group>"; };
 		6116856215FE1CF600D4A203 /* ShadowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowLabel.h; sourceTree = "<group>"; };
 		6116856315FE1CF600D4A203 /* ShadowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowLabel.m; sourceTree = "<group>"; };
 		6116856615FE20C400D4A203 /* topbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbg.png; sourceTree = "<group>"; };
@@ -686,13 +686,13 @@
 			children = (
 				61CB404D160386CF00888317 /* HZAreaPickerView.h */,
 				61CB404E160386CF00888317 /* HZAreaPickerView.m */,
+				61CB404F160386CF00888317 /* HZAreaPickerView.xib */,
 				61CB40D21604ADCD00888317 /* HZDatePickerView.h */,
 				61CB40D31604ADCD00888317 /* HZDatePickerView.m */,
+				5A07DF6C161AAEF600A50998 /* HZTimePickerView.h */,
+				5A07DF6D161AAEF600A50998 /* HZTimePickerView.m */,
 				61CB40D81604BD7300888317 /* HZDegreePickerView.h */,
 				61CB40D91604BD7400888317 /* HZDegreePickerView.m */,
-				5A62E88B1619DC4100BD3958 /* HZTimePickerView.h */,
-				5A62E88C1619DC4100BD3958 /* HZTimePickerView.m */,
-				61CB404F160386CF00888317 /* HZAreaPickerView.xib */,
 			);
 			name = "picker views";
 			sourceTree = "<group>";
@@ -1443,7 +1443,7 @@
 				61240BE41619D8D6005C4E6C /* MoreUserInfoView.m in Sources */,
 				5A62E8841619755100BD3958 /* RemindViewController.m in Sources */,
 				5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */,
-				5A62E88D1619DC4100BD3958 /* HZTimePickerView.m in Sources */,
+				5A07DF6E161AAEF600A50998 /* HZTimePickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

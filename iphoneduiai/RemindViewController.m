@@ -10,10 +10,18 @@
 
 @interface RemindViewController ()
 @property(nonatomic,retain)NSArray *dataArray;
+
 @end
 
 @implementation RemindViewController
-@synthesize dataArray;
+
+@synthesize dataArray=_dataArray;
+
+- (void)dealloc
+{
+    [_dataArray release];
+    [super dealloc];
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -37,8 +45,7 @@
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
-    self.tableView.allowsSelection = NO;
-    dataArray = [[NSArray alloc]initWithObjects:@"收到新私信",@"个人新动态提醒",@"有人赞了我", nil];
+    _dataArray = [[NSArray alloc]initWithObjects:@"收到新私信",@"个人新动态提醒",@"有人赞了我", nil];
     
     
 }
@@ -86,8 +93,7 @@
     [bgView addSubview:bigLabel];
     bigLabel.text = [self.dataArray objectAtIndex:[indexPath row]];
 
-    UISwitch *mySwitch = [[UISwitch alloc]init];
-    cell.accessoryView = mySwitch;
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -160,6 +166,7 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
-}
+    
+    }
 
 @end

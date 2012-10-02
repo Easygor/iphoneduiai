@@ -86,8 +86,7 @@
     NSLog(@"hahaha");
   
     if([self.delegate respondsToSelector:@selector(dgreePickerDidChangeStatus:withNum:withDesc:)]) {
-        [self.delegate dgreePickerDidChangeStatus:self withNum:[self.degrees objectForKey:[self.levels objectAtIndex:row]]
-                                         withDesc:[self.levels objectAtIndex:row]];
+        [self.delegate dgreePickerDidChangeStatus:self withNum:[self.degrees objectForKey:[self.levels objectAtIndex:row]] withDesc:[self.levels objectAtIndex:row]];
     }
     
 }
