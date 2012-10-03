@@ -364,6 +364,7 @@ static CGFloat dHeight2 = 0.0f;
 {
     NSMutableDictionary *dParams = [Utils queryParams];
 //    [dParams setObject:@"photo" forKey:@"a"];
+    [dParams setObject:@"myv" forKey:@"a"];
     [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [dParams setObject:@"10" forKey:@"pagesize"];
     
@@ -371,12 +372,14 @@ static CGFloat dHeight2 = 0.0f;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"data: %@", data);
-                self.loading = NO;
-                self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
-                self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
-                // 此行须在前两行后面
-                self.weiyus = [data objectForKey:@"data"];
+                NSLog(@"my weiyu data: %@", data);
+                if (![[data objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+                    self.loading = NO;
+                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                    // 此行须在前两行后面
+                    self.weiyus = [data objectForKey:@"data"];
+                }
             }
         }];
         

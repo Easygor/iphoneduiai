@@ -7,31 +7,111 @@
 //
 
 #import "WeiTalkListViewController.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
+#import "WeiyuWordCell.h"
+#import "CustomBarButtonItem.h"
+#import "EGORefreshTableHeaderView.h"
+#import "AddWeiyuViewController.h"
 
-@interface WeiTalkListViewController ()
+
+@interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate>
+{
+    BOOL reloading;
+}
+
+@property (strong, nonatomic) NSMutableArray *weiyus;
+@property (strong, nonatomic) UITableViewCell *moreCell;
+@property (nonatomic) NSInteger curPage, totalPage;
+@property (nonatomic) BOOL loading;
+@property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
+@property (nonatomic) BOOL onlyPhoto;
 
 @end
 
 @implementation WeiTalkListViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)dealloc
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    self.refreshHeaderView.delegate = nil;
+    [_weiyus release];
+    [_moreCell release];
+    [_refreshHeaderView release];
+    [super dealloc];
 }
+
+- (void)setWeiyus:(NSMutableArray *)weiyus
+{
+    if (![_weiyus isEqualToArray:weiyus]) {
+        if (self.curPage > 1) {
+            [_weiyus addObjectsFromArray:weiyus];
+        } else{
+            _weiyus = [[NSMutableArray alloc] initWithArray:weiyus];
+        }
+        
+        [self.tableView reloadData];
+    }
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"图"
+                                                                                               target:self
+                                                                                               action:@selector(exchangeAction:)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"添加"
+                                                                                               target:self
+                                                                                               action:@selector(addAction)] autorelease];
+    
+    if (self.refreshHeaderView == nil) {
+		
+		self.refreshHeaderView = [[[EGORefreshTableHeaderView alloc]
+                                  initWithFrame:CGRectMake(0.0f,
+                                                           0.0f - self.tableView.bounds.size.height,
+                                                           self.view.frame.size.width,
+                                                           self.tableView.bounds.size.height)] autorelease];
+		self.refreshHeaderView.delegate = self;
+        self.refreshHeaderView.backgroundColor = [UIColor clearColor];
+        self.refreshHeaderView.opaque = YES;
+		[self.tableView addSubview:self.refreshHeaderView];
+		
+	}
+    
+	//  update the last update date
+	[self.refreshHeaderView refreshLastUpdatedDate];
+    
+}
+
+- (void)exchangeAction:(CustomBarButtonItem*)item
+{
+    // here dou
+    if (self.onlyPhoto) {
+        self.onlyPhoto = NO;
+        self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"图"
+                                                                                                   target:self
+                                                                                                   action:@selector(exchangeAction:)] autorelease];
+    } else{
+        self.onlyPhoto = YES;
+        self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"全"
+                                                                                                   target:self
+                                                                                                   action:@selector(exchangeAction:)] autorelease];
+    }
+    
+    [self reloadList];
+}
+
+- (void)addAction
+{
+    // here dou
+    AddWeiyuViewController *awvc = [[AddWeiyuViewController alloc] initWithNibName:@"AddWeiyuViewController" bundle:nil];
+    [self.navigationController pushViewController:awvc animated:YES];
+    [awvc release];
+    
 }
 
 - (void)viewDidUnload
@@ -41,88 +121,263 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)viewDidAppear:(BOOL)animated
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    [super viewDidAppear:animated];
+    if (self.weiyus.count <= 0) {
+        [self reloadList];
+    }
+    
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    if (self.totalPage <= self.curPage) {
+        return self.weiyus.count;
+    } else{
+        return self.weiyus.count + 1;
+    }
+    
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+-(UITableViewCell *)createMoreCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"moretag"] autorelease];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
+	UILabel *labelNumber = [[UILabel alloc] initWithFrame:CGRectMake(110, 10, 100, 20)];
+    labelNumber.textAlignment = UITextAlignmentCenter;
+    
+    if (self.totalPage <= self.curPage){
+        labelNumber.text = @"";
+    } else {
+        labelNumber.text = @"更多";
+    }
+    
+	[labelNumber setTag:1];
+	labelNumber.backgroundColor = [UIColor clearColor];
+	labelNumber.font = [UIFont boldSystemFontOfSize:18];
+	[cell.contentView addSubview:labelNumber];
+	[labelNumber release];
+	
+    self.moreCell = cell;
+    
+    return self.moreCell;
+}
+
+- (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"weiyuWordCell";
+    WeiyuWordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:2];
+        cell.delegate = self;
+    }
     
     // Configure the cell...
+    cell.weiyu = [self.weiyus objectAtIndex:indexPath.row];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (indexPath.row == self.weiyus.count) {
+        return [self createMoreCell:tableView cellForRowAtIndexPath:indexPath];
+    }else {
+        return [self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    if (indexPath.row == self.weiyus.count) {
+        
+        return 40.0f;
+    }else {
+        WeiyuWordCell *cell = (WeiyuWordCell *)[self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
+        return [cell requiredHeight];
+        
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (void)loadNextInfoList
 {
+    UILabel *label = (UILabel*)[self.moreCell.contentView viewWithTag:1];
+    label.text = @"正在加载..."; // bug no reload table not show it.
+    
+    if (!self.loading) {
+        [self grabWeiyuListReqeustWithPage:self.curPage+1];
+        self.loading = YES;
+    }
+    
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+    if (indexPath.row == self.weiyus.count) {
+        double delayInSeconds = 0.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self loadNextInfoList];
+        });
+    }
 }
-*/
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 20)] autorelease];
+    view.backgroundColor = [UIColor clearColor];
+    view.opaque = YES;
+    
+    return view;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+ 
+    self.tableView.sectionHeaderHeight = 20.0f;
+    return 20.0f;
+    
+}
+
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+  
+    CGFloat sectionHeaderHeight = self.tableView.sectionHeaderHeight; // note: the height is static.
+    
+    if (scrollView.contentOffset.y <= sectionHeaderHeight &&
+        scrollView.contentOffset.y>=0) {
+        
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        
+    } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+        
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+        
+    }
+    [self.refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    
+    [self.refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource
+{
+    
+    //  should be calling your tableviews data source model to reload
+
+    [self grabWeiyuListReqeustWithPage:1];
+    
+    reloading = YES;
+    
+}
+
+- (void)doneLoadingTableViewData
+{
+    
+    //  model should call this when its done loading
+    reloading = NO;
+    [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+    
+}
+
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    
+    [self reloadTableViewDataSource];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self doneLoadingTableViewData];
+    });
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    
+    return reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view
+{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
+}
+
+-(void)reloadList
+{
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        
+        self.tableView.contentOffset = CGPointMake(0, -65);
+        
+    } completion:^(BOOL finished) {
+        
+        [self.refreshHeaderView egoRefreshScrollViewDidEndDragging:self.tableView];
+        
+    }];
+}
+
+
+#pragma mark requests
+- (void)grabWeiyuListReqeustWithPage:(NSInteger)page
+{
+    NSMutableDictionary *dParams = [Utils queryParams];
+    
+    if (self.onlyPhoto) {
+        [dParams setObject:@"photo" forKey:@"a"];
+    }
+    
+    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [dParams setObject:@"20" forKey:@"pagesize"];
+    
+    [[RKClient sharedClient] get:[@"/v" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+//                NSLog(@"data: %@", data);
+                self.loading = NO;
+                self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                // 此行须在前两行后面
+                self.weiyus = [data objectForKey:@"data"];
+                [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+            }
+        }];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"error: %@", [error description]);
+        }];
+        
+    }];
+}
+
+
+#pragma mark - cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
+    NSLog(@"status: %@", status);
 }
 
 @end

@@ -12,6 +12,9 @@
 @interface AsyncImageView : UIImageView
 
 - (void) loadImage:(NSString*)imageURL;
+- (void) loadImage:(NSString*)imageURL withBlock:(void(^)(void))block;
 - (void) loadImage:(NSString*)imageURL withPlaceholdImage:(UIImage*)image;
+- (void) loadImage:(NSString*)imageURL withPlaceholdImage:(UIImage *)placeholdImage withBlock:(void(^)(void))block;
+
 
 @end

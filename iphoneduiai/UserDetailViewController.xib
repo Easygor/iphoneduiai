@@ -1511,7 +1511,6 @@
 								<string key="NSFrame">{{161, 2}, {159, 50}}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -2016,7 +2015,6 @@
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="439359407"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -2473,7 +2471,6 @@
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="388476768"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -3998,23 +3995,35 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">217</int>
+			<int key="maxID">218</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">AvatarView</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">sexView</string>
-						<string key="NS.object.0">UIImageView</string>
+					<string key="className">AsyncImageView</string>
+					<string key="superclassName">UIImageView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AsyncImageView.h</string>
 					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">sexView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">AvatarView</string>
+					<string key="superclassName">UIView</string>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="imageView">AsyncImageView</string>
+						<string key="sexView">UIImageView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="imageView">
+							<string key="name">imageView</string>
+							<string key="candidateClassName">AsyncImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sexView">
 							<string key="name">sexView</string>
 							<string key="candidateClassName">UIImageView</string>
 						</object>
-					</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/AvatarView.h</string>
@@ -4022,6 +4031,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">CountView</string>
+					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="countLabel">UILabel</string>
 						<string key="logo">UIImageView</string>
@@ -4043,6 +4053,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MarrayReqView</string>
+					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="ageLabel">UILabel</string>
 						<string key="areaLabel">UILabel</string>
@@ -4089,6 +4100,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">MoreUserInfoView</string>
+					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="aihaoLabel">UILabel</string>
 						<string key="attentionLabel">UILabel</string>
@@ -4135,6 +4147,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">ShowPhotoView</string>
+					<string key="superclassName">UIView</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="containerView">UIView</string>
 						<string key="scrollView">UIScrollView</string>
@@ -4166,6 +4179,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">UserDetailViewController</string>
+					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addressLabel">UILabel</string>
 						<string key="areaLabel">UILabel</string>
@@ -4292,20 +4306,20 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="andriod_icon.png">{16, 16}</string>
-			<string key="bolg_icon.png">{16, 16}</string>
-			<string key="choice_icon.png">{16, 16}</string>
-			<string key="detail_icon.png">{16, 16}</string>
-			<string key="focus_icon.png">{16, 16}</string>
-			<string key="headbox.png">{16, 16}</string>
-			<string key="info_bg.png">{16, 16}</string>
-			<string key="intro_icon.png">{16, 16}</string>
-			<string key="more.png">{16, 16}</string>
-			<string key="msg_icon.png">{16, 16}</string>
-			<string key="qq_icon.png">{16, 16}</string>
-			<string key="tweibo_icon.png">{16, 16}</string>
-			<string key="weibo_icon.png">{16, 16}</string>
-			<string key="weixin_icon.png">{16, 16}</string>
+			<string key="andriod_icon.png">{22, 25}</string>
+			<string key="bolg_icon.png">{18, 18}</string>
+			<string key="choice_icon.png">{18, 18}</string>
+			<string key="detail_icon.png">{18, 18}</string>
+			<string key="focus_icon.png">{18, 18}</string>
+			<string key="headbox.png">{100, 100}</string>
+			<string key="info_bg.png">{310, 42}</string>
+			<string key="intro_icon.png">{18, 18}</string>
+			<string key="more.png">{12, 13}</string>
+			<string key="msg_icon.png">{30, 30}</string>
+			<string key="qq_icon.png">{30, 30}</string>
+			<string key="tweibo_icon.png">{42, 42}</string>
+			<string key="weibo_icon.png">{42, 42}</string>
+			<string key="weixin_icon.png">{42, 42}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

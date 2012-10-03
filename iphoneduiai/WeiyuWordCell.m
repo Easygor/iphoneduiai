@@ -7,11 +7,12 @@
 //
 
 #import "WeiyuWordCell.h"
+#import "FullyLoaded.h"
 
 #define DW 150.0f
 #define DH 112.0f
 
-@interface WeiyuWordCell ()
+@interface WeiyuWordCell () <UIScrollViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *timeIconView;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
@@ -154,6 +155,9 @@
             if (photos.count == 1) {
                 NSDictionary *d = [photos objectAtIndex:0];
                 AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 10, DW, DH)] autorelease];
+                [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
+//                imView.tag = 0;
+                imView.userInteractionEnabled = YES;
                 [imView loadImage:[d objectForKey:@"icon"]];
                 [self.mainView addSubview:imView];
                 
@@ -174,13 +178,16 @@
                 
                 for (int i=0; i<rows; i++) {
                     for (int j=0; j<columns; j++) {
-                        
-                        if (i*columns+j >= photos.count) {
+                        NSInteger index = i*columns+j;
+                        if (index >= photos.count) {
                             break;
                         }
                         
-                        NSDictionary *d = [photos objectAtIndex:i*columns+j];
+                        NSDictionary *d = [photos objectAtIndex:index];
                         AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0 + j*(w+2), 10 + i*(h+2), w, h)] autorelease];
+                        [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
+                        imView.userInteractionEnabled = YES;
+//                        imView.tag = index;
                         [imView loadImage:[d objectForKey:@"icon"]];
                         [self.mainView addSubview:imView];
                     }
@@ -205,6 +212,82 @@
         }
         
         [self resizeFrameWithHeight:dHeight+addressH+10];
+    }
+}
+
+- (void)tapImageGesture:(UITapGestureRecognizer*)gesture
+{
+
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        
+        NSInteger index = [self.mainView.subviews indexOfObject:gesture.view];
+        UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
+        view.backgroundColor = [UIColor blackColor];
+        view.maximumZoomScale = 5.0;
+        view.zoomScale = 1.0;
+        view.minimumZoomScale = 1.0;
+        view.showsHorizontalScrollIndicator = NO;
+        view.showsVerticalScrollIndicator = NO;
+        view.delegate = self;
+        view.tag = index+100;
+        UITapGestureRecognizer *oneTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
+        oneTap.numberOfTapsRequired = 1;
+        oneTap.numberOfTouchesRequired = 1;
+        [view addGestureRecognizer:oneTap];
+        
+        CGRect viewFrame = [self.mainView convertRect:gesture.view.frame toView:self.window];
+
+        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
+        NSDictionary *d = [self.photos objectAtIndex:index];
+        
+        imView.tag = index;
+        
+        [view addSubview:imView];
+        [self.window addSubview:view];
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+        CGSize size = view.frame.size;
+        [imView loadImage:[d objectForKey:@"url"]
+       withPlaceholdImage:[[FullyLoaded sharedFullyLoaded] imageForURL:[d objectForKey:@"icon"]] withBlock:^{
+           [UIView animateWithDuration:0.3 animations:^{
+               CGSize imgsize = imView.image.size;
+               CGFloat imgWidth = MIN(imgsize.width, size.width);
+               CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
+               
+               imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
+           }];
+       }];
+
+        
+    }
+}
+
+- (void)tapContainerView:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        if (gesture.numberOfTapsRequired == 1) {
+            UIView *view = [self.mainView.subviews objectAtIndex:gesture.view.tag-100];
+            CGRect viewFrame = [self.mainView convertRect:view.frame toView:gesture.view];
+            
+            AsyncImageView *imView = (AsyncImageView*)[gesture.view viewWithTag:gesture.view.tag-100];
+            
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            gesture.view.backgroundColor = [UIColor clearColor];
+            [UIView animateWithDuration:0.3
+                             animations:^{
+                                 imView.frame = viewFrame;
+                             }
+                             completion:^(BOOL finshed){
+                                 [gesture.view removeFromSuperview];
+                                 
+                             }];
+        } else{
+            UIScrollView *view = (UIScrollView*)gesture.view;
+            view.zoomScale *= 2;
+        }
+
     }
 }
 
@@ -262,7 +345,6 @@
 
 - (IBAction)plusBtnAction:(UIButton*)sender
 {
-
     if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
         [self.delegate didChangeStatus:self toStatus:@"plus"];
     }
@@ -282,6 +364,14 @@
     if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
         [self.delegate didChangeStatus:self toStatus:@"comment"];
     }
+}
+
+#pragma mark - scroll view delegate
+- (UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    UIView *view = [scrollView viewWithTag:scrollView.tag-100];
+
+    return view;
 }
 
 @end

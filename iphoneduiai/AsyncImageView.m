@@ -11,17 +11,27 @@
 #import <RestKit/RKClient.h>
 
 @interface AsyncImageView ()
-- (void) downloadImage:(NSString*)imageURL;
 @end
 
 @implementation AsyncImageView
 
-
-- (void) loadImage:(NSString*)imageURL {
-    [self loadImage:imageURL withPlaceholdImage:nil];
+- (void) loadImage:(NSString*)imageURL
+{
+    [self loadImage:imageURL withBlock:nil];
 }
 
-- (void) loadImage:(NSString*)imageURL withPlaceholdImage:(UIImage *)placeholdImage {
+- (void) loadImage:(NSString*)imageURL withBlock:(void(^)(void))block
+{
+    [self loadImage:imageURL withPlaceholdImage:nil withBlock:block];
+}
+
+- (void) loadImage:(NSString*)imageURL withPlaceholdImage:(UIImage *)placeholdImage
+{
+    [self loadImage:imageURL withPlaceholdImage:placeholdImage withBlock:nil];
+}
+
+- (void) loadImage:(NSString*)imageURL withPlaceholdImage:(UIImage *)placeholdImage withBlock:(void(^)(void))block
+{
     self.image = placeholdImage;
     
     /*
@@ -36,16 +46,22 @@
     dispatch_async(queue, ^{
         UIImage *image = [[FullyLoaded sharedFullyLoaded] imageForURL:imageURL];
         dispatch_sync(dispatch_get_main_queue(), ^{
-            if (image) 
+            if (image) {
                 self.image = image;
-            else
-                [self downloadImage:imageURL];
+                if (block) {
+                    block();
+                }
+            } else{
+                [self downloadImage:imageURL withBlock:block];
+            }
+
         });
     });
 
 }
 
-- (void) downloadImage:(NSString *)imageURL {
+- (void) downloadImage:(NSString *)imageURL withBlock:(void(^)(void))block
+{
 	NSString *newImageURL = [imageURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *downloadDestinationPath = [[FullyLoaded sharedFullyLoaded] pathForImageURL:imageURL];
     //    NSLog(@"image path:%@", downloadDestinationPath);
@@ -64,6 +80,9 @@
                     UIImage *image = [[FullyLoaded sharedFullyLoaded] imageForURL:imageURL];
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         self.image = image;
+                        if (block) {
+                            block();
+                        }
                     });
                 });
             }

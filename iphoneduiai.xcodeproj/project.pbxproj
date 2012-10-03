@@ -16,6 +16,8 @@
 		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
 		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
+		610AE63B161C2A9E001E6217 /* EGORefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 610AE638161C2A9E001E6217 /* EGORefresh.bundle */; };
+		610AE63C161C2A9E001E6217 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 610AE63A161C2A9E001E6217 /* EGORefreshTableHeaderView.m */; };
 		6116856415FE1CF600D4A203 /* ShadowLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116856315FE1CF600D4A203 /* ShadowLabel.m */; };
 		6116856815FE20C400D4A203 /* topbg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116856615FE20C400D4A203 /* topbg.png */; };
 		6116856915FE20C400D4A203 /* topbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116856715FE20C400D4A203 /* topbg@2x.png */; };
@@ -89,6 +91,9 @@
 		6141A71615FB779200985257 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71415FB779100985257 /* LoginViewController.xib */; };
 		6141A71D15FB800700985257 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71B15FB800700985257 /* bg.png */; };
 		6141A71E15FB800700985257 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71C15FB800700985257 /* bg@2x.png */; };
+		614CAA51161C579C00C86D8F /* AddWeiyuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */; };
+		614CAA52161C579C00C86D8F /* AddWeiyuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */; };
+		614CAA59161C7CAD00C86D8F /* DropMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 614CAA58161C7CAD00C86D8F /* DropMenuView.m */; };
 		6153D9AA16104E3100AC4A2D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6153D9A916104E3100AC4A2D /* Default-568h@2x.png */; };
 		6153D9BE1610941900AC4A2D /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6153D9BD1610941900AC4A2D /* CustomCell.xib */; };
 		6153D9C1161099BC00AC4A2D /* UserInfoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */; };
@@ -308,6 +313,9 @@
 		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
 		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
 		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
+		610AE638161C2A9E001E6217 /* EGORefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EGORefresh.bundle; sourceTree = "<group>"; };
+		610AE639161C2A9E001E6217 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		610AE63A161C2A9E001E6217 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
 		6116856215FE1CF600D4A203 /* ShadowLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowLabel.h; sourceTree = "<group>"; };
 		6116856315FE1CF600D4A203 /* ShadowLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowLabel.m; sourceTree = "<group>"; };
 		6116856615FE20C400D4A203 /* topbg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topbg.png; sourceTree = "<group>"; };
@@ -399,6 +407,11 @@
 		6141A71415FB779100985257 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		6141A71B15FB800700985257 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6141A71C15FB800700985257 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		614CAA4E161C579B00C86D8F /* AddWeiyuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWeiyuViewController.h; sourceTree = "<group>"; };
+		614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddWeiyuViewController.m; sourceTree = "<group>"; };
+		614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddWeiyuViewController.xib; sourceTree = "<group>"; };
+		614CAA57161C7CAD00C86D8F /* DropMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropMenuView.h; sourceTree = "<group>"; };
+		614CAA58161C7CAD00C86D8F /* DropMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropMenuView.m; sourceTree = "<group>"; };
 		6153D9A916104E3100AC4A2D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6153D9BD1610941900AC4A2D /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		6153D9BF161099BC00AC4A2D /* UserInfoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoTableCell.h; sourceTree = "<group>"; };
@@ -643,6 +656,16 @@
 			name = "New Group1";
 			sourceTree = "<group>";
 		};
+		610AE637161C2A9E001E6217 /* EGORefresh */ = {
+			isa = PBXGroup;
+			children = (
+				610AE638161C2A9E001E6217 /* EGORefresh.bundle */,
+				610AE639161C2A9E001E6217 /* EGORefreshTableHeaderView.h */,
+				610AE63A161C2A9E001E6217 /* EGORefreshTableHeaderView.m */,
+			);
+			path = EGORefresh;
+			sourceTree = "<group>";
+		};
 		611CE70415FDE82B0066EEA2 /* login & regigster images */ = {
 			isa = PBXGroup;
 			children = (
@@ -704,6 +727,7 @@
 		6141A6CE15FB511000985257 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				610AE637161C2A9E001E6217 /* EGORefresh */,
 				61CB3F5E16033B1100888317 /* RegexKitLite.m */,
 				61CB3F5F16033B1100888317 /* RegexKitLite.h */,
 				61CB3F361602BA3F00888317 /* Utils.h */,
@@ -912,6 +936,19 @@
 			name = "Profile images";
 			sourceTree = "<group>";
 		};
+		61729F1E161C2577004E3DA0 /* wei talk */ = {
+			isa = PBXGroup;
+			children = (
+				6141A70315FB730B00985257 /* WeiTalkListViewController.h */,
+				6141A70415FB730B00985257 /* WeiTalkListViewController.m */,
+				6141A70515FB730B00985257 /* WeiTalkListViewController.xib */,
+				614CAA4E161C579B00C86D8F /* AddWeiyuViewController.h */,
+				614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */,
+				614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */,
+			);
+			name = "wei talk";
+			sourceTree = "<group>";
+		};
 		6199D66415FEA6AD00BEBD00 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
@@ -1005,15 +1042,13 @@
 				61BB2B7E15FA158700AA82CC /* Views */,
 				61AA9C0C15FBCE3F009D67AD /* login & register */,
 				6159B1261615703100705835 /* Search */,
+				61729F1E161C2577004E3DA0 /* wei talk */,
 				61BB2B6815F9DB0800AA82CC /* AppDelegate.h */,
 				61BB2B6915F9DB0800AA82CC /* AppDelegate.m */,
 				6141A6ED15FB6D9800985257 /* MainWindow.xib */,
 				6141A6FE15FB72E200985257 /* MessageListViewController.h */,
 				6141A6FF15FB72E200985257 /* MessageListViewController.m */,
 				6141A70015FB72E300985257 /* MessageListViewController.xib */,
-				6141A70315FB730B00985257 /* WeiTalkListViewController.h */,
-				6141A70415FB730B00985257 /* WeiTalkListViewController.m */,
-				6141A70515FB730B00985257 /* WeiTalkListViewController.xib */,
 				6141A70815FB732D00985257 /* HonorListViewController.h */,
 				6141A70915FB732D00985257 /* HonorListViewController.m */,
 				6141A70A15FB732D00985257 /* HonorListViewController.xib */,
@@ -1068,6 +1103,8 @@
 				6153D9C9161099FC00AC4A2D /* Async Images */,
 				6153D9BC161093F200AC4A2D /* Custom Cell */,
 				61397A901607F95D009FDAF9 /* picker views */,
+				614CAA57161C7CAD00C86D8F /* DropMenuView.h */,
+				614CAA58161C7CAD00C86D8F /* DropMenuView.m */,
 				6141A6DB15FB691A00985257 /* CustomBarButtonItem.h */,
 				6141A6DC15FB691A00985257 /* CustomBarButtonItem.m */,
 				6141A6DD15FB691A00985257 /* CustomTabBarController.h */,
@@ -1389,6 +1426,8 @@
 				61240BC816195FB7005C4E6C /* SettingViewController.xib in Resources */,
 				5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */,
 				5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */,
+				610AE63B161C2A9E001E6217 /* EGORefresh.bundle in Resources */,
+				614CAA52161C579C00C86D8F /* AddWeiyuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,6 +1491,9 @@
 				5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */,
 				61240BF41619F1E8005C4E6C /* WeiyuWordCell.m in Sources */,
 				5A07DF6E161AAEF600A50998 /* HZTimePickerView.m in Sources */,
+				610AE63C161C2A9E001E6217 /* EGORefreshTableHeaderView.m in Sources */,
+				614CAA51161C579C00C86D8F /* AddWeiyuViewController.m in Sources */,
+				614CAA59161C7CAD00C86D8F /* DropMenuView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
