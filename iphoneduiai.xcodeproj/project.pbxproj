@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5A07DF6E161AAEF600A50998 /* HZTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A07DF6D161AAEF600A50998 /* HZTimePickerView.m */; };
+		5A07DF91161B1E7600A50998 /* SeniorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A07DF8F161B1E7600A50998 /* SeniorViewController.m */; };
+		5A07DF92161B1E7600A50998 /* SeniorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A07DF90161B1E7600A50998 /* SeniorViewController.xib */; };
+		5A07DF94161B201D00A50998 /* seniorEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A07DF93161B201D00A50998 /* seniorEntries.plist */; };
 		5A376ED9161849F2003B2C14 /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED7161849F2003B2C14 /* line.png */; };
 		5A376EDA161849F2003B2C14 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED8161849F2003B2C14 /* line@2x.png */; };
 		5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */; };
@@ -303,6 +306,10 @@
 /* Begin PBXFileReference section */
 		5A07DF6C161AAEF600A50998 /* HZTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTimePickerView.h; sourceTree = "<group>"; };
 		5A07DF6D161AAEF600A50998 /* HZTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimePickerView.m; sourceTree = "<group>"; };
+		5A07DF8E161B1E7600A50998 /* SeniorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeniorViewController.h; sourceTree = "<group>"; };
+		5A07DF8F161B1E7600A50998 /* SeniorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeniorViewController.m; sourceTree = "<group>"; };
+		5A07DF90161B1E7600A50998 /* SeniorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeniorViewController.xib; sourceTree = "<group>"; };
+		5A07DF93161B201D00A50998 /* seniorEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = seniorEntries.plist; sourceTree = "<group>"; };
 		5A376ED7161849F2003B2C14 /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		5A376ED8161849F2003B2C14 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusdetail_header_arrow@2x.png"; sourceTree = "<group>"; };
@@ -1058,6 +1065,9 @@
 				61240BC416195FB7005C4E6C /* SettingViewController.h */,
 				61240BC516195FB7005C4E6C /* SettingViewController.m */,
 				61240BC616195FB7005C4E6C /* SettingViewController.xib */,
+				5A07DF8E161B1E7600A50998 /* SeniorViewController.h */,
+				5A07DF8F161B1E7600A50998 /* SeniorViewController.m */,
+				5A07DF90161B1E7600A50998 /* SeniorViewController.xib */,
 				5A62E8811619755100BD3958 /* RemindViewController.h */,
 				5A62E8821619755100BD3958 /* RemindViewController.m */,
 				5A62E8831619755100BD3958 /* RemindViewController.xib */,
@@ -1092,6 +1102,7 @@
 				61BB2B6715F9DB0800AA82CC /* iphoneduiai-Prefix.pch */,
 				619CFAE515FCA4E0002A122D /* devices.plist */,
 				6159B1FB16193D0E00705835 /* settingEntries.plist */,
+				5A07DF93161B201D00A50998 /* seniorEntries.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1428,6 +1439,8 @@
 				5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */,
 				610AE63B161C2A9E001E6217 /* EGORefresh.bundle in Resources */,
 				614CAA52161C579C00C86D8F /* AddWeiyuViewController.xib in Resources */,
+				5A07DF92161B1E7600A50998 /* SeniorViewController.xib in Resources */,
+				5A07DF94161B201D00A50998 /* seniorEntries.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1494,6 +1507,7 @@
 				610AE63C161C2A9E001E6217 /* EGORefreshTableHeaderView.m in Sources */,
 				614CAA51161C579C00C86D8F /* AddWeiyuViewController.m in Sources */,
 				614CAA59161C7CAD00C86D8F /* DropMenuView.m in Sources */,
+				5A07DF91161B1E7600A50998 /* SeniorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

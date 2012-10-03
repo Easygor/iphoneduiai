@@ -80,11 +80,11 @@
     }
     cell.contentView.backgroundColor = [UIColor clearColor];
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
+    UIView *bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)]autorelease];
     bgView.backgroundColor  = [UIColor whiteColor];
     [cell.contentView addSubview:bgView];
     
-    UIImageView  *lineView= [[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)];
+    UIImageView  *lineView= [[[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)]autorelease];
     lineView.image =  [UIImage imageNamed:@"line.png"];
     [bgView addSubview:lineView];
 
@@ -104,8 +104,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* header= [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 35)];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(33, 13, 320, 15)];
+    UIView* header= [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 35)]autorelease];
+    UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(33, 13, 320, 15)]autorelease];
     label.text = @"当以下情况发生时,提醒我";
     label.font = [UIFont systemFontOfSize:13];
     label.textColor = RGBCOLOR(130, 130, 130);
