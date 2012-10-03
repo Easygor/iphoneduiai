@@ -128,10 +128,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-     UIView* header= [[UIView alloc]initWithFrame:CGRectZero];
+     UIView* header= [[[UIView alloc]initWithFrame:CGRectZero]autorelease]
+    ;
     if (section==0) {
         header.frame = CGRectMake(0, 0, 320, 35);
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(33, 13, 320, 15)];
+        UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(33, 13, 320, 15)]autorelease];
         label.text = @"设置提醒接受时段";
         label.font = [UIFont systemFontOfSize:13];
         label.textColor = RGBCOLOR(130, 130, 130);
@@ -144,45 +145,6 @@
     }
         return header;
 }
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
 
 #pragma mark - Table view delegate
 

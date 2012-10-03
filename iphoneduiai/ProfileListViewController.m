@@ -9,7 +9,7 @@
 #import "ProfileListViewController.h"
 #import "CustomBarButtonItem.h"
 #import "SettingViewController.h"
-
+#import "SeniorViewController.h"
 @interface ProfileListViewController ()
 
 @end
@@ -30,16 +30,16 @@
     [super viewDidLoad];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"
-                                                                                              target:self
-                                                                                              action:@selector(settingAction)] autorelease];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"target:self action:@selector(settingAction)] autorelease];
 }
 
 - (void)settingAction
 {
     NSLog(@"jump to setting");
-    SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
-     [self.navigationController pushViewController:settingViewController animated:YES];
+//    SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+//     [self.navigationController pushViewController:settingViewController animated:YES];
+    SeniorViewController *seniorViewController = [[[SeniorViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+    [self.navigationController pushViewController:seniorViewController animated:YES];
 }
 
 - (void)viewDidUnload
@@ -58,14 +58,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
+
     // Return the number of sections.
     return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
     return 0;
 }

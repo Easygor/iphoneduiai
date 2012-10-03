@@ -1,21 +1,21 @@
 //
-//  SettingViewController.m
+//  SeniorViewController.m
 //  iphoneduiai
 //
-//  Created by yinliping on 12-9-30.
+//  Created by yinliping on 12-10-2.
 //  Copyright (c) 2012年 duiai.com. All rights reserved.
 //
 
-#import "SettingViewController.h"
-#import "RemindViewController.h"
-#import "PreventSetViewController.h"
+#import "SeniorViewController.h"
 #define kActionChooseImageTag 201
-@interface SettingViewController ()
+@interface SeniorViewController ()
 
 @property (strong, nonatomic) NSArray *entries;
 @end
 
-@implementation SettingViewController
+
+
+@implementation SeniorViewController
 @synthesize entries = _entries;
 
 - (void)dealloc
@@ -27,7 +27,7 @@
 - (NSArray *)entries
 {
     if (_entries == nil) {
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"settingEntries" withExtension:@"plist"];
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"seniorEntries" withExtension:@"plist"];
         _entries = [[NSArray alloc] initWithContentsOfURL:url];
     }
     
@@ -42,27 +42,48 @@
     }
     return self;
 }
-
+-(void)loadView
+{
+    [super loadView];
+    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    tapGr.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapGr];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+   
     
-    
-    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
-    
-    UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    exitButton.frame = CGRectMake(10, 50, 300, 44);
-    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
-    
-    [exitButton setTitle:@"退出" forState:UIControlStateNormal];
-    exitButton.titleLabel.text = @"退出";
-    exitButton.titleLabel.textColor = [UIColor whiteColor];
-    [exitButton addTarget:self action:@selector(resginAction) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:exitButton];
-    self.tableView.tableFooterView = footView;
+        
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+//通过触摸背景关闭键盘
+-(void)viewTapped:(UITapGestureRecognizer*)tapGr{
+    for (UITableViewCell *cell in self.tableView.subviews )
+    {
+        if ([cell isMemberOfClass:[UITableViewCell class]])
+            
+        {for (UIView *view in [cell.contentView subviews]) {
+            for (UITextField *field in [view subviews] )
+            {
+                if ([field isMemberOfClass:[UITextField class]]) {
+                    [field resignFirstResponder];
+                }
+            
+            }
+            
+        }
+        }
+        
+    }
 }
 
 #pragma mark - Table view data source
@@ -83,78 +104,56 @@
 {
     static NSString* identifier = @"cell";
     
-    int frontImgTag = 101;
+   
     int bigLabelTag = 102;
-    int behindImgTag = 103;
+   
     int smallImgTag= 104;
     int lineTag = 105;
-    int bgViewTag = 106;
     int arrowTag = 107;
+    int textFieldTag = 108;
     
-    UIImageView* frontImg = nil;
     UILabel* bigLabel=nil;
     UILabel* smallLabel=nil;
-    UIImageView* behindImg=nil;
     UIImageView* lineView=nil;
     UIView* bgView = nil;
     UIImageView* arrowImgView = nil;
+    UITextField* textField = nil;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (cell == nil)
     {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier]autorelease];
         
-        //cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-
-        
         bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:bgView];
-        
-        frontImg = [[[UIImageView alloc] initWithFrame: CGRectMake(10, 13, 18, 18)] autorelease];
-        frontImg.tag = frontImgTag;
         
         lineView= [[[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)]autorelease];
         lineView.image =  [UIImage imageNamed:@"line.png"];
         lineView.tag = lineTag;
         [bgView addSubview:lineView];
-        
-        behindImg = [[[UIImageView alloc]initWithFrame:CGRectZero] autorelease];
-        behindImg.tag=behindImgTag;
-        // [cell.contentView addSubview:behindImg];
-        behindImg.frame = CGRectMake(230, 2, 40,40);
-        [bgView addSubview:behindImg];
-        
+    
         
         bigLabel = [[[UILabel alloc]initWithFrame:CGRectZero] autorelease];
         bigLabel.backgroundColor=[UIColor clearColor];
         bigLabel.tag=bigLabelTag;
         [bgView addSubview:bigLabel];
-        
-        smallLabel = [[[UILabel alloc]initWithFrame:CGRectMake(230, 15, 50, 14)] autorelease];
-        smallLabel.backgroundColor=[UIColor clearColor];
-        [bgView addSubview:smallLabel];
-        smallLabel.tag=smallImgTag;
-        smallLabel.font = [UIFont systemFontOfSize:12];
-        smallLabel.textColor = [UIColor grayColor];
+
+        textField = [[[UITextField alloc]initWithFrame:CGRectMake(100, 15, 150, 14)]autorelease];
+        textField.placeholder = @"未填写";
+        [bgView addSubview:textField];
+        textField.tag = textFieldTag;
+        textField.font = [UIFont systemFontOfSize:12];
+        textField.textColor = [UIColor grayColor];
         
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         arrowImgView.tag = arrowTag;
         [cell addSubview:arrowImgView];
-
+        
     }
-    
-    if (bgView == nil)
-        bgView = (UIView*)[cell viewWithTag:bgViewTag];
     
     if (lineView == nil)
         lineView = (UIImageView*)[cell viewWithTag:lineTag];
-    
-    if (frontImg == nil)
-        frontImg= (UIImageView*)[cell viewWithTag:frontImgTag];
-    
-    if (behindImg == nil)
-        behindImg= (UIImageView*)[cell viewWithTag:behindImgTag];
     
     if (bigLabel == nil)
         bigLabel = (UILabel*)[cell viewWithTag:bigLabelTag];
@@ -164,6 +163,9 @@
     if (arrowImgView ==nil) {
         arrowImgView = (UIImageView*)[cell viewWithTag:arrowTag];
     }
+    if (textField == nil) {
+        textField = (UITextField*)[cell viewWithTag:textFieldTag];
+    }
     
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     UIImage *img = nil;
@@ -171,7 +173,7 @@
     UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
     
     if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
-        bigLabel.frame = CGRectMake(40, 0, 200, 44);
+        bigLabel.frame = CGRectMake(15, 0, 200, 44);
         img = [UIImage imageNamed:[data objectForKey:@"logo"]];
         
     } else{
@@ -180,8 +182,6 @@
     
     bigLabel.text = [data objectForKey:@"text"];
     [bgView addSubview:lineView];
-    frontImg.image = img;
-    [bgView addSubview:frontImg];
     
     if ([[data objectForKey:@"haveNext"] boolValue]) {
         arrowImgView.image = arrowImg;
@@ -189,39 +189,49 @@
         arrowImgView.image = nil;
     }
     
-    if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
-        headImg = [UIImage imageNamed:@"tweibo_icon.png"];
-    }else if([[data objectForKey:@"label"] isEqualToString:@"my_photo"])
-    {
-        smallLabel.text = @"共2张";
-    }else if([[data objectForKey:@"label"] isEqualToString:@"up_person"])
-    {
-        smallLabel.text = @"共13人";
-    } else{
-        smallLabel.text = @"";
-        
-    }
-    
-    behindImg.image = headImg;
-    
+        cell.selectionStyle =UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if(section == 0)
-        return 15;
-    else
-        return 25;
+ 
+        return 30;
 }
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat sectionHeaderHeight = self.tableView.sectionHeaderHeight; // note: the height is static.
+    
+    if (scrollView.contentOffset.y <= sectionHeaderHeight &&
+        scrollView.contentOffset.y>=0) {
+        
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+        
+    } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+        
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight-10, 0, 0, 0);
+        
+    }
+}
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* header= [[[UIView alloc]initWithFrame:CGRectZero]autorelease];
-    if (section == 0)
-        header.frame = CGRectMake(0, 0, 320, 15);
-    else
-        header.frame = CGRectMake(0, 0, 320, 25);
+    UIView* header= [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)]autorelease];
+    UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(20, 10, 100, 15)]autorelease];
+    label.textColor = [UIColor blueColor];
+    label.backgroundColor = [UIColor clearColor];
+    if (section==0) {
+        label.text = @"工作学习";
+    }else if(section==1)
+    {
+        label.text = @"个人信息";
+    }else if(section==2)
+    {
+        label.text = @"生活状况";
+    }
+    [header addSubview:label];
+    
     return header;
 }
 
@@ -254,6 +264,7 @@
                     picker.allowsEditing = YES;
                     [self presentModalViewController:picker animated:YES];
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+                    
                 }
                 
             }
@@ -265,13 +276,10 @@
     }else if([indexPath section]==2)
     {
         if ([indexPath row]==0) {
-            RemindViewController *remindViewController = [[[RemindViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
-            [self.navigationController pushViewController:remindViewController animated:YES];
+           
         }else if([indexPath row]==1)
         {
-            PreventSetViewController *preventSetViewController = [[[PreventSetViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
-            [self.navigationController pushViewController:preventSetViewController animated:YES];
-            
+                        
         }
         
     }else if([indexPath section]==3)
@@ -307,4 +315,5 @@
                                 animated: YES];
     }
 }
+
 @end
