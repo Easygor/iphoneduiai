@@ -7,13 +7,25 @@
 //
 
 #import "ConditionViewController.h"
+#import "HZSementedControl.h"
 
-@interface ConditionViewController ()
+@interface ConditionViewController () <HZSementdControlDelegate>
+@property (retain, nonatomic) IBOutlet HZSementedControl *sementedControl;
 
 @end
 
 @implementation ConditionViewController
 
+- (void)dealloc
+{
+    [_sementedControl release];
+    [super dealloc];
+}
+- (void)viewDidUnload
+{
+    [self setSementedControl:nil];
+    [super viewDidUnload];
+}
 
 - (void)viewDidLoad
 {
@@ -23,5 +35,12 @@
 }
 
 
+#pragma mark - delegate sememnted 
+- (void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
+{
+    if ([segment isEqual:self.sementedControl]) {
+        NSLog(@"selected index: %d, text: %@", index, text);
+    }
+}
 
 @end
