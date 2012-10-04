@@ -61,21 +61,21 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    int num;
+    int num = 0;
     if (section == 0) {
         num=1;
     }else if(section ==1)
     {
         num =2;
     }
-    return num;
 
+    return num;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [[tableView dequeueReusableCellWithIdentifier:CellIdentifier] autorelease];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
@@ -89,7 +89,7 @@
     lineView.image =  [UIImage imageNamed:@"line.png"];
     [bgView addSubview:lineView];
     
-    UILabel *bigLabel = [[[UILabel alloc]initWithFrame:CGRectMake(23, 13, 200, 15)] autorelease];
+    UILabel *bigLabel = [[UILabel alloc]initWithFrame:CGRectMake(23, 13, 200, 15)];
     bigLabel.backgroundColor=[UIColor clearColor];
     [bgView addSubview:bigLabel];
     if ([indexPath section]==0) {
@@ -111,12 +111,13 @@
     [bgView addSubview:smallLabel];
     smallLabel.font = [UIFont systemFontOfSize:12];
     smallLabel.textColor = [UIColor grayColor];
-    
+    [bigLabel release];
+    [smallLabel release];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    float num;
+    float num = 0;
     if (section == 0) {
         num = 35.0f;
     }else if(section == 1)

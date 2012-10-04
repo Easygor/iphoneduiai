@@ -45,7 +45,7 @@
 -(void)loadView
 {
     [super loadView];
-    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    UITapGestureRecognizer *tapGr = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)]autorelease];
     tapGr.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tapGr];
     
@@ -158,8 +158,6 @@
     if (bigLabel == nil)
         bigLabel = (UILabel*)[cell viewWithTag:bigLabelTag];
     
-    if (smallLabel == nil)
-        smallLabel = (UILabel*)[cell viewWithTag:smallImgTag];
     if (arrowImgView ==nil) {
         arrowImgView = (UIImageView*)[cell viewWithTag:arrowTag];
     }
@@ -169,7 +167,6 @@
     
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     UIImage *img = nil;
-    UIImage *headImg = nil;
     UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
     
     if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
@@ -189,7 +186,8 @@
         arrowImgView.image = nil;
     }
     
-        cell.selectionStyle =UITableViewCellSelectionStyleNone;
+    cell.selectionStyle =UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 
