@@ -9,14 +9,17 @@
 #import "ShowPhotoView.h"
 #import "RoundThumbView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "SliderView.h"
+#import "Utils.h"
 
-@interface ShowPhotoView ()
+@interface ShowPhotoView () <SliderDataSource, UIScrollViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *rounds;
 @property (strong, nonatomic) IBOutlet AsyncImageView *showImageView;
 @property (strong, nonatomic) IBOutlet CountView *viewCountView;
+@property (strong, nonatomic) SliderView *slider;
 
 @end
 
@@ -27,6 +30,10 @@
     [_scrollView release];
     [_showImageView release];
     [_photos release];
+    [_viewCountView release];
+    [_slider release];
+    [_rounds release];
+    [_containerView release];
     [super dealloc];
 }
 
@@ -42,11 +49,11 @@
 - (void)setPhotos:(NSArray *)photos
 {
     if (![_photos isEqualToArray:photos]) {
-        _photos = [photos retain];
-
+//        _photos = [photos retain];
+        NSMutableArray *tmp = [NSMutableArray array];
         // init the thumbs
         int i=0;
-        for (NSDictionary *d in self.photos) {
+        for (NSDictionary *d in photos) {
             if ([[d objectForKey:@"class"] isEqualToString:@"show"] ||
                 [[d objectForKey:@"class"] isEqualToString:@"show selected"]) {
 
@@ -57,10 +64,13 @@
                 view.tag = i;
                 [self.scrollView addSubview:view];
                 [self.rounds addObject:view];
+                [tmp addObject:d];
             }
 
             i++;
         }
+        
+        _photos = [[NSArray alloc] initWithArray:tmp];
         
         RoundThumbView *lastView = [self.rounds lastObject];
 
@@ -84,6 +94,27 @@
     self.containerView.layer.masksToBounds = NO;
     self.containerView.layer.shouldRasterize = YES;
     
+    [self.showImageView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
+    self.showImageView.userInteractionEnabled = YES;
+    self.showImageView.tag = -1;
+    
+    [self.viewCountView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
+    
+}
+
+- (void)scoreGestureAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        NSDictionary *d = [self.photos objectAtIndex:gesture.view.tag];
+        NSLog(@"user: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"user"]);
+        NSLog(@"photo : %@", d);
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        [Utils scorePhotoWithUid:[info objectForKey:@"uid"] pid:[d objectForKey:@"pid"] block:^{
+            NSString *scoreString = [NSString stringWithFormat:@"%d", [self.viewCountView.count integerValue]+1];
+            self.viewCountView.count = scoreString;
+        }];
+    }
 }
 
 - (void)awakeFromNib
@@ -103,17 +134,22 @@
 
 - (void)selectedRoundView:(RoundThumbView*)tv
 {
+    int i = 0;
     for (RoundThumbView *view in self.rounds) {
         if ([view isEqual:tv]) {
             NSDictionary *d = [self.photos objectAtIndex:view.tag];
             
             view.selected = YES;
             NSString *iconUrl = [d objectForKey:@"icon"];
-            [self.showImageView loadImage:[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]];
+            [self.showImageView loadImage:iconUrl/*[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]*/];
             self.viewCountView.count = [d objectForKey:@"score"];
+            self.showImageView.tag = i;
+            self.viewCountView.tag = i;
         } else{
             view.selected = NO;
         }
+        
+        i++;
     }
 }
 
@@ -124,6 +160,127 @@
         RoundThumbView *tv = (RoundThumbView *)gesture.view;
         [self selectedRoundView:tv];
     }
+}
+
+
+#pragma mark - slider views
+-(void)addSliderView
+{
+    // Do any additional setup after loading the view from its nib.
+    SliderView *pageView = [[SliderView alloc] initWithFrame: self.window.frame
+                                              withDataSource: self];
+    pageView.backgroundColor = [UIColor blackColor];
+    [self.window addSubview:pageView];
+    self.slider = pageView;
+    
+}
+
+-(void)clearSliderView
+{
+    [self.slider removeFromSuperview];
+    self.slider = nil;
+    
+}
+
+-(int)numberOfPages
+{
+    return self.photos.count;
+}
+
+-(UIView *)viewAtIndex:(int)index
+{
+    UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
+    view.backgroundColor = [UIColor clearColor];
+    view.opaque = YES;
+    view.maximumZoomScale = 5.0;
+    view.zoomScale = 1.0;
+    view.minimumZoomScale = 1.0;
+    view.showsHorizontalScrollIndicator = NO;
+    view.showsVerticalScrollIndicator = NO;
+    view.delegate = self;
+    view.tag = index+100;
+    UITapGestureRecognizer *oneTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
+    oneTap.numberOfTapsRequired = 1;
+    oneTap.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:oneTap];
+    
+    CGRect viewFrame = [self convertRect:self.showImageView.frame toView:self.window];
+    
+    AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
+    NSDictionary *d = [self.photos objectAtIndex:index];
+    
+    imView.tag = index;
+    
+    [view addSubview:imView];
+    NSString *iconUrl = [d objectForKey:@"icon"];
+
+    CGSize size = view.frame.size;
+    [imView loadImage:[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]
+   withPlaceholdImage:self.showImageView.image withBlock:^{
+        [UIView animateWithDuration:0.3 animations:^{
+            CGSize imgsize = imView.image.size;
+            CGFloat imgWidth = MIN(imgsize.width, size.width);
+            CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
+            
+            imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
+        }];
+    }];
+    
+    return view;
+}
+
+- (void)tapImageGesture:(UITapGestureRecognizer*)gesture
+{
+    
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        NSInteger index = gesture.view.tag;
+        if (index >= 0) {
+            [[UIApplication sharedApplication] setStatusBarHidden:YES];
+            
+            [self addSliderView];
+            [self.slider selectPageAtIndex:index];
+        }
+ 
+    }
+}
+
+- (void)tapContainerView:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        if (gesture.numberOfTapsRequired == 1) {
+            
+            CGRect viewFrame = [self convertRect:self.showImageView.frame toView:gesture.view];
+            
+            AsyncImageView *imView = (AsyncImageView*)[gesture.view viewWithTag:gesture.view.tag-100];
+            [self selectedRoundView:[self.rounds objectAtIndex:gesture.view.tag-100]];
+            
+            [[UIApplication sharedApplication] setStatusBarHidden:NO];
+            self.slider.backgroundColor = [UIColor clearColor];
+            
+            [UIView animateWithDuration:0.3
+                             animations:^{
+                                 imView.frame = viewFrame;
+                             }
+                             completion:^(BOOL finshed){
+                                 [gesture.view removeFromSuperview];
+                                 [self clearSliderView];
+                             }];
+        } else{
+            UIScrollView *view = (UIScrollView*)gesture.view;
+            view.zoomScale *= 2;
+        }
+        
+    }
+}
+
+#pragma mark - scroll view delegate
+- (UIView*)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    UIView *view = [scrollView viewWithTag:scrollView.tag-100];
+    
+    return view;
 }
 
 @end

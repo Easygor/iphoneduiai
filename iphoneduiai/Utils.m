@@ -10,6 +10,8 @@
 #import "math.h"
 #import "LocationController.h"
 #import "NSDate-Utilities.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
 
 @implementation Utils
 
@@ -192,6 +194,34 @@
     }
     
     return curLocation;
+}
+
++ (void)scorePhotoWithUid:(NSString*)uid pid:(NSString*)pid block:(void(^)())block
+{
+    NSMutableDictionary *dp = [[self class] queryParams];
+    [[RKClient sharedClient] post:[@"/common/photoscore.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        request.params = [RKParams paramsWithDictionary:@{@"uid":uid, @"pid":pid}];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"score photo error: %@", [error description]);
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *d = [[response bodyAsString] objectFromJSONString];
+                NSInteger code = [d[@"error"] integerValue];
+                NSLog(@"score photo mesg: %d, %@", code, d[@"message"]);
+                if (code == 0) {
+                    if (block) {
+                        block();
+                    }
+                }
+                
+   
+            }
+        }];
+        
+    }];
 }
 
 @end

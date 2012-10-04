@@ -1185,6 +1185,8 @@
 				6153D9C9161099FC00AC4A2D /* Async Images */,
 				6153D9BC161093F200AC4A2D /* Custom Cell */,
 				61397A901607F95D009FDAF9 /* picker views */,
+				610D8E23161D61A900A22685 /* SliderView.h */,
+				610D8E24161D61A900A22685 /* SliderView.m */,
 				614CAA57161C7CAD00C86D8F /* DropMenuView.h */,
 				614CAA58161C7CAD00C86D8F /* DropMenuView.m */,
 				6141A6DB15FB691A00985257 /* CustomBarButtonItem.h */,
@@ -1214,8 +1216,6 @@
 				61240BDC1619C4A7005C4E6C /* MarrayReqView.m */,
 				61240BE21619D8D6005C4E6C /* MoreUserInfoView.h */,
 				61240BE31619D8D6005C4E6C /* MoreUserInfoView.m */,
-				610D8E23161D61A900A22685 /* SliderView.h */,
-				610D8E24161D61A900A22685 /* SliderView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";

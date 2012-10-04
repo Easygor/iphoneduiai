@@ -220,12 +220,12 @@
 }
 
 #pragma mark - slider views
-
 -(void)addSliderView
 {
     // Do any additional setup after loading the view from its nib.
     SliderView *pageView = [[SliderView alloc] initWithFrame: self.window.frame
                                                          withDataSource: self];
+    pageView.backgroundColor = [UIColor blackColor];
     [self.window addSubview:pageView];
     self.slider = pageView;
     
@@ -238,7 +238,6 @@
     
 }
 
-
 -(int)numberOfPages
 {
     return self.photos.count;
@@ -247,7 +246,8 @@
 -(UIView *)viewAtIndex:(int)index
 {
     UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
-    view.backgroundColor = [UIColor blackColor];
+    view.backgroundColor = [UIColor clearColor];
+    view.opaque = YES;
     view.maximumZoomScale = 5.0;
     view.zoomScale = 1.0;
     view.minimumZoomScale = 1.0;
@@ -260,20 +260,18 @@
     oneTap.numberOfTouchesRequired = 1;
     [view addGestureRecognizer:oneTap];
     
-    UIView *oldView = (UIView*)[self.mainView.subviews objectAtIndex:index];
+    AsyncImageView *oldView = (AsyncImageView*)[self.mainView.subviews objectAtIndex:index];
     CGRect viewFrame = [self.mainView convertRect:oldView.frame toView:self.window];
     
     AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
     NSDictionary *d = [self.photos objectAtIndex:index];
     
-    imView.tag = 99;
+    imView.tag = index;
     
     [view addSubview:imView];
-    [self.window addSubview:view];
     
     CGSize size = view.frame.size;
-    [imView loadImage:[d objectForKey:@"url"]
-   withPlaceholdImage:[[FullyLoaded sharedFullyLoaded] imageForURL:[d objectForKey:@"icon"]] withBlock:^{
+    [imView loadImage:[d objectForKey:@"url"] withPlaceholdImage:oldView.image withBlock:^{
        [UIView animateWithDuration:0.3 animations:^{
            CGSize imgsize = imView.image.size;
            CGFloat imgWidth = MIN(imgsize.width, size.width);
@@ -283,7 +281,6 @@
        }];
    }];
     
-
     return view;
 }
 
@@ -296,43 +293,6 @@
         NSInteger index = [self.mainView.subviews indexOfObject:gesture.view];
         [self addSliderView];
         [self.slider selectPageAtIndex:index];
-//        UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
-//        view.backgroundColor = [UIColor blackColor];
-//        view.maximumZoomScale = 5.0;
-//        view.zoomScale = 1.0;
-//        view.minimumZoomScale = 1.0;
-//        view.showsHorizontalScrollIndicator = NO;
-//        view.showsVerticalScrollIndicator = NO;
-//        view.delegate = self;
-//        view.tag = index+100;
-//        UITapGestureRecognizer *oneTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
-//        oneTap.numberOfTapsRequired = 1;
-//        oneTap.numberOfTouchesRequired = 1;
-//        [view addGestureRecognizer:oneTap];
-        
-//        CGRect viewFrame = [self.mainView convertRect:gesture.view.frame toView:self.window];
-//
-//        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
-//        NSDictionary *d = [self.photos objectAtIndex:index];
-//        
-//        imView.tag = index;
-//        
-//        [view addSubview:imView];
-//        [self.window addSubview:view];
-//        
-//        [[UIApplication sharedApplication] setStatusBarHidden:YES];
-//        CGSize size = view.frame.size;
-//        [imView loadImage:[d objectForKey:@"url"]
-//       withPlaceholdImage:[[FullyLoaded sharedFullyLoaded] imageForURL:[d objectForKey:@"icon"]] withBlock:^{
-//           [UIView animateWithDuration:0.3 animations:^{
-//               CGSize imgsize = imView.image.size;
-//               CGFloat imgWidth = MIN(imgsize.width, size.width);
-//               CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
-//               
-//               imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
-//           }];
-//       }];
-
         
     }
 }
@@ -342,13 +302,15 @@
     if (gesture.state == UIGestureRecognizerStateChanged ||
         gesture.state == UIGestureRecognizerStateEnded) {
         if (gesture.numberOfTapsRequired == 1) {
+
             UIView *view = [self.mainView.subviews objectAtIndex:gesture.view.tag-100];
             CGRect viewFrame = [self.mainView convertRect:view.frame toView:gesture.view];
             
             AsyncImageView *imView = (AsyncImageView*)[gesture.view viewWithTag:gesture.view.tag-100];
             
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
-            gesture.view.backgroundColor = [UIColor clearColor];
+            self.slider.backgroundColor = [UIColor clearColor];
+            
             [UIView animateWithDuration:0.3
                              animations:^{
                                  imView.frame = viewFrame;
@@ -365,6 +327,8 @@
     }
 }
 
+
+#pragma mark resize pictures
 - (void)resizeFrameWithHeight:(CGFloat)height
 {
     CGRect mainFrame = self.mainView.frame;

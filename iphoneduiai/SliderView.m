@@ -93,7 +93,7 @@
 		smileView = [self.dataSource viewAtIndex:page];
         [self.views replaceObjectAtIndex:page withObject:smileView];
     } else {
-        UIImageView *imageView = (UIImageView *)[smileView viewWithTag:99];
+        UIImageView *imageView = (UIImageView *)[smileView viewWithTag:page];
         if (imageView != nil && imageView.image == nil) {
             smileView = [self.dataSource viewAtIndex:page];
             [self.views replaceObjectAtIndex:page withObject:smileView];
