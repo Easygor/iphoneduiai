@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddWeiyuViewController : UIViewController
+@interface AddWeiyuViewController : UIViewController<UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+{
+    UITextView *contentTextView;
+    UILabel* contentLabel;
+    UIView *contentView;
+    UIView* toolView;
+    
+    UIButton *faceButton;
+    BOOL state;
+    
+}
 
 @end

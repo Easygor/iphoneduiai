@@ -63,6 +63,7 @@
     [exitButton addTarget:self action:@selector(resginAction) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:exitButton];
     self.tableView.tableFooterView = footView;
+    [footView release];
 }
 
 #pragma mark - Table view data source
