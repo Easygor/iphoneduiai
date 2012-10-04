@@ -7,41 +7,64 @@
 //
 
 #import "LocationController.h"
-//#import "Utils.h"
 
 static LocationController* sharedCLDelegate = nil;
 
 @implementation LocationController
-@synthesize locationManager, location, delegate, allow;
-
-- (id)init
-{
- 	self = [super init];
-	if (self != nil) {
-		self.locationManager = [[[CLLocationManager alloc] init] autorelease];
-		self.locationManager.delegate = self;
-		self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-	}
-	return self;
-}
 
 - (void)dealloc
 {
-    [delegate release];
-    [location release];
-    [locationManager release];
+    [_delegate release];
+    [_location release];
+    [_locationManager release];
     [super dealloc];
     
 }
 
-#pragma mark -
-#pragma mark CLLocationManagerDelegate Methods
+- (BOOL)allow
+{
+    return  [CLLocationManager locationServicesEnabled] && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized;
+}
+
++ (LocationController*)sharedInstance {
+    static LocationController *_sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        CLLocationManager *locationManager = [[CLLocationManager alloc] init];
+        _sharedInstance = [[LocationController alloc] initWithLocationManager:locationManager];
+    });
+    
+    return _sharedInstance;
+}
+
+-(id)initWithLocationManager:(CLLocationManager *)locationManager
+{
+    self = [super init];
+    if (self == nil) {
+        return nil;
+    }
+    
+    self.locationManager = locationManager;
+    self.locationManager.delegate = self;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    return self;
+}
+
+
+
+#pragma mark - CLLocationManagerDelegate Methods
 - (void)locationManager:(CLLocationManager*)manager
 	didUpdateToLocation:(CLLocation*)newLocation
 		   fromLocation:(CLLocation*)oldLocation
 {
+    
     self.location = self.locationManager.location;
-    self.allow = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(locationUpdate:)]) {
+        [self.delegate locationUpdate:self.location];
+    }
+    
     //NSLog(@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude);
 }
 
@@ -49,37 +72,54 @@ static LocationController* sharedCLDelegate = nil;
 	   didFailWithError:(NSError*)error
 {
     [self.locationManager stopUpdatingLocation];
-    NSString *errorString;        
+    NSString *errorString;
     // We handle CoreLocation-related errors here
     switch ([error code]) {
             // "Don't Allow" on two successive app launches is the same as saying "never allow". The user
             // can reset this for all apps by going to Settings > General > Reset > Reset Location Warnings.
         case kCLErrorDenied:
-            errorString = @"乐帮需要获取你位置信息的许可，以便提供给你周边的求助信息。";
-//            [Utils tellNotification:errorString];
+            errorString = @"需获取位置的授权";
+            //            [Utils tellNotification:errorString];
             break;
         case kCLErrorLocationUnknown:
             errorString = @"获取位置信息出现未知错误";
-//            [Utils tellNotification:errorString];
+            //            [Utils tellNotification:errorString];
             break;
             
         default:
             break;
     }
-    self.allow = NO;
 }
 
-#pragma mark -
-#pragma mark Singleton Object Methods
-
-+ (LocationController*)sharedInstance {
-    @synchronized(self) {
-        if (sharedCLDelegate == nil) {
-            [[self alloc] init];
-        }
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            // do
+            break;
+            
+        case kCLAuthorizationStatusAuthorized:
+            if ([self.delegate respondsToSelector:@selector(didOnChangeStatusToAllow:)]) {
+                [self.delegate didOnChangeStatusToAllow:manager];
+            }
+            break;
+            
+        case kCLAuthorizationStatusRestricted:
+            // next
+        case kCLAuthorizationStatusDenied:
+            if ([self.delegate respondsToSelector:@selector(didOnChangeStatusToUneabled:)]) {
+                [self.delegate didOnChangeStatusToUneabled:manager];
+            }
+            break;
+            
+            
+        default:
+            break;
     }
-    return sharedCLDelegate;
+    
 }
+
+#pragma mark Singleton Object Methods
 
 + (id)allocWithZone:(NSZone *)zone {
     @synchronized(self) {

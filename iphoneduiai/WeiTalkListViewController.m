@@ -15,9 +15,10 @@
 #import "CustomBarButtonItem.h"
 #import "EGORefreshTableHeaderView.h"
 #import "AddWeiyuViewController.h"
+#import "DropMenuView.h"
 
 
-@interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate>
+@interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
     BOOL reloading;
 }
@@ -28,6 +29,8 @@
 @property (nonatomic) BOOL loading;
 @property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
 @property (nonatomic) BOOL onlyPhoto;
+@property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
+@property (strong, nonatomic) NSString *city;
 
 @end
 
@@ -39,6 +42,8 @@
     [_weiyus release];
     [_moreCell release];
     [_refreshHeaderView release];
+    [_dropMenuView release];
+    [_city release];
     [super dealloc];
 }
 
@@ -55,6 +60,14 @@
     }
 }
 
+- (void)setCity:(NSString *)city
+{
+    if (![_city isEqualToString:city]) {
+        _city = [city retain];
+        
+        [self reloadList];
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -84,12 +97,32 @@
     
 	//  update the last update date
 	[self.refreshHeaderView refreshLastUpdatedDate];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 100, 44);
+    [btn setTitle:@"同城异性" forState:UIControlStateNormal];
+    [btn setTitle:@"同城异性" forState:UIControlStateHighlighted];
+    [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = btn;
+    self.city = @"all";
     
+}
+
+- (void)selectAeraAction:(UIButton*)btn
+{
+    CGRect posFrame = [self.navigationItem.titleView.superview convertRect:self.navigationItem.titleView.frame toView:self.view.window];
+    [self.dropMenuView showMeAtView:self.view
+                            atPoint:CGPointMake(posFrame.origin.x, posFrame.origin.y+posFrame.size.height)
+                           animated:YES];
 }
 
 - (void)exchangeAction:(CustomBarButtonItem*)item
 {
     // here dou
+    if (self.tableView.isDecelerating ||
+        self.tableView.isDragging ||
+        self.tableView.isEditing) {
+        return;
+    }
     if (self.onlyPhoto) {
         self.onlyPhoto = NO;
         self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"图"
@@ -107,7 +140,7 @@
 
 - (void)addAction
 {
-    // here dou
+
     AddWeiyuViewController *awvc = [[AddWeiyuViewController alloc] initWithNibName:@"AddWeiyuViewController" bundle:nil];
     [self.navigationController pushViewController:awvc animated:YES];
     [awvc release];
@@ -116,6 +149,7 @@
 
 - (void)viewDidUnload
 {
+    [self setDropMenuView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -347,6 +381,14 @@
         [dParams setObject:@"photo" forKey:@"a"];
     }
     
+    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    if ([info[@"sex"] isEqualToString:@"m"]) {
+        [dParams setObject:@"w" forKey:@"sex"];
+    } else{
+        [dParams setObject:@"m" forKey:@"sex"];
+    }
+    
+    [dParams setObject:self.city forKey:@"city"];
     [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [dParams setObject:@"20" forKey:@"pagesize"];
     
@@ -378,6 +420,26 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
+}
+
+#pragma mark - drop menu 
+- (NSArray *)dropMenuViewData:(DropMenuView *)dropView
+{
+
+    return @[@{@"tag":@"all", @"name":@"全部异性"}, @{@"tag":@"province", @"name":@"同省异性"}, @{@"tag":@"city", @"name":@"同城异性"}];
+}
+
+- (void)didSelectedMenuCell:(DropMenuView *)dropView withTag:(NSString *)tag name:(NSString *)name
+{
+    NSLog(@"selecte which one: %@", tag);
+    
+    if (self.tableView.isDecelerating ||
+        self.tableView.isDragging ||
+        self.tableView.isEditing) {
+        return;
+    }
+    
+    self.city = tag;
 }
 
 @end

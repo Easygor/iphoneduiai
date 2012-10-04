@@ -12,22 +12,18 @@
 
 // protocol for sending location updates to another view controller
 @protocol LocationControllerDelegate <NSObject>
-@required
+@optional
 - (void)locationUpdate:(CLLocation*)location;
+- (void)didOnChangeStatusToAllow:(CLLocationManager*)manager;
+- (void)didOnChangeStatusToUneabled:(CLLocationManager *)manager;
 @end
 
-@interface LocationController : NSObject <CLLocationManagerDelegate> {
-    
-	CLLocationManager* locationManager;
-	CLLocation* location;
-	id delegate;
-    BOOL allow;
-}
+@interface LocationController : NSObject <CLLocationManagerDelegate>
 
-@property (nonatomic, retain) CLLocationManager* locationManager;
-@property (nonatomic, retain) CLLocation* location;
+@property (nonatomic, strong) CLLocationManager* locationManager;
+@property (nonatomic, strong) CLLocation* location;
 @property (nonatomic, assign) id <LocationControllerDelegate> delegate;
-@property BOOL allow;
+@property (nonatomic) BOOL allow;
 
 + (LocationController*)sharedInstance; // Singleton method
 

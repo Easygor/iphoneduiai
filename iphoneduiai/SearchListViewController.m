@@ -18,8 +18,9 @@
 #import "Utils.h"
 #import "ConditionViewController.h"
 #import "UserDetailViewController.h"
+#import "LocationController.h"
 
-@interface SearchListViewController () <HZSementdControlDelegate>
+@interface SearchListViewController () <HZSementdControlDelegate, LocationControllerDelegate, CustomCellDelegate>
 {
     BOOL isWater;
 }
@@ -73,6 +74,8 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"搜索条件"
                                                                                               target:self
                                                                                               action:@selector(jumpAction)] autorelease];
+    
+    [LocationController sharedInstance].delegate = self;
   
 }
 
@@ -135,7 +138,8 @@
 - (void)doInitWork
 {
     // do something here
-    if (self.users.count <= 0) {
+    if (self.users.count <= 0 &&
+        [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         [self.sementdView selectSegmentAtIndex:0];
     }
 
@@ -229,6 +233,7 @@
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
             cell = [nib objectAtIndex:1];
+            cell.delegate = self;
         }
         
         cell.users = users;
@@ -364,8 +369,10 @@
     switch (index) {
         case 0:
             // go next
-        case 1:
             self.orderField = nil;
+            break;
+        case 1:
+            self.orderField = @"distance";
             break;
         case 2:
             self.orderField = @"viewcount";
@@ -389,29 +396,63 @@
 #pragma mark - request 
 - (void)searchReqeustWithPage:(NSInteger)page
 {
-    NSMutableDictionary *d = [Utils queryParams];
+    [SVProgressHUD show];
+    NSMutableDictionary *dParams = [Utils queryParams];
+    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    if ([[LocationController sharedInstance] allow] && [self.orderField isEqualToString:@"distance"]) {
+        [[[LocationController sharedInstance] locationManager] startUpdatingLocation];
+        
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            CLLocationCoordinate2D location2D = [LocationController sharedInstance].location.coordinate;
+            [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
+            
+            [dParams setObject:[NSNumber numberWithInteger:ceil(location2D.latitude*1000000)] forKey:@"wei"];
+            [dParams setObject:[NSNumber numberWithInteger:ceil(location2D.longitude*1000000)] forKey:@"jin"];
+            [dParams setObject:@"0.5" forKey:@"maxdis"];
+            [self searchReqeustWithParams:dParams];
+        });
+        
+    } else {
+        [self searchReqeustWithParams:dParams];
+    }
+}
+
+- (void)searchReqeustWithParams:(NSMutableDictionary*)params
+{
+
 
     NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    
+    // select sex
     if ([info[@"sex"] isEqualToString:@"m"]) {
-         [d setObject:@"w" forKey:@"sex"];
+         [params setObject:@"w" forKey:@"sex"];
     } else{
-         [d setObject:@"m" forKey:@"sex"];
+         [params setObject:@"m" forKey:@"sex"];
     }
     
-    if (self.orderField) {
-        [d setObject:self.orderField forKey:@"order"];
-        [d setObject:@"-1" forKey:@"ordasc"];
+    // area info
+    [params setObject:info[@"province"] forKey:@"province"];
+    [params setObject:info[@"city"] forKey:@"city"];
+
+    if (self.orderField && ![self.orderField isEqualToString:@"distance"]) {
+        [params setObject:self.orderField forKey:@"order"];
+        [params setObject:@"-1" forKey:@"ordasc"];
     }
     
     // location distance
     
-    [d setObject:@"18" forKey:@"minage"];
-    [d setObject:@"30" forKey:@"maxage"];
-    [d setObject:@"21" forKey:@"pagesize"];
-    [d setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
-    [d setObject:@"niname,age,height,photo,photocount,sex,acctime,distance,last_weiyu" forKey:@"fields"];
+    [params setObject:@"18" forKey:@"minage"];
+    [params setObject:@"30" forKey:@"maxage"];
+    [params setObject:@"21" forKey:@"pagesize"];
     
-    [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:d] usingBlock:^(RKRequest *request){
+    // have pics
+    [params setObject:@"1" forKey:@"photo"];
+    [params setObject:@"niname,age,height,photo,photocount,sex,acctime,distance,weibolist,position,last_weiyu" forKey:@"fields"];
+    
+
+    [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
         NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
@@ -422,13 +463,48 @@
                 self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
                   // 此行须在前两行后面
                 self.users = [data objectForKey:@"data"];
+                [SVProgressHUD dismiss];
 
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
             }
         }];
         [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
             NSLog(@"Error: %@", [error description]);
         }];
     }];
+}
+
+#pragma mark - location controller delegate
+-(void)didOnChangeStatusToAllow:(CLLocationManager *)manager
+{
+
+    if ([self.orderField isEqualToString:@"distance"]) {
+       [self reloadList];
+    }
+ 
+}
+
+-(void)didOnChangeStatusToUneabled:(CLLocationManager *)manager
+{
+    
+    if ([self.orderField isEqualToString:@"distance"]) {
+        [self reloadList];
+    }
+}
+
+#pragma mark custom cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.waterTableView indexPathForCell:cell];
+    NSInteger index = indexPath.row*3 + [status integerValue];
+    NSDictionary *user = [self.users objectAtIndex:index];
+    
+    UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+    udvc.user = user;
+    [self.navigationController pushViewController:udvc animated:YES];
+    [udvc release];
 }
 
 @end

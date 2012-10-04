@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import <RestKit/RestKit.h>
+#import "LocationController.h"
 
 @implementation AppDelegate
 
@@ -60,6 +61,12 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[[LocationController sharedInstance] locationManager] startUpdatingLocation];
+    double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
+    });
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

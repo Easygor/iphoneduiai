@@ -10,10 +10,11 @@
 
 #define INIH 10
 
-@interface DropMenuView () <UITableViewDataSource, UITableViewDelegate>
+@interface DropMenuView () <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableVew;
 @property (strong, nonatomic) NSArray *options;
+@property (strong, nonatomic) UIView *containerView;
 
 @end
 
@@ -81,6 +82,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     NSString *tag = nil, *name=nil;
     id data = [self.options objectAtIndex:indexPath.row];
     if ([data isKindOfClass:[NSDictionary class]]) {
@@ -92,15 +94,43 @@
     }
     
     if ([self.delegate respondsToSelector:@selector(didSelectedMenuCell:withTag:name:)]) {
+
         [self.delegate didSelectedMenuCell:self withTag:tag name:name];
     }
     
     [self removeMeWithAnimated:YES];
 }
 
-- (void)showMeInView:(UIView *)view atPoint:(CGPoint)pos animated:(BOOL)animated
+- (void)tapGestureAction:(UITapGestureRecognizer*)gesture
 {
+    NSLog(@"hahah");
 
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        CGPoint point = [gesture locationInView:gesture.view];
+        if (CGRectContainsPoint(self.frame, point)) {
+            // do
+        } else{
+            [self removeMeWithAnimated:YES];
+        }
+    
+    }
+}
+
+- (void)showMeAtView:(UIView*)view atPoint:(CGPoint)pos animated:(BOOL)animated
+{
+    
+    if (self.containerView == nil) {
+        self.containerView = [[[UIView alloc] initWithFrame:view.window.frame] autorelease];
+        self.containerView.backgroundColor = [UIColor clearColor];
+        self.containerView.opaque = YES;
+        self.containerView.clipsToBounds = NO;
+        UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureAction:)] autorelease];
+        tap.delegate = self;
+        [self.containerView addGestureRecognizer:tap];
+    }
+    
+    [view.window addSubview:self.containerView];
     CGRect selfFrame = self.frame;
     selfFrame.origin.x = pos.x;
     selfFrame.origin.y = pos.y;
@@ -108,15 +138,18 @@
     if (animated) {
 
         self.frame = CGRectMake(selfFrame.origin.x, selfFrame.origin.y, selfFrame.size.width, INIH);;
-        [view addSubview:self];
+        [self.containerView addSubview:self];
         [UIView animateWithDuration:0.3 animations:^{
             self.frame = CGRectMake(selfFrame.origin.x, selfFrame.origin.y, selfFrame.size.width, selfFrame.size.height);
         }];
         
     } else{
         self.frame = selfFrame;
-        [view addSubview:self];
+        [self.containerView addSubview:self];
     }
+    
+
+    
 }
 
 - (void)removeMeWithAnimated:(BOOL)animated
@@ -130,16 +163,29 @@
                              self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, INIH);
                          } completion:^(BOOL finshed){
                              [self removeFromSuperview];
+                             [self.containerView removeFromSuperview];
                              self.frame = selfFrame;
                          }];
     } else{
         [self removeFromSuperview];
+        [self.containerView removeFromSuperview];
     }
 }
 
 - (void)reloadData
 {
     [self.tableVew reloadData];
+}
+
+#pragma mark - getsture delegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    CGPoint point = [touch locationInView:gestureRecognizer.view];
+    if (CGRectContainsPoint(self.frame, point)) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end

@@ -31,6 +31,6 @@
 
 - (void)reloadData;
 - (void)removeMeWithAnimated:(BOOL)animated;
-- (void)showMeInView:(UIView *)view atPoint:(CGPoint)pos animated:(BOOL)animated;
+- (void)showMeAtView:(UIView*)view atPoint:(CGPoint)pos animated:(BOOL)animated;
 
 @end

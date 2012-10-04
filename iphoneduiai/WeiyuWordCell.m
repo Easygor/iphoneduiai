@@ -8,11 +8,12 @@
 
 #import "WeiyuWordCell.h"
 #import "FullyLoaded.h"
+#import "SliderView.h"
 
 #define DW 150.0f
 #define DH 112.0f
 
-@interface WeiyuWordCell () <UIScrollViewDelegate>
+@interface WeiyuWordCell () <UIScrollViewDelegate, SliderDataSource>
 
 @property (strong, nonatomic) IBOutlet UIImageView *timeIconView;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
@@ -23,6 +24,8 @@
 @property (nonatomic) NSInteger digoNum, shitNum, commentNum;
 @property (strong, nonatomic) NSString *addTimeDesc, *content;
 @property (strong, nonatomic) NSMutableArray *photos;
+
+@property (strong, nonatomic) SliderView *slider;
 
 @end
 
@@ -46,6 +49,7 @@
     [_content release];
     [_containerView release];
     [_photos release];
+    [_slider release];
     [super dealloc];
 }
 
@@ -215,49 +219,119 @@
     }
 }
 
+#pragma mark - slider views
+
+-(void)addSliderView
+{
+    // Do any additional setup after loading the view from its nib.
+    SliderView *pageView = [[SliderView alloc] initWithFrame: self.window.frame
+                                                         withDataSource: self];
+    [self.window addSubview:pageView];
+    self.slider = pageView;
+    
+}
+
+-(void)clearSliderView
+{
+    [self.slider removeFromSuperview];
+    self.slider = nil;
+    
+}
+
+
+-(int)numberOfPages
+{
+    return self.photos.count;
+}
+
+-(UIView *)viewAtIndex:(int)index
+{
+    UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
+    view.backgroundColor = [UIColor blackColor];
+    view.maximumZoomScale = 5.0;
+    view.zoomScale = 1.0;
+    view.minimumZoomScale = 1.0;
+    view.showsHorizontalScrollIndicator = NO;
+    view.showsVerticalScrollIndicator = NO;
+    view.delegate = self;
+    view.tag = index+100;
+    UITapGestureRecognizer *oneTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
+    oneTap.numberOfTapsRequired = 1;
+    oneTap.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:oneTap];
+    
+    UIView *oldView = (UIView*)[self.mainView.subviews objectAtIndex:index];
+    CGRect viewFrame = [self.mainView convertRect:oldView.frame toView:self.window];
+    
+    AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
+    NSDictionary *d = [self.photos objectAtIndex:index];
+    
+    imView.tag = 99;
+    
+    [view addSubview:imView];
+    [self.window addSubview:view];
+    
+    CGSize size = view.frame.size;
+    [imView loadImage:[d objectForKey:@"url"]
+   withPlaceholdImage:[[FullyLoaded sharedFullyLoaded] imageForURL:[d objectForKey:@"icon"]] withBlock:^{
+       [UIView animateWithDuration:0.3 animations:^{
+           CGSize imgsize = imView.image.size;
+           CGFloat imgWidth = MIN(imgsize.width, size.width);
+           CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
+           
+           imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
+       }];
+   }];
+    
+
+    return view;
+}
+
 - (void)tapImageGesture:(UITapGestureRecognizer*)gesture
 {
 
     if (gesture.state == UIGestureRecognizerStateChanged ||
         gesture.state == UIGestureRecognizerStateEnded) {
-        
-        NSInteger index = [self.mainView.subviews indexOfObject:gesture.view];
-        UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
-        view.backgroundColor = [UIColor blackColor];
-        view.maximumZoomScale = 5.0;
-        view.zoomScale = 1.0;
-        view.minimumZoomScale = 1.0;
-        view.showsHorizontalScrollIndicator = NO;
-        view.showsVerticalScrollIndicator = NO;
-        view.delegate = self;
-        view.tag = index+100;
-        UITapGestureRecognizer *oneTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
-        oneTap.numberOfTapsRequired = 1;
-        oneTap.numberOfTouchesRequired = 1;
-        [view addGestureRecognizer:oneTap];
-        
-        CGRect viewFrame = [self.mainView convertRect:gesture.view.frame toView:self.window];
-
-        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
-        NSDictionary *d = [self.photos objectAtIndex:index];
-        
-        imView.tag = index;
-        
-        [view addSubview:imView];
-        [self.window addSubview:view];
-        
         [[UIApplication sharedApplication] setStatusBarHidden:YES];
-        CGSize size = view.frame.size;
-        [imView loadImage:[d objectForKey:@"url"]
-       withPlaceholdImage:[[FullyLoaded sharedFullyLoaded] imageForURL:[d objectForKey:@"icon"]] withBlock:^{
-           [UIView animateWithDuration:0.3 animations:^{
-               CGSize imgsize = imView.image.size;
-               CGFloat imgWidth = MIN(imgsize.width, size.width);
-               CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
-               
-               imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
-           }];
-       }];
+        NSInteger index = [self.mainView.subviews indexOfObject:gesture.view];
+        [self addSliderView];
+        [self.slider selectPageAtIndex:index];
+//        UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
+//        view.backgroundColor = [UIColor blackColor];
+//        view.maximumZoomScale = 5.0;
+//        view.zoomScale = 1.0;
+//        view.minimumZoomScale = 1.0;
+//        view.showsHorizontalScrollIndicator = NO;
+//        view.showsVerticalScrollIndicator = NO;
+//        view.delegate = self;
+//        view.tag = index+100;
+//        UITapGestureRecognizer *oneTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
+//        oneTap.numberOfTapsRequired = 1;
+//        oneTap.numberOfTouchesRequired = 1;
+//        [view addGestureRecognizer:oneTap];
+        
+//        CGRect viewFrame = [self.mainView convertRect:gesture.view.frame toView:self.window];
+//
+//        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
+//        NSDictionary *d = [self.photos objectAtIndex:index];
+//        
+//        imView.tag = index;
+//        
+//        [view addSubview:imView];
+//        [self.window addSubview:view];
+//        
+//        [[UIApplication sharedApplication] setStatusBarHidden:YES];
+//        CGSize size = view.frame.size;
+//        [imView loadImage:[d objectForKey:@"url"]
+//       withPlaceholdImage:[[FullyLoaded sharedFullyLoaded] imageForURL:[d objectForKey:@"icon"]] withBlock:^{
+//           [UIView animateWithDuration:0.3 animations:^{
+//               CGSize imgsize = imView.image.size;
+//               CGFloat imgWidth = MIN(imgsize.width, size.width);
+//               CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
+//               
+//               imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
+//           }];
+//       }];
 
         
     }
@@ -281,7 +355,7 @@
                              }
                              completion:^(BOOL finshed){
                                  [gesture.view removeFromSuperview];
-                                 
+                                 [self clearSliderView];
                              }];
         } else{
             UIScrollView *view = (UIScrollView*)gesture.view;

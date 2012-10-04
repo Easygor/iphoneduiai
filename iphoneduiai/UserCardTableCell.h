@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "UserCardView.h"
+#import "CustomCellDelegate.h"
 
 @interface UserCardTableCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UserCardView *leftCard, *middleCard, *rightCard;
 @property (strong, nonatomic) NSArray *users;
+@property (assign, nonatomic) IBOutlet id <CustomCellDelegate> delegate;
 
 @end

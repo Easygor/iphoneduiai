@@ -20,6 +20,7 @@
 
 - (void)dealloc
 {
+    self.delegate = nil;
     [_arry release];
     [_timeLabel release];
     [_contentLabel release];
@@ -28,6 +29,19 @@
     [_rightCard release];
     [_users release];
     [super dealloc];
+}
+
+- (void)awakeFromNib
+{
+    UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(gestureAction:)] autorelease];
+    UITapGestureRecognizer *tap2 = [[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(gestureAction:)] autorelease];
+    UITapGestureRecognizer *tap3 = [[[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                           action:@selector(gestureAction:)] autorelease];
+    [self.leftCard addGestureRecognizer:tap];
+    [self.middleCard addGestureRecognizer:tap2];
+    [self.rightCard addGestureRecognizer:tap3];
 }
 
 - (NSArray *)arry
@@ -58,6 +72,33 @@
         for (int i=users.count; i<self.arry.count; i++) {
             UserCardView *view = [self.arry objectAtIndex:i];
             view.hidden = YES;
+        }
+    }
+}
+
+- (void)gestureAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded ||
+        gesture.state == UIGestureRecognizerStateBegan) {
+        // something
+        
+        CGSize size = gesture.view.frame.size;
+        UIView *coverView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)] autorelease];
+        coverView.backgroundColor = RGBACOLOR(0, 0, 0, 0.35);
+        [gesture.view addSubview:coverView];
+        
+//        int64_t delayInSeconds = 1;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+
+            [coverView removeFromSuperview];
+        });
+        
+        NSString *pos = [NSString stringWithFormat:@"%d", [self.arry indexOfObject:gesture.view]];
+        NSLog(@"post: %@", pos);
+        if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
+            [self.delegate didChangeStatus:self toStatus:pos];
         }
     }
 }
