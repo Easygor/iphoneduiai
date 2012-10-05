@@ -16,12 +16,21 @@
 @end
 
 @interface SliderView : UIView <UIScrollViewDelegate>
+{
+	UIScrollView *scrollView;
+	UIPageControl *pageControl;
+	
+	// To be used when scrolls originate from the UIPageControl
+    BOOL pageControlUsed;
+}
 
+@property (nonatomic, assign) IBOutlet id<SliderDataSource> dataSource;
+
+@property (strong, nonatomic) UIPageControl *pageControl;
 - (IBAction)changePage:(id)sender;
 - (IBAction)changePageCycle:(id)sender;
 - (void)selectPageAtIndex:(NSInteger)index;
 
 - (id)initWithFrame:(CGRect)frame withDataSource:(id<SliderDataSource>)_dataSource;
-
 
 @end

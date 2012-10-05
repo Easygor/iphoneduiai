@@ -224,4 +224,36 @@
     }];
 }
 
++ (void)uploadImage:(NSData*)data type:(NSString*)photoType block:(void(^)(NSDictionary *info))block
+{
+    NSMutableDictionary *dp = [[self class] queryParams];
+
+    [[RKClient sharedClient] post:[@"/uc/uploadphoto.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+
+        RKParams *p = [RKParams paramsWithDictionary:@{@"phototype":photoType}];
+        [p setData:data MIMEType:@"image/png" forParam:@"Filedata"];
+        request.params = p;
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"score photo error: %@", [error description]);
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            NSLog(@"str : %@", [response bodyAsString]);
+            if (response.isOK && response.isJSON) {
+                NSDictionary *d = [[response bodyAsString] objectFromJSONString];
+                NSInteger code = [d[@"error"] integerValue];
+                NSLog(@"upload image: %@", d);
+                NSLog(@"score photo mesg: %d, %@", code, d[@"message"]);
+                if (code == 0) {
+                    if (block) {
+                        block([d objectForKey:@"photoinfo"]);
+                    }
+                }
+            }
+        }];
+        
+    }];
+}
+
 @end

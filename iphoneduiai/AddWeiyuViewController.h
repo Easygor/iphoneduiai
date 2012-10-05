@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncImageView.h"
 
 @interface AddWeiyuViewController : UIViewController<UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -17,6 +18,8 @@
     
     UIButton *faceButton;
     BOOL state;
+    
+    AsyncImageView *avatarImageView;
     
 }
 

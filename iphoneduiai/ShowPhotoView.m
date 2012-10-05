@@ -27,6 +27,7 @@
 
 - (void)dealloc
 {
+    self.slider.dataSource = nil;
     [_scrollView release];
     [_showImageView release];
     [_photos release];
@@ -34,6 +35,7 @@
     [_slider release];
     [_rounds release];
     [_containerView release];
+    [_slider release];
     [super dealloc];
 }
 
@@ -204,6 +206,13 @@
     oneTap.numberOfTouchesRequired = 1;
     [view addGestureRecognizer:oneTap];
     
+    UITapGestureRecognizer *doubleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
+    doubleTap.numberOfTapsRequired = 2;
+    doubleTap.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:doubleTap];
+    
+    [oneTap requireGestureRecognizerToFail:doubleTap];
+    
     CGRect viewFrame = [self convertRect:self.showImageView.frame toView:self.window];
     
     AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
@@ -269,7 +278,11 @@
                              }];
         } else{
             UIScrollView *view = (UIScrollView*)gesture.view;
-            view.zoomScale *= 2;
+            if (view.zoomScale <= 1.0) {
+                [view setZoomScale:3.0 animated:YES];
+            } else{
+                [view setZoomScale:1.0 animated:YES];
+            }
         }
         
     }

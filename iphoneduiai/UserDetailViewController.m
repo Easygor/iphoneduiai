@@ -517,4 +517,10 @@ static CGFloat dHeight2 = 0.0f;
     NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
 }
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    // do here
+}
+
 @end

@@ -9,11 +9,12 @@
 #import "WeiyuWordCell.h"
 #import "FullyLoaded.h"
 #import "SliderView.h"
+#import "SVProgressHUD.h"
 
 #define DW 150.0f
 #define DH 112.0f
 
-@interface WeiyuWordCell () <UIScrollViewDelegate, SliderDataSource>
+@interface WeiyuWordCell () <UIScrollViewDelegate, SliderDataSource, UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *timeIconView;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
@@ -26,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray *photos;
 
 @property (strong, nonatomic) SliderView *slider;
+@property (strong, nonatomic) UIImageView *curImageView;
 
 @end
 
@@ -33,6 +35,7 @@
 
 - (void)dealloc
 {
+    self.slider.dataSource = nil;
     self.delegate = nil;
     [_timeIconView release];
     [_avaterImageView release];
@@ -50,6 +53,7 @@
     [_containerView release];
     [_photos release];
     [_slider release];
+    [_curImageView release];
     [super dealloc];
 }
 
@@ -260,6 +264,16 @@
     oneTap.numberOfTouchesRequired = 1;
     [view addGestureRecognizer:oneTap];
     
+    UITapGestureRecognizer *doubleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapContainerView:)] autorelease];
+    doubleTap.numberOfTapsRequired = 2;
+    doubleTap.numberOfTouchesRequired = 1;
+    [view addGestureRecognizer:doubleTap];
+    
+    UILongPressGestureRecognizer *longPress = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)] autorelease];
+    [view addGestureRecognizer:longPress];
+    
+    [oneTap requireGestureRecognizerToFail:doubleTap];
+    
     AsyncImageView *oldView = (AsyncImageView*)[self.mainView.subviews objectAtIndex:index];
     CGRect viewFrame = [self.mainView convertRect:oldView.frame toView:self.window];
     
@@ -310,6 +324,7 @@
             
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             self.slider.backgroundColor = [UIColor clearColor];
+            self.slider.pageControl.hidden = YES;
             
             [UIView animateWithDuration:0.3
                              animations:^{
@@ -321,10 +336,47 @@
                              }];
         } else{
             UIScrollView *view = (UIScrollView*)gesture.view;
-            view.zoomScale *= 2;
+            if (view.zoomScale <= 1.0) {
+                [view setZoomScale:3.0 animated:YES];
+            } else{
+                [view setZoomScale:1.0 animated:YES];
+            }
         }
 
     }
+}
+
+- (void)longPressAction:(UILongPressGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan ||
+        gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"保存图片",nil];
+        self.curImageView = (UIImageView*)[gesture.view viewWithTag:gesture.view.tag-100];
+        [actionSheet showInView:self.window];
+        [actionSheet release];
+        
+    }
+}
+
+#pragma mark - ActionSheet Delegate Methods
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([actionSheet cancelButtonIndex] == buttonIndex) {
+        return;
+    }
+        
+    if (buttonIndex == 0){
+        UIImageWriteToSavedPhotosAlbum(self.curImageView.image, nil, nil, nil);
+        [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+    }
+    
+    self.curImageView = nil;
 }
 
 

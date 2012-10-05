@@ -27,4 +27,5 @@
 + (NSString *)dateDescWithDate:(NSDate*)date;
 + (NSMutableDictionary*)queryParams;
 + (void)scorePhotoWithUid:(NSString*)uid pid:(NSString*)pid block:(void(^)())block;
++ (void)uploadImage:(NSData*)data type:(NSString*)photoType block:(void(^)(NSDictionary *info))block;
 @end

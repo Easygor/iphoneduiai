@@ -477,22 +477,28 @@
     }];
 }
 
+- (void)doOnLocationStrategy
+{
+    if ([self.orderField isEqualToString:@"distance"]) {
+        [self reloadList];
+    } else{
+        if (self.users.count <= 0) {
+            [self.sementdView selectSegmentAtIndex:0];
+        }
+    }
+}
+
 #pragma mark - location controller delegate
 -(void)didOnChangeStatusToAllow:(CLLocationManager *)manager
 {
-
-    if ([self.orderField isEqualToString:@"distance"]) {
-       [self reloadList];
-    }
- 
+    [self doOnLocationStrategy];
 }
 
 -(void)didOnChangeStatusToUneabled:(CLLocationManager *)manager
 {
     
-    if ([self.orderField isEqualToString:@"distance"]) {
-        [self reloadList];
-    }
+    [self doOnLocationStrategy];
+    
 }
 
 #pragma mark custom cell delegate

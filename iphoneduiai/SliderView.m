@@ -9,15 +9,7 @@
 #import "SliderView.h"
 
 @interface SliderView ()
-{
-	UIScrollView *scrollView;
-	UIPageControl *pageControl;
-	
-	// To be used when scrolls originate from the UIPageControl
-    BOOL pageControlUsed;
-}
 
-@property (nonatomic, assign) IBOutlet id<SliderDataSource> dataSource;
 @property (nonatomic, strong) NSMutableArray *views;
 
 - (void)loadScrollViewWithPage:(int)page;
@@ -26,11 +18,13 @@
 @end
 
 @implementation SliderView
+@synthesize pageControl;
 
 - (void)dealloc
 {
     self.dataSource = nil;
     [_views release];
+    [pageControl release];
     [super dealloc];
 }
 

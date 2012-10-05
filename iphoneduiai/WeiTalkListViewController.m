@@ -30,7 +30,10 @@
 @property (strong, nonatomic) EGORefreshTableHeaderView *refreshHeaderView;
 @property (nonatomic) BOOL onlyPhoto;
 @property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
-@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *city, *selectedSex;
+@property (strong, nonatomic) NSString *citySex;
+@property (strong, nonatomic) NSArray *filterEntries;
+@property (strong, nonatomic) UIButton *tilteBtn;
 
 @end
 
@@ -44,7 +47,50 @@
     [_refreshHeaderView release];
     [_dropMenuView release];
     [_city release];
+    [_selectedSex release];
+    [_citySex release];
+    [_filterEntries release];
+    [_tilteBtn release];
     [super dealloc];
+}
+
+- (NSArray *)filterEntries
+{
+    if (_filterEntries == nil) {
+        _filterEntries = [[NSArray alloc] initWithArray:@[@{@"tag":@"all_w", @"name":@"全部女生"},
+                          @{@"tag":@"province_w", @"name":@"同省女生"},
+                          @{@"tag":@"city_w", @"name":@"同城女生"},
+                          @{@"tag":@"all_m", @"name":@"全部男生"},
+                          @{@"tag":@"province_m", @"name":@"同省男生"},
+                          @{@"tag":@"city_m", @"name":@"同城男生"}]];
+    }
+    
+    return _filterEntries;
+}
+
+- (void)setCitySex:(NSString *)citySex
+{
+    if (![_citySex isEqualToString:citySex]) {
+        _citySex = [citySex retain];
+        
+        NSArray *tags = [citySex componentsSeparatedByString:@"_"];
+        self.selectedSex = [tags objectAtIndex:1];
+        self.city = [tags objectAtIndex:0];
+        
+        NSString *name = nil;
+        for (NSDictionary *d in self.filterEntries) {
+            if ([[d objectForKey:@"tag"] isEqualToString:citySex]) {
+                name = [d objectForKey:@"name"];
+                break;
+            }
+            
+        }
+        
+        [self.tilteBtn setTitle:name forState:UIControlStateNormal];
+        [self.tilteBtn setTitle:name forState:UIControlStateHighlighted];
+        
+        [self reloadList];
+    }
 }
 
 - (void)setWeiyus:(NSMutableArray *)weiyus
@@ -57,15 +103,6 @@
         }
         
         [self.tableView reloadData];
-    }
-}
-
-- (void)setCity:(NSString *)city
-{
-    if (![_city isEqualToString:city]) {
-        _city = [city retain];
-        
-        [self reloadList];
     }
 }
 
@@ -99,12 +136,9 @@
 	[self.refreshHeaderView refreshLastUpdatedDate];
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 100, 44);
-    [btn setTitle:@"同城异性" forState:UIControlStateNormal];
-    [btn setTitle:@"同城异性" forState:UIControlStateHighlighted];
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;
-    self.city = @"all";
-    
+    self.tilteBtn = btn;
 }
 
 - (void)selectAeraAction:(UIButton*)btn
@@ -113,6 +147,7 @@
     [self.dropMenuView showMeAtView:self.view
                             atPoint:CGPointMake(posFrame.origin.x, posFrame.origin.y+posFrame.size.height)
                            animated:YES];
+
 }
 
 - (void)exchangeAction:(CustomBarButtonItem*)item
@@ -159,7 +194,13 @@
 {
     [super viewDidAppear:animated];
     if (self.weiyus.count <= 0) {
-        [self reloadList];
+
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        if ([info[@"sex"] isEqualToString:@"m"]) {
+            self.citySex = @"city_w";
+        } else{
+            self.citySex = @"city_m";
+        }
     }
     
 }
@@ -381,13 +422,9 @@
         [dParams setObject:@"photo" forKey:@"a"];
     }
     
-    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-    if ([info[@"sex"] isEqualToString:@"m"]) {
-        [dParams setObject:@"w" forKey:@"sex"];
-    } else{
-        [dParams setObject:@"m" forKey:@"sex"];
-    }
-    
+//    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+
+    [dParams setObject:self.selectedSex forKey:@"sex"];
     [dParams setObject:self.city forKey:@"city"];
     [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [dParams setObject:@"20" forKey:@"pagesize"];
@@ -425,13 +462,12 @@
 #pragma mark - drop menu 
 - (NSArray *)dropMenuViewData:(DropMenuView *)dropView
 {
+    return self.filterEntries;
 
-    return @[@{@"tag":@"all", @"name":@"全部异性"}, @{@"tag":@"province", @"name":@"同省异性"}, @{@"tag":@"city", @"name":@"同城异性"}];
 }
 
 - (void)didSelectedMenuCell:(DropMenuView *)dropView withTag:(NSString *)tag name:(NSString *)name
 {
-    NSLog(@"selecte which one: %@", tag);
     
     if (self.tableView.isDecelerating ||
         self.tableView.isDragging ||
@@ -439,7 +475,8 @@
         return;
     }
     
-    self.city = tag;
+    self.citySex = tag;
+
 }
 
 @end
