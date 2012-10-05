@@ -106,14 +106,11 @@
     
    
     int bigLabelTag = 102;
-   
-    int smallImgTag= 104;
     int lineTag = 105;
     int arrowTag = 107;
     int textFieldTag = 108;
     
     UILabel* bigLabel=nil;
-    UILabel* smallLabel=nil;
     UIImageView* lineView=nil;
     UIView* bgView = nil;
     UIImageView* arrowImgView = nil;

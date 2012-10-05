@@ -9,6 +9,9 @@
 #import "SettingViewController.h"
 #import "RemindViewController.h"
 #import "PreventSetViewController.h"
+#import "ChangePasswordViewController.h"
+#import "StopAccountViewController.h"
+#import "AboutViewController.h"
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 
@@ -277,6 +280,19 @@
         
     }else if([indexPath section]==3)
     {
+        if ([indexPath row]==0) {
+            ChangePasswordViewController *changePasswordViewController = [[[ChangePasswordViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+            [self.navigationController pushViewController:changePasswordViewController animated:YES];
+        }else if([indexPath row]==1)
+        {
+            StopAccountViewController *stopAccountViewController = [[[StopAccountViewController alloc]init]autorelease];
+            [self.navigationController pushViewController:stopAccountViewController animated:YES];
+        }else if([indexPath row]==4)
+        {
+            AboutViewController *aboutViewController = [[[AboutViewController alloc]init]autorelease];
+            [self.navigationController pushViewController:aboutViewController animated:YES];
+            
+        }
         
     }
     

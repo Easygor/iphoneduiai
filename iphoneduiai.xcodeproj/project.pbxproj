@@ -16,6 +16,9 @@
 		5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */; };
 		5A3770041618ADD9003B2C14 /* statusdetail_header_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */; };
 		5A3949FB161ED9A700FB23C2 /* CopyQQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3949FA161ED9A600FB23C2 /* CopyQQViewController.m */; };
+		5A394A0C161F0C1900FB23C2 /* ChangePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A394A0A161F0C1900FB23C2 /* ChangePasswordViewController.m */; };
+		5A394A0D161F0C1900FB23C2 /* ChangePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A394A0B161F0C1900FB23C2 /* ChangePasswordViewController.xib */; };
+		5A394A10161F150E00FB23C2 /* StopAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A394A0F161F150D00FB23C2 /* StopAccountViewController.m */; };
 		5A4C287A161D6550003F2221 /* messages_toolbar_keyboardbutton_background_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4C2876161D654D003F2221 /* messages_toolbar_keyboardbutton_background_highlighted@2x.png */; };
 		5A4C287B161D6550003F2221 /* messages_toolbar_keyboardbutton_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4C2877161D654E003F2221 /* messages_toolbar_keyboardbutton_background.png */; };
 		5A4C287C161D6550003F2221 /* messages_toolbar_keyboardbutton_background_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4C2878161D654E003F2221 /* messages_toolbar_keyboardbutton_background_highlighted.png */; };
@@ -24,6 +27,8 @@
 		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
 		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
+		5AE147FA161F25B0005CC680 /* SendSuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */; };
+		5AE147FD161F2E1A005CC680 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147FC161F2E1A005CC680 /* AboutViewController.m */; };
 		5AE46AAB161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE46A9B161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png */; };
 		5AE46AAC161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE46A9C161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted@2x.png */; };
 		5AE46AAD161C873B00F3007C /* messages_toolbar_camerabutton_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE46A9D161C873B00F3007C /* messages_toolbar_camerabutton_background.png */; };
@@ -373,6 +378,11 @@
 		5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusdetail_header_arrow.png; sourceTree = "<group>"; };
 		5A3949F9161ED9A600FB23C2 /* CopyQQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CopyQQViewController.h; sourceTree = "<group>"; };
 		5A3949FA161ED9A600FB23C2 /* CopyQQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyQQViewController.m; sourceTree = "<group>"; };
+		5A394A09161F0C1900FB23C2 /* ChangePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordViewController.h; sourceTree = "<group>"; };
+		5A394A0A161F0C1900FB23C2 /* ChangePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordViewController.m; sourceTree = "<group>"; };
+		5A394A0B161F0C1900FB23C2 /* ChangePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangePasswordViewController.xib; sourceTree = "<group>"; };
+		5A394A0E161F150D00FB23C2 /* StopAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StopAccountViewController.h; sourceTree = "<group>"; };
+		5A394A0F161F150D00FB23C2 /* StopAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopAccountViewController.m; sourceTree = "<group>"; };
 		5A4C2876161D654D003F2221 /* messages_toolbar_keyboardbutton_background_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages_toolbar_keyboardbutton_background_highlighted@2x.png"; sourceTree = "<group>"; };
 		5A4C2877161D654E003F2221 /* messages_toolbar_keyboardbutton_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages_toolbar_keyboardbutton_background.png; sourceTree = "<group>"; };
 		5A4C2878161D654E003F2221 /* messages_toolbar_keyboardbutton_background_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages_toolbar_keyboardbutton_background_highlighted.png; sourceTree = "<group>"; };
@@ -383,6 +393,10 @@
 		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
 		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
 		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
+		5AE147F8161F25B0005CC680 /* SendSuggestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendSuggestViewController.h; sourceTree = "<group>"; };
+		5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendSuggestViewController.m; sourceTree = "<group>"; };
+		5AE147FB161F2E1A005CC680 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		5AE147FC161F2E1A005CC680 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		5AE46A9B161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages_toolbar_camerabutton_background_highlighted.png; sourceTree = "<group>"; };
 		5AE46A9C161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages_toolbar_camerabutton_background_highlighted@2x.png"; sourceTree = "<group>"; };
 		5AE46A9D161C873B00F3007C /* messages_toolbar_camerabutton_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages_toolbar_camerabutton_background.png; sourceTree = "<group>"; };
@@ -1221,6 +1235,15 @@
 				5A62E88616198EF600BD3958 /* PreventSetViewController.h */,
 				5A62E88716198EF600BD3958 /* PreventSetViewController.m */,
 				5A62E88816198EF600BD3958 /* PreventSetViewController.xib */,
+				5A394A09161F0C1900FB23C2 /* ChangePasswordViewController.h */,
+				5A394A0A161F0C1900FB23C2 /* ChangePasswordViewController.m */,
+				5A394A0B161F0C1900FB23C2 /* ChangePasswordViewController.xib */,
+				5A394A0E161F150D00FB23C2 /* StopAccountViewController.h */,
+				5A394A0F161F150D00FB23C2 /* StopAccountViewController.m */,
+				5AE147F8161F25B0005CC680 /* SendSuggestViewController.h */,
+				5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */,
+				5AE147FB161F2E1A005CC680 /* AboutViewController.h */,
+				5AE147FC161F2E1A005CC680 /* AboutViewController.m */,
 				61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */,
 				61BB2B6015F9DB0800AA82CC /* Supporting Files */,
 			);
@@ -1690,6 +1713,7 @@
 				61C7EE35161EEB840080CAAE /* em31.gif in Resources */,
 				61C7EE36161EEB840080CAAE /* em32.gif in Resources */,
 				61C7EE37161EEB840080CAAE /* em.plist in Resources */,
+				5A394A0D161F0C1900FB23C2 /* ChangePasswordViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1760,6 +1784,10 @@
 				610D8E25161D61A900A22685 /* SliderView.m in Sources */,
 				61C7EDF2161EEB0A0080CAAE /* PageSmileView.m in Sources */,
 				5A3949FB161ED9A700FB23C2 /* CopyQQViewController.m in Sources */,
+				5A394A0C161F0C1900FB23C2 /* ChangePasswordViewController.m in Sources */,
+				5A394A10161F150E00FB23C2 /* StopAccountViewController.m in Sources */,
+				5AE147FA161F25B0005CC680 /* SendSuggestViewController.m in Sources */,
+				5AE147FD161F2E1A005CC680 /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
