@@ -458,7 +458,7 @@
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                NSLog(@"data %@", data);
+//                NSLog(@"data %@", data);
                 self.loading = NO;
                 self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
                 self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
@@ -479,13 +479,16 @@
 
 - (void)doOnLocationStrategy
 {
-    if ([self.orderField isEqualToString:@"distance"]) {
-        [self reloadList];
-    } else{
-        if (self.users.count <= 0) {
-            [self.sementdView selectSegmentAtIndex:0];
+    if ([self checkLogin]) {
+        if ([self.orderField isEqualToString:@"distance"]) {
+            [self reloadList];
+        } else{
+            if (self.users.count <= 0) {
+                [self.sementdView selectSegmentAtIndex:0];
+            }
         }
     }
+
 }
 
 #pragma mark - location controller delegate

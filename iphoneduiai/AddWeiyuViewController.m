@@ -15,12 +15,15 @@
 #import <QuartzCore/QuartzCore.h>
 #import "PageSmileDataSource.h"
 #import "PageSmileView.h"
+#import "SVProgressHUD.h"
 
 @interface AddWeiyuViewController () <PageSmileDataSource>
 
 @property (strong, nonatomic) NSArray *emontions;
 @property (strong, nonatomic) NSData *imageData;
 @property (assign, nonatomic) NSRange lastRange;
+@property (nonatomic) CLLocationCoordinate2D curLocaiton;
+@property (strong, nonatomic) NSString *curAddress, *photoId;
 
 @end
 
@@ -112,7 +115,31 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_emontions release];
     [_imageData release];
+    [_curAddress release];
     [super dealloc];
+}
+
+- (void)setCurAddress:(NSString *)curAddress
+{
+    if (![_curAddress isEqualToString:curAddress]) {
+        _curAddress = [curAddress retain];
+        
+        UIFont *font = [UIFont systemFontOfSize:12.0f];
+        CGSize size = [curAddress sizeWithFont:font];
+        
+        UILabel *lbl = (UILabel*)[contentTextView viewWithTag:99];
+        if (lbl == nil) {
+            lbl = [[[UILabel alloc] initWithFrame:CGRectMake(5, contentTextView.frame.size.height - 16, MIN(size.width, 245), 16)] autorelease];
+            lbl.backgroundColor = [UIColor lightGrayColor];
+            lbl.font = font;
+            lbl.tag = 99;
+             [contentTextView addSubview:lbl];
+        }
+  
+        lbl.text = curAddress;
+//        [lbl sizeToFit];
+        
+    }
 }
 
 - (NSArray *)emontions
@@ -211,6 +238,45 @@
 
 -(IBAction)locSelect:(id)sender
 {
+    if ([LocationController sharedInstance].allow) {
+        [SVProgressHUD show];
+        [[[LocationController sharedInstance] locationManager] startUpdatingLocation];
+        int64_t delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.curLocaiton = [LocationController sharedInstance].location.coordinate;
+            [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
+            
+            NSDictionary *p = @{@"latlng": [NSString stringWithFormat:@"%f,%f", self.curLocaiton.latitude, self.curLocaiton.longitude],
+            @"sensor": @"true", @"language":@"zh-CN"};
+            
+            [[RKClient sharedClient] get:[@"http://maps.googleapis.com/maps/api/geocode/json" stringByAppendingQueryParameters:p]
+                              usingBlock:^(RKRequest *request){
+                                  [request setOnDidFailLoadWithError:^(NSError *error){
+                                      NSLog(@"get address %@", [error description]);
+                                      [SVProgressHUD dismiss];
+                                  }];
+                                  
+                                  [request setOnDidLoadResponse:^(RKResponse *response){
+                                      if (response.isOK && response.isJSON) {
+                                          NSDictionary *geo = [[response bodyAsString] objectFromJSONString];
+//                                          NSLog(@"geo: %@", geo);
+                                          [SVProgressHUD dismiss];
+                                          for (NSDictionary *g in geo[@"results"]) {
+                                              if ([g[@"types"] containsObject:@"street_address"]) {
+                                                   NSLog(@"name: %@", g[@"formatted_address"]);
+                                                  self.curAddress = g[@"formatted_address"];
+                                                  break;
+                                              }
+                                          }
+                                      }
+                                  }];
+                              }];
+            
+        });
+    } else{
+        [SVProgressHUD showErrorWithStatus:@"定位未开启"];
+    }
 }
 
 #pragma mark –  Camera View Delegate Methods
@@ -253,10 +319,17 @@
          CGRect rect2 = toolView.frame;
          rect2.origin.y = rect.size.height-40;
          CGRect rect3 = contentTextView.frame;
-         rect3.size.height = 460 -125-r.size.height;
+         rect3.size.height = 460 -114-r.size.height;
          contentView.frame = rect;
          toolView.frame = rect2;
          contentTextView.frame = rect3;
+         
+         UILabel *lbl = (UILabel*)[contentTextView viewWithTag:99];
+         if (lbl) {
+             CGRect rect4 = lbl.frame;
+             rect4.origin.y = rect3.size.height - lbl.frame.size.height;
+             lbl.frame = rect4;
+         }
 
         }];
     
@@ -273,10 +346,17 @@
          CGRect rect2 = toolView.frame;
          rect2.origin.y = rect.size.height-40;
          CGRect rect3 = contentTextView.frame;
-         rect3.size.height = 124;
+         rect3.size.height = 135;
          contentView.frame = rect;
          toolView.frame = rect2;
          contentTextView.frame = rect3;
+         
+         UILabel *lbl = (UILabel*)[contentTextView viewWithTag:99];
+         if (lbl) {
+             CGRect rect4 = lbl.frame;
+             rect4.origin.y = rect3.size.height - lbl.frame.size.height;
+             lbl.frame = rect4;
+         }
          
      }];
     
@@ -286,10 +366,25 @@
 {
     NSMutableDictionary *dParams = [Utils queryParams];
     [[RKClient sharedClient] post:[@"/v/send.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        
         NSMutableDictionary *pd = [NSMutableDictionary dictionary];
         [pd setObject:[[UIDevice currentDevice] model] forKey:@"vfrom"];
         [pd setObject:@"true" forKey:@"submitupdate"];
         [pd setObject:contentTextView.text forKey:@"content"];
+        
+        if (self.curAddress) {
+            [pd setObject:self.curAddress forKey:@"address"];
+        }
+        
+        if (abs(self.curLocaiton.latitude - 0.0) > 0.001) {
+            [pd setObject:[NSNumber numberWithDouble:self.curLocaiton.latitude] forKey:@"wei"];
+            [pd setObject:[NSNumber numberWithDouble:self.curLocaiton.longitude] forKey:@"jin"];
+        }
+        
+        if (self.photoId) {
+            [pd setObject:self.photoId forKey:@"photoid"];
+        }
+        
         request.params = [RKParams paramsWithDictionary:pd];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
@@ -309,11 +404,13 @@
 
 #pragma mark - emontions
 
-- (int)numberOfPages {
+- (int)numberOfPages
+{
 	return (self.emontions.count / 28) + (self.emontions.count % 28 > 0 ? 1 : 0);
 }
 
-- (UIView *)viewAtIndex:(int)index {
+- (UIView *)viewAtIndex:(int)index
+{
     
     UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)] autorelease];
     for (int i=index*28; i < MIN(index*28+28, self.emontions.count); i++) {

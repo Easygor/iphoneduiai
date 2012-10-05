@@ -8,6 +8,7 @@
 
 #import "CopyQQViewController.h"
 #import "SVProgressHUD.h"
+#import "CustomBarButtonItem.h"
 
 @interface CustomView :UIView
 @end
@@ -43,7 +44,7 @@
     [super loadView];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     UIView *upView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 130)];
-    upView.backgroundColor = [UIColor whiteColor];
+    upView.backgroundColor = RGBCOLOR(250, 250, 250);
     [self.view addSubview:upView];
     
     UILabel *myQQLabel  = [[UILabel alloc]initWithFrame:CGRectMake(20, 30, 100, 16)];
@@ -61,11 +62,14 @@
     qqLabel.backgroundColor = [UIColor clearColor];
     [compositeView addSubview:qqLabel];
     
-    UIButton *copyButton = [[UIButton alloc]initWithFrame:CGRectMake(195, 1, 84, 38)];
+    UIButton *copyButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    copyButton.frame = CGRectMake(195, 1, 84, 38);
     copyButton.backgroundColor = RGBCOLOR(240, 240, 240);
     [copyButton setTitle:@"复制" forState:UIControlStateNormal];
+    [copyButton setTitle:@"复制" forState:UIControlStateHighlighted];
     [copyButton setTitleColor:RGBCOLOR(181, 181, 181) forState:UIControlStateNormal];
-    [copyButton addTarget:self action:@selector(copyPress:)   forControlEvents:UIControlEventTouchUpInside];
+    [copyButton setTitleColor:RGBCOLOR(0, 0, 0) forState:UIControlStateHighlighted];
+    [copyButton addTarget:self action:@selector(copyPress:) forControlEvents:UIControlEventTouchUpInside];
     [compositeView addSubview:copyButton];
     
     
@@ -100,6 +104,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+}
+
+- (void)backAction
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning
