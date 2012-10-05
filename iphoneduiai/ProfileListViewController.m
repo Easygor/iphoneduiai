@@ -36,10 +36,10 @@
 - (void)settingAction
 {
     NSLog(@"jump to setting");
-//    SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
-//     [self.navigationController pushViewController:settingViewController animated:YES];
-    SeniorViewController *seniorViewController = [[[SeniorViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
-    [self.navigationController pushViewController:seniorViewController animated:YES];
+    SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+     [self.navigationController pushViewController:settingViewController animated:YES];
+//    SeniorViewController *seniorViewController = [[[SeniorViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+//    [self.navigationController pushViewController:seniorViewController animated:YES];
 }
 
 - (void)viewDidUnload
