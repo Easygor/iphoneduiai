@@ -15,6 +15,7 @@
 		5A376EDA161849F2003B2C14 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED8161849F2003B2C14 /* line@2x.png */; };
 		5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */; };
 		5A3770041618ADD9003B2C14 /* statusdetail_header_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */; };
+		5A3949FB161ED9A700FB23C2 /* CopyQQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3949FA161ED9A600FB23C2 /* CopyQQViewController.m */; };
 		5A4C287A161D6550003F2221 /* messages_toolbar_keyboardbutton_background_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4C2876161D654D003F2221 /* messages_toolbar_keyboardbutton_background_highlighted@2x.png */; };
 		5A4C287B161D6550003F2221 /* messages_toolbar_keyboardbutton_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4C2877161D654E003F2221 /* messages_toolbar_keyboardbutton_background.png */; };
 		5A4C287C161D6550003F2221 /* messages_toolbar_keyboardbutton_background_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A4C2878161D654E003F2221 /* messages_toolbar_keyboardbutton_background_highlighted.png */; };
@@ -335,6 +336,8 @@
 		5A376ED8161849F2003B2C14 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusdetail_header_arrow@2x.png"; sourceTree = "<group>"; };
 		5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusdetail_header_arrow.png; sourceTree = "<group>"; };
+		5A3949F9161ED9A600FB23C2 /* CopyQQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CopyQQViewController.h; sourceTree = "<group>"; };
+		5A3949FA161ED9A600FB23C2 /* CopyQQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyQQViewController.m; sourceTree = "<group>"; };
 		5A4C2876161D654D003F2221 /* messages_toolbar_keyboardbutton_background_highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "messages_toolbar_keyboardbutton_background_highlighted@2x.png"; sourceTree = "<group>"; };
 		5A4C2877161D654E003F2221 /* messages_toolbar_keyboardbutton_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages_toolbar_keyboardbutton_background.png; sourceTree = "<group>"; };
 		5A4C2878161D654E003F2221 /* messages_toolbar_keyboardbutton_background_highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages_toolbar_keyboardbutton_background_highlighted.png; sourceTree = "<group>"; };
@@ -913,6 +916,8 @@
 				6159B12C16158D6100705835 /* UserDetailViewController.h */,
 				6159B12D16158D6200705835 /* UserDetailViewController.m */,
 				6159B12E16158D6200705835 /* UserDetailViewController.xib */,
+				5A3949F9161ED9A600FB23C2 /* CopyQQViewController.h */,
+				5A3949FA161ED9A600FB23C2 /* CopyQQViewController.m */,
 			);
 			name = Search;
 			sourceTree = "<group>";
@@ -1602,6 +1607,7 @@
 				614CAA59161C7CAD00C86D8F /* DropMenuView.m in Sources */,
 				5A07DF91161B1E7600A50998 /* SeniorViewController.m in Sources */,
 				610D8E25161D61A900A22685 /* SliderView.m in Sources */,
+				5A3949FB161ED9A700FB23C2 /* CopyQQViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

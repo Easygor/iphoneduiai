@@ -17,7 +17,7 @@
 #import "MoreUserInfoView.h"
 #import "WeiyuWordCell.h"
 #import "CustomBarButtonItem.h"
-
+#import "CopyQQViewController.h"
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 
@@ -399,7 +399,11 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)checkQQAction
 {
-    NSLog(@"check QQ now");
+    //NSLog(@"check QQ now");
+    CopyQQViewController *copyQQViewController = [[[CopyQQViewController alloc]init]autorelease];
+    
+    [self.navigationController pushViewController:copyQQViewController animated:YES];
+    
 }
 
 - (IBAction)moreDetailAction:(UIButton *)sender
