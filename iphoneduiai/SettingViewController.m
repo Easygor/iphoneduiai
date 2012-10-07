@@ -13,6 +13,7 @@
 #import "StopAccountViewController.h"
 #import "AboutViewController.h"
 #import "AddPicViewController.h"
+#import "ILikeViewController.h"
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 

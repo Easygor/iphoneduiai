@@ -19,6 +19,7 @@
 #import "MarrayReqView.h"
 #import "MoreUserInfoView.h"
 #import "WeiyuWordCell.h"
+#import "BindingViewController.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -771,12 +772,12 @@ static NSInteger kActionChooseImageTag = 201;
 
 - (IBAction)bindingAction
 {
-    NSLog(@"binding...");
+    BindingViewController *bindingViewController = [[[BindingViewController alloc]init]autorelease];
+    [self.navigationController pushViewController:bindingViewController animated:YES];
 }
 
 - (IBAction)seniorAction
 {
-   
     SeniorViewController *seniorViewController = [[[SeniorViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
     [self.navigationController pushViewController:seniorViewController animated:YES];
 }
