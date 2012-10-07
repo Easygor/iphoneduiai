@@ -18,7 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSMutableArray *rounds;
 @property (strong, nonatomic) IBOutlet AsyncImageView *showImageView;
-@property (strong, nonatomic) IBOutlet CountView *viewCountView;
+//@property (strong, nonatomic) IBOutlet CountView *viewCountView;
 @property (strong, nonatomic) SliderView *slider;
 
 @end
@@ -31,7 +31,7 @@
     [_scrollView release];
     [_showImageView release];
     [_photos release];
-    [_viewCountView release];
+//    [_viewCountView release];
     [_slider release];
     [_rounds release];
     [_containerView release];
@@ -48,11 +48,11 @@
     return _rounds;
 }
 
-- (void)setPhotos:(NSArray *)photos
+- (void)setPhotos:(NSMutableArray *)photos
 {
     if (![_photos isEqualToArray:photos]) {
 //        _photos = [photos retain];
-        NSMutableArray *tmp = [NSMutableArray array];
+         _photos = [[NSMutableArray alloc] init];
         // init the thumbs
         int i=0;
         for (NSDictionary *d in photos) {
@@ -66,13 +66,11 @@
                 view.tag = i;
                 [self.scrollView addSubview:view];
                 [self.rounds addObject:view];
-                [tmp addObject:d];
+                [_photos addObject:d];
             }
 
             i++;
         }
-        
-        _photos = [[NSArray alloc] initWithArray:tmp];
         
         RoundThumbView *lastView = [self.rounds lastObject];
 
@@ -100,23 +98,9 @@
     self.showImageView.userInteractionEnabled = YES;
     self.showImageView.tag = -1;
     
-    [self.viewCountView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
+    self.scrollView.showsHorizontalScrollIndicator = NO;
+    self.scrollView.showsVerticalScrollIndicator = NO;
     
-}
-
-- (void)scoreGestureAction:(UITapGestureRecognizer*)gesture
-{
-    if (gesture.state == UIGestureRecognizerStateChanged ||
-        gesture.state == UIGestureRecognizerStateEnded) {
-        NSDictionary *d = [self.photos objectAtIndex:gesture.view.tag];
-        NSLog(@"user: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"user"]);
-        NSLog(@"photo : %@", d);
-        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-        [Utils scorePhotoWithUid:[info objectForKey:@"uid"] pid:[d objectForKey:@"pid"] block:^{
-            NSString *scoreString = [NSString stringWithFormat:@"%d", [self.viewCountView.count integerValue]+1];
-            self.viewCountView.count = scoreString;
-        }];
-    }
 }
 
 - (void)awakeFromNib
@@ -143,10 +127,8 @@
             
             view.selected = YES;
             NSString *iconUrl = [d objectForKey:@"icon"];
-            [self.showImageView loadImage:iconUrl/*[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]*/];
-            self.viewCountView.count = [d objectForKey:@"score"];
+            [self.showImageView loadImage:/*iconUrl*/[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]];
             self.showImageView.tag = i;
-            self.viewCountView.tag = i;
         } else{
             view.selected = NO;
         }

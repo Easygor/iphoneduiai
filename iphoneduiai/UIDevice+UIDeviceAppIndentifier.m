@@ -7,23 +7,23 @@
 //
 
 #import "UIDevice+UIDeviceAppIndentifier.h"
+#import "SSKeychain.h"
 
 @implementation UIDevice (UIDeviceAppIndentifier)
 
 - (NSString *) deviceApplicationIdentifier
 {
     static NSString *name = @"theDeviceApplicationIdentifier";
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *value = [defaults objectForKey: name];
+    NSError *error = nil;
+    NSString *uuid = [SSKeychain passwordForService:name account:@"uuid" error:&error];
     
-    if (!value)
+    if (!uuid)
     {
-        value = (NSString *) CFUUIDCreateString (kCFAllocatorDefault, CFUUIDCreate(kCFAllocatorDefault));
-        [defaults setObject: value forKey: name];
-        [defaults synchronize];
+        uuid = (NSString *) CFUUIDCreateString (kCFAllocatorDefault, CFUUIDCreate(kCFAllocatorDefault));
+       [SSKeychain setPassword:uuid forService:name account:@"uuid"];
     }
     
-    return value;
+    return uuid;
     
 }
 

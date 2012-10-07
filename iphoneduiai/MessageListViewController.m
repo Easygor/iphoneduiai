@@ -7,26 +7,32 @@
 //
 
 #import "MessageListViewController.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
+#import "MessageTableCell.h"
 
 @interface MessageListViewController ()
+
+@property (strong, nonatomic) NSMutableArray *messages;
 
 @end
 
 @implementation MessageListViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)dealloc
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    [_messages release];
+    [super dealloc];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.title = @"消息";
+    [self.navigationController.navigationBar setHidden:YES];
 }
 
 - (void)viewDidUnload
@@ -36,33 +42,27 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+//    return self.messages.count;
+    return 11;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"messageCell";
+    MessageTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:3];
+    }
+    
+    cell.count = indexPath.row;
     
     return cell;
 }

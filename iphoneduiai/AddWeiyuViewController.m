@@ -91,6 +91,7 @@
     UIButton *locButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background"] forState:UIControlStateNormal];
     [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background_highlighted"] forState:UIControlStateHighlighted ];
+    [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background_highlighted"] forState:UIControlStateApplication ];
     locButton.frame = CGRectMake(220, 12, 18, 24);
     [locButton addTarget:self action:@selector(locSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:locButton];
@@ -287,7 +288,7 @@
     
     [Utils uploadImage:data type:@"vphoto" block:^(NSDictionary *info){
         if (info) {
-            NSLog(@"photo info: %@", info);
+            self.photoId = info[@"pid"];
         }
     }];
     [picker dismissModalViewControllerAnimated:YES];
@@ -364,6 +365,8 @@
 
 - (void)sendWeiyuRequest
 {
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [SVProgressHUD show];
     NSMutableDictionary *dParams = [Utils queryParams];
     [[RKClient sharedClient] post:[@"/v/send.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         
@@ -388,15 +391,26 @@
         request.params = [RKParams paramsWithDictionary:pd];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
-            NSLog(@"send weiyu: %@", [error description]);
+            NSLog(@"send weiyu error: %@", [error description]);
+            self.navigationItem.rightBarButtonItem.enabled = YES;
         }];
         
         [request setOnDidLoadResponse:^(RKResponse *response){
-            NSLog(@"send weiyu: %@", [response bodyAsString]);
+
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                NSLog(@"weiyu data: %@", data);
+                NSInteger code = [[data objectForKey:@"error"] integerValue];
+
+                if (code != 0) {
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                } else{
+                    [SVProgressHUD showSuccessWithStatus:@"发表成功"];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+
             }
+            
+            self.navigationItem.rightBarButtonItem.enabled = YES;
         }];
         
     }];
