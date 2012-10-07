@@ -11,6 +11,11 @@
 		5A07DF91161B1E7600A50998 /* SeniorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A07DF8F161B1E7600A50998 /* SeniorViewController.m */; };
 		5A07DF92161B1E7600A50998 /* SeniorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A07DF90161B1E7600A50998 /* SeniorViewController.xib */; };
 		5A07DF94161B201D00A50998 /* seniorEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A07DF93161B201D00A50998 /* seniorEntries.plist */; };
+		5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3505CF16204C5C00A80A71 /* AddPicViewController.m */; };
+		5A3505D216204C5C00A80A71 /* AddPicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A3505D016204C5C00A80A71 /* AddPicViewController.xib */; };
+		5A3505D516204C8200A80A71 /* BJGridItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3505D416204C8200A80A71 /* BJGridItem.m */; };
+		5A3505D7162050F700A80A71 /* blueButton.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5A3505D6162050F700A80A71 /* blueButton.jpg */; };
+		5A3505DD1620548000A80A71 /* deletbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3505DC1620548000A80A71 /* deletbutton.png */; };
 		5A376ED9161849F2003B2C14 /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED7161849F2003B2C14 /* line.png */; };
 		5A376EDA161849F2003B2C14 /* line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A376ED8161849F2003B2C14 /* line@2x.png */; };
 		5A3770021618AAB1003B2C14 /* statusdetail_header_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */; };
@@ -374,6 +379,13 @@
 		5A07DF8F161B1E7600A50998 /* SeniorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeniorViewController.m; sourceTree = "<group>"; };
 		5A07DF90161B1E7600A50998 /* SeniorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeniorViewController.xib; sourceTree = "<group>"; };
 		5A07DF93161B201D00A50998 /* seniorEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = seniorEntries.plist; sourceTree = "<group>"; };
+		5A3505CE16204C5C00A80A71 /* AddPicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPicViewController.h; sourceTree = "<group>"; };
+		5A3505CF16204C5C00A80A71 /* AddPicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPicViewController.m; sourceTree = "<group>"; };
+		5A3505D016204C5C00A80A71 /* AddPicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddPicViewController.xib; sourceTree = "<group>"; };
+		5A3505D316204C8200A80A71 /* BJGridItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BJGridItem.h; sourceTree = "<group>"; };
+		5A3505D416204C8200A80A71 /* BJGridItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BJGridItem.m; sourceTree = "<group>"; };
+		5A3505D6162050F700A80A71 /* blueButton.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blueButton.jpg; sourceTree = "<group>"; };
+		5A3505DC1620548000A80A71 /* deletbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletbutton.png; sourceTree = "<group>"; };
 		5A376ED7161849F2003B2C14 /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		5A376ED8161849F2003B2C14 /* line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line@2x.png"; sourceTree = "<group>"; };
 		5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusdetail_header_arrow@2x.png"; sourceTree = "<group>"; };
@@ -779,6 +791,8 @@
 		5A1A18161618491700D0B782 /* Setting images */ = {
 			isa = PBXGroup;
 			children = (
+				5A3505DC1620548000A80A71 /* deletbutton.png */,
+				5A3505D6162050F700A80A71 /* blueButton.jpg */,
 				5A3770001618AAB1003B2C14 /* statusdetail_header_arrow@2x.png */,
 				5A3770031618ADD9003B2C14 /* statusdetail_header_arrow.png */,
 				5A376ED7161849F2003B2C14 /* line.png */,
@@ -1231,6 +1245,36 @@
 				6141A70815FB732D00985257 /* HonorListViewController.h */,
 				6141A70915FB732D00985257 /* HonorListViewController.m */,
 				6141A70A15FB732D00985257 /* HonorListViewController.xib */,
+				6141A70D15FB737000985257 /* ProfileListViewController.h */,
+				6141A70E15FB737000985257 /* ProfileListViewController.m */,
+				6141A70F15FB737100985257 /* ProfileListViewController.xib */,
+				61240BC416195FB7005C4E6C /* SettingViewController.h */,
+				61240BC516195FB7005C4E6C /* SettingViewController.m */,
+				61240BC616195FB7005C4E6C /* SettingViewController.xib */,
+				5A07DF8E161B1E7600A50998 /* SeniorViewController.h */,
+				5A07DF8F161B1E7600A50998 /* SeniorViewController.m */,
+				5A07DF90161B1E7600A50998 /* SeniorViewController.xib */,
+				5A62E8811619755100BD3958 /* RemindViewController.h */,
+				5A62E8821619755100BD3958 /* RemindViewController.m */,
+				5A62E8831619755100BD3958 /* RemindViewController.xib */,
+				5A62E88616198EF600BD3958 /* PreventSetViewController.h */,
+				5A62E88716198EF600BD3958 /* PreventSetViewController.m */,
+				5A62E88816198EF600BD3958 /* PreventSetViewController.xib */,
+				5A394A09161F0C1900FB23C2 /* ChangePasswordViewController.h */,
+				5A394A0A161F0C1900FB23C2 /* ChangePasswordViewController.m */,
+				5A394A0B161F0C1900FB23C2 /* ChangePasswordViewController.xib */,
+				5A394A0E161F150D00FB23C2 /* StopAccountViewController.h */,
+				5A394A0F161F150D00FB23C2 /* StopAccountViewController.m */,
+				5AE147F8161F25B0005CC680 /* SendSuggestViewController.h */,
+				5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */,
+				5AE147FB161F2E1A005CC680 /* AboutViewController.h */,
+				5AE147FC161F2E1A005CC680 /* AboutViewController.m */,
+				5A3505CE16204C5C00A80A71 /* AddPicViewController.h */,
+				5A3505CF16204C5C00A80A71 /* AddPicViewController.m */,
+				5A3505D016204C5C00A80A71 /* AddPicViewController.xib */,
+				5A3505D316204C8200A80A71 /* BJGridItem.h */,
+				5A3505D416204C8200A80A71 /* BJGridItem.m */,
+>>>>>>> 1b19c9db2737b7be7e7cb71fc1329094eb7bdf5e
 				61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */,
 				61BB2B6015F9DB0800AA82CC /* Supporting Files */,
 			);
@@ -1732,6 +1776,9 @@
 				61C7EE36161EEB840080CAAE /* em32.gif in Resources */,
 				61C7EE37161EEB840080CAAE /* em.plist in Resources */,
 				5A394A0D161F0C1900FB23C2 /* ChangePasswordViewController.xib in Resources */,
+				5A3505D216204C5C00A80A71 /* AddPicViewController.xib in Resources */,
+				5A3505D7162050F700A80A71 /* blueButton.jpg in Resources */,
+				5A3505DD1620548000A80A71 /* deletbutton.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1808,6 +1855,8 @@
 				5AE147FD161F2E1A005CC680 /* AboutViewController.m in Sources */,
 				61C7EE55161F3F850080CAAE /* MessageTableCell.m in Sources */,
 				61C7EE5C16202B0F0080CAAE /* SSKeychain.m in Sources */,
+				5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */,
+				5A3505D516204C8200A80A71 /* BJGridItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

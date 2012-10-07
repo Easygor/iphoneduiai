@@ -25,7 +25,7 @@
     
     [self.view addSubview:duiAiImgView];
     
-    UILabel *versionLabel = [[UILabel alloc]initWithFrame:CGRectMake(110, 200, 80, 30)];
+    UILabel *versionLabel = [[[UILabel alloc]initWithFrame:CGRectMake(110, 200, 80, 30)]autorelease];
     versionLabel.text = @"iPhone版v1.0\n已是最新版本";
     versionLabel.lineBreakMode = UILineBreakModeWordWrap;
     versionLabel.numberOfLines = 0;
@@ -49,7 +49,10 @@
     moreLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:moreLabel];
 
-    
+    [moreLabel release];
+    [URLLabel release];
+    [versionLabel release];
+
     
     
 }

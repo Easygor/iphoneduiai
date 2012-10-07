@@ -30,7 +30,7 @@
     tipLabel.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:tipLabel];
     
-    UIButton *stopButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIButton *stopButton = [[UIButton buttonWithType:UIButtonTypeCustom]autorelease];
     stopButton.frame = CGRectMake(10, 120, 300, 44);
     stopButton.backgroundColor =RGBCOLOR(226, 86, 89);
     
