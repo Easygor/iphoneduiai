@@ -37,6 +37,7 @@
 		5ABA114A16214C040043F51A /* BindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA114816214C040043F51A /* BindingViewController.m */; };
 		5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114916214C040043F51A /* BindingViewController.xib */; };
 		5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114C16216DE90043F51A /* settingBindingEntries.plist */; };
+		5ABA115D1621D48B0043F51A /* SetEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA115C1621D48B0043F51A /* SetEmailViewController.m */; };
 		5AE147FA161F25B0005CC680 /* SendSuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */; };
 		5AE147FD161F2E1A005CC680 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147FC161F2E1A005CC680 /* AboutViewController.m */; };
 		5AE46AAB161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE46A9B161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png */; };
@@ -419,6 +420,8 @@
 		5ABA114816214C040043F51A /* BindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingViewController.m; sourceTree = "<group>"; };
 		5ABA114916214C040043F51A /* BindingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BindingViewController.xib; sourceTree = "<group>"; };
 		5ABA114C16216DE90043F51A /* settingBindingEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settingBindingEntries.plist; sourceTree = "<group>"; };
+		5ABA115B1621D48B0043F51A /* SetEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetEmailViewController.h; sourceTree = "<group>"; };
+		5ABA115C1621D48B0043F51A /* SetEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetEmailViewController.m; sourceTree = "<group>"; };
 		5AE147F8161F25B0005CC680 /* SendSuggestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendSuggestViewController.h; sourceTree = "<group>"; };
 		5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendSuggestViewController.m; sourceTree = "<group>"; };
 		5AE147FB161F2E1A005CC680 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -1417,6 +1420,8 @@
 				5ABA114716214C040043F51A /* BindingViewController.h */,
 				5ABA114816214C040043F51A /* BindingViewController.m */,
 				5ABA114916214C040043F51A /* BindingViewController.xib */,
+				5ABA115B1621D48B0043F51A /* SetEmailViewController.h */,
+				5ABA115C1621D48B0043F51A /* SetEmailViewController.m */,
 			);
 			name = profiles;
 			sourceTree = "<group>";
@@ -1856,6 +1861,7 @@
 				5A3505D516204C8200A80A71 /* BJGridItem.m in Sources */,
 				5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */,
 				5ABA114A16214C040043F51A /* BindingViewController.m in Sources */,
+				5ABA115D1621D48B0043F51A /* SetEmailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

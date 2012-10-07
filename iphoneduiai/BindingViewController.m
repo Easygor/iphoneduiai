@@ -8,6 +8,7 @@
 
 #import "BindingViewController.h"
 #import "CustomBarButtonItem.h"
+#import "SetEmailViewController.h"
 @interface BindingViewController ()
 @property(nonatomic,retain)NSArray *dataArray;
 
@@ -15,6 +16,13 @@
 
 @implementation BindingViewController
 @synthesize dataArray = _dataArray;
+
+
+-(void)dealloc
+{
+    [_dataArray release];
+    [super dealloc];
+}
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -39,6 +47,20 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
     _dataArray = [[NSArray alloc]initWithObjects:@"来关注我",@"新浪微博",@"腾讯微博",@"QQ空间",@"微信",@"邮箱", nil];
+    UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, 300, 100)];
+    UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 10, 300, 100)];
+    tipLabel.text = @"绑定微博可以让您获取更多关注，增进互相了解。\n同时也可以丰富您的个人资料，让您在找对象过程中更有竞争力。\n绑定微信可以更便于您和别的用户沟通。\n绑定邮箱之后可用于取回密码。额可以给所有用户发邮件，同时也可以收到别的用户给您的邮件。";
+    tipLabel.textColor = RGBCOLOR(204, 204, 204);
+    tipLabel.numberOfLines = 0;
+     tipLabel.lineBreakMode = UILineBreakModeCharacterWrap;
+    tipLabel.font = [UIFont systemFontOfSize:11];
+    tipLabel.backgroundColor = [UIColor clearColor];
+    tipLabel.shadowColor = [UIColor whiteColor];
+    tipLabel.shadowOffset = CGSizeMake(1.0, 1.0);
+
+    [footView addSubview:tipLabel];
+    self.tableView.tableFooterView = footView;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -91,6 +113,10 @@
     [bgView addSubview:smallLabel];
     bigLabel.text = [self.dataArray objectAtIndex:[indexPath row]];
     
+    
+   UIImageView *arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
+    [cell addSubview:arrowImgView];
+    arrowImgView.image = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
     if ([indexPath row]==0) {
         UIImageView *img = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"]];
         img.frame = CGRectMake(15, 10, 24, 24);
@@ -122,17 +148,17 @@
 
 
 #pragma mark - Table view delegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 34.0f;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    if ([indexPath row]==5) {
+        SetEmailViewController *setEmailViewController = [[[SetEmailViewController alloc]init]autorelease];
+        [self.navigationController pushViewController:setEmailViewController animated:YES];
+    }
 }
 
 @end
