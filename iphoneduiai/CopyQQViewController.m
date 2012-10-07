@@ -89,6 +89,9 @@
     tipLabel.font = [UIFont systemFontOfSize:15];
     tipLabel.textColor = RGBCOLOR(174, 174, 174);
     [self.view addSubview:tipLabel];
+    [tipLabel release];
+    [compositeView release];
+    [qqLabel release];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

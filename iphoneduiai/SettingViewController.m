@@ -12,6 +12,7 @@
 #import "ChangePasswordViewController.h"
 #import "StopAccountViewController.h"
 #import "AboutViewController.h"
+#import "AddPicViewController.h"
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 
@@ -262,6 +263,10 @@
                 
             }
             
+        }else if([indexPath row]==1)
+        {
+            AddPicViewController *addPicViewController  = [[[AddPicViewController alloc]init]autorelease];
+            [self.navigationController pushViewController:addPicViewController animated:YES];
         }
     }else if([indexPath section]==1)
     {
