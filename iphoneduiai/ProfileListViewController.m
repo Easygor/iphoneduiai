@@ -22,8 +22,9 @@
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
+static NSInteger kActionChooseImageTag = 201;
 
-@interface ProfileListViewController () <CustomCellDelegate>
+@interface ProfileListViewController () <CustomCellDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ShowPhotoDelegate>
 
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
 @property (retain, nonatomic) IBOutlet AvatarView *avatarView;
@@ -66,6 +67,7 @@ static CGFloat dHeight2 = 0.0f;
 @property (retain, nonatomic) IBOutlet UIImageView *img6;
 
 @property (strong, nonatomic) UIBarButtonItem *cancelBarItem, *saveBarItem, *settingBarItem, *changeBaritem;
+@property (nonatomic) BOOL isUploadPhoto;
 
 @end
 
@@ -255,13 +257,17 @@ static CGFloat dHeight2 = 0.0f;
     self.settingBarItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"target:self action:@selector(settingAction)] autorelease];
     self.navigationItem.leftBarButtonItem = self.changeBaritem;
     self.navigationItem.rightBarButtonItem = self.settingBarItem;
+    
+    self.showPhotoView.delegate = self;
+    
+    [self grabUserInfoDetailRequest];
+    [self grabMyWeiyuListReqeustWithPage:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self grabUserInfoDetailRequest];
-    [self grabMyWeiyuListReqeustWithPage:1];
+
 }
 
 - (void)saveAction
@@ -344,6 +350,10 @@ static CGFloat dHeight2 = 0.0f;
     headerView.frame = frame;
     self.tableView.tableHeaderView = headerView;
     
+    // avatar
+    self.avatarView.editing = YES;
+    // show images
+    self.showPhotoView.editing = YES;
 }
 
 - (void)changeToNonEditingView
@@ -388,6 +398,10 @@ static CGFloat dHeight2 = 0.0f;
     headerView.frame = frame;
     self.tableView.tableHeaderView = headerView;
     
+    // avatar
+    self.avatarView.editing = NO;
+    // showimages
+    self.showPhotoView.editing = NO;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -403,8 +417,6 @@ static CGFloat dHeight2 = 0.0f;
     
 
 }
-
-
 
 #pragma mark - Table view data source
 
@@ -772,6 +784,118 @@ static CGFloat dHeight2 = 0.0f;
 - (IBAction)friendAction
 {
     NSLog(@"friend...");
+}
+
+- (IBAction)uploadAvatarAction
+{
+    // upload
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"从资源库",@"拍照",nil];
+        actionSheet.tag=kActionChooseImageTag;
+        [actionSheet showInView:self.view.window];
+        [actionSheet release];
+        
+    } else {
+        
+        UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.delegate = self;
+        if (!self.isUploadPhoto) {
+            picker.allowsEditing = YES;
+        }
+
+        [self presentModalViewController:picker animated:YES];
+    }
+}
+
+#pragma mark - ActionSheet Delegate Methods
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([actionSheet cancelButtonIndex] == buttonIndex) {
+        return;
+    }
+    
+    if (actionSheet.tag==kActionChooseImageTag) {
+        UIImagePickerController* imagePickerController = [[[UIImagePickerController alloc] init]autorelease];
+        
+        if (buttonIndex == 0)
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        else  if(buttonIndex==1)
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+        
+        
+        imagePickerController.delegate=self;
+        if (!self.isUploadPhoto) {
+            imagePickerController.allowsEditing = YES;
+        }
+        [self presentModalViewController: imagePickerController
+                                animated: YES];
+    }else{
+        if ([actionSheet destructiveButtonIndex] == buttonIndex) {
+            NSDictionary *photo = [self.showPhotoView.photos objectAtIndex:actionSheet.tag];
+            [Utils deleteImage:photo[@"pid"] block:^{
+                [self.showPhotoView removePhotoAt:actionSheet.tag];
+            }];
+        }
+    }
+}
+
+#pragma mark –  Camera View Delegate Methods
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    /*添加处理选中图像代码*/
+    if (self.isUploadPhoto) {
+         NSData *data = UIImagePNGRepresentation([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]);
+        [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
+            if (res) {
+                [self.showPhotoView insertPhoto:res atIndex:1];
+                [self.showPhotoView selectRoundAt:1];
+            }
+        }];
+        self.isUploadPhoto = NO;
+        
+    } else{
+         NSData *data = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage]);
+        [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
+
+            if (res) {
+                self.avatarView.imageView.image = [UIImage imageWithData:data];
+            }
+        }];
+    }
+
+    [picker dismissModalViewControllerAnimated:YES];
+    
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
+    [picker dismissModalViewControllerAnimated:YES];
+     self.isUploadPhoto = NO;
+}
+
+#pragma mark - show photo delegate
+- (void)didTriggerAddPhotoAction:(ShowPhotoView *)view
+{
+    self.isUploadPhoto = YES;
+    [self uploadAvatarAction];
+}
+
+- (void)didTriggerDelPhotoAction:(ShowPhotoView *)view at:(NSInteger)index
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:nil
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:@"删除照片"
+                                  otherButtonTitles:nil];
+    actionSheet.tag=index;
+    [actionSheet showInView:self.view.window];
+    [actionSheet release];
 }
 
 @end

@@ -11,6 +11,7 @@
 @interface AvatarView ()
 
 @property (strong, nonatomic) IBOutlet UIImageView *sexView;
+@property (strong, nonatomic) IBOutlet UIButton *uploadBtn;
 
 @end
 
@@ -35,6 +36,22 @@
             self.sexView.image = [UIImage imageNamed:@"male_icon.png"];
         }
     }
+}
+
+- (void)setEditing:(BOOL)editing
+{
+    if (_editing != editing) {
+        _editing = editing;
+        
+        if (editing) {
+            self.sexView.hidden = YES;
+            self.uploadBtn.hidden = NO;
+        } else{
+            self.sexView.hidden = NO;
+            self.uploadBtn.hidden = YES;
+        }
+    }
+
 }
 
 @end

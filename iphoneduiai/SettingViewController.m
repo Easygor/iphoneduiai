@@ -234,72 +234,61 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath section]==0) {
-        if ([indexPath row]==0) {
-            NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    NSString *label = data[@"label"];
+    if ([label isEqualToString:@"set_avatar"]) {
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+            UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                          initWithTitle:nil
+                                          delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          destructiveButtonTitle:nil
+                                          otherButtonTitles:@"从资源库",@"拍照",nil];
+            actionSheet.tag=kActionChooseImageTag;
+            [actionSheet showInView:self.view];
+            [actionSheet release];
             
-            if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
-                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
-                    UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                                  initWithTitle:nil
-                                                  delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"从资源库",@"拍照",nil];
-                    actionSheet.tag=kActionChooseImageTag;
-                    [actionSheet showInView:self.view];
-                    [actionSheet release];
-                    
-                } else {
-                    
-                    UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
-                    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                    picker.delegate = self;
-                    picker.allowsEditing = YES;
-                    [self presentModalViewController:picker animated:YES];
-                    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-                }
-                
-            }
+        } else {
             
-        }else if([indexPath row]==1)
-        {
-            AddPicViewController *addPicViewController  = [[[AddPicViewController alloc]init]autorelease];
-            [self.navigationController pushViewController:addPicViewController animated:YES];
-        }
-    }else if([indexPath section]==1)
-    {
-        
-    }else if([indexPath section]==2)
-    {
-        if ([indexPath row]==0) {
-            RemindViewController *remindViewController = [[[RemindViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
-            [self.navigationController pushViewController:remindViewController animated:YES];
-        }else if([indexPath row]==1)
-        {
-            PreventSetViewController *preventSetViewController = [[[PreventSetViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
-            [self.navigationController pushViewController:preventSetViewController animated:YES];
-            
+            UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+            picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            picker.delegate = self;
+            picker.allowsEditing = YES;
+            [self presentModalViewController:picker animated:YES];
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }
         
-    }else if([indexPath section]==3)
-    {
-        if ([indexPath row]==0) {
-            ChangePasswordViewController *changePasswordViewController = [[[ChangePasswordViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
-            [self.navigationController pushViewController:changePasswordViewController animated:YES];
-        }else if([indexPath row]==1)
-        {
-            StopAccountViewController *stopAccountViewController = [[[StopAccountViewController alloc]init]autorelease];
-            [self.navigationController pushViewController:stopAccountViewController animated:YES];
-        }else if([indexPath row]==4)
-        {
-            AboutViewController *aboutViewController = [[[AboutViewController alloc]init]autorelease];
-            [self.navigationController pushViewController:aboutViewController animated:YES];
-            
-        }
+    } else if ([label isEqualToString:@"my_photo"]){
+        
+        AddPicViewController *addPicViewController  = [[[AddPicViewController alloc]init]autorelease];
+        [self.navigationController pushViewController:addPicViewController animated:YES];
+        
+    } else if ([label isEqualToString:@"set_notify"]){
+        
+        RemindViewController *remindViewController = [[[RemindViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+        [self.navigationController pushViewController:remindViewController animated:YES];
+        
+    } else if ([label isEqualToString:@"set_nowarn"]){
+        
+        PreventSetViewController *preventSetViewController = [[[PreventSetViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+        [self.navigationController pushViewController:preventSetViewController animated:YES];
+        
+    } else if ([label isEqualToString:@"update_pass"]){
+        
+        ChangePasswordViewController *changePasswordViewController = [[[ChangePasswordViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+        [self.navigationController pushViewController:changePasswordViewController animated:YES];
+        
+    } else if ([label isEqualToString:@"stop_account"]){
+        
+        StopAccountViewController *stopAccountViewController = [[[StopAccountViewController alloc]init]autorelease];
+        [self.navigationController pushViewController:stopAccountViewController animated:YES];
+        
+    } else if ([label isEqualToString:@"about"]){
+        
+        AboutViewController *aboutViewController = [[[AboutViewController alloc]init]autorelease];
+        [self.navigationController pushViewController:aboutViewController animated:YES];
         
     }
-    
     
 }
 

@@ -259,10 +259,11 @@
     }];
 }
 
-+ (void)uploadImage:(NSData*)data type:(NSString*)photoType block:(void(^)(NSDictionary *info))block
++ (void)uploadImage:(NSData*)data type:(NSString*)photoType block:(void(^)(NSMutableDictionary *info))block
 {
     NSMutableDictionary *dp = [[self class] queryParams];
-
+    
+    [SVProgressHUD showWithStatus:@"上传图片中..."];
     [[RKClient sharedClient] post:[@"/uc/uploadphoto.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
 
         RKParams *p = [RKParams paramsWithDictionary:@{@"phototype":photoType}];
@@ -271,21 +272,59 @@
         
         [request setOnDidFailLoadWithError:^(NSError *error){
             NSLog(@"score photo error: %@", [error description]);
+            [SVProgressHUD showErrorWithStatus:@"上传失败"];
         }];
         
         [request setOnDidLoadResponse:^(RKResponse *response){
+
             if (response.isOK && response.isJSON) {
-                NSDictionary *d = [[response bodyAsString] objectFromJSONString];
+                NSDictionary *d = [[response bodyAsString] mutableObjectFromJSONString];
                 NSInteger code = [d[@"error"] integerValue];
 
                 if (code == 0) {
                     if (block) {
                         block([d objectForKey:@"photoinfo"]);
                     }
+                    [SVProgressHUD showSuccessWithStatus:d[@"message"]];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:d[@"message"]];
                 }
             }
         }];
         
+    }];
+}
+
++ (void)deleteImage:(NSString*)pid block:(void(^)())block
+{
+    NSMutableDictionary *dp = [[self class] queryParams];
+    [dp setObject:pid forKey:@"id"];
+    
+    [SVProgressHUD show];
+    [[RKClient sharedClient] get:[@"/common/delphoto.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"score photo error: %@", [error description]);
+            [SVProgressHUD showErrorWithStatus:@"删除失败"];
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            
+            if (response.isOK && response.isJSON) {
+                NSDictionary *d = [[response bodyAsString] mutableObjectFromJSONString];
+                NSInteger code = [d[@"error"] integerValue];
+                
+                if (code == 0) {
+                    if (block) {
+                        block();
+                    }
+                    [SVProgressHUD showSuccessWithStatus:d[@"message"]];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:d[@"message"]];
+                }
+            }
+        }];
+ 
     }];
 }
 

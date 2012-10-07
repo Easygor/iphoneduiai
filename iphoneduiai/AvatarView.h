@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) IBOutlet AsyncImageView *imageView;
 @property (strong, nonatomic) NSString *sex;
+@property (nonatomic) BOOL editing;
 
 @end

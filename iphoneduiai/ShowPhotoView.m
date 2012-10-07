@@ -24,9 +24,11 @@
 @end
 
 @implementation ShowPhotoView
+@synthesize photos=_photos;
 
 - (void)dealloc
 {
+    self.delegate = nil;
     self.slider.dataSource = nil;
     [_scrollView release];
     [_showImageView release];
@@ -39,13 +41,22 @@
     [super dealloc];
 }
 
-- (NSArray *)rounds
+- (NSMutableArray *)rounds
 {
     if (_rounds == nil) {
         _rounds = [[NSMutableArray alloc] init];
     }
     
     return _rounds;
+}
+
+- (NSMutableArray *)photos
+{
+    if (_photos == nil) {
+        _photos = [[NSMutableArray alloc] init];
+    }
+    
+    return _photos;
 }
 
 - (void)setPhotos:(NSMutableArray *)photos
@@ -72,13 +83,11 @@
             i++;
         }
         
-        RoundThumbView *lastView = [self.rounds lastObject];
-
-        self.scrollView.contentSize = CGSizeMake(lastView.frame.origin.x + lastView.frame.size.width+5, self.scrollView.contentSize.height);
+        [self resizeScrollView];
         self.scrollView.scrollEnabled = YES;
         if (self.rounds.count > 0) {
             RoundThumbView *firstView = [self.rounds objectAtIndex:0];
-            [self selectedRoundView:firstView];
+            [self selectedRoundView:firstView del:NO];
 
         }
         
@@ -118,17 +127,118 @@
     return self;
 }
 
-- (void)selectedRoundView:(RoundThumbView*)tv
+
+- (void)resizeScrollView
+{
+    RoundThumbView *lastView = [self.rounds lastObject];
+    
+    self.scrollView.contentSize = CGSizeMake(lastView.frame.origin.x + lastView.frame.size.width+5, self.scrollView.contentSize.height);
+}
+
+- (void)insertPhoto:(NSMutableDictionary*)d atIndex:(NSInteger)index
+{
+    
+    for (int i=self.rounds.count-1; i>=index; i--) {
+        UIView *view = [self.rounds objectAtIndex:i];
+        view.tag += 1;
+        CGRect vFrame = view.frame;
+        vFrame.origin.x += 50;
+        view.frame = vFrame;
+    }
+    
+    RoundThumbView *round = [[[RoundThumbView alloc] initWithFrame:CGRectMake(5+50*index, 3, 46, 46)
+                                                            image:[d objectForKey:@"icon"]
+                                                           target:self
+                                                      forSelector:@selector(gestureAction:)] autorelease];
+    round.tag = index;
+    [self.scrollView addSubview:round];
+    [self.rounds insertObject:round atIndex:index];
+    [self.photos insertObject:d atIndex:index];
+    
+    [self resizeScrollView];
+
+}
+
+- (void)removePhotoAt:(NSInteger)index
+{
+    if (self.rounds.count <= 0) {
+        return;
+    }
+    
+    UIView *view = [self.rounds objectAtIndex:index];
+    [view removeFromSuperview];
+    
+    for (int i=index; i<self.rounds.count; i++) {
+        UIView *view = [self.rounds objectAtIndex:i];
+        view.tag -= 1;
+        CGRect vFrame = view.frame;
+        vFrame.origin.x -= 50;
+        view.frame = vFrame;
+    }
+    
+    [self.rounds removeObjectAtIndex:index];
+    [self.photos removeObjectAtIndex:index];
+    
+    [self resizeScrollView];
+}
+
+- (void)setEditing:(BOOL)editing
+{
+    if (_editing != editing) {
+        _editing = editing;
+        if (editing) {
+            // loading
+            NSMutableDictionary *d = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"http://tp2.sinaimg.cn/1987513781/180/5609823393/1", @"icon", @"add", @"action", nil];
+            [self insertPhoto:d atIndex:0];
+        } else{
+            // editing
+            [self removePhotoAt:0];
+        }
+    }
+    
+}
+
+- (void)selectRoundAt:(NSInteger)index
+{
+    if (index < 0 || index >= self.rounds.count) {
+        return;
+    }
+    
+    RoundThumbView *view = (RoundThumbView*)[self.rounds objectAtIndex:index];
+    [self selectedRoundView:view del:NO];
+    
+}
+
+- (void)selectedRoundView:(RoundThumbView*)tv del:(BOOL)isDel
 {
     int i = 0;
     for (RoundThumbView *view in self.rounds) {
         if ([view isEqual:tv]) {
             NSDictionary *d = [self.photos objectAtIndex:view.tag];
             
-            view.selected = YES;
-            NSString *iconUrl = [d objectForKey:@"icon"];
-            [self.showImageView loadImage:/*iconUrl*/[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]];
-            self.showImageView.tag = i;
+            if ([d[@"action"] isEqualToString:@"add"]) {
+
+                if ([self.delegate respondsToSelector:@selector(didTriggerAddPhotoAction:)]) {
+                    [self.delegate didTriggerAddPhotoAction:self];
+                }
+                break;
+            } else{
+                view.selected = YES;
+                NSString *iconUrl = [d objectForKey:@"icon"];
+                
+                if ([d[@"icon"] hasSuffix:@".thumb.jpg"]) {
+                    iconUrl = [iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]];
+                }
+                [self.showImageView loadImage:iconUrl];
+                self.showImageView.tag = i;
+                
+                if (isDel && self.editing && [self.delegate respondsToSelector:@selector(didTriggerDelPhotoAction:at:)]) {
+                    [self.delegate didTriggerDelPhotoAction:self at:view.tag];
+                }
+            }
+
+
+            
         } else{
             view.selected = NO;
         }
@@ -142,10 +252,9 @@
     if (gesture.state == UIGestureRecognizerStateChanged ||
         gesture.state == UIGestureRecognizerStateEnded) {
         RoundThumbView *tv = (RoundThumbView *)gesture.view;
-        [self selectedRoundView:tv];
+        [self selectedRoundView:tv del:YES];
     }
 }
-
 
 #pragma mark - slider views
 -(void)addSliderView
@@ -245,7 +354,7 @@
             CGRect viewFrame = [self convertRect:self.showImageView.frame toView:gesture.view];
             
             AsyncImageView *imView = (AsyncImageView*)[gesture.view viewWithTag:gesture.view.tag-100];
-            [self selectedRoundView:[self.rounds objectAtIndex:gesture.view.tag-100]];
+            [self selectedRoundView:[self.rounds objectAtIndex:gesture.view.tag-100] del:NO];
             
             [[UIApplication sharedApplication] setStatusBarHidden:NO];
             self.slider.backgroundColor = [UIColor clearColor];

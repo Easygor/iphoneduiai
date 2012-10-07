@@ -1288,13 +1288,13 @@
 		61BB2B7E15FA158700AA82CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				61C7EDEF161EEB0A0080CAAE /* PageSmileView.m */,
-				61C7EDF0161EEB0A0080CAAE /* PageSmileDataSource.h */,
-				61C7EDF1161EEB0A0080CAAE /* PageSmileView.h */,
 				61240BDA16197589005C4E6C /* Profile views */,
 				6153D9C9161099FC00AC4A2D /* Async Images */,
 				6153D9BC161093F200AC4A2D /* Custom Cell */,
 				61397A901607F95D009FDAF9 /* picker views */,
+				61C7EDEF161EEB0A0080CAAE /* PageSmileView.m */,
+				61C7EDF0161EEB0A0080CAAE /* PageSmileDataSource.h */,
+				61C7EDF1161EEB0A0080CAAE /* PageSmileView.h */,
 				610D8E23161D61A900A22685 /* SliderView.h */,
 				610D8E24161D61A900A22685 /* SliderView.m */,
 				614CAA57161C7CAD00C86D8F /* DropMenuView.h */,
