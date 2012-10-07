@@ -145,7 +145,6 @@
         smallLabel.textColor = [UIColor grayColor];
         
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
-        arrowImgView.tag = arrowTag;
         [cell addSubview:arrowImgView];
 
     }
