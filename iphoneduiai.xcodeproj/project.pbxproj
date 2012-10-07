@@ -1274,7 +1274,6 @@
 				5A3505D016204C5C00A80A71 /* AddPicViewController.xib */,
 				5A3505D316204C8200A80A71 /* BJGridItem.h */,
 				5A3505D416204C8200A80A71 /* BJGridItem.m */,
->>>>>>> 1b19c9db2737b7be7e7cb71fc1329094eb7bdf5e
 				61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */,
 				61BB2B6015F9DB0800AA82CC /* Supporting Files */,
 			);
