@@ -9,12 +9,12 @@
 #import "BindingViewController.h"
 #import "CustomBarButtonItem.h"
 @interface BindingViewController ()
-@property (strong, nonatomic) NSArray *entries;
+@property(nonatomic,retain)NSArray *dataArray;
 
 @end
 
 @implementation BindingViewController
-@synthesize entries = _entries;
+@synthesize dataArray = _dataArray;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -23,24 +23,6 @@
     }
     return self;
 }
-
-- (void)dealloc
-{
-    [_entries release];
-    [super dealloc];
-}
-
-- (NSArray *)entries
-{
-    if (_entries == nil) {
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"settingBindingEntries" withExtension:@"plist"];
-        _entries = [[NSArray alloc] initWithContentsOfURL:url];
-    }
-    
-    return _entries;
-}
-
-
 -(void)loadView
 {
     [super loadView];
@@ -56,7 +38,7 @@
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
-   
+    _dataArray = [[NSArray alloc]initWithObjects:@"来关注我",@"新浪微博",@"腾讯微博",@"QQ空间",@"微信",@"邮箱", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,7 +89,6 @@
     bigLabel.backgroundColor=[UIColor clearColor];
     [bgView addSubview:bigLabel];
     [bgView addSubview:smallLabel];
-    
     bigLabel.text = [self.dataArray objectAtIndex:[indexPath row]];
     
     if ([indexPath row]==0) {
