@@ -277,11 +277,19 @@
 
 -(int)numberOfPages
 {
+    if (self.editing) {
+        return self.photos.count - 1;
+    }
+    
     return self.photos.count;
 }
 
 -(UIView *)viewAtIndex:(int)index
 {
+    if (self.editing) {
+        index += 1;
+    }
+    
     UIScrollView *view = [[[UIScrollView alloc] initWithFrame:self.window.frame] autorelease];
     view.backgroundColor = [UIColor clearColor];
     view.opaque = YES;
