@@ -12,6 +12,7 @@
 #import "NSDate-Utilities.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
 
 @implementation Utils
 
@@ -198,9 +199,10 @@
 
 + (void)scorePhotoWithUid:(NSString*)uid pid:(NSString*)pid block:(void(^)())block
 {
+//    [SVProgressHUD show];
     NSMutableDictionary *dp = [[self class] queryParams];
     [[RKClient sharedClient] post:[@"/common/photoscore.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
-        request.params = [RKParams paramsWithDictionary:@{@"uid":uid, @"pid":pid}];
+        request.params = [RKParams paramsWithDictionary:@{@"uid":uid, @"pid":pid, @"submitupdate":@"true"}];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
             NSLog(@"score photo error: %@", [error description]);
@@ -210,14 +212,47 @@
             if (response.isOK && response.isJSON) {
                 NSDictionary *d = [[response bodyAsString] objectFromJSONString];
                 NSInteger code = [d[@"error"] integerValue];
-                NSLog(@"score photo mesg: %d, %@", code, d[@"message"]);
                 if (code == 0) {
                     if (block) {
                         block();
                     }
+//                    [SVProgressHUD showSuccessWithStatus:d[@"message"]];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:d[@"message"]];
                 }
                 
    
+            }
+        }];
+        
+    }];
+}
+
++ (void)scoreUserWithUid:(NSString*)uid block:(void(^)())block
+{
+    //    [SVProgressHUD show];
+    NSMutableDictionary *dp = [[self class] queryParams];
+    [[RKClient sharedClient] post:[@"/common/digouser.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        request.params = [RKParams paramsWithDictionary:@{@"uid":uid, @"submitupdate":@"true"}];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"score photo error: %@", [error description]);
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *d = [[response bodyAsString] objectFromJSONString];
+                NSInteger code = [d[@"error"] integerValue];
+                if (code == 0) {
+                    if (block) {
+                        block();
+                    }
+                    //                    [SVProgressHUD showSuccessWithStatus:d[@"message"]];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:d[@"message"]];
+                }
+                
+                
             }
         }];
         
@@ -239,12 +274,10 @@
         }];
         
         [request setOnDidLoadResponse:^(RKResponse *response){
-            NSLog(@"str : %@", [response bodyAsString]);
             if (response.isOK && response.isJSON) {
                 NSDictionary *d = [[response bodyAsString] objectFromJSONString];
                 NSInteger code = [d[@"error"] integerValue];
-                NSLog(@"upload image: %@", d);
-                NSLog(@"score photo mesg: %d, %@", code, d[@"message"]);
+
                 if (code == 0) {
                     if (block) {
                         block([d objectForKey:@"photoinfo"]);

@@ -307,6 +307,8 @@
 		61C7EE35161EEB840080CAAE /* em31.gif in Resources */ = {isa = PBXBuildFile; fileRef = 61C7EE13161EEB840080CAAE /* em31.gif */; };
 		61C7EE36161EEB840080CAAE /* em32.gif in Resources */ = {isa = PBXBuildFile; fileRef = 61C7EE14161EEB840080CAAE /* em32.gif */; };
 		61C7EE37161EEB840080CAAE /* em.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61C7EE15161EEB840080CAAE /* em.plist */; };
+		61C7EE55161F3F850080CAAE /* MessageTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7EE54161F3F850080CAAE /* MessageTableCell.m */; };
+		61C7EE5C16202B0F0080CAAE /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C7EE5B16202B0F0080CAAE /* SSKeychain.m */; };
 		61CB3F301602AF4B00888317 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB3F2F1602AF4B00888317 /* LocationController.m */; };
 		61CB3F321602AF9800888317 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CB3F311602AF9800888317 /* CoreLocation.framework */; };
 		61CB3F351602B59000888317 /* UIDevice+UIDeviceAppIndentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CB3F341602B59000888317 /* UIDevice+UIDeviceAppIndentifier.m */; };
@@ -732,6 +734,10 @@
 		61C7EE13161EEB840080CAAE /* em31.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = em31.gif; sourceTree = "<group>"; };
 		61C7EE14161EEB840080CAAE /* em32.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = em32.gif; sourceTree = "<group>"; };
 		61C7EE15161EEB840080CAAE /* em.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = em.plist; sourceTree = "<group>"; };
+		61C7EE53161F3F850080CAAE /* MessageTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableCell.h; sourceTree = "<group>"; };
+		61C7EE54161F3F850080CAAE /* MessageTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableCell.m; sourceTree = "<group>"; };
+		61C7EE5A16202B0F0080CAAE /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		61C7EE5B16202B0F0080CAAE /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		61CB3F2E1602AF4B00888317 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
 		61CB3F2F1602AF4B00888317 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		61CB3F311602AF9800888317 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -769,13 +775,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */,
 				61CB3F77160359EB00888317 /* libicucore.dylib in Frameworks */,
 				61CB3F321602AF9800888317 /* CoreLocation.framework in Frameworks */,
 				6199D68515FEA74500BEBD00 /* libRestKit.a in Frameworks */,
 				6199D68415FEA73600BEBD00 /* QuartzCore.framework in Frameworks */,
 				6199D68215FEA72600BEBD00 /* SystemConfiguration.framework in Frameworks */,
 				6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */,
-				6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */,
 				6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */,
 				61BB2B5815F9DB0800AA82CC /* UIKit.framework in Frameworks */,
 				61BB2B5A15F9DB0800AA82CC /* Foundation.framework in Frameworks */,
@@ -913,6 +919,8 @@
 			isa = PBXGroup;
 			children = (
 				610AE637161C2A9E001E6217 /* EGORefresh */,
+				61C7EE5A16202B0F0080CAAE /* SSKeychain.h */,
+				61C7EE5B16202B0F0080CAAE /* SSKeychain.m */,
 				61CB3F5E16033B1100888317 /* RegexKitLite.m */,
 				61CB3F5F16033B1100888317 /* RegexKitLite.h */,
 				61CB3F361602BA3F00888317 /* Utils.h */,
@@ -993,6 +1001,8 @@
 				61240BF21619F1E8005C4E6C /* WeiyuWordCell.h */,
 				61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */,
 				61240BF51619F7A5005C4E6C /* CustomCellDelegate.h */,
+				61C7EE53161F3F850080CAAE /* MessageTableCell.h */,
+				61C7EE54161F3F850080CAAE /* MessageTableCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -1230,6 +1240,7 @@
 				61AA9C0C15FBCE3F009D67AD /* login & register */,
 				6159B1261615703100705835 /* Search */,
 				61729F1E161C2577004E3DA0 /* wei talk */,
+				61C7EE52161F37AE0080CAAE /* profiles */,
 				61BB2B6815F9DB0800AA82CC /* AppDelegate.h */,
 				61BB2B6915F9DB0800AA82CC /* AppDelegate.m */,
 				6141A6ED15FB6D9800985257 /* MainWindow.xib */,
@@ -1390,6 +1401,37 @@
 				61C7EE15161EEB840080CAAE /* em.plist */,
 			);
 			name = smiles;
+			sourceTree = "<group>";
+		};
+		61C7EE52161F37AE0080CAAE /* profiles */ = {
+			isa = PBXGroup;
+			children = (
+				6141A70D15FB737000985257 /* ProfileListViewController.h */,
+				6141A70E15FB737000985257 /* ProfileListViewController.m */,
+				6141A70F15FB737100985257 /* ProfileListViewController.xib */,
+				61240BC416195FB7005C4E6C /* SettingViewController.h */,
+				61240BC516195FB7005C4E6C /* SettingViewController.m */,
+				61240BC616195FB7005C4E6C /* SettingViewController.xib */,
+				5A07DF8E161B1E7600A50998 /* SeniorViewController.h */,
+				5A07DF8F161B1E7600A50998 /* SeniorViewController.m */,
+				5A07DF90161B1E7600A50998 /* SeniorViewController.xib */,
+				5A62E8811619755100BD3958 /* RemindViewController.h */,
+				5A62E8821619755100BD3958 /* RemindViewController.m */,
+				5A62E8831619755100BD3958 /* RemindViewController.xib */,
+				5A62E88616198EF600BD3958 /* PreventSetViewController.h */,
+				5A62E88716198EF600BD3958 /* PreventSetViewController.m */,
+				5A62E88816198EF600BD3958 /* PreventSetViewController.xib */,
+				5A394A09161F0C1900FB23C2 /* ChangePasswordViewController.h */,
+				5A394A0A161F0C1900FB23C2 /* ChangePasswordViewController.m */,
+				5A394A0B161F0C1900FB23C2 /* ChangePasswordViewController.xib */,
+				5A394A0E161F150D00FB23C2 /* StopAccountViewController.h */,
+				5A394A0F161F150D00FB23C2 /* StopAccountViewController.m */,
+				5AE147F8161F25B0005CC680 /* SendSuggestViewController.h */,
+				5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */,
+				5AE147FB161F2E1A005CC680 /* AboutViewController.h */,
+				5AE147FC161F2E1A005CC680 /* AboutViewController.m */,
+			);
+			name = profiles;
 			sourceTree = "<group>";
 		};
 		61CB40B3160489CE00888317 /* SVProgressHUD */ = {
@@ -1819,6 +1861,8 @@
 				5A394A10161F150E00FB23C2 /* StopAccountViewController.m in Sources */,
 				5AE147FA161F25B0005CC680 /* SendSuggestViewController.m in Sources */,
 				5AE147FD161F2E1A005CC680 /* AboutViewController.m in Sources */,
+				61C7EE55161F3F850080CAAE /* MessageTableCell.m in Sources */,
+				61C7EE5C16202B0F0080CAAE /* SSKeychain.m in Sources */,
 				5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */,
 				5A3505D516204C8200A80A71 /* BJGridItem.m in Sources */,
 				5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */,

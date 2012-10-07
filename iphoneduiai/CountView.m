@@ -30,17 +30,15 @@
 {
     if (![_count isEqualToString:count]) {
         _count = [count retain];
-        CGSize size = [count sizeWithFont:self.countLabel.font];
-        CGRect countFrame = self.countLabel.frame;
-        countFrame.size.width = size.width;
-        self.countLabel.frame = countFrame;
+
+         self.countLabel.text = count;
+        [self.countLabel sizeToFit];
         
         CGRect selfFrame = self.frame;
-        selfFrame.size.width = size.width + self.logo.frame.size.width + 15;
-        selfFrame.origin.x = 320 - 5 - selfFrame.size.width;
-        self.frame = selfFrame;
-        
-        self.countLabel.text = count;
+        selfFrame.size.width = self.countLabel.frame.size.width + self.logo.frame.size.width + 20;
+        selfFrame.origin.x = 320 - 20 - selfFrame.size.width;
+        self.frame = selfFrame;  
+       
     }
 }
 

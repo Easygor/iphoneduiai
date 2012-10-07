@@ -18,6 +18,7 @@
 #import "WeiyuWordCell.h"
 #import "CustomBarButtonItem.h"
 #import "CopyQQViewController.h"
+
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 
@@ -26,8 +27,8 @@ static CGFloat dHeight2 = 0.0f;
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
 @property (retain, nonatomic) IBOutlet AvatarView *avatarView;
-@property (strong, nonatomic) NSArray *photos;
-@property (strong, nonatomic) NSDictionary *userInfo, *userBody, *userLife, *userInterest, *userWork, *marrayReq;
+@property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) NSDictionary *userInfo, *userBody, *userLife, *userInterest, *userWork, *marrayReq, *searchIndex;
 @property (retain, nonatomic) IBOutlet UILabel *nameAgeLabel;
 @property (retain, nonatomic) IBOutlet UILabel *timeDistanceLabel;
 
@@ -48,6 +49,7 @@ static CGFloat dHeight2 = 0.0f;
 @property (retain, nonatomic) IBOutlet UIView *move2View;
 @property (retain, nonatomic) IBOutlet UIView *move1View;
 @property (retain, nonatomic) IBOutlet UILabel *dySexLabel;
+@property (retain, nonatomic) IBOutlet CountView *countView;
 
 @property (strong, nonatomic) NSMutableArray *weiyus;
 @property (strong, nonatomic) UITableViewCell *moreCell;
@@ -92,6 +94,8 @@ static CGFloat dHeight2 = 0.0f;
     [_moreUserInfoView release];
     [_weiyus release];
     [_moreCell release];
+    [_countView release];
+    [_searchIndex release];
     [super dealloc];
 }
 
@@ -124,11 +128,21 @@ static CGFloat dHeight2 = 0.0f;
     }
 }
 
-- (void)setPhotos:(NSArray *)photos
+- (void)setPhotos:(NSMutableArray *)photos
 {
     if (![_photos isEqualToArray:photos]) {
         _photos = [photos retain];
         self.showPhotoView.photos = photos;
+    }
+}
+
+- (void)setSearchIndex:(NSDictionary *)searchIndex
+{
+    if (![_searchIndex isEqualToDictionary:searchIndex]) {
+        _searchIndex = [searchIndex retain];
+        
+        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@/900m", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
+        self.countView.count = [[searchIndex objectForKey:@"digocount"] description];
     }
 }
 
@@ -140,7 +154,7 @@ static CGFloat dHeight2 = 0.0f;
         self.avatarView.sex = [userInfo objectForKey:@"sex"];
         [self.avatarView.imageView loadImage:[userInfo objectForKey:@"photo"]];
         self.nameAgeLabel.text = [NSString stringWithFormat:@"%@, %@岁", [userInfo objectForKey:@"niname"], [userInfo objectForKey:@"age"]];
-        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@/900m", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[self.user objectForKey:@"acctime"] integerValue]]]];
+
         
         self.heightLabel.text = [NSString stringWithFormat:@"%@cm", [userInfo objectForKey:@"height"]];
         self.areaLabel.text = [userInfo objectForKey:@"area"];
@@ -187,6 +201,7 @@ static CGFloat dHeight2 = 0.0f;
     [self setMove1View:nil];
     [self setDySexLabel:nil];
     [self setMoreUserInfoView:nil];
+    [self setCountView:nil];
     [super viewDidUnload];
 }
 
@@ -200,6 +215,19 @@ static CGFloat dHeight2 = 0.0f;
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
+    [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
+}
+
+- (void)scoreGestureAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        
+        [Utils scoreUserWithUid:[self.user objectForKey:@"_id"] block:^{
+            NSString *scoreString = [NSString stringWithFormat:@"%d", [self.countView.count integerValue]+1];
+            self.countView.count = scoreString;
+        }];
+    }
 }
 
 - (void)backAction
@@ -340,16 +368,20 @@ static CGFloat dHeight2 = 0.0f;
     [[RKClient sharedClient] get:[@"user" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
-                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                NSLog(@"data: %@", data);
-                NSDictionary *dataData = [data objectForKey:@"data"];
-                self.photos = [dataData objectForKey:@"photo"];
-                self.userInfo = [dataData objectForKey:@"user_info"];
-                self.userBody = [dataData objectForKey:@"user_body"];
-                self.userLife = [dataData objectForKey:@"user_life"];
-                self.userInterest = [dataData objectForKey:@"user_interest"];
-                self.userWork = [dataData objectForKey:@"user_work"];
-                self.marrayReq = [dataData objectForKey:@"marray_req"];
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+                NSLog(@"user data: %@", data);
+                NSInteger code = [[data objectForKey:@"error"] integerValue];
+                if (code == 0) {
+                    NSDictionary *dataData = [data objectForKey:@"data"];
+                    self.photos = [dataData objectForKey:@"photo"];
+                    self.userInfo = [dataData objectForKey:@"user_info"];
+                    self.userBody = [dataData objectForKey:@"user_body"];
+                    self.userLife = [dataData objectForKey:@"user_life"];
+                    self.userInterest = [dataData objectForKey:@"user_interest"];
+                    self.userWork = [dataData objectForKey:@"user_work"];
+                    self.marrayReq = [dataData objectForKey:@"marray_req"];
+                    self.searchIndex = [dataData objectForKey:@"searchindex"];
+                }
             }
         }];
         
@@ -363,8 +395,9 @@ static CGFloat dHeight2 = 0.0f;
 - (void)grabMyWeiyuListReqeustWithPage:(NSInteger)page
 {
     NSMutableDictionary *dParams = [Utils queryParams];
-//    [dParams setObject:@"photo" forKey:@"a"];
-    [dParams setObject:@"myv" forKey:@"a"];
+
+//    [dParams setObject:@"myv" forKey:@"a"];
+    [dParams setObject:[self.user objectForKey:@"_id"] forKey:@"uid"];
     [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [dParams setObject:@"10" forKey:@"pagesize"];
     
@@ -372,7 +405,7 @@ static CGFloat dHeight2 = 0.0f;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"my weiyu data: %@", data);
+//                NSLog(@"my weiyu data: %@", data);
                 if (![[data objectForKey:@"data"] isKindOfClass:[NSString class]]) {
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
@@ -521,10 +554,4 @@ static CGFloat dHeight2 = 0.0f;
     NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
 }
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    // do here
-}
-
 @end

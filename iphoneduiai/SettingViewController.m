@@ -238,7 +238,6 @@
     if ([indexPath section]==0) {
         if ([indexPath row]==0) {
             NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-            NSLog(@"hah : %@", [data objectForKey:@"label"]);
             
             if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){

@@ -29,6 +29,8 @@
 @property (strong, nonatomic) SliderView *slider;
 @property (strong, nonatomic) UIImageView *curImageView;
 
+@property (nonatomic) NSInteger state;
+
 @end
 
 @implementation WeiyuWordCell
@@ -130,19 +132,42 @@
         contentLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         contentLabel.numberOfLines = 0;
         contentLabel.text = content;
+        
+        AsyncImageView *imView = nil;
+        if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
+            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, contentLabel.frame.size.height + 10, DW, DH)] autorelease];
+            [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
+            //                imView.tag = 0;
+            imView.userInteractionEnabled = YES;
+            NSString *imgUrl = [self.weiyu objectForKey:@"pic"];
+            [imView loadImage: imgUrl];
+            _photos = [[NSMutableArray alloc] initWithObjects:@{@"icon": imgUrl, @"url": imgUrl}, nil];
+            [self.mainView addSubview:imView];
+        }
+        
         [self.mainView addSubview:contentLabel];
         
-        CGFloat addressH = 0;
+        CGFloat totalH = size.height;
+        if (imView) {
+            totalH = imView.frame.origin.y + imView.frame.size.height;
+        }
+        
         if (![[self.weiyu objectForKey:@"address"] isEqualToString:@""]) {
             self.addressView.hidden = NO;
             CGRect addFrame = self.addressView.frame;
-            addFrame.origin.y = size.height + 6;
+            if (imView) {
+                addFrame.origin.y = imView.frame.origin.y + imView.frame.size.height + 10;
+            } else{
+                addFrame.origin.y = contentLabel.frame.size.height + 10;
+            }
+            
             self.addressView.frame = addFrame;
-            addressH = self.addressView.frame.size.height + 6;
+            totalH = self.addressView.frame.origin.y + self.addressView.frame.size.height;
             self.addressLabel.text = [self.weiyu objectForKey:@"address"];
             [self.mainView addSubview:self.addressView];
         }
-        [self resizeFrameWithHeight:MAX(size.height+addressH+10, 10.0f)];
+        
+        [self resizeFrameWithHeight:MAX(totalH+10, 10.0f)];
     }
 }
 
@@ -432,6 +457,62 @@
     }
     
 }
+
+- (void)willTransitionToState:(UITableViewCellStateMask)aState
+{
+    [super willTransitionToState:aState];
+    self.state = aState;
+}
+
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    // no indent in edit mode
+    self.contentView.frame = CGRectMake(0,
+                                        self.contentView.frame.origin.y,
+                                        self.contentView.frame.size.width,
+                                        self.contentView.frame.size.height);
+    
+    if (self.editing )
+    {
+//        NSLog(@"subview");
+        float indentPoints = self.indentationLevel * self.indentationWidth;
+        
+        switch (self.state) {
+            case 3:
+                self.contentView.frame = CGRectMake(indentPoints,
+                                                    self.contentView.frame.origin.y,
+                                                    self.contentView.frame.size.width +124,// - indentPoints,
+                                                    self.contentView.frame.size.height);
+                
+                break;
+            case 2:
+                // swipe action
+                self.contentView.frame = CGRectMake(indentPoints,
+                                                    self.contentView.frame.origin.y,
+                                                    self.contentView.frame.size.width +75,// - indentPoints,
+                                                    self.contentView.frame.size.height);
+                
+                break;
+            default:
+                // state == 1, hit edit button
+                self.contentView.frame = CGRectMake(indentPoints,
+                                                    self.contentView.frame.origin.y,
+                                                    self.contentView.frame.size.width +80,// - indentPoints,
+                                                    self.contentView.frame.size.height);  
+                break;
+        }
+    }
+}
+
+//-(void)layoutSubviews
+//{
+//    if ([self isEditing] == NO) {
+//        // Lay out subviews normally.
+//        [super layoutSubviews];
+//    }
+//}
 
 - (IBAction)plusBtnAction:(UIButton*)sender
 {

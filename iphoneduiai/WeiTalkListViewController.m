@@ -433,7 +433,7 @@
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-//                NSLog(@"data: %@", data);
+                NSLog(@"weiyu list data: %@", data);
                 self.loading = NO;
                 self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
                 self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
