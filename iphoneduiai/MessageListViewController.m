@@ -16,6 +16,7 @@
 @interface MessageListViewController ()
 
 @property (strong, nonatomic) NSMutableArray *messages;
+@property (nonatomic) NSInteger lastUpdated;
 
 @end
 
@@ -40,6 +41,13 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    NSLog(@"user: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"user"]);
+    [self getMixedNotifictions];
 }
 
 #pragma mark - Table view data source
@@ -67,16 +75,15 @@
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -88,23 +95,7 @@
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -118,6 +109,31 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+}
+
+#pragma mark - request remote
+- (void)getMixedNotifictions
+{
+    NSMutableDictionary *dp = [Utils queryParams];
+    [dp setObject:[NSNumber numberWithInteger:self.lastUpdated] forKey:@"accesstime"];
+    
+    [[RKClient sharedClient] get:[@"/common/sysnotice.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"sys notice: %@", [error description]);
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    NSLog(@"suc ss: %@", data);
+                }
+                
+            }
+        }];
+    }];
 }
 
 @end

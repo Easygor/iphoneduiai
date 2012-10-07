@@ -37,11 +37,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        AsyncImageView *center = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)] autorelease];
+        AsyncImageView *center = [[[AsyncImageView alloc] initWithFrame:CGRectMake(1, 1, frame.size.width-2, frame.size.height-2)] autorelease];
         [center loadImage:imageUrl];
-        center.layer.cornerRadius = 30;
+        center.layer.cornerRadius = frame.size.width/2-1;
         center.layer.masksToBounds = YES;
-        center.clipsToBounds = YES;
         [self addSubview:center];
         self.roundCenterView = center;
         

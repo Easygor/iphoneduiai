@@ -409,8 +409,8 @@
             CLLocationCoordinate2D location2D = [LocationController sharedInstance].location.coordinate;
             [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
             
-            [dParams setObject:[NSNumber numberWithInteger:ceil(location2D.latitude*1000000)] forKey:@"wei"];
-            [dParams setObject:[NSNumber numberWithInteger:ceil(location2D.longitude*1000000)] forKey:@"jin"];
+            [dParams setObject:[NSNumber numberWithDouble:location2D.latitude] forKey:@"wei"];
+            [dParams setObject:[NSNumber numberWithDouble:location2D.longitude] forKey:@"jin"];
             [dParams setObject:@"0.5" forKey:@"maxdis"];
             [self searchReqeustWithParams:dParams];
         });

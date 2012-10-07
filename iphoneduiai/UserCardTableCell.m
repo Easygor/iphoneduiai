@@ -96,7 +96,7 @@
         });
         
         NSString *pos = [NSString stringWithFormat:@"%d", [self.arry indexOfObject:gesture.view]];
-        NSLog(@"post: %@", pos);
+
         if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
             [self.delegate didChangeStatus:self toStatus:pos];
         }

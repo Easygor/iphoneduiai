@@ -586,14 +586,14 @@ static NSInteger kActionChooseImageTag = 201;
 {
     NSMutableDictionary *dParams = [Utils queryParams];
     NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-    NSLog(@"user info: %@", info);
+
     [dParams setObject:[info objectForKey:@"uid"] forKey:@"uid"];
     
     [[RKClient sharedClient] get:[@"user" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"data: %@", data);
+//                NSLog(@"data: %@", data);
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
                 if (code == 0) {
                     NSDictionary *dataData = [data objectForKey:@"data"];
@@ -631,7 +631,7 @@ static NSInteger kActionChooseImageTag = 201;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"my weiyu data: %@", data);
+//                NSLog(@"my weiyu data: %@", data);
                 if (![[data objectForKey:@"data"] isKindOfClass:[NSString class]]) {
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];

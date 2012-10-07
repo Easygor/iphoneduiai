@@ -180,6 +180,16 @@
     [self.photos removeObjectAtIndex:index];
     
     [self resizeScrollView];
+    
+    if (self.editing) {
+        if (self.rounds.count > 1) {
+            RoundThumbView *round = [self.rounds objectAtIndex:MAX(0, index-1)];
+            [self selectedRoundView:round del:NO];
+        } else{
+            self.showImageView.image = nil;
+        }
+    }
+    
 }
 
 - (void)setEditing:(BOOL)editing
