@@ -13,6 +13,7 @@
 #import "StopAccountViewController.h"
 #import "AboutViewController.h"
 #import "AddPicViewController.h"
+#import "ILikeViewController.h"
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 
@@ -261,6 +262,10 @@
                     [tableView deselectRowAtIndexPath:indexPath animated:YES];
                 }
                 
+            }else if([indexPath row]==1)
+            {
+                ILikeViewController *iLikeViewController = [[[ILikeViewController alloc]init]autorelease];
+                [self.navigationController pushViewController:iLikeViewController animated:YES];
             }
             
         }else if([indexPath row]==1)
