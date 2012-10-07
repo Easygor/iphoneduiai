@@ -1466,7 +1466,7 @@
 				<reference key="IBUITableHeaderView" ref="512415947"/>
 			</object>
 			<object class="IBUIView" id="791953898">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="131164722">
@@ -1953,7 +1953,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{300, 313}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="564020894"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -1963,7 +1962,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="753022554">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="764248267">
@@ -2387,7 +2386,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{300, 273}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="764248267"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -2397,7 +2395,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="423790910">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIButton" id="359082769">
@@ -2600,7 +2598,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 100}</string>
-				<reference key="NSSuperview"/>
 				<reference key="NSNextKeyView" ref="359082769"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -4188,20 +4185,20 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="andriod_icon.png">{16, 16}</string>
-			<string key="bolg_icon.png">{16, 16}</string>
-			<string key="choice_icon.png">{16, 16}</string>
-			<string key="detail_icon.png">{16, 16}</string>
+			<string key="andriod_icon.png">{22, 25}</string>
+			<string key="bolg_icon.png">{18, 18}</string>
+			<string key="choice_icon.png">{18, 18}</string>
+			<string key="detail_icon.png">{18, 18}</string>
 			<string key="fav_icon.png">{16, 16}</string>
-			<string key="focus_icon.png">{16, 16}</string>
-			<string key="headbox.png">{16, 16}</string>
-			<string key="info_bg.png">{16, 16}</string>
-			<string key="intro_icon.png">{16, 16}</string>
-			<string key="more.png">{16, 16}</string>
-			<string key="statusdetail_header_arrow.png">{16, 16}</string>
-			<string key="tweibo_icon.png">{16, 16}</string>
-			<string key="weibo_icon.png">{16, 16}</string>
-			<string key="weixin_icon.png">{16, 16}</string>
+			<string key="focus_icon.png">{18, 18}</string>
+			<string key="headbox.png">{100, 100}</string>
+			<string key="info_bg.png">{310, 42}</string>
+			<string key="intro_icon.png">{18, 18}</string>
+			<string key="more.png">{12, 13}</string>
+			<string key="statusdetail_header_arrow.png">{14, 14}</string>
+			<string key="tweibo_icon.png">{42, 42}</string>
+			<string key="weibo_icon.png">{42, 42}</string>
+			<string key="weixin_icon.png">{42, 42}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

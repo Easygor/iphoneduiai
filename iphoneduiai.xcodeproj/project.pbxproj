@@ -34,6 +34,9 @@
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
 		5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8042731621306A00B872D3 /* ILikeViewController.m */; };
 		5A8042761621306A00B872D3 /* ILikeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8042741621306A00B872D3 /* ILikeViewController.xib */; };
+		5ABA114A16214C040043F51A /* BindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA114816214C040043F51A /* BindingViewController.m */; };
+		5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114916214C040043F51A /* BindingViewController.xib */; };
+		5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114C16216DE90043F51A /* settingBindingEntries.plist */; };
 		5AE147FA161F25B0005CC680 /* SendSuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */; };
 		5AE147FD161F2E1A005CC680 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147FC161F2E1A005CC680 /* AboutViewController.m */; };
 		5AE46AAB161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AE46A9B161C873B00F3007C /* messages_toolbar_camerabutton_background_highlighted.png */; };
@@ -412,6 +415,10 @@
 		5A8042721621306A00B872D3 /* ILikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILikeViewController.h; sourceTree = "<group>"; };
 		5A8042731621306A00B872D3 /* ILikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILikeViewController.m; sourceTree = "<group>"; };
 		5A8042741621306A00B872D3 /* ILikeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILikeViewController.xib; sourceTree = "<group>"; };
+		5ABA114716214C040043F51A /* BindingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingViewController.h; sourceTree = "<group>"; };
+		5ABA114816214C040043F51A /* BindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingViewController.m; sourceTree = "<group>"; };
+		5ABA114916214C040043F51A /* BindingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BindingViewController.xib; sourceTree = "<group>"; };
+		5ABA114C16216DE90043F51A /* settingBindingEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settingBindingEntries.plist; sourceTree = "<group>"; };
 		5AE147F8161F25B0005CC680 /* SendSuggestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendSuggestViewController.h; sourceTree = "<group>"; };
 		5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendSuggestViewController.m; sourceTree = "<group>"; };
 		5AE147FB161F2E1A005CC680 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
@@ -1289,6 +1296,7 @@
 				619CFAE515FCA4E0002A122D /* devices.plist */,
 				6159B1FB16193D0E00705835 /* settingEntries.plist */,
 				5A07DF93161B201D00A50998 /* seniorEntries.plist */,
+				5ABA114C16216DE90043F51A /* settingBindingEntries.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1406,6 +1414,9 @@
 				5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */,
 				5AE147FB161F2E1A005CC680 /* AboutViewController.h */,
 				5AE147FC161F2E1A005CC680 /* AboutViewController.m */,
+				5ABA114716214C040043F51A /* BindingViewController.h */,
+				5ABA114816214C040043F51A /* BindingViewController.m */,
+				5ABA114916214C040043F51A /* BindingViewController.xib */,
 			);
 			name = profiles;
 			sourceTree = "<group>";
@@ -1763,6 +1774,8 @@
 				5A3505D7162050F700A80A71 /* blueButton.jpg in Resources */,
 				5A3505DD1620548000A80A71 /* deletbutton.png in Resources */,
 				5A8042761621306A00B872D3 /* ILikeViewController.xib in Resources */,
+				5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */,
+				5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1842,6 +1855,7 @@
 				5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */,
 				5A3505D516204C8200A80A71 /* BJGridItem.m in Sources */,
 				5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */,
+				5ABA114A16214C040043F51A /* BindingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
