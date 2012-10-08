@@ -14,6 +14,7 @@
 #import "AboutViewController.h"
 #import "AddPicViewController.h"
 #import "ILikeViewController.h"
+#import "BlacklistViewController.h"
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 
@@ -288,6 +289,10 @@
         AboutViewController *aboutViewController = [[[AboutViewController alloc]init]autorelease];
         [self.navigationController pushViewController:aboutViewController animated:YES];
         
+    } else if([label isEqualToString:@"black_list"]){
+        BlacklistViewController *blacklistViewController = [[[BlacklistViewController alloc]init]autorelease];
+        [self.navigationController pushViewController:blacklistViewController animated:YES];
+    
     }
     
 }

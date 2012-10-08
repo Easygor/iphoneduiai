@@ -161,11 +161,10 @@
     if (textField == nil) {
         textField = (UITextField*)[cell viewWithTag:textFieldTag];
     }
-    
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     UIImage *img = nil;
     UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
-    
+
     if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
         bigLabel.frame = CGRectMake(15, 0, 200, 44);
         img = [UIImage imageNamed:[data objectForKey:@"logo"]];

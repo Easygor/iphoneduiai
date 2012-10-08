@@ -43,20 +43,20 @@
 {
     [super loadView];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    UIView *upView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 130)];
+    UIView *upView = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 130)]autorelease];
     upView.backgroundColor = RGBCOLOR(250, 250, 250);
     [self.view addSubview:upView];
     
-    UILabel *myQQLabel  = [[UILabel alloc]initWithFrame:CGRectMake(20, 30, 100, 16)];
+    UILabel *myQQLabel  = [[[UILabel alloc]initWithFrame:CGRectMake(20, 30, 100, 16)]autorelease];
     myQQLabel.text = @"我的QQ是:";
     myQQLabel.textColor = RGBCOLOR(158, 210, 238);
     [upView addSubview:myQQLabel];
     
-    CustomView *compositeView = [[CustomView alloc]initWithFrame:CGRectMake(20, 55, 280, 40)];
+    CustomView *compositeView = [[[CustomView alloc]initWithFrame:CGRectMake(20, 55, 280, 40)]autorelease];
     compositeView.backgroundColor = [UIColor clearColor];
     [upView addSubview:compositeView];
     
-    qqLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 1, 190, 38)];
+    qqLabel = [[[UILabel alloc]initWithFrame:CGRectMake(10, 1, 190, 38)]autorelease];
     qqLabel.text = @"81168900";
     qqLabel.font = [UIFont systemFontOfSize:23];
     qqLabel.backgroundColor = [UIColor clearColor];
@@ -73,7 +73,7 @@
     [compositeView addSubview:copyButton];
     
     
-    UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 100, 282, 300)];
+    UILabel *tipLabel = [[[UILabel alloc]initWithFrame:CGRectMake(20, 100, 282, 300)]autorelease];
     tipLabel.text = @"1.如果QQ无法联系到对方,您可以通过她的邮箱:81168900@qq.com发邮件给她。\n\n2.本次查看消耗一次查看机会，您今天还有6次查看他人联系方式机会！\n\n3.如果女方聊了没几句就着急见面，并把你领到一个‘你不熟悉的酒吧餐厅’,一定要立马闪人并向我们举报,以免遭受经济损失!";
     
     //文本阴影颜色
@@ -89,9 +89,6 @@
     tipLabel.font = [UIFont systemFontOfSize:15];
     tipLabel.textColor = RGBCOLOR(174, 174, 174);
     [self.view addSubview:tipLabel];
-    [tipLabel release];
-    [compositeView release];
-    [qqLabel release];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

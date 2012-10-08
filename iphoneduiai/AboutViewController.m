@@ -20,7 +20,7 @@
     [super loadView];
      self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     
-    UIImageView *duiAiImgView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 160)];
+    UIImageView *duiAiImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 160)]autorelease];
     duiAiImgView.backgroundColor = [UIColor yellowColor];
     
     [self.view addSubview:duiAiImgView];
@@ -35,23 +35,21 @@
     [self.view addSubview:versionLabel];
     
     
-    UILabel *URLLabel = [[UILabel alloc]initWithFrame:CGRectMake(80, 280, 180, 18)];
+    UILabel *URLLabel = [[[UILabel alloc]initWithFrame:CGRectMake(80, 280, 180, 18)]autorelease];
     URLLabel.text = @"官方网站:www.duiai.com";
     URLLabel.font = [UIFont systemFontOfSize:15];
     URLLabel.textColor = RGBCOLOR(197, 197, 197);
     URLLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:URLLabel];
     
-    UILabel *moreLabel = [[UILabel alloc]initWithFrame:CGRectMake(100, 305, 130, 18)];
+    UILabel *moreLabel = [[[UILabel alloc]initWithFrame:CGRectMake(100, 305, 130, 18)]autorelease];
     moreLabel.text = @"更多功能,请登陆官网";
     moreLabel.font = [UIFont systemFontOfSize:13];
     moreLabel.textColor = RGBCOLOR(197, 197, 197);
     moreLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:moreLabel];
 
-    [moreLabel release];
-    [URLLabel release];
-    [versionLabel release];
+ 
 
     
     
