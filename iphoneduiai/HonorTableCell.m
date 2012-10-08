@@ -29,6 +29,7 @@
     for (UIView *v in self.imageViews) {
         UITapGestureRecognizer *tap3 = [[[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(gestureAction:)] autorelease];
+        v.userInteractionEnabled = YES;
         [v addGestureRecognizer:tap3];
     }
 }
@@ -57,7 +58,12 @@
             AsyncImageView *view = [self.imageViews objectAtIndex:i];
             NSDictionary *user = [users objectAtIndex:i];
             view.hidden = NO;
-            [view loadImage:user[@"photo"]];
+            if ([user[@"photo"] isEqualToString:@""]) {
+                [view loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+            } else{
+                [view loadImage:user[@"photo"]];
+            }
+            
         }
         
         for (int i=users.count; i<self.imageViews.count; i++) {

@@ -355,7 +355,7 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setLocale:[NSLocale currentLocale]];
     [dateFormat setDateFormat:tstr];
-    NSString *str = [dateFormat stringFromDate:[NSDate date]];
+    NSString *str = [dateFormat stringFromDate:self];
     [dateFormat release];
     //    NSLog(@"date: %@", str);
     

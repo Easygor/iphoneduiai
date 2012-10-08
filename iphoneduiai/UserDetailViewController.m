@@ -369,7 +369,7 @@ static CGFloat dHeight2 = 0.0f;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"user data: %@", data);
+//                NSLog(@"user data: %@", data);
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
                 if (code == 0) {
                     NSDictionary *dataData = [data objectForKey:@"data"];
@@ -405,14 +405,20 @@ static CGFloat dHeight2 = 0.0f;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-//                NSLog(@"my weiyu data: %@", data);
-                if (![[data objectForKey:@"data"] isKindOfClass:[NSString class]]) {
-                    self.loading = NO;
-                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
-                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
-                    // 此行须在前两行后面
-                    self.weiyus = [data objectForKey:@"data"];
+                NSInteger code = [data[@"error"] integerValue];
+                //                NSLog(@"my weiyu data: %@", data);
+                if (code == 0) {
+                    if (![[data objectForKey:@"data"] isKindOfClass:[NSString class]]) {
+                        self.loading = NO;
+                        self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                        self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                        // 此行须在前两行后面
+                        self.weiyus = [data objectForKey:@"data"];
+                    }
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
+
             }
         }];
         

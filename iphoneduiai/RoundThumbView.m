@@ -14,10 +14,24 @@
 
 @property (strong, nonatomic) UIImageView *roundImageView;
 @property (strong, nonatomic) AsyncImageView *roundCenterView;
+@property (strong, nonatomic) UIImageView *delLogo;
 
 @end
 
 @implementation RoundThumbView
+
+- (void)setEditing:(BOOL)editing
+{
+    if (_editing != editing) {
+        _editing = editing;
+        
+        if (editing) {
+            self.delLogo.hidden = NO;
+        } else{
+            self.delLogo.hidden = YES;
+        }
+    }
+}
 
 - (void)setSelected:(BOOL)selected
 {
@@ -50,7 +64,15 @@
         self.roundImageView = view;
         
         [self addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:delegate action:gestureAction] autorelease]];
+        
+        UIImageView *logo = [[[UIImageView alloc] initWithFrame:CGRectMake(frame.size.width-20, 0, 20, 20)] autorelease];
+        logo.image = [UIImage imageNamed:@"DeleteGroupMemberBtn.png"];
+        logo.hidden = YES;
+        [self addSubview:logo];
+        self.delLogo = logo;
+        
     }
+    
     return self;
 }
 

@@ -111,6 +111,25 @@
 		61240BDD1619C4A7005C4E6C /* MarrayReqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BDC1619C4A7005C4E6C /* MarrayReqView.m */; };
 		61240BE41619D8D6005C4E6C /* MoreUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BE31619D8D6005C4E6C /* MoreUserInfoView.m */; };
 		61240BF41619F1E8005C4E6C /* WeiyuWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */; };
+		6130267616229D3A000E1CBD /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6130267416229D3A000E1CBD /* TasksViewController.m */; };
+		6130267716229D3A000E1CBD /* TasksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6130267516229D3A000E1CBD /* TasksViewController.xib */; };
+		6130267A1622A06C000E1CBD /* DeleteGroupMemberBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 613026781622A06C000E1CBD /* DeleteGroupMemberBtn.png */; };
+		6130267B1622A06C000E1CBD /* DeleteGroupMemberBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613026791622A06C000E1CBD /* DeleteGroupMemberBtn@2x.png */; };
+		6130267E1622A4D9000E1CBD /* mailapp_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 6130267C1622A4D9000E1CBD /* mailapp_delete.png */; };
+		6130267F1622A4D9000E1CBD /* mailapp_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6130267D1622A4D9000E1CBD /* mailapp_delete@2x.png */; };
+		613026831622AFEF000E1CBD /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 613026821622AFEF000E1CBD /* Notification.m */; };
+		6130268A1622BC77000E1CBD /* notice_unread.png in Resources */ = {isa = PBXBuildFile; fileRef = 613026881622BC77000E1CBD /* notice_unread.png */; };
+		6130268B1622BC77000E1CBD /* notice_unread@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613026891622BC77000E1CBD /* notice_unread@2x.png */; };
+		613026911622BF9F000E1CBD /* AppShareBook.png in Resources */ = {isa = PBXBuildFile; fileRef = 6130268D1622BF9F000E1CBD /* AppShareBook.png */; };
+		613026921622BF9F000E1CBD /* AppShareBook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6130268E1622BF9F000E1CBD /* AppShareBook@2x.png */; };
+		613026931622BF9F000E1CBD /* AppShareimage.png in Resources */ = {isa = PBXBuildFile; fileRef = 6130268F1622BF9F000E1CBD /* AppShareimage.png */; };
+		613026941622BF9F000E1CBD /* AppShareimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613026901622BF9F000E1CBD /* AppShareimage@2x.png */; };
+		613026A51622FA41000E1CBD /* NotificationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613026A31622FA41000E1CBD /* NotificationListViewController.m */; };
+		613026A61622FA41000E1CBD /* NotificationListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613026A41622FA41000E1CBD /* NotificationListViewController.xib */; };
+		613026AA1622FA84000E1CBD /* FeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613026A81622FA84000E1CBD /* FeedListViewController.m */; };
+		613026AB1622FA84000E1CBD /* FeedListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613026A91622FA84000E1CBD /* FeedListViewController.xib */; };
+		613026AF1622FAD0000E1CBD /* SessionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613026AD1622FACF000E1CBD /* SessionViewController.m */; };
+		613026B01622FAD0000E1CBD /* SessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613026AE1622FAD0000E1CBD /* SessionViewController.xib */; };
 		61397A921607FC2A009FDAF9 /* degree.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61397A911607FC2A009FDAF9 /* degree.plist */; };
 		6141A6D215FB512400985257 /* tabbar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6D015FB512400985257 /* tabbar-bg.png */; };
 		6141A6D315FB512400985257 /* tabbar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6D115FB512400985257 /* tabbar-bg@2x.png */; };
@@ -512,6 +531,30 @@
 		61240BF21619F1E8005C4E6C /* WeiyuWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuWordCell.h; sourceTree = "<group>"; };
 		61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuWordCell.m; sourceTree = "<group>"; };
 		61240BF51619F7A5005C4E6C /* CustomCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellDelegate.h; sourceTree = "<group>"; };
+		6130267316229D3A000E1CBD /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
+		6130267416229D3A000E1CBD /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
+		6130267516229D3A000E1CBD /* TasksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksViewController.xib; sourceTree = "<group>"; };
+		613026781622A06C000E1CBD /* DeleteGroupMemberBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteGroupMemberBtn.png; sourceTree = "<group>"; };
+		613026791622A06C000E1CBD /* DeleteGroupMemberBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteGroupMemberBtn@2x.png"; sourceTree = "<group>"; };
+		6130267C1622A4D9000E1CBD /* mailapp_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mailapp_delete.png; sourceTree = "<group>"; };
+		6130267D1622A4D9000E1CBD /* mailapp_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mailapp_delete@2x.png"; sourceTree = "<group>"; };
+		613026811622AFEF000E1CBD /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		613026821622AFEF000E1CBD /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		613026881622BC77000E1CBD /* notice_unread.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notice_unread.png; sourceTree = "<group>"; };
+		613026891622BC77000E1CBD /* notice_unread@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notice_unread@2x.png"; sourceTree = "<group>"; };
+		6130268D1622BF9F000E1CBD /* AppShareBook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppShareBook.png; sourceTree = "<group>"; };
+		6130268E1622BF9F000E1CBD /* AppShareBook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppShareBook@2x.png"; sourceTree = "<group>"; };
+		6130268F1622BF9F000E1CBD /* AppShareimage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppShareimage.png; sourceTree = "<group>"; };
+		613026901622BF9F000E1CBD /* AppShareimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AppShareimage@2x.png"; sourceTree = "<group>"; };
+		613026A21622FA41000E1CBD /* NotificationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationListViewController.h; sourceTree = "<group>"; };
+		613026A31622FA41000E1CBD /* NotificationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationListViewController.m; sourceTree = "<group>"; };
+		613026A41622FA41000E1CBD /* NotificationListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationListViewController.xib; sourceTree = "<group>"; };
+		613026A71622FA84000E1CBD /* FeedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedListViewController.h; sourceTree = "<group>"; };
+		613026A81622FA84000E1CBD /* FeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedListViewController.m; sourceTree = "<group>"; };
+		613026A91622FA84000E1CBD /* FeedListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedListViewController.xib; sourceTree = "<group>"; };
+		613026AC1622FACF000E1CBD /* SessionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionViewController.h; sourceTree = "<group>"; };
+		613026AD1622FACF000E1CBD /* SessionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionViewController.m; sourceTree = "<group>"; };
+		613026AE1622FAD0000E1CBD /* SessionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionViewController.xib; sourceTree = "<group>"; };
 		61397A911607FC2A009FDAF9 /* degree.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = degree.plist; sourceTree = "<group>"; };
 		6141A6D015FB512400985257 /* tabbar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-bg.png"; sourceTree = "<group>"; };
 		6141A6D115FB512400985257 /* tabbar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-bg@2x.png"; sourceTree = "<group>"; };
@@ -920,6 +963,38 @@
 			name = "Profile views";
 			sourceTree = "<group>";
 		};
+		613026801622AF8F000E1CBD /* notifications */ = {
+			isa = PBXGroup;
+			children = (
+				6141A6FE15FB72E200985257 /* MessageListViewController.h */,
+				6141A6FF15FB72E200985257 /* MessageListViewController.m */,
+				6141A70015FB72E300985257 /* MessageListViewController.xib */,
+				613026A21622FA41000E1CBD /* NotificationListViewController.h */,
+				613026A31622FA41000E1CBD /* NotificationListViewController.m */,
+				613026A41622FA41000E1CBD /* NotificationListViewController.xib */,
+				613026A71622FA84000E1CBD /* FeedListViewController.h */,
+				613026A81622FA84000E1CBD /* FeedListViewController.m */,
+				613026A91622FA84000E1CBD /* FeedListViewController.xib */,
+				613026AC1622FACF000E1CBD /* SessionViewController.h */,
+				613026AD1622FACF000E1CBD /* SessionViewController.m */,
+				613026AE1622FAD0000E1CBD /* SessionViewController.xib */,
+			);
+			name = notifications;
+			sourceTree = "<group>";
+		};
+		6130268C1622BF87000E1CBD /* message images */ = {
+			isa = PBXGroup;
+			children = (
+				6130268D1622BF9F000E1CBD /* AppShareBook.png */,
+				6130268E1622BF9F000E1CBD /* AppShareBook@2x.png */,
+				6130268F1622BF9F000E1CBD /* AppShareimage.png */,
+				613026901622BF9F000E1CBD /* AppShareimage@2x.png */,
+				613026881622BC77000E1CBD /* notice_unread.png */,
+				613026891622BC77000E1CBD /* notice_unread@2x.png */,
+			);
+			name = "message images";
+			sourceTree = "<group>";
+		};
 		61397A901607F95D009FDAF9 /* picker views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1100,6 +1175,10 @@
 		6159B17B16180F5200705835 /* Profile images */ = {
 			isa = PBXGroup;
 			children = (
+				6130267C1622A4D9000E1CBD /* mailapp_delete.png */,
+				6130267D1622A4D9000E1CBD /* mailapp_delete@2x.png */,
+				613026781622A06C000E1CBD /* DeleteGroupMemberBtn.png */,
+				613026791622A06C000E1CBD /* DeleteGroupMemberBtn@2x.png */,
 				6159B17C16180F9700705835 /* andriod_icon.png */,
 				6159B17D16180F9700705835 /* andriod_icon@2x.png */,
 				6159B17E16180F9700705835 /* apple_icon.png */,
@@ -1194,6 +1273,8 @@
 			children = (
 				61EC9F021611370A00C9DC6E /* User.h */,
 				61EC9F031611370A00C9DC6E /* User.m */,
+				613026811622AFEF000E1CBD /* Notification.h */,
+				613026821622AFEF000E1CBD /* Notification.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1264,15 +1345,16 @@
 				6159B1261615703100705835 /* Search */,
 				61729F1E161C2577004E3DA0 /* wei talk */,
 				61C7EE52161F37AE0080CAAE /* profiles */,
+				613026801622AF8F000E1CBD /* notifications */,
 				61BB2B6815F9DB0800AA82CC /* AppDelegate.h */,
 				61BB2B6915F9DB0800AA82CC /* AppDelegate.m */,
 				6141A6ED15FB6D9800985257 /* MainWindow.xib */,
-				6141A6FE15FB72E200985257 /* MessageListViewController.h */,
-				6141A6FF15FB72E200985257 /* MessageListViewController.m */,
-				6141A70015FB72E300985257 /* MessageListViewController.xib */,
 				6141A70815FB732D00985257 /* HonorListViewController.h */,
 				6141A70915FB732D00985257 /* HonorListViewController.m */,
 				6141A70A15FB732D00985257 /* HonorListViewController.xib */,
+				6130267316229D3A000E1CBD /* TasksViewController.h */,
+				6130267416229D3A000E1CBD /* TasksViewController.m */,
+				6130267516229D3A000E1CBD /* TasksViewController.xib */,
 				5A3505CE16204C5C00A80A71 /* AddPicViewController.h */,
 				5A3505CF16204C5C00A80A71 /* AddPicViewController.m */,
 				5A3505D016204C5C00A80A71 /* AddPicViewController.xib */,
@@ -1290,6 +1372,7 @@
 		61BB2B6015F9DB0800AA82CC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				6130268C1622BF87000E1CBD /* message images */,
 				61C7EDF3161EEB740080CAAE /* smiles */,
 				5AE46A9A161C86D000F3007C /* Wei talk images */,
 				5A1A18161618491700D0B782 /* Setting images */,
@@ -1799,6 +1882,20 @@
 				5A8042761621306A00B872D3 /* ILikeViewController.xib in Resources */,
 				5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */,
 				5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */,
+				6130267716229D3A000E1CBD /* TasksViewController.xib in Resources */,
+				6130267A1622A06C000E1CBD /* DeleteGroupMemberBtn.png in Resources */,
+				6130267B1622A06C000E1CBD /* DeleteGroupMemberBtn@2x.png in Resources */,
+				6130267E1622A4D9000E1CBD /* mailapp_delete.png in Resources */,
+				6130267F1622A4D9000E1CBD /* mailapp_delete@2x.png in Resources */,
+				6130268A1622BC77000E1CBD /* notice_unread.png in Resources */,
+				6130268B1622BC77000E1CBD /* notice_unread@2x.png in Resources */,
+				613026911622BF9F000E1CBD /* AppShareBook.png in Resources */,
+				613026921622BF9F000E1CBD /* AppShareBook@2x.png in Resources */,
+				613026931622BF9F000E1CBD /* AppShareimage.png in Resources */,
+				613026941622BF9F000E1CBD /* AppShareimage@2x.png in Resources */,
+				613026A61622FA41000E1CBD /* NotificationListViewController.xib in Resources */,
+				613026AB1622FA84000E1CBD /* FeedListViewController.xib in Resources */,
+				613026B01622FAD0000E1CBD /* SessionViewController.xib in Resources */,
 				5A34EBC11622C647005A0232 /* QQSetViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1882,6 +1979,11 @@
 				5ABA114A16214C040043F51A /* BindingViewController.m in Sources */,
 				6172EBB91621D5C700860F03 /* HonorTableCell.m in Sources */,
 				5ABA115D1621D48B0043F51A /* SetEmailViewController.m in Sources */,
+				6130267616229D3A000E1CBD /* TasksViewController.m in Sources */,
+				613026831622AFEF000E1CBD /* Notification.m in Sources */,
+				613026A51622FA41000E1CBD /* NotificationListViewController.m in Sources */,
+				613026AA1622FA84000E1CBD /* FeedListViewController.m in Sources */,
+				613026AF1622FAD0000E1CBD /* SessionViewController.m in Sources */,
 				5A34EBBC1622BDF5005A0232 /* BlacklistViewController.m in Sources */,
 				5A34EBC01622C647005A0232 /* QQSetViewController.m in Sources */,
 			);
