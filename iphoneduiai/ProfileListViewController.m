@@ -20,6 +20,7 @@
 #import "MoreUserInfoView.h"
 #import "WeiyuWordCell.h"
 #import "BindingViewController.h"
+#import "QQSetViewController.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -768,6 +769,9 @@ static NSInteger kActionChooseImageTag = 201;
 - (IBAction)contractAction
 {
     NSLog(@"contract...");
+    QQSetViewController *qqSetViewController = [[[QQSetViewController alloc]init]autorelease];
+    [self.navigationController pushViewController:qqSetViewController animated:YES];
+    
 }
 
 - (IBAction)bindingAction

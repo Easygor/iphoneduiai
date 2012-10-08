@@ -20,12 +20,12 @@
     [super loadView];
     self.view.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 
-    UIView *emailView = [[UIView alloc]initWithFrame:CGRectMake(10, 15, 300, 44)];
+    UIView *emailView = [[[UIView alloc]initWithFrame:CGRectMake(10, 15, 300, 44)]autorelease];
     emailView.backgroundColor = [UIColor whiteColor];
-    UILabel *emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(7, 15, 40, 15)];
+    UILabel *emailLabel = [[[UILabel alloc]initWithFrame:CGRectMake(7, 15, 40, 15)]autorelease];
     emailLabel.text = @"邮箱";
     emailLabel.font = [UIFont systemFontOfSize:15];
-    UITextField *emailField = [[UITextField alloc]initWithFrame:CGRectMake(80, 15, 170, 15)];
+    UITextField *emailField = [[[UITextField alloc]initWithFrame:CGRectMake(80, 15, 170, 15)]autorelease];
     emailField.textColor = RGBCOLOR(179, 179, 179);
     [emailView addSubview:emailLabel];
     [emailView addSubview:emailField];
@@ -39,7 +39,7 @@
     [self.view addSubview:verifyButton];
     
     
-    UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 120, 300, 60)];
+    UILabel *tipLabel = [[[UILabel alloc]initWithFrame:CGRectMake(10, 120, 300, 60)]autorelease];
     tipLabel.text =  @"邮箱用来登陆对爱和找回密码的唯一账号。\n如需要更改邮件绑定，请使用新邮箱发送一封标题为100010310的邮件到love@duiai.com,发送成功后即可自动绑定。\n更换绑定后，请使用新邮箱登陆。";
     tipLabel.numberOfLines = 0;
     tipLabel.lineBreakMode = UILineBreakModeCharacterWrap;
