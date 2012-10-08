@@ -8,15 +8,16 @@
 
 #import "MessageListViewController.h"
 #import "Utils.h"
-#import <RestKit/RestKit.h>
-#import <RestKit/JSONKit.h>
-#import "SVProgressHUD.h"
 #import "MessageTableCell.h"
+#import "Notification.h"
+#import "NSDate-Utilities.h"
+#import "NotificationListViewController.h"
+#import "FeedListViewController.h"
+#import "SessionViewController.h"
 
 @interface MessageListViewController ()
 
 @property (strong, nonatomic) NSMutableArray *messages;
-@property (nonatomic) NSInteger lastUpdated;
 
 @end
 
@@ -28,12 +29,21 @@
     [super dealloc];
 }
 
+- (void)setMessages:(NSMutableArray *)messages
+{
+    if (![_messages isEqualToArray:messages]) {
+        _messages = [messages retain];
+
+        [self.tableView reloadData];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.navigationItem.title = @"消息";
-    [self.navigationController.navigationBar setHidden:YES];
+
 }
 
 - (void)viewDidUnload
@@ -43,20 +53,27 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setHidden:YES];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSLog(@"user: %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"user"]);
-    [self getMixedNotifictions];
+
+    [[Notification sharedInstance] updateFromRemote:^{
+        self.messages =  [[Notification sharedInstance] mergeAndOrderNotices];
+    }];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-//    return self.messages.count;
-    return 11;
+
+    return self.messages.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -70,7 +87,19 @@
         cell = [nib objectAtIndex:3];
     }
     
-    cell.count = indexPath.row;
+    NSDictionary *msg = [self.messages objectAtIndex:indexPath.row];
+    cell.nameLabel.text = msg[@"title"];
+    cell.descLabel.text = msg[@"subTitle"];
+    cell.count = [msg[@"bageNum"] integerValue];
+    NSDate *updated = msg[@"updated"];
+    cell.timeLabel.text = [updated stringWithPattern:@"M/d HH:mm"];
+    if ([msg[@"logo"] hasPrefix:@"http://"]) {
+
+        [cell.avatarImageView loadImage:msg[@"logo"]];
+    } else{
+        cell.avatarImageView.image = [UIImage imageNamed:msg[@"logo"]];
+    }
+    
     
     return cell;
 }
@@ -89,11 +118,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        NSDictionary *msg = self.messages[indexPath.row];
+        // TODO: request server
+        [[Notification sharedInstance] removeNoticeObject:msg];
+        [self.messages removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+//    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }   
 }
 
 
@@ -101,39 +134,28 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-}
-
-#pragma mark - request remote
-- (void)getMixedNotifictions
-{
-    NSMutableDictionary *dp = [Utils queryParams];
-    [dp setObject:[NSNumber numberWithInteger:self.lastUpdated] forKey:@"accesstime"];
-    
-    [[RKClient sharedClient] get:[@"/common/sysnotice.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
-        [request setOnDidFailLoadWithError:^(NSError *error){
-            NSLog(@"sys notice: %@", [error description]);
-        }];
+    NSDictionary *msg = self.messages[indexPath.row];
+    if ([msg[@"type"] isEqualToString:@"message"]) {
         
-        [request setOnDidLoadResponse:^(RKResponse *response){
-            if (response.isOK && response.isJSON) {
-                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-
-                NSInteger code = [data[@"error"] integerValue];
-                if (code == 0) {
-                    NSLog(@"suc ss: %@", data);
-                }
-                
-            }
-        }];
-    }];
+        SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
+        [self.navigationController pushViewController:svc animated:YES];
+        [svc release];
+        
+    } else if ([msg[@"type"] isEqualToString:@"notice"]){
+        
+        NotificationListViewController *nlvc = [[NotificationListViewController alloc] initWithNibName:@"NotificationListViewController" bundle:nil];
+        [self.navigationController pushViewController:nlvc animated:YES];
+        [nlvc release];
+        
+    } else if ([msg[@"type"] isEqualToString:@"feed"]){
+        
+        FeedListViewController *flvc = [[FeedListViewController alloc] initWithNibName:@"FeedListViewController" bundle:nil];
+        [self.navigationController pushViewController:flvc animated:YES];
+        [flvc release];
+        
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

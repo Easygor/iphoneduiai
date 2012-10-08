@@ -170,13 +170,21 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    [avatarImageView loadImage:info[@"photo"]];
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
     PageSmileView *pageSmileView = [[PageSmileView alloc] initWithFrame: CGRectMake(0, 200, 320, 216)
                                                          withDataSource: self];
-
-//    pageSmileView.backgroundColor = [UIColor redColor];
+    
+    //    pageSmileView.backgroundColor = [UIColor redColor];
     [self.view addSubview:pageSmileView];
     [pageSmileView release];
-    
 }
 
 - (void)backAction

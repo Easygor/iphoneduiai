@@ -62,7 +62,13 @@
             UserCardView *view = [self.arry objectAtIndex:i];
             NSDictionary *user = [users objectAtIndex:i];
             view.hidden = NO;
-            [view.imageView loadImage:[user objectForKey:@"photo"]];
+            
+            if ([user[@"photo"] isEqualToString:@""]) {
+                [view.imageView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+            } else{
+                [view.imageView loadImage:user[@"photo"]];
+            }
+
             view.picNumLabel.text = [NSString stringWithFormat:@"%@P", [user objectForKey:@"photocount"]];
             view.infoLabel.text = [NSString stringWithFormat:@"%@ %@岁 %@cm",
                                    [Utils descriptionForDistance:[[user objectForKey:@"distance"] intValue]],

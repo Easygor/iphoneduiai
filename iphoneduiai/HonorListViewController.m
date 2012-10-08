@@ -14,28 +14,106 @@
 #import "CustomBarButtonItem.h"
 #import "UserDetailViewController.h"
 #import "HonorTableCell.h"
+#import "DropMenuView.h"
+#import "AsyncImageView.h"
+#import <QuartzCore/QuartzCore.h>
+#import "TasksViewController.h"
 
 #define CNUM 4
 
-@interface HonorListViewController () <CustomCellDelegate>
+@interface HonorListViewController () <CustomCellDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *users;
 @property (strong, nonatomic) UITableViewCell *moreCell;
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (nonatomic) BOOL loading;
 
+@property (strong, nonatomic) NSString *selectedSex;
+@property (strong, nonatomic) NSArray *filterEntries;
+@property (strong, nonatomic) UIButton *tilteBtn;
+@property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
+@property (retain, nonatomic) IBOutlet AsyncImageView *avatarImageView;
+@property (retain, nonatomic) IBOutlet UIImageView *levelImageView;
+@property (retain, nonatomic) IBOutlet UIImageView *bigLevelImageView;
+@property (retain, nonatomic) IBOutlet UIButton *btn;
+@property (retain, nonatomic) IBOutlet UILabel *levelLabel;
+@property (retain, nonatomic) IBOutlet UILabel *nameLabel;
+@property (retain, nonatomic) IBOutlet UIView *bottomView;
+@property (strong, nonatomic) NSDictionary *vipData;
+
 @end
 
 @implementation HonorListViewController
 
 - (void)dealloc {
-
-
-
+    
+    [_selectedSex release];
     [_users release];
     [_moreCell release];
-    
+    [_filterEntries release];
+    [_tilteBtn release];
+    [_selectedSex release];
+    [_dropMenuView release];
+    [_avatarImageView release];
+    [_levelImageView release];
+    [_bigLevelImageView release];
+    [_btn release];
+    [_levelLabel release];
+    [_nameLabel release];
+    [_bottomView release];
+    [_vipData release];
     [super dealloc];
+}
+
+- (void)setVipData:(NSDictionary *)vipData
+{
+    if (![_vipData isEqualToDictionary:vipData]) {
+        _vipData = [vipData retain];
+        CGSize size = [vipData[@"txt"] sizeWithFont:self.levelLabel.font
+                                  constrainedToSize:CGSizeMake(self.levelLabel.frame.size.width, 60)
+                                      lineBreakMode:UILineBreakModeCharacterWrap];
+        CGRect lFrame = self.levelLabel.frame;
+        lFrame.size.height = size.height;
+        self.levelLabel.frame = lFrame;
+        
+        self.levelLabel.text = vipData[@"txt"];
+        
+        [self.btn setTitle:vipData[@"bt"] forState:UIControlStateNormal];
+        [self.btn setTitle:vipData[@"bt"] forState:UIControlStateHighlighted];
+    }
+}
+
+- (NSArray *)filterEntries
+{
+    if (_filterEntries == nil) {
+        _filterEntries = [[NSArray alloc] initWithArray:@[
+                          @{@"tag":@"w", @"name":@"同城女生"},
+                          @{@"tag":@"m", @"name":@"同城男生"}]];
+    }
+    
+    return _filterEntries;
+}
+
+- (void)setSelectedSex:(NSString *)selectedSex
+{
+    if (![_selectedSex isEqualToString:selectedSex]) {
+        _selectedSex = [selectedSex retain];
+
+        
+        NSString *name = nil;
+        for (NSDictionary *d in self.filterEntries) {
+            if ([[d objectForKey:@"tag"] isEqualToString:selectedSex]) {
+                name = [d objectForKey:@"name"];
+                break;
+            }
+            
+        }
+        
+        [self.tilteBtn setTitle:name forState:UIControlStateNormal];
+        [self.tilteBtn setTitle:name forState:UIControlStateHighlighted];
+        
+        [self requestHonorListWithPage:1];
+    }
 }
 
 - (void)setUsers:(NSMutableArray *)users
@@ -56,19 +134,64 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-      self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"我要升级"
                                                                                                 target:self
                                                                                                 action:@selector(jumpAction)] autorelease];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 100, 44);
+    [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = btn;
+    self.tilteBtn = btn;
+    
+    self.bottomView.layer.shadowColor = [UIColor grayColor].CGColor;
+    self.bottomView.layer.shadowOffset = CGSizeMake(0, 1.0);
+    self.bottomView.layer.shadowOpacity = 0.45;
+    self.bottomView.layer.shadowRadius = 1.0;
+    self.bottomView.layer.shouldRasterize = YES;
+    
+    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    [self.avatarImageView loadImage:info[@"photo"]];
+    self.nameLabel.text = info[@"niname"];
+    [self.nameLabel sizeToFit];
+    
+    CGRect lFrame = self.levelImageView.frame;
+    lFrame.origin.x = self.nameLabel.frame.origin.x + self.nameLabel.frame.size.width + 3;
+    self.levelImageView.frame = lFrame;
+    
+    self.avatarImageView.layer.masksToBounds = YES;
+    self.avatarImageView.layer.cornerRadius = 5.0f;
+    
+}
+
+- (void)selectAeraAction:(UIButton*)btn
+{
+    CGRect posFrame = [self.navigationItem.titleView.superview convertRect:self.navigationItem.titleView.frame toView:self.view.window];
+    [self.dropMenuView showMeAtView:self.view
+                            atPoint:CGPointMake(posFrame.origin.x, posFrame.origin.y+posFrame.size.height)
+                           animated:YES];
+    
 }
 
 - (void)jumpAction
 {
-    NSLog(@"我要升级...");
+
+    TasksViewController *tvc = [[TasksViewController alloc] initWithNibName:@"TasksViewController" bundle:nil];
+    [self.navigationController pushViewController:tvc animated:YES];
+    [tvc release];
 }
 
 - (void)viewDidUnload
 {
+    [self setDropMenuView:nil];
+    [self setAvatarImageView:nil];
+    [self setLevelImageView:nil];
+    [self setBigLevelImageView:nil];
+    [self setBtn:nil];
+    [self setLevelLabel:nil];
+    [self setNameLabel:nil];
+    [self setBottomView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -80,7 +203,16 @@
     [super viewDidAppear:animated];
         
         // do init things
-    [self requestHonorListWithPage:1];
+    if (self.users.count <= 0) {
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        if ([info[@"sex"] isEqualToString:@"m"]) {
+            self.selectedSex = @"w";
+        } else{
+            self.selectedSex = @"m";
+        }
+        [self requestHonorListWithPage:1];
+    }
+
 }
 
 
@@ -203,12 +335,8 @@
     NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
     
     // select sex
-    if ([info[@"sex"] isEqualToString:@"m"]) {
-        [params setObject:@"w" forKey:@"sex"];
-    } else{
-        [params setObject:@"m" forKey:@"sex"];
-    }
-    
+    [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [params setObject:self.selectedSex forKey:@"sex"];
     // area info
     [params setObject:info[@"province"] forKey:@"province"];
     [params setObject:info[@"city"] forKey:@"city"];
@@ -217,27 +345,32 @@
     [params setObject:@"-1" forKey:@"ordasc"];
     // location distance
     
-    [params setObject:@"18" forKey:@"minage"];
-    [params setObject:@"30" forKey:@"maxage"];
-    [params setObject:@"32" forKey:@"pagesize"];
+    [params setObject:@"40" forKey:@"pagesize"];
     
     // have pics
-    [params setObject:@"1" forKey:@"photo"];
+//    [params setObject:@"1" forKey:@"photo"];
     [params setObject:@"photo" forKey:@"fields"];
     
-    
+    [SVProgressHUD show];
     [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
         NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                //                NSLog(@"data %@", data);
-                self.loading = NO;
-                self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
-                self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
-                // 此行须在前两行后面
-                self.users = [data objectForKey:@"data"];
-                [SVProgressHUD dismiss];
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    //                NSLog(@"data %@", data);
+                    self.loading = NO;
+                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                    // 此行须在前两行后面
+                    self.users = [data objectForKey:@"data"];
+                    self.vipData = data[@"vipdata"];
+                    //                NSLog(@"data vip: %@", self.vipData);
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
                 
             } else{
                 [SVProgressHUD showErrorWithStatus:@"获取失败"];
@@ -263,5 +396,28 @@
     [udvc release];
 }
 
+#pragma mark - drop menu
+- (NSArray *)dropMenuViewData:(DropMenuView *)dropView
+{
+    return self.filterEntries;
+    
+}
 
+- (void)didSelectedMenuCell:(DropMenuView *)dropView withTag:(NSString *)tag name:(NSString *)name
+{
+    
+    if (self.tableView.isDecelerating ||
+        self.tableView.isDragging ||
+        self.tableView.isEditing) {
+        return;
+    }
+    
+    self.selectedSex = tag;
+    
+}
+
+- (IBAction)goToLevelAction
+{
+    [self jumpAction];
+}
 @end

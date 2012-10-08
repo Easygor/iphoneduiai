@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface RoundThumbView : UIView
-@property (nonatomic) BOOL selected;
+@property (nonatomic) BOOL selected, editing;
 
 - (id)initWithFrame:(CGRect)frame image:(NSString*)imageUrl target:(id)delegate forSelector:(SEL)gestureAction;
 

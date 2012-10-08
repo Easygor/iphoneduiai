@@ -199,10 +199,16 @@
         if (editing) {
             // loading
             NSMutableDictionary *d = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"http://tp2.sinaimg.cn/1987513781/180/5609823393/1", @"icon", @"add", @"action", nil];
+            for (RoundThumbView *v  in self.rounds) {
+                v.editing = YES;
+            }
             [self insertPhoto:d atIndex:0];
         } else{
             // editing
             [self removePhotoAt:0];
+            for (RoundThumbView *v  in self.rounds) {
+                v.editing = NO;
+            }
         }
     }
     

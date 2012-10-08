@@ -433,13 +433,19 @@
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"weiyu list data: %@", data);
-                self.loading = NO;
-                self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
-                self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
-                // 此行须在前两行后面
-                self.weiyus = [data objectForKey:@"data"];
-                [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+//                NSLog(@"weiyu list data: %@", data);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    self.loading = NO;
+                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                    // 此行须在前两行后面
+                    self.weiyus = [data objectForKey:@"data"];
+                    [self.refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+ 
             }
         }];
         

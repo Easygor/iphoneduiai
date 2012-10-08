@@ -19,8 +19,9 @@
 #import "ConditionViewController.h"
 #import "UserDetailViewController.h"
 #import "LocationController.h"
+#import "DropMenuView.h"
 
-@interface SearchListViewController () <HZSementdControlDelegate, LocationControllerDelegate, CustomCellDelegate>
+@interface SearchListViewController () <HZSementdControlDelegate, LocationControllerDelegate, CustomCellDelegate, DropMenuViewDelegate>
 {
     BOOL isWater;
 }
@@ -34,6 +35,12 @@
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (strong, nonatomic) NSString *orderField;
 
+@property (strong, nonatomic) NSString *selectedSex;
+@property (strong, nonatomic) NSArray *filterEntries;
+@property (strong, nonatomic) UIButton *tilteBtn;
+@property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
+
+
 @end
 
 @implementation SearchListViewController
@@ -45,7 +52,45 @@
     [_users release];
     [_moreCell release];
     [_orderField release];
+    [_filterEntries release];
+    [_tilteBtn release];
+    [_selectedSex release];
+
+    [_dropMenuView release];
     [super dealloc];
+}
+
+- (NSArray *)filterEntries
+{
+    if (_filterEntries == nil) {
+        _filterEntries = [[NSArray alloc] initWithArray:@[
+                          @{@"tag":@"w", @"name":@"同城女生"},
+                          @{@"tag":@"m", @"name":@"同城男生"}]];
+    }
+    
+    return _filterEntries;
+}
+
+- (void)setSelectedSex:(NSString *)selectedSex
+{
+    if (![_selectedSex isEqualToString:selectedSex]) {
+        _selectedSex = [selectedSex retain];
+        
+        
+        NSString *name = nil;
+        for (NSDictionary *d in self.filterEntries) {
+            if ([[d objectForKey:@"tag"] isEqualToString:selectedSex]) {
+                name = [d objectForKey:@"name"];
+                break;
+            }
+            
+        }
+        
+        [self.tilteBtn setTitle:name forState:UIControlStateNormal];
+        [self.tilteBtn setTitle:name forState:UIControlStateHighlighted];
+        
+        [self reloadList];
+    }
 }
 
 - (void)setUsers:(NSMutableArray *)users
@@ -76,8 +121,22 @@
                                                                                               target:self
                                                                                               action:@selector(jumpAction)] autorelease];
     
-    [LocationController sharedInstance].delegate = self;
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 0, 100, 44);
+    [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = btn;
+    self.tilteBtn = btn;
   
+}
+
+- (void)selectAeraAction:(UIButton*)btn
+{
+    CGRect posFrame = [self.navigationItem.titleView.superview convertRect:self.navigationItem.titleView.frame toView:self.view.window];
+    [self.dropMenuView showMeAtView:self.view
+                            atPoint:CGPointMake(posFrame.origin.x, posFrame.origin.y+posFrame.size.height)
+                           animated:YES];
+    
 }
 
 - (void)jumpAction
@@ -118,6 +177,7 @@
     [self setSementdView:nil];
     [self setWaterTableView:nil];
     [self setInfoTableView:nil];
+    [self setDropMenuView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -141,8 +201,11 @@
     // do something here
     if (self.users.count <= 0 &&
         [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
+        // todo 
         [self.sementdView selectSegmentAtIndex:0];
     }
+#warning two time request trigger.
+    [LocationController sharedInstance].delegate = self;
 
 }
 
@@ -216,7 +279,11 @@
 
         // do on here
         cell.nameLabel.text = [user objectForKey:@"niname"];
-        [cell.avatarImageView loadImage:[user objectForKey:@"photo"]];
+        if ([user[@"photo"] isEqualToString:@""]) {
+            [cell.avatarImageView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+        } else{
+            [cell.avatarImageView loadImage:user[@"photo"]];
+        }
         cell.ageHightLabel.text = [NSString stringWithFormat:@"%@岁·%@cm", [user objectForKey:@"age"], [user objectForKey:@"height"]];
         NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
         NSInteger d = [[user objectForKey:@"distance"] integerValue];
@@ -262,7 +329,6 @@
             return [self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
         }
     }
-    
 
 }
 
@@ -385,8 +451,17 @@
             self.orderField = nil;
             break;
     }
-    
-    [self reloadList];
+    if (self.selectedSex) {
+        [self reloadList];
+    } else{
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        if ([info[@"sex"] isEqualToString:@"m"]) {
+            self.selectedSex = @"w";
+        } else{
+            self.selectedSex = @"m";
+        }
+    }
+
 }
 
 - (void)reloadList
@@ -427,11 +502,7 @@
     NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
     
     // select sex
-    if ([info[@"sex"] isEqualToString:@"m"]) {
-         [params setObject:@"w" forKey:@"sex"];
-    } else{
-         [params setObject:@"m" forKey:@"sex"];
-    }
+    [params setObject:self.selectedSex forKey:@"sex"];
     
     // area info
     [params setObject:info[@"province"] forKey:@"province"];
@@ -449,7 +520,7 @@
     [params setObject:@"21" forKey:@"pagesize"];
     
     // have pics
-    [params setObject:@"1" forKey:@"photo"];
+//    [params setObject:@"1" forKey:@"photo"];
     [params setObject:@"niname,age,height,photo,photocount,sex,acctime,distance,weibolist,position,last_weiyu" forKey:@"fields"];
     
 
@@ -459,12 +530,23 @@
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
 //                NSLog(@"data %@", data);
-                self.loading = NO;
-                self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
-                self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
-                  // 此行须在前两行后面
-                self.users = [data objectForKey:@"data"];
-                [SVProgressHUD dismiss];
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    self.loading = NO;
+                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                    // 此行须在前两行后面
+                    if ([data[@"data"] isEqual:[NSNull null]]) {
+                        self.users = nil;
+                    } else{
+                        self.users = [data objectForKey:@"data"];
+                    }
+                    
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+
 
             } else{
                 [SVProgressHUD showErrorWithStatus:@"获取失败"];
@@ -515,6 +597,29 @@
     udvc.user = user;
     [self.navigationController pushViewController:udvc animated:YES];
     [udvc release];
+}
+
+#pragma mark - drop menu
+- (NSArray *)dropMenuViewData:(DropMenuView *)dropView
+{
+    return self.filterEntries;
+    
+}
+
+- (void)didSelectedMenuCell:(DropMenuView *)dropView withTag:(NSString *)tag name:(NSString *)name
+{
+    
+    if (self.waterTableView.isDecelerating ||
+        self.waterTableView.isDragging ||
+        self.waterTableView.isEditing ||
+        self.infoTableView.isDecelerating ||
+        self.infoTableView.isDragging ||
+        self.infoTableView.isEditing) {
+        return;
+    }
+    
+    self.selectedSex = tag;
+    
 }
 
 @end

@@ -63,6 +63,8 @@
 - (NSInteger) daysAfterDate: (NSDate *) aDate;
 - (NSInteger) daysBeforeDate: (NSDate *) aDate;
 
+- (NSString *)stringWithPattern:(NSString *)tstr;
+
 // Decomposing dates
 @property (readonly) NSInteger nearestHour;
 @property (readonly) NSInteger hour;
