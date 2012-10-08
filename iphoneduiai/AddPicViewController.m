@@ -43,14 +43,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"
-                                                                                                target:self
-                                                                                                action:@selector(saceAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(saceAction)] autorelease];
     page = 0;
     isEditing = NO;
     addbutton = [[BJGridItem alloc] initWithTitle:@"Add" withImageName:@"blueButton.jpg" atIndex:0 editable:NO];
     
-    [addbutton setFrame:CGRectMake(20, 20, 100, 100)];
+    [addbutton setFrame:CGRectMake(0, 10, 100, 100)];
     addbutton.delegate = self;
     [scrollview addSubview: addbutton];
     gridItems = [[NSMutableArray alloc] initWithCapacity:6];
@@ -127,7 +125,7 @@
     NSLog(@"prex:%f",preX);
 }
 - (void)Addbutton {
-    CGRect frame = CGRectMake(20, 20, 100, 100);
+    CGRect frame = CGRectMake(0, 10, 100, 100);
     int n = [gridItems count];
     int row = (n-1) / 2;
     int col = (n-1) % 2;
