@@ -73,7 +73,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return self.messages.count;
+//    return self.messages.count;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,18 +88,18 @@
         cell = [nib objectAtIndex:3];
     }
     
-    NSDictionary *msg = [self.messages objectAtIndex:indexPath.row];
-    cell.nameLabel.text = msg[@"title"];
-    cell.descLabel.text = msg[@"subTitle"];
-    cell.count = [msg[@"bageNum"] integerValue];
-    NSDate *updated = msg[@"updated"];
-    cell.timeLabel.text = [updated stringWithPattern:@"M/d HH:mm"];
-    if ([msg[@"logo"] hasPrefix:@"http://"]) {
-
-        [cell.avatarImageView loadImage:msg[@"logo"]];
-    } else{
-        cell.avatarImageView.image = [UIImage imageNamed:msg[@"logo"]];
-    }
+//    NSDictionary *msg = [self.messages objectAtIndex:indexPath.row];
+//    cell.nameLabel.text = msg[@"title"];
+//    cell.descLabel.text = msg[@"subTitle"];
+//    cell.count = [msg[@"bageNum"] integerValue];
+//    NSDate *updated = msg[@"updated"];
+//    cell.timeLabel.text = [updated stringWithPattern:@"M/d HH:mm"];
+//    if ([msg[@"logo"] hasPrefix:@"http://"]) {
+//
+//        [cell.avatarImageView loadImage:msg[@"logo"]];
+//    } else{
+//        cell.avatarImageView.image = [UIImage imageNamed:msg[@"logo"]];
+//    }
     
     
     return cell;
@@ -134,27 +135,29 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *msg = self.messages[indexPath.row];
-    if ([msg[@"type"] isEqualToString:@"message"]) {
-        
-        SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
-        [self.navigationController pushViewController:svc animated:YES];
-        [svc release];
-        
-    } else if ([msg[@"type"] isEqualToString:@"notice"]){
-        
-        NotificationListViewController *nlvc = [[NotificationListViewController alloc] initWithNibName:@"NotificationListViewController" bundle:nil];
-        [self.navigationController pushViewController:nlvc animated:YES];
-        [nlvc release];
-        
-    } else if ([msg[@"type"] isEqualToString:@"feed"]){
-        
-        FeedListViewController *flvc = [[FeedListViewController alloc] initWithNibName:@"FeedListViewController" bundle:nil];
-        [self.navigationController pushViewController:flvc animated:YES];
-        [flvc release];
-        
-    }
-    
+//    NSDictionary *msg = self.messages[indexPath.row];
+//    if ([msg[@"type"] isEqualToString:@"message"]) {
+//        
+//        SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
+//        [self.navigationController pushViewController:svc animated:YES];
+//        [svc release];
+//        
+//    } else if ([msg[@"type"] isEqualToString:@"notice"]){
+//        
+//        NotificationListViewController *nlvc = [[NotificationListViewController alloc] initWithNibName:@"NotificationListViewController" bundle:nil];
+//        [self.navigationController pushViewController:nlvc animated:YES];
+//        [nlvc release];
+//        
+//    } else if ([msg[@"type"] isEqualToString:@"feed"]){
+//        
+//        FeedListViewController *flvc = [[FeedListViewController alloc] initWithNibName:@"FeedListViewController" bundle:nil];
+//        [self.navigationController pushViewController:flvc animated:YES];
+//        [flvc release];
+//        
+//    }
+    SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
+    [self.navigationController pushViewController:svc animated:YES];
+    [svc release];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

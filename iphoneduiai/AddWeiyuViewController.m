@@ -239,7 +239,8 @@
     }else
     {
         [contentTextView becomeFirstResponder];
-        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background"] forState:UIControlStateNormal];
+        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background.png"] forState:UIControlStateNormal];
+        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateNormal];
         state = YES;
 
     }

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <RestKit/RestKit.h>
 #import "LocationController.h"
+#import "Notification.h"
 
 @implementation AppDelegate
 
@@ -72,6 +73,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
+    [[Notification sharedInstance] saveDataToPlist];
     [self saveContext];
 }
 

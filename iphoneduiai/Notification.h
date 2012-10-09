@@ -15,5 +15,6 @@
 - (void)updateFromRemote:(void(^)())block;
 - (NSMutableArray*)mergeAndOrderNotices;
 - (void)removeNoticeObject:(NSDictionary*)d;
+- (void)saveDataToPlist;
 
 @end

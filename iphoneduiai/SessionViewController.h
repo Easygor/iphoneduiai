@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SessionViewController : UITableViewController
+@interface SessionViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
 
 @end

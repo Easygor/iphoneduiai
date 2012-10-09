@@ -290,6 +290,20 @@
 		61AA9C5015FC4AD1009D67AD /* icon-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AA9C3E15FC4AD1009D67AD /* icon-search.png */; };
 		61AA9C5115FC4AD1009D67AD /* icon-weiyu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AA9C3F15FC4AD1009D67AD /* icon-weiyu@2x.png */; };
 		61AA9C5215FC4AD1009D67AD /* icon-weiyu-linked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AA9C4015FC4AD1009D67AD /* icon-weiyu-linked@2x.png */; };
+		61BA60C21623F293001D7448 /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA60BF1623F293001D7448 /* HPGrowingTextView.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		61BA60C31623F293001D7448 /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BA60C11623F293001D7448 /* HPTextViewInternal.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		61BA60CC1623F74B001D7448 /* MessageEntryBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60C41623F74B001D7448 /* MessageEntryBackground.png */; };
+		61BA60CD1623F74B001D7448 /* MessageEntryBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60C51623F74B001D7448 /* MessageEntryBackground@2x.png */; };
+		61BA60CE1623F74B001D7448 /* MessageEntryInputField.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60C61623F74B001D7448 /* MessageEntryInputField.png */; };
+		61BA60CF1623F74B001D7448 /* MessageEntryInputField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60C71623F74B001D7448 /* MessageEntryInputField@2x.png */; };
+		61BA60D01623F74B001D7448 /* MessageEntrySendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60C81623F74B001D7448 /* MessageEntrySendButton.png */; };
+		61BA60D11623F74B001D7448 /* MessageEntrySendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60C91623F74B001D7448 /* MessageEntrySendButton@2x.png */; };
+		61BA60D21623F74B001D7448 /* MessageEntrySendButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60CA1623F74B001D7448 /* MessageEntrySendButtonPressed.png */; };
+		61BA60D31623F74B001D7448 /* MessageEntrySendButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60CB1623F74B001D7448 /* MessageEntrySendButtonPressed@2x.png */; };
+		61BA60D816246731001D7448 /* mailapp_addBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60D416246731001D7448 /* mailapp_addBtn.png */; };
+		61BA60D916246731001D7448 /* mailapp_addBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60D516246731001D7448 /* mailapp_addBtn@2x.png */; };
+		61BA60DA16246731001D7448 /* mailapp_addBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60D616246731001D7448 /* mailapp_addBtn2.png */; };
+		61BA60DB16246731001D7448 /* mailapp_addBtn2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BA60D716246731001D7448 /* mailapp_addBtn2@2x.png */; };
 		61BB2B5815F9DB0800AA82CC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61BB2B5715F9DB0800AA82CC /* UIKit.framework */; };
 		61BB2B5A15F9DB0800AA82CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61BB2B5915F9DB0800AA82CC /* Foundation.framework */; };
 		61BB2B5C15F9DB0800AA82CC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61BB2B5B15F9DB0800AA82CC /* CoreGraphics.framework */; };
@@ -354,6 +368,14 @@
 		61CB40DD1604CB6600888317 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61CB40DB1604CB6600888317 /* city.plist */; };
 		61CB40DE1604CB6600888317 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61CB40DC1604CB6600888317 /* area.plist */; };
 		61EC9F041611370A00C9DC6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EC9F031611370A00C9DC6E /* User.m */; };
+		61EEFECE162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFEC6162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png */; };
+		61EEFECF162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFEC7162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png */; };
+		61EEFED0162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFEC8162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL.png */; };
+		61EEFED1162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFEC9162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL@2x.png */; };
+		61EEFED2162324D1008E375F /* VOIPSenderVoiceNodeBkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECA162324D1008E375F /* VOIPSenderVoiceNodeBkg.png */; };
+		61EEFED3162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECB162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png */; };
+		61EEFED4162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECC162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png */; };
+		61EEFED5162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECD162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -747,6 +769,22 @@
 		61AA9C3E15FC4AD1009D67AD /* icon-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-search.png"; sourceTree = "<group>"; };
 		61AA9C3F15FC4AD1009D67AD /* icon-weiyu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-weiyu@2x.png"; sourceTree = "<group>"; };
 		61AA9C4015FC4AD1009D67AD /* icon-weiyu-linked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-weiyu-linked@2x.png"; sourceTree = "<group>"; };
+		61BA60BE1623F293001D7448 /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
+		61BA60BF1623F293001D7448 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
+		61BA60C01623F293001D7448 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
+		61BA60C11623F293001D7448 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
+		61BA60C41623F74B001D7448 /* MessageEntryBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryBackground.png; sourceTree = "<group>"; };
+		61BA60C51623F74B001D7448 /* MessageEntryBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryBackground@2x.png"; sourceTree = "<group>"; };
+		61BA60C61623F74B001D7448 /* MessageEntryInputField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntryInputField.png; sourceTree = "<group>"; };
+		61BA60C71623F74B001D7448 /* MessageEntryInputField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntryInputField@2x.png"; sourceTree = "<group>"; };
+		61BA60C81623F74B001D7448 /* MessageEntrySendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButton.png; sourceTree = "<group>"; };
+		61BA60C91623F74B001D7448 /* MessageEntrySendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButton@2x.png"; sourceTree = "<group>"; };
+		61BA60CA1623F74B001D7448 /* MessageEntrySendButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MessageEntrySendButtonPressed.png; sourceTree = "<group>"; };
+		61BA60CB1623F74B001D7448 /* MessageEntrySendButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MessageEntrySendButtonPressed@2x.png"; sourceTree = "<group>"; };
+		61BA60D416246731001D7448 /* mailapp_addBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mailapp_addBtn.png; sourceTree = "<group>"; };
+		61BA60D516246731001D7448 /* mailapp_addBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mailapp_addBtn@2x.png"; sourceTree = "<group>"; };
+		61BA60D616246731001D7448 /* mailapp_addBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mailapp_addBtn2.png; sourceTree = "<group>"; };
+		61BA60D716246731001D7448 /* mailapp_addBtn2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mailapp_addBtn2@2x.png"; sourceTree = "<group>"; };
 		61BB2B5315F9DB0800AA82CC /* iphoneduiai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iphoneduiai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BB2B5715F9DB0800AA82CC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		61BB2B5915F9DB0800AA82CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -832,6 +870,14 @@
 		61CB40DC1604CB6600888317 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		61EC9F021611370A00C9DC6E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		61EC9F031611370A00C9DC6E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		61EEFEC6162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VOIPReceiverVoiceNodeBkg.png; sourceTree = "<group>"; };
+		61EEFEC7162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VOIPReceiverVoiceNodeBkg@2x.png"; sourceTree = "<group>"; };
+		61EEFEC8162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VOIPReceiverVoiceNodeBkgHL.png; sourceTree = "<group>"; };
+		61EEFEC9162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VOIPReceiverVoiceNodeBkgHL@2x.png"; sourceTree = "<group>"; };
+		61EEFECA162324D1008E375F /* VOIPSenderVoiceNodeBkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VOIPSenderVoiceNodeBkg.png; sourceTree = "<group>"; };
+		61EEFECB162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VOIPSenderVoiceNodeBkg@2x.png"; sourceTree = "<group>"; };
+		61EEFECC162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VOIPSenderVoiceNodeBkgHL.png; sourceTree = "<group>"; };
+		61EEFECD162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VOIPSenderVoiceNodeBkgHL@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -985,6 +1031,26 @@
 		6130268C1622BF87000E1CBD /* message images */ = {
 			isa = PBXGroup;
 			children = (
+				61BA60D416246731001D7448 /* mailapp_addBtn.png */,
+				61BA60D516246731001D7448 /* mailapp_addBtn@2x.png */,
+				61BA60D616246731001D7448 /* mailapp_addBtn2.png */,
+				61BA60D716246731001D7448 /* mailapp_addBtn2@2x.png */,
+				61BA60C41623F74B001D7448 /* MessageEntryBackground.png */,
+				61BA60C51623F74B001D7448 /* MessageEntryBackground@2x.png */,
+				61BA60C61623F74B001D7448 /* MessageEntryInputField.png */,
+				61BA60C71623F74B001D7448 /* MessageEntryInputField@2x.png */,
+				61BA60C81623F74B001D7448 /* MessageEntrySendButton.png */,
+				61BA60C91623F74B001D7448 /* MessageEntrySendButton@2x.png */,
+				61BA60CA1623F74B001D7448 /* MessageEntrySendButtonPressed.png */,
+				61BA60CB1623F74B001D7448 /* MessageEntrySendButtonPressed@2x.png */,
+				61EEFEC6162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png */,
+				61EEFEC7162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png */,
+				61EEFEC8162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL.png */,
+				61EEFEC9162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL@2x.png */,
+				61EEFECA162324D1008E375F /* VOIPSenderVoiceNodeBkg.png */,
+				61EEFECB162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png */,
+				61EEFECC162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png */,
+				61EEFECD162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png */,
 				6130268D1622BF9F000E1CBD /* AppShareBook.png */,
 				6130268E1622BF9F000E1CBD /* AppShareBook@2x.png */,
 				6130268F1622BF9F000E1CBD /* AppShareimage.png */,
@@ -1298,6 +1364,17 @@
 			name = "login & register";
 			sourceTree = "<group>";
 		};
+		61BA60BD1623F282001D7448 /* Growing textview */ = {
+			isa = PBXGroup;
+			children = (
+				61BA60BE1623F293001D7448 /* HPGrowingTextView.h */,
+				61BA60BF1623F293001D7448 /* HPGrowingTextView.m */,
+				61BA60C01623F293001D7448 /* HPTextViewInternal.h */,
+				61BA60C11623F293001D7448 /* HPTextViewInternal.m */,
+			);
+			name = "Growing textview";
+			sourceTree = "<group>";
+		};
 		61BB2B4815F9DB0800AA82CC = {
 			isa = PBXGroup;
 			children = (
@@ -1403,6 +1480,7 @@
 		61BB2B7E15FA158700AA82CC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				61BA60BD1623F282001D7448 /* Growing textview */,
 				61240BDA16197589005C4E6C /* Profile views */,
 				6153D9C9161099FC00AC4A2D /* Async Images */,
 				6153D9BC161093F200AC4A2D /* Custom Cell */,
@@ -1897,6 +1975,26 @@
 				613026AB1622FA84000E1CBD /* FeedListViewController.xib in Resources */,
 				613026B01622FAD0000E1CBD /* SessionViewController.xib in Resources */,
 				5A34EBC11622C647005A0232 /* QQSetViewController.xib in Resources */,
+				61EEFECE162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png in Resources */,
+				61EEFECF162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png in Resources */,
+				61EEFED0162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL.png in Resources */,
+				61EEFED1162324D1008E375F /* VOIPReceiverVoiceNodeBkgHL@2x.png in Resources */,
+				61EEFED2162324D1008E375F /* VOIPSenderVoiceNodeBkg.png in Resources */,
+				61EEFED3162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png in Resources */,
+				61EEFED4162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png in Resources */,
+				61EEFED5162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png in Resources */,
+				61BA60CC1623F74B001D7448 /* MessageEntryBackground.png in Resources */,
+				61BA60CD1623F74B001D7448 /* MessageEntryBackground@2x.png in Resources */,
+				61BA60CE1623F74B001D7448 /* MessageEntryInputField.png in Resources */,
+				61BA60CF1623F74B001D7448 /* MessageEntryInputField@2x.png in Resources */,
+				61BA60D01623F74B001D7448 /* MessageEntrySendButton.png in Resources */,
+				61BA60D11623F74B001D7448 /* MessageEntrySendButton@2x.png in Resources */,
+				61BA60D21623F74B001D7448 /* MessageEntrySendButtonPressed.png in Resources */,
+				61BA60D31623F74B001D7448 /* MessageEntrySendButtonPressed@2x.png in Resources */,
+				61BA60D816246731001D7448 /* mailapp_addBtn.png in Resources */,
+				61BA60D916246731001D7448 /* mailapp_addBtn@2x.png in Resources */,
+				61BA60DA16246731001D7448 /* mailapp_addBtn2.png in Resources */,
+				61BA60DB16246731001D7448 /* mailapp_addBtn2@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1986,6 +2084,8 @@
 				613026AF1622FAD0000E1CBD /* SessionViewController.m in Sources */,
 				5A34EBBC1622BDF5005A0232 /* BlacklistViewController.m in Sources */,
 				5A34EBC01622C647005A0232 /* QQSetViewController.m in Sources */,
+				61BA60C21623F293001D7448 /* HPGrowingTextView.m in Sources */,
+				61BA60C31623F293001D7448 /* HPTextViewInternal.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
