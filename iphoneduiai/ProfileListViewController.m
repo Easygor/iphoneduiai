@@ -21,6 +21,7 @@
 #import "WeiyuWordCell.h"
 #import "BindingViewController.h"
 #import "QQSetViewController.h"
+#import "ChoosePartnerViewController.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -796,6 +797,10 @@ static NSInteger kActionChooseImageTag = 201;
 - (IBAction)friendAction
 {
     NSLog(@"friend...");
+    ChoosePartnerViewController *choosePartnerViewController = [[ChoosePartnerViewController alloc]initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:choosePartnerViewController animated:YES];
+    
+    
 }
 
 - (IBAction)uploadAvatarAction
