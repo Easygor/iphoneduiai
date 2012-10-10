@@ -7,7 +7,7 @@
 			<key>text</key>
 			<string>设置头像</string>
 			<key>logo</key>
-			<string>bolg_icon.png</string>
+			<string>set_head_icon.png</string>
 			<key>label</key>
 			<string>set_avatar</string>
 			<key>haveNext</key>
@@ -17,7 +17,7 @@
 			<key>text</key>
 			<string>我的照片</string>
 			<key>logo</key>
-			<string>bolg_icon.png</string>
+			<string>set_pic_icon.png</string>
 			<key>label</key>
 			<string>my_photo</string>
 			<key>haveNext</key>
@@ -29,7 +29,7 @@
 			<key>text</key>
 			<string>我赞过的人</string>
 			<key>logo</key>
-			<string>bolg_icon.png</string>
+			<string>set_fav_icon.png</string>
 			<key>label</key>
 			<string>up_person</string>
 			<key>haveNext</key>
@@ -41,7 +41,7 @@
 			<key>text</key>
 			<string>提醒设置</string>
 			<key>logo</key>
-			<string>bolg_icon.png</string>
+			<string>set_remind_icon.png</string>
 			<key>label</key>
 			<string>set_notify</string>
 			<key>haveNext</key>
@@ -51,7 +51,7 @@
 			<key>text</key>
 			<string>防打扰设置</string>
 			<key>logo</key>
-			<string>bolg_icon.png</string>
+			<string>set_disturb_icon</string>
 			<key>label</key>
 			<string>set_nowarn</string>
 			<key>haveNext</key>
@@ -61,7 +61,7 @@
 			<key>text</key>
 			<string>黑名单管理</string>
 			<key>logo</key>
-			<string>bolg_icon.png</string>
+			<string>set_deader_icon</string>
 			<key>label</key>
 			<string>black_list</string>
 			<key>haveNext</key>
