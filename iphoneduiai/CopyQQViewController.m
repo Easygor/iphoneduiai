@@ -16,7 +16,6 @@
 - (void)drawRect:(CGRect)rect
 {
     //画长方形
-    
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(ctx, [RGBCOLOR(213, 213, 213) CGColor]);
     CGContextSetLineWidth(ctx, 1.0);
@@ -24,9 +23,7 @@
     CGContextAddLines(ctx,poins,4);
     CGContextClosePath(ctx);
     CGContextStrokePath(ctx);
-    
     //画线
-    
     CGContextMoveToPoint(ctx, 195, 0);
     CGContextAddLineToPoint(ctx, 195, 40);
     CGContextSetLineWidth(ctx, 1.0);
