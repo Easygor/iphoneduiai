@@ -111,9 +111,6 @@
     {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier]autorelease];
         
-        //cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-
-        
         bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
         [cell.contentView addSubview:bgView];
@@ -128,7 +125,7 @@
         
         behindImg = [[[UIImageView alloc]initWithFrame:CGRectZero] autorelease];
         behindImg.tag=behindImgTag;
-        // [cell.contentView addSubview:behindImg];
+   
         behindImg.frame = CGRectMake(230, 2, 40,40);
         [bgView addSubview:behindImg];
         
