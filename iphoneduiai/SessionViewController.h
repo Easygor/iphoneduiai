@@ -10,4 +10,6 @@
 
 @interface SessionViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
 
+@property (strong, nonatomic) NSDictionary *messageData;
+
 @end

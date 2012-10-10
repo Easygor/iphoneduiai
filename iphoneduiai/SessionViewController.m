@@ -10,6 +10,10 @@
 #import "HPGrowingTextView.h"
 #import "PageSmileDataSource.h"
 #import "PageSmileView.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
 
 @interface SessionViewController () <HPGrowingTextViewDelegate, PageSmileDataSource>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
@@ -23,6 +27,12 @@
 @property (assign) BOOL isShowSmile, isKeyboardShow;
 @property (strong, nonatomic) PageSmileView *pageSmileView;
 @property (strong, nonatomic) UIView *coverView;
+
+@property (strong, nonatomic) UITableViewCell *moreCell;
+@property (nonatomic) NSInteger curPage, totalPage;
+@property (nonatomic) BOOL loading;
+
+@property (strong, nonatomic) NSMutableArray *messages;
 
 @end
 
@@ -40,7 +50,28 @@
     [_sendBtn release];
     [_pageSmileView release];
     [_coverView release];
+    [_moreCell release];
+    [_messages release];
     [super dealloc];
+}
+
+- (void)setMessages:(NSMutableArray *)messages
+{
+    if (![_messages isEqualToArray:messages]) {
+
+        if (self.curPage <= 1) {
+            _messages = [[NSMutableArray alloc] initWithArray:[[messages reverseObjectEnumerator] allObjects]];
+        } else{
+            for (id obj in [messages reverseObjectEnumerator]) {
+                [_messages insertObject:obj atIndex:0];
+            }
+        }
+        
+        [self.tableView reloadData];
+        if (self.curPage <= 1) {
+            [self keepTableviewOnBottom];
+        }
+    }
 }
 
 - (NSArray *)emontions
@@ -95,14 +126,14 @@
     
     [self.containerView addSubview:self.messageView];
 	
-    UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
-    UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
+    UIImage *rawEntryBackground = [UIImage imageNamed:@"chat_inputbox"];
+    UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     UIImageView *entryImageView = [[[UIImageView alloc] initWithImage:entryBackground] autorelease];
     entryImageView.frame = CGRectMake(leftPad-1, 0, width+8, 40);
     entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
-    UIImage *rawBackground = [UIImage imageNamed:@"MessageEntryBackground.png"];
-    UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
+    UIImage *rawBackground = [UIImage imageNamed:@"chat_input_bg"];
+    UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:10 topCapHeight:4];
     UIImageView *imageView = [[[UIImageView alloc] initWithImage:background] autorelease];
     imageView.frame = CGRectMake(0, 0, self.messageView.frame.size.width, self.messageView.frame.size.height);
     imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
@@ -111,23 +142,24 @@
     
     // view hierachy
     [self.messageView addSubview:imageView];
-    [self.messageView addSubview:self.textView];
+
     [self.messageView addSubview:entryImageView];
+    [self.messageView addSubview:self.textView];
     
     UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     UIImage *selectedSendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     
     UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [plusBtn setImage:[UIImage imageNamed:@"mailapp_addBtn.png"] forState:UIControlStateNormal];
+    [plusBtn setImage:[UIImage imageNamed:@"chat_add_icon"] forState:UIControlStateNormal];
     [plusBtn setImage:[UIImage imageNamed:@"mailapp_addBtn2.png"] forState:UIControlStateHighlighted ];
-    plusBtn.frame = CGRectMake(6, 10, 24, 24);
+    plusBtn.frame = CGRectMake(6, 5, 33, 34);
     [plusBtn addTarget:self action:@selector(plusAction:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:plusBtn];
     
     self.faceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.faceBtn setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background.png"] forState:UIControlStateNormal];
+    [self.faceBtn setImage:[UIImage imageNamed:@"chat_express_icon"] forState:UIControlStateNormal];
     [self.faceBtn setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
-    self.faceBtn.frame = CGRectMake(32, 10, 24, 24);
+    self.faceBtn.frame = CGRectMake(32, 5, 33, 34);
     [self.faceBtn addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:self.faceBtn];
     
@@ -170,7 +202,28 @@
     self.coverView = [[[UIView alloc] initWithFrame:self.tableView.frame] autorelease];
     self.coverView.backgroundColor = [UIColor clearColor];
     self.coverView.opaque = YES;
-    [self.coverView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease]];
+    UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease];
+    [self.coverView addGestureRecognizer:tap];
+    UISwipeGestureRecognizer *swipd = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease];
+    swipd.direction = UISwipeGestureRecognizerDirectionDown;
+    [self.coverView addGestureRecognizer:swipd];
+    UISwipeGestureRecognizer *swipu = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease];
+    swipu.direction = UISwipeGestureRecognizerDirectionUp;
+    [self.coverView addGestureRecognizer:swipu];
+    UISwipeGestureRecognizer *swipl = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease];
+    swipl.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.coverView addGestureRecognizer:swipl];
+    UISwipeGestureRecognizer *swipr = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease];
+    swipr.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.coverView addGestureRecognizer:swipr];
+    UILongPressGestureRecognizer *longPress = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTapAction:)] autorelease];
+    [self.coverView addGestureRecognizer:longPress];
+    
+//    [tap requireGestureRecognizerToFail:longPress];
+//    [tap requireGestureRecognizerToFail:swip];
+//    [longPress requireGestureRecognizerToFail:swip];
+    
+    [self requestMessageListWithPage:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -185,9 +238,10 @@
     [self.pageSmileView release];
 }
 
-- (void)gestureTapAction:(UITapGestureRecognizer*)gesture
+- (void)gestureTapAction:(UIGestureRecognizer*)gesture
 {
-    if (gesture.state == UIGestureRecognizerStateChanged ||
+    if (gesture.state == UIGestureRecognizerStateBegan ||
+        gesture.state == UIGestureRecognizerStateChanged ||
         gesture.state == UIGestureRecognizerStateEnded) {
         if (self.isKeyboardShow) {
             [self.textView resignFirstResponder];
@@ -206,9 +260,12 @@
 
 - (void)keepTableviewOnBottom
 {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:20-1 inSection:0]
-                          atScrollPosition:UITableViewScrollPositionBottom
-                                  animated:YES];
+    if (self.messages.count > 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0]
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:YES];
+    }
+    
 }
 
 -(void)faceSelect:(UIButton*)btn
@@ -240,7 +297,7 @@
 {
 
     // Return the number of rows in the section.
-    return 20;
+    return self.messages.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -252,7 +309,10 @@
     }
     
     // Configure the cell...
-    cell.textLabel.text = @"失败的男人...";
+
+    NSMutableDictionary *msg = [self.messages objectAtIndex:indexPath.row];
+    cell.textLabel.text = msg[@"content"];
+    
     return cell;
 }
 
@@ -477,5 +537,48 @@
     self.lastRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
     [self growingTextViewDidChange:self.textView];
 }
+
+#pragma mark - request for Feeds
+- (void)requestMessageListWithPage:(NSInteger)page
+{
+    NSMutableDictionary *params = [Utils queryParams];
+    
+    [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [params setObject:@"20" forKey:@"pagesize"];
+    if (self.messageData[@"tid"]) {
+        [params setObject:self.messageData[@"tid"] forKey:@"id"];
+    }
+    
+    [SVProgressHUD show];
+    [[RKClient sharedClient] get:[@"/uc/message.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+        NSLog(@"url: %@", request.URL);
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    NSLog(@"message: %@", data);
+                    self.loading = NO;
+                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                    // 此行须在前两行后面
+                    
+                    self.messages = data[@"data"];
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+}
+
 
 @end

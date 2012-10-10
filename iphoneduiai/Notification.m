@@ -26,7 +26,7 @@ static NSString *fileName = @"notifications.plist";
 
 - (void)dealloc
 {
-    NSLog(@"page ...");
+
     [_feed release];
     [_message release];
     [_notice release];
@@ -53,7 +53,7 @@ static NSString *fileName = @"notifications.plist";
     }
 
     NSMutableDictionary *notiData =nil;
-    
+
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.filePath]) {
         notiData = [NSDictionary dictionaryWithContentsOfFile:self.filePath];
         
@@ -105,26 +105,31 @@ static NSString *fileName = @"notifications.plist";
 #pragma mark import data
 - (void)setMessage:(NSMutableDictionary *)message
 {
-    if (message == nil) {
-        return;
-    }
     
     self.messageCount = [message[@"icount"] integerValue];
-    
-    for (NSDictionary *d in message[@"list"]) {
-        NSString *uid = d[@"senduid"];
-        _message[@"data"][uid] = @{@"title": d[@"uinfo"][@"niname"], @"subTitle": d[@"content"],
-        @"bageNum": d[@"newcount"], @"logo": d[@"uinfo"][@"photo"], @"type": @"message",
-        @"updated": [NSDate dateWithTimeIntervalSince1970:[d[@"addtime"] integerValue]],
-        @"data": d};
+    if (message[@"list"]) {
+        for (NSDictionary *d in message[@"list"]) {
+            NSString *uid = d[@"senduid"];
+            _message[@"data"][uid] =[NSMutableDictionary dictionaryWithDictionary:@{@"title": d[@"uinfo"][@"niname"], @"subTitle": d[@"content"],
+                                     @"bageNum": d[@"newcount"], @"logo": d[@"uinfo"][@"photo"], @"type": @"message",
+                                     @"updated": [NSDate dateWithTimeIntervalSince1970:[d[@"addtime"] integerValue]],
+                                     @"data": d}];
+        }
+
+    } else{
+        for (NSMutableDictionary *d in [self.message[@"data"] allValues]) {
+            d[@"bageNum"] = @"0";
+        }
     }
+
 }
 
 - (void)setFeed:(NSMutableDictionary *)feed
 {
-    if (feed == nil) {
-        return;
-    }
+//    if (feed == nil) {
+//        self.feedCount = 0;
+//        return;
+//    }
     
     if (_feed[@"data"] == nil) {
        _feed[@"data"] = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"feed", @"type",
@@ -137,15 +142,15 @@ static NSString *fileName = @"notifications.plist";
     }
     
     self.feedCount = [feed[@"icount"] integerValue];
-    _feed[@"data"][@"bageNum"] = _feed[@"count"];
     _feed[@"data"][@"updated"] = [NSDate date];
 }
 
 - (void)setNotice:(NSMutableDictionary *)notice
 {
-    if (notice == nil) {
-        return;
-    }
+//    if (notice == nil) {
+//        self.noticeCount = 0;
+//        return;
+//    }
     
     if (_notice[@"data"] == nil) {
         _notice[@"data"] = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"notice", @"type",
@@ -158,7 +163,6 @@ static NSString *fileName = @"notifications.plist";
     }
     
     self.noticeCount = [notice[@"icount"] integerValue];
-    _notice[@"data"][@"bageNum"] = _notice[@"count"];
     _notice[@"data"][@"updated"] = [NSDate date];
 }
 
@@ -190,6 +194,16 @@ static NSString *fileName = @"notifications.plist";
     }
 }
 
+- (void)clearAllBages
+{
+    self.messageCount = 0;
+    self.feedCount = 0;
+    self.noticeCount = 0;
+    for (NSMutableDictionary *d in [self.message[@"data"] allValues]) {
+        d[@"bageNum"] = @"0";
+    }
+}
+
 #pragma mark request
 - (void)updateFromRemote:(void(^)())block
 {
@@ -205,7 +219,7 @@ static NSString *fileName = @"notifications.plist";
             
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                
+
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
 
@@ -213,9 +227,12 @@ static NSString *fileName = @"notifications.plist";
                     self.notice = data[@"data"][@"sysnotice"];
                     self.feed = data[@"data"][@"feed"];
                     self.updated = [NSDate date];
-                    block();
+            
+                } else{
+                    [self clearAllBages];
                 }
                 
+                block();      
             }
         }];
     }];
@@ -224,7 +241,7 @@ static NSString *fileName = @"notifications.plist";
 #pragma mark counters 
 - (void)setFeedCount:(NSInteger)feedCount
 {
-    self.feed[@"count"] = [NSNumber numberWithInteger:feedCount];
+    self.feed[@"count"] = self.feed[@"data"][@"bageNum"] = [NSNumber numberWithInteger:feedCount];
 }
 
 - (NSInteger)feedCount
@@ -245,7 +262,7 @@ static NSString *fileName = @"notifications.plist";
 
 - (void)setNoticeCount:(NSInteger)noticeCount
 {
-    self.notice[@"count"] = [NSNumber numberWithInteger:noticeCount];
+    self.notice[@"count"] = self.notice[@"data"][@"bageNum"] = [NSNumber numberWithInteger:noticeCount];
 }
 
 - (NSInteger)noticeCount
