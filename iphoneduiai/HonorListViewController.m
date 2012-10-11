@@ -263,7 +263,7 @@
     
 
     NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*CNUM, MIN(CNUM, self.users.count-indexPath.row*CNUM))]];
-    static NSString *CellIdentifier = @"userCardCell";
+    static NSString *CellIdentifier = @"honorCell";
     HonorTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     // Configure the cell...
     if (cell == nil) {

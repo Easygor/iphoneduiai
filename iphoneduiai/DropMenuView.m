@@ -103,7 +103,6 @@
 
 - (void)tapGestureAction:(UITapGestureRecognizer*)gesture
 {
-    NSLog(@"hahah");
 
     if (gesture.state == UIGestureRecognizerStateChanged ||
         gesture.state == UIGestureRecognizerStateEnded) {

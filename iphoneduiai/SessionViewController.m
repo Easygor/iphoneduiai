@@ -14,14 +14,16 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+#import "MesgPoperView.h"
+#import "CustomBarButtonItem.h"
+#import "UserDetailViewController.h"
 
 @interface SessionViewController () <HPGrowingTextViewDelegate, PageSmileDataSource>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) HPGrowingTextView *textView;
 @property (strong, nonatomic) UIView *messageView;
-@property (strong, nonatomic) UIButton *sendBtn, *faceBtn;
+@property (strong, nonatomic) UIButton *faceBtn;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
-@property (strong, nonatomic) UILabel *placeholderLabel;
 @property (strong, nonatomic) NSArray *emontions;
 @property (assign, nonatomic) NSRange lastRange;
 @property (assign) BOOL isShowSmile, isKeyboardShow;
@@ -33,6 +35,7 @@
 @property (nonatomic) BOOL loading;
 
 @property (strong, nonatomic) NSMutableArray *messages;
+@property (retain, nonatomic) IBOutlet MesgPoperView *poperView;
 
 @end
 
@@ -46,12 +49,11 @@
     [_messageView release];
     [_containerView release];
     [_emontions release];
-    [_placeholderLabel release];
-    [_sendBtn release];
     [_pageSmileView release];
     [_coverView release];
     [_moreCell release];
     [_messages release];
+    [_poperView release];
     [super dealloc];
 }
 
@@ -89,6 +91,7 @@
 - (void)viewDidUnload {
     [self setTableView:nil];
     [self setContainerView:nil];
+    [self setPoperView:nil];
     [super viewDidUnload];
 }
 
@@ -104,22 +107,24 @@
     [self keepTableviewOnBottom];
     
     // config the sms send textview
-    CGFloat leftPad = 60.0f;
-    CGFloat width = 200.0f;
+    CGFloat leftPad = 83.0f;
+    CGFloat width = 230.0f;
     self.messageView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)] autorelease];
     self.messageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
-    self.textView = [[[HPGrowingTextView alloc] initWithFrame:CGRectMake(leftPad, 3, width, 40)] autorelease];
-    self.textView.contentInset = UIEdgeInsetsMake(0, 5, 0, 5);
+    self.textView = [[[HPGrowingTextView alloc] initWithFrame:CGRectMake(leftPad, 2, width, 40)] autorelease];
+    self.textView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    self.textView.backgroundColor = [UIColor redColor];
     
 	self.textView.minNumberOfLines = 1;
 	self.textView.maxNumberOfLines = 6;
-	self.textView.returnKeyType = UIReturnKeyDefault; //just as an example
+	self.textView.returnKeyType = UIReturnKeySend; //just as an example
 	self.textView.font = [UIFont systemFontOfSize:15.0f];
     
 	self.textView.delegate = self;
     self.textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
-    self.textView.backgroundColor = [UIColor whiteColor];
+    self.textView.backgroundColor = RGBCOLOR(238, 238, 238);
+    self.textView.enablesReturnKeyAutomatically = YES;
     
     // textView.text = @"test\n\ntest";
 	// textView.animateHeightChange = NO; //turns off animation
@@ -129,7 +134,7 @@
     UIImage *rawEntryBackground = [UIImage imageNamed:@"chat_inputbox"];
     UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:10 topCapHeight:10];
     UIImageView *entryImageView = [[[UIImageView alloc] initWithImage:entryBackground] autorelease];
-    entryImageView.frame = CGRectMake(leftPad-1, 0, width+8, 40);
+    entryImageView.frame = CGRectMake(leftPad, 2, width, 40);
     entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     UIImage *rawBackground = [UIImage imageNamed:@"chat_input_bg"];
@@ -142,12 +147,8 @@
     
     // view hierachy
     [self.messageView addSubview:imageView];
-
-    [self.messageView addSubview:entryImageView];
     [self.messageView addSubview:self.textView];
-    
-    UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
-    UIImage *selectedSendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
+    [self.messageView addSubview:entryImageView];
     
     UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusBtn setImage:[UIImage imageNamed:@"chat_add_icon"] forState:UIControlStateNormal];
@@ -159,27 +160,9 @@
     self.faceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.faceBtn setImage:[UIImage imageNamed:@"chat_express_icon"] forState:UIControlStateNormal];
     [self.faceBtn setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
-    self.faceBtn.frame = CGRectMake(32, 5, 33, 34);
+    self.faceBtn.frame = CGRectMake(44, 5, 33, 34);
     [self.faceBtn addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:self.faceBtn];
-    
-	UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-	doneBtn.frame = CGRectMake(self.messageView.frame.size.width - 55, 8, 50, 26);
-    doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
-	[doneBtn setTitle:@"发送" forState:UIControlStateNormal];
-    
-    [doneBtn setTitleShadowColor:[UIColor colorWithWhite:0 alpha:0.4] forState:UIControlStateNormal];
-    doneBtn.titleLabel.shadowOffset = CGSizeMake (0.0, -1.0);
-    doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15.0f];
-    doneBtn.enabled = NO;
-    
-    [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-	[doneBtn addTarget:self action:@selector(sendText:) forControlEvents:UIControlEventTouchUpInside];
-    [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
-    [doneBtn setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
-    self.sendBtn = doneBtn;
-    
-	[self.messageView addSubview:doneBtn];
 
     // notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -191,12 +174,6 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    self.placeholderLabel = [[[UILabel alloc] initWithFrame:CGRectMake(14, 9, 50, 16)] autorelease];
-    self.placeholderLabel.font = [UIFont systemFontOfSize:16.0];
-    self.placeholderLabel.textColor = [UIColor grayColor];
-    self.placeholderLabel.backgroundColor = [UIColor clearColor];
-    self.placeholderLabel.text = @"回复";
     
     // coverview
     self.coverView = [[[UIView alloc] initWithFrame:self.tableView.frame] autorelease];
@@ -223,6 +200,15 @@
 //    [tap requireGestureRecognizerToFail:swip];
 //    [longPress requireGestureRecognizerToFail:swip];
     
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"消息"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"资料"
+                                                                                                target:self
+                                                                                                action:@selector(detailAction)] autorelease];
+    self.navigationItem.title = self.messageData[@"uinfo"][@"niname"];
+    
+    NSLog(@"uinfo: %@", self.messageData);
     [self requestMessageListWithPage:1];
 }
 
@@ -236,6 +222,21 @@
     //    pageSmileView.backgroundColor = [UIColor redColor];
     [self.containerView addSubview:self.pageSmileView];
     [self.pageSmileView release];
+}
+
+- (void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)detailAction
+{
+
+    UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+    self.messageData[@"uinfo"][@"_id"] = self.messageData[@"senduid"];
+    udvc.user = self.messageData[@"uinfo"];
+    [self.navigationController pushViewController:udvc animated:YES];
+    [udvc release];
 }
 
 - (void)gestureTapAction:(UIGestureRecognizer*)gesture
@@ -290,6 +291,9 @@
 - (void)plusAction:(UIButton*)btn
 {
     NSLog(@"plus action");
+    CGRect rect = [self.containerView convertRect:self.messageView.frame toView:self.view.window];
+
+    [self.poperView showMeAtView:self.view atPoint:CGPointMake(rect.origin.x+2, rect.origin.y - 5 - self.poperView.bounds.size.height)];
 }
 
 #pragma mark - Table view data source
@@ -330,15 +334,6 @@
      */
 }
 
-
-#pragma mark - sms text send
--(void)sendText:(id)sender
-{
-    //    NSLog(@"sent now");
-//    [self sendPost];
-
-}
-
 - (void)resizeUIWithDuration:(NSTimeInterval)duration andCurve:(UIViewAnimationCurve)curve delta:(CGFloat)height
 {
 	// get a rect for the textView frame
@@ -364,7 +359,7 @@
     
     // exchange facet btn
     if (self.isKeyboardShow || height == 0) {
-        [self.faceBtn setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background.png"] forState:UIControlStateNormal];
+        [self.faceBtn setImage:[UIImage  imageNamed:@"chat_express_icon"] forState:UIControlStateNormal];
         [self.faceBtn setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted];
         self.faceBtn.tag = 0;
     } else{
@@ -448,37 +443,37 @@
 
 -(BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    if ([text isEqualToString:@"\n"]) {
+        NSLog(@"sending...");
+        
+        return NO;
+    }
     
     return YES;
 }
 
 -(void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
 {
-    NSInteger nonSpaceTextLength = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
-    if([growingTextView hasText] && nonSpaceTextLength > 0) {
-        
-        self.sendBtn.enabled = YES;
-        [self.placeholderLabel removeFromSuperview];
-        
-    } else {
-        self.sendBtn.enabled = NO;
-        [growingTextView addSubview:self.placeholderLabel];
-        
-    }
-}
-
-- (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView
-{
-    return YES;
+//    NSInteger nonSpaceTextLength = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
+//    if([growingTextView hasText] && nonSpaceTextLength > 0) {
+//        
+////        self.sendBtn.enabled = YES;
+//        [self.placeholderLabel removeFromSuperview];
+//        
+//    } else {
+////        self.sendBtn.enabled = NO;
+//        [growingTextView addSubview:self.placeholderLabel];
+//        
+//    }
 }
 
 -(void)growingTextViewDidEndEditing:(HPGrowingTextView *)growingTextView
 {
-    if (![growingTextView hasText]) {
-        [growingTextView addSubview:self.placeholderLabel];
-    } else {
-        [self.placeholderLabel removeFromSuperview];
-    }
+//    if (![growingTextView hasText]) {
+//        [growingTextView addSubview:self.placeholderLabel];
+//    } else {
+//        [self.placeholderLabel removeFromSuperview];
+//    }
     
 }
 
@@ -580,5 +575,15 @@
     }];
 }
 
+- (IBAction)sendPictureAction:(UIButton *)sender
+{
+    NSLog(@"send pic....");
+    [self.poperView removeMe];
+}
+- (IBAction)sendPosAction:(UIButton *)sender
+{
+    NSLog(@"send pos...");
+    [self.poperView removeMe];
+}
 
 @end
