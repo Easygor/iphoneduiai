@@ -30,7 +30,7 @@
 {
     // register the apns
     [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user"];
     
     
 //    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];

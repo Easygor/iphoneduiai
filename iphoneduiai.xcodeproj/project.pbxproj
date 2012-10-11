@@ -473,6 +473,8 @@
 		61EEFED3162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECB162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png */; };
 		61EEFED4162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECC162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png */; };
 		61EEFED5162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFECD162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png */; };
+		61FB233B16268F77003E4485 /* LeftBubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FB233A16268F77003E4485 /* LeftBubbleCell.m */; };
+		61FB233E16268F8E003E4485 /* RightBubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FB233D16268F8E003E4485 /* RightBubbleCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1074,6 +1076,10 @@
 		61EEFECB162324D1008E375F /* VOIPSenderVoiceNodeBkg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VOIPSenderVoiceNodeBkg@2x.png"; sourceTree = "<group>"; };
 		61EEFECC162324D1008E375F /* VOIPSenderVoiceNodeBkgHL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VOIPSenderVoiceNodeBkgHL.png; sourceTree = "<group>"; };
 		61EEFECD162324D1008E375F /* VOIPSenderVoiceNodeBkgHL@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VOIPSenderVoiceNodeBkgHL@2x.png"; sourceTree = "<group>"; };
+		61FB233916268F77003E4485 /* LeftBubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftBubbleCell.h; sourceTree = "<group>"; };
+		61FB233A16268F77003E4485 /* LeftBubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftBubbleCell.m; sourceTree = "<group>"; };
+		61FB233C16268F8D003E4485 /* RightBubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RightBubbleCell.h; sourceTree = "<group>"; };
+		61FB233D16268F8E003E4485 /* RightBubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RightBubbleCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1457,6 +1463,10 @@
 				61C7EE54161F3F850080CAAE /* MessageTableCell.m */,
 				6172EBB71621D5C600860F03 /* HonorTableCell.h */,
 				6172EBB81621D5C600860F03 /* HonorTableCell.m */,
+				61FB233916268F77003E4485 /* LeftBubbleCell.h */,
+				61FB233A16268F77003E4485 /* LeftBubbleCell.m */,
+				61FB233C16268F8D003E4485 /* RightBubbleCell.h */,
+				61FB233D16268F8E003E4485 /* RightBubbleCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -2478,6 +2488,8 @@
 				61BA60C31623F293001D7448 /* HPTextViewInternal.m in Sources */,
 				5A34EBD716231CF0005A0232 /* ChoosePartnerViewController.m in Sources */,
 				610DBF461625C10B00563D26 /* MesgPoperView.m in Sources */,
+				61FB233B16268F77003E4485 /* LeftBubbleCell.m in Sources */,
+				61FB233E16268F8E003E4485 /* RightBubbleCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,6 +17,8 @@
 #import "MesgPoperView.h"
 #import "CustomBarButtonItem.h"
 #import "UserDetailViewController.h"
+#import "LeftBubbleCell.h"
+#import "RightBubbleCell.h"
 
 @interface SessionViewController () <HPGrowingTextViewDelegate, PageSmileDataSource>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
@@ -36,6 +38,8 @@
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (retain, nonatomic) IBOutlet MesgPoperView *poperView;
+
+@property (strong, nonatomic) NSMutableDictionary *partner;
 
 @end
 
@@ -306,18 +310,46 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    NSMutableDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    NSMutableDictionary *msg = self.messages[indexPath.row];
+    if ([msg[@"senduid"] isEqualToString:info[@"uid"]]) {
+        static NSString *CellIdentifier = @"rightBubbleCell";
+        RightBubbleCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:6];
+        }
+        
+        cell.content = msg[@"content"];
+        [cell.avatarImageView loadImage:info[@"photo"]];
+        if ([msg[@"needsend"] boolValue]) {
+            cell.data = msg;
+            [cell sendMessageToRemote];
+        }
+        
+        return cell;
+      
+    } else{
+        static NSString *CellIdentifier = @"leftBubbleCell";
+        LeftBubbleCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:5];
+        }
+        
+        cell.content = msg[@"content"];
+        [cell.avatarImageView loadImage:self.partner[@"photo"]];
+        
+        return cell;
     }
-    
-    // Configure the cell...
+ 
+}
 
-    NSMutableDictionary *msg = [self.messages objectAtIndex:indexPath.row];
-    cell.textLabel.text = msg[@"content"];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    return cell;
+    return [cell requiredHeight];
 }
 
 #pragma mark - Table view delegate
@@ -444,7 +476,21 @@
 -(BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
-        NSLog(@"sending...");
+        NSMutableDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        NSMutableDictionary *newMsg = [NSMutableDictionary dictionary];
+        newMsg[@"content"] = self.textView.text;
+        newMsg[@"uid"] = self.partner[@"uid"];
+        newMsg[@"senduid"] = info[@"uid"];
+        newMsg[@"addtime"] = @([[NSDate date] timeIntervalSince1970]);
+
+        [self.messages addObject:newMsg];
+        self.textView.text = nil;
+        
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
+        
+        newMsg[@"needsend"] = @YES; // 必须在cell插入之后，设置发送参数，防止就会重复发送, 因为移动bottom重复显示cell一次
+        [self keepTableviewOnBottom]; // 
         
         return NO;
     }
@@ -559,6 +605,8 @@
                     // 此行须在前两行后面
                     
                     self.messages = data[@"data"];
+                    self.partner = data[@"uinfo"];
+                    
                     [SVProgressHUD dismiss];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];

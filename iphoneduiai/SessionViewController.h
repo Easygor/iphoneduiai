@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SessionViewController : UIViewController <UITableViewDataSource, UITabBarDelegate>
+@interface SessionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate>
 
 @property (strong, nonatomic) NSMutableDictionary *messageData;
 
