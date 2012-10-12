@@ -38,12 +38,71 @@
     [_contentLabel release];
     [_data release];
     [super dealloc];
+
 }
 
 - (void)doInitWork
 {
     self.avatarImageView.layer.masksToBounds = YES;
     self.avatarImageView.layer.cornerRadius = 4.0f;
+    UILongPressGestureRecognizer *longPress = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressGestureAction:)] autorelease];
+    longPress.minimumPressDuration = 1.0;
+    self.bubbleImageView.userInteractionEnabled = YES;
+    [self.bubbleImageView  addGestureRecognizer:longPress];
+
+    
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)pressGestureAction:(UILongPressGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan ||
+        gesture.state == UIGestureRecognizerStateChanged) {
+
+        UIMenuController *mc = [UIMenuController sharedMenuController];
+        if (![mc isMenuVisible]) {
+            self.bubbleImageView.highlighted = YES;
+            [self becomeFirstResponder];
+            [[UIMenuController sharedMenuController] setTargetRect:gesture.view.frame inView:gesture.view.superview];
+            [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
+        }
+
+    }
+}
+
+- (void)copy:(id)sender
+{
+
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = self.content;
+
+    [self resignFirstResponder];
+    self.bubbleImageView.highlighted = YES;
+   
+}
+
+- (void)delete:(id)sender
+{
+    NSLog(@"do delete");
+    [self resignFirstResponder];
+    self.bubbleImageView.highlighted = YES;
+
+}
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+
+    if (action == @selector(copy:)) {
+        return YES;
+    } else if(action == @selector(delete:)){
+        return YES;
+    }
+    
+    return [super canPerformAction:action withSender:sender];
 }
 
 - (void)awakeFromNib
@@ -178,7 +237,7 @@
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
-                
+                NSLog(@"return data: %@", data);
                 if (code != 0) {
                     NSLog(@"Fail to send messsage: %@", data[@"message"]);
                 } else{

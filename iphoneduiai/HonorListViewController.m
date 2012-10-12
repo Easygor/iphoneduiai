@@ -261,7 +261,6 @@
 - (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-
     NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*CNUM, MIN(CNUM, self.users.count-indexPath.row*CNUM))]];
     static NSString *CellIdentifier = @"honorCell";
     HonorTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];

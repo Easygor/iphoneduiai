@@ -84,7 +84,7 @@
 {
     if (_emontions == nil) {
         // Custom initialization
-        NSString *myFile = [[NSBundle mainBundle] pathForResource:@"em" ofType:@"plist"];
+        NSString *myFile = [[NSBundle mainBundle] pathForResource:@"emoticons" ofType:@"plist"];
         _emontions = [[NSArray alloc] initWithContentsOfFile:myFile];
         
     }
@@ -543,7 +543,7 @@
         
         btn.frame = CGRectMake(16 + 13 * column + 30*column, 16*(row+1) + 30*row, 30, 30);
         
-        [btn setImage:[UIImage imageNamed:[[self.emontions objectAtIndex:i] objectForKey:@"gif"]]
+        [btn setImage:[UIImage imageNamed:[[self.emontions objectAtIndex:i] objectForKey:@"png"]]
              forState:UIControlStateNormal];
         btn.tag = i;
         [btn addTarget:self action:@selector(emontionAction:) forControlEvents:UIControlEventTouchUpInside];
