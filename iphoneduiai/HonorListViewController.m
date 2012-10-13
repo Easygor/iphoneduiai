@@ -141,6 +141,10 @@
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 100, 44);
+    [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateHighlighted];
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
+    btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;
     self.tilteBtn = btn;

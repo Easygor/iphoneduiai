@@ -17,14 +17,15 @@
     if (self != nil) {
         UIFont *textFont = [UIFont boldSystemFontOfSize:14.0f];
         CGSize size = [title sizeWithFont:textFont];
+        CGFloat width = MAX(size.width+14, 54);
         UIImage *bgImg = [UIImage imageWithLeftNamed:@"btn-left-back-bg.png"
                                            bodyNamed:@"btn-x-bg.png"
                                         rightImgName:@"btn-right-bg.png"
-                                               width:size.width+28];
+                                               width:width];
         UIImage *bgImgPressed = [UIImage imageWithLeftNamed:@"btn-left-back-bg-linked.png"
                                            bodyNamed:@"btn-x-bglinked.png"
                                         rightImgName:@"btn-right-bglinked.png"
-                                               width:size.width+28];
+                                               width:width];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         button.frame = CGRectMake(0, 0, bgImg.size.width, bgImg.size.height);
@@ -51,6 +52,41 @@
     return self;
 }
 
+-(id)initBarButtonWithImage:(UIImage *)image  target:(id)target action:(SEL)action
+{
+    self = [super init];
+    if (self != nil) {
+        UIFont *textFont = [UIFont boldSystemFontOfSize:14.0f];
+        CGSize size = image.size;
+        CGFloat width = MAX(size.width, 50);
+        UIImage *bgImg = [UIImage imageWithLeftNamed:@"btn-leftbg.png"
+                                           bodyNamed:@"btn-x-bg.png"
+                                        rightImgName:@"btn-right-bg.png"
+                                               width:width];
+        UIImage *bgImgPressed = [UIImage imageWithLeftNamed:@"btn-leftbg-linked.png"
+                                                  bodyNamed:@"btn-x-bglinked.png"
+                                               rightImgName:@"btn-right-bglinked.png"
+                                                      width:width];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        button.frame = CGRectMake(0, 0, bgImg.size.width, bgImg.size.height);
+        
+        [button setBackgroundImage:bgImg forState:UIControlStateNormal];
+        [button setBackgroundImage:bgImgPressed forState:UIControlStateHighlighted];
+
+        [button setImage:image forState:UIControlStateNormal];
+        [button setImage:image forState:UIControlStateHighlighted];
+        
+        button.titleLabel.font = textFont;
+        
+        [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+        
+        self.customView = button;
+        
+    }
+    
+    return self;
+}
 
 -(id)initRightBarButtonWithTitle:(NSString *)title  target:(id)target action:(SEL)action
 {
@@ -58,14 +94,15 @@
     if (self != nil) {
         UIFont *textFont = [UIFont boldSystemFontOfSize:14.0f];
         CGSize size = [title sizeWithFont:textFont];
+        CGFloat width = MAX(size.width+14, 50);
         UIImage *bgImg = [UIImage imageWithLeftNamed:@"btn-leftbg.png"
                                            bodyNamed:@"btn-x-bg.png"
                                         rightImgName:@"btn-right-bg.png"
-                                               width:size.width+28];
+                                               width:width];
         UIImage *bgImgPressed = [UIImage imageWithLeftNamed:@"btn-leftbg-linked.png"
                                                   bodyNamed:@"btn-x-bglinked.png"
                                                rightImgName:@"btn-right-bglinked.png"
-                                                      width:size.width+22];
+                                                      width:width];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         button.frame = CGRectMake(0, 0, bgImg.size.width, bgImg.size.height);

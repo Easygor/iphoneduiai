@@ -18,7 +18,6 @@
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *bubbleImageView;
-@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 @property (strong, nonatomic) IBOutlet UIImageView *readImageView;
 @property (strong, nonatomic) UILabel *contentLabel;
 @property (nonatomic) BOOL sending;
@@ -29,6 +28,7 @@
 
 - (void)dealloc
 {
+    self.delegate = nil;
     [_avatarImageView release];
     [_bubbleImageView release];
     [_indicatorView release];
@@ -90,7 +90,9 @@
     NSLog(@"do delete");
     [self resignFirstResponder];
     self.bubbleImageView.highlighted = YES;
-
+    if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
+        [self.delegate didChangeStatus:self toStatus:self.data[@"tid"]];
+    }
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender

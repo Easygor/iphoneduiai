@@ -39,6 +39,7 @@
 @property (strong, nonatomic) NSArray *filterEntries;
 @property (strong, nonatomic) UIButton *tilteBtn;
 @property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
+@property (strong, nonatomic) UIBarButtonItem *leftList, *leftView;
 
 
 @end
@@ -114,19 +115,29 @@
     self.waterTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.infoTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 //    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"换"
-                                                                                              target:self
-                                                                                              action:@selector(exchangeAction)] autorelease];
+
+    self.leftList = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"change_list_icon"]
+                                                                                          target:self
+                                                                                          action:@selector(exchangeAction)] autorelease];
+    self.leftView = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"change_view_icon"]
+                                                                                          target:self
+                                                                                          action:@selector(exchangeAction)] autorelease];
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"搜索条件"
                                                                                               target:self
                                                                                               action:@selector(jumpAction)] autorelease];
     
+    self.navigationItem.leftBarButtonItem = self.leftList;
+    
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 100, 44);
+    [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateHighlighted];
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
+    btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;
-    self.tilteBtn = btn;
+    self.tilteBtn = btn;    
   
 }
 
@@ -161,6 +172,7 @@
         [self.view exchangeSubviewAtIndex:water withSubviewAtIndex:info];
         isWater = NO;
     } else {
+        isWater = YES;
         [self.view exchangeSubviewAtIndex:info withSubviewAtIndex:water];
         
     }
@@ -170,6 +182,12 @@
     //[UIView setAnimationDidStopSelector:@selector(animationFinished:)];
     
     [UIView commitAnimations];
+    
+    if (isWater) {
+        self.navigationItem.leftBarButtonItem = self.leftView;
+    } else{
+        self.navigationItem.leftBarButtonItem = self.leftList;
+    }
 }
 
 - (void)viewDidUnload

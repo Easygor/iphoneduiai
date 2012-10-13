@@ -19,8 +19,9 @@
 #import "UserDetailViewController.h"
 #import "LeftBubbleCell.h"
 #import "RightBubbleCell.h"
+#import "CustomCellDelegate.h"
 
-@interface SessionViewController () <HPGrowingTextViewDelegate, PageSmileDataSource>
+@interface SessionViewController () <HPGrowingTextViewDelegate, PageSmileDataSource, CustomCellDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) HPGrowingTextView *textView;
 @property (strong, nonatomic) UIView *messageView;
@@ -30,9 +31,8 @@
 @property (assign, nonatomic) NSRange lastRange;
 @property (assign) BOOL isShowSmile, isKeyboardShow;
 @property (strong, nonatomic) PageSmileView *pageSmileView;
-@property (strong, nonatomic) UIView *coverView;
+@property (strong, nonatomic) UIView *coverView, *headView;
 
-@property (strong, nonatomic) UITableViewCell *moreCell;
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (nonatomic) BOOL loading;
 
@@ -55,7 +55,6 @@
     [_emontions release];
     [_pageSmileView release];
     [_coverView release];
-    [_moreCell release];
     [_messages release];
     [_poperView release];
     [super dealloc];
@@ -71,6 +70,12 @@
             for (id obj in [messages reverseObjectEnumerator]) {
                 [_messages insertObject:obj atIndex:0];
             }
+        }
+        
+        if (self.curPage < self.totalPage) {
+            self.tableView.tableHeaderView = self.headView;
+        } else{
+            self.tableView.tableHeaderView = nil;
         }
         
         [self.tableView reloadData];
@@ -212,7 +217,18 @@
                                                                                                 action:@selector(detailAction)] autorelease];
     self.navigationItem.title = self.messageData[@"uinfo"][@"niname"];
     
-    NSLog(@"uinfo: %@", self.messageData);
+    // more table header
+    self.headView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)] autorelease];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake((self.view.bounds.size.width-100)/2, (30-20)/2, 100, 20);
+    [btn setTitle:@"更多较早的信息" forState:UIControlStateNormal];
+    [btn setTitle:@"更多较早的信息" forState:UIControlStateHighlighted];
+    [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14.0f];
+    [btn addTarget:self action:@selector(requestMoreAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.headView addSubview:btn];
+    
     [self requestMessageListWithPage:1];
 }
 
@@ -226,6 +242,11 @@
     //    pageSmileView.backgroundColor = [UIColor redColor];
     [self.containerView addSubview:self.pageSmileView];
     [self.pageSmileView release];
+}
+
+- (void)requestMoreAction
+{
+    [self requestMessageListWithPage:self.curPage+1];
 }
 
 - (void)backAction
@@ -266,6 +287,7 @@
 - (void)keepTableviewOnBottom
 {
     if (self.messages.count > 0) {
+
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.messages.count-1 inSection:0]
                               atScrollPosition:UITableViewScrollPositionBottom
                                       animated:YES];
@@ -303,27 +325,29 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-
-    // Return the number of rows in the section.
-    return self.messages.count;
+        return self.messages.count;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-    NSMutableDictionary *msg = self.messages[indexPath.row];
+    
+    NSMutableDictionary *msg = self.messages[indexPath.row];;
+
     if ([msg[@"senduid"] isEqualToString:info[@"uid"]]) {
         static NSString *CellIdentifier = @"rightBubbleCell";
         RightBubbleCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
             cell = [nib objectAtIndex:6];
+            cell.delegate = self;
         }
         
         cell.content = msg[@"content"];
         [cell.avatarImageView loadImage:info[@"photo"]];
+        cell.data = msg;
         if ([msg[@"needsend"] boolValue]) {
-            cell.data = msg;
             [cell sendMessageToRemote];
         }
         
@@ -335,6 +359,7 @@
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
             cell = [nib objectAtIndex:5];
+            cell.delegate = self;
         }
         
         cell.content = msg[@"content"];
@@ -350,22 +375,10 @@
     id cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
     return [cell requiredHeight];
+
 }
 
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-}
-
 - (void)resizeUIWithDuration:(NSTimeInterval)duration andCurve:(UIViewAnimationCurve)curve delta:(CGFloat)height
 {
 	// get a rect for the textView frame
@@ -632,6 +645,46 @@
 {
     NSLog(@"send pos...");
     [self.poperView removeMe];
+}
+
+#pragma  mark custom cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSMutableDictionary *msg = self.messages[indexPath.row];
+
+    NSMutableDictionary *params = [Utils queryParams];
+    [[(id)cell indicatorView] startAnimating];
+    
+    [[RKClient sharedClient] post:[@"/common/delmessage.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+        NSLog(@"url: %@", request.URL);
+        
+        request.params = [RKParams paramsWithDictionary:@{@"tid[]" : msg[@"tid"], @"submitupdate": @"true"}];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                NSInteger code = [data[@"error"] integerValue];
+//                NSLog(@"delete data:%@", data);
+                if (code == 0) {
+
+                    [self.messages removeObject:msg];
+                    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                } else{
+                    
+                    NSLog(@"show error: %@", data[@"message"]);
+                    
+                }
+                [[(id)cell indicatorView] startAnimating];
+            }
+            
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [[(id)cell indicatorView] startAnimating];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+
 }
 
 @end

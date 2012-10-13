@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+#import "CustomCellDelegate.h"
 
 @interface LeftBubbleCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet AsyncImageView *avatarImageView;
 @property (strong, nonatomic) NSString *content, *imageUrl;
+@property (assign, nonatomic) id <CustomCellDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 
 - (CGFloat)requiredHeight;
 

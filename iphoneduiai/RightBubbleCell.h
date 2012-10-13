@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+#import "CustomCellDelegate.h"
 
 @interface RightBubbleCell : UITableViewCell
 
@@ -15,6 +16,8 @@
 @property (strong, nonatomic) NSString *content, *imageUrl;
 @property (strong, nonatomic) NSMutableDictionary *data;
 @property (nonatomic) BOOL isRead;
+@property (assign, nonatomic) id <CustomCellDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
 
 - (CGFloat)requiredHeight;
 - (void)sendMessageToRemote;

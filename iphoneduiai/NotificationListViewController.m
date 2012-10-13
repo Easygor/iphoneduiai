@@ -228,7 +228,7 @@
         NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
         // Delete the row from the data source
         NSMutableDictionary *params = [Utils queryParams];
-        [params setObject:n[@"tid"] forKey:@"tid[]"];
+//        [params setObject:n[@"tid"] forKey:@"tid[]"];
         [SVProgressHUD show];
         [[RKClient sharedClient] post:[@"/common/delnotice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
             NSLog(@"url: %@", request.URL);
