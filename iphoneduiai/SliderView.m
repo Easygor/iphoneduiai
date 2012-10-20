@@ -18,13 +18,14 @@
 @end
 
 @implementation SliderView
-@synthesize pageControl;
+@synthesize pageControl, scrollView;
 
 - (void)dealloc
 {
     self.dataSource = nil;
     [_views release];
     [pageControl release];
+    [scrollView release];
     [super dealloc];
 }
 
@@ -48,7 +49,7 @@
         }
 		
 		// in the meantime, load the array with placeholders which will be replaced on demand
-		NSMutableArray *views = [[NSMutableArray alloc] init];
+		NSMutableArray *views = [NSMutableArray array];
 		for (unsigned i = 0; i < kNumberOfPages; i++) {
 			[views addObject:[NSNull null]];
 		}

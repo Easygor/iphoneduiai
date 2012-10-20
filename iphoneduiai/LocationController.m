@@ -72,17 +72,17 @@ static LocationController* sharedCLDelegate = nil;
 	   didFailWithError:(NSError*)error
 {
     [self.locationManager stopUpdatingLocation];
-    NSString *errorString;
+//    NSString *errorString;
     // We handle CoreLocation-related errors here
     switch ([error code]) {
             // "Don't Allow" on two successive app launches is the same as saying "never allow". The user
             // can reset this for all apps by going to Settings > General > Reset > Reset Location Warnings.
         case kCLErrorDenied:
-            errorString = @"需获取位置的授权";
+//            errorString = @"需获取位置的授权";
             //            [Utils tellNotification:errorString];
             break;
         case kCLErrorLocationUnknown:
-            errorString = @"获取位置信息出现未知错误";
+//            errorString = @"获取位置信息出现未知错误";
             //            [Utils tellNotification:errorString];
             break;
             

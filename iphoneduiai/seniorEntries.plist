@@ -31,7 +31,7 @@
 			<key>text</key>
 			<string>毕业学校</string>
 			<key>label</key>
-			<string>school</string>
+			<string>university</string>
 			<key>haveNext</key>
 			<true/>
 		</dict>

@@ -252,8 +252,8 @@
 -(void)addSliderView
 {
     // Do any additional setup after loading the view from its nib.
-    SliderView *pageView = [[SliderView alloc] initWithFrame: self.window.frame
-                                                         withDataSource: self];
+    SliderView *pageView = [[[SliderView alloc] initWithFrame: self.window.frame
+                                                         withDataSource: self] autorelease];
     pageView.backgroundColor = [UIColor blackColor];
     [self.window addSubview:pageView];
     self.slider = pageView;

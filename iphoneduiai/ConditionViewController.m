@@ -150,9 +150,9 @@
                                                  name:UIKeyboardWillHideNotification object:self.view.window];
     
     
-    self.incomePickerView = [[HZPopPickerView alloc] initWithDelegate:self];
+    self.incomePickerView = [[[HZPopPickerView alloc] initWithDelegate:self] autorelease];
 
-    self.degreePicker = [[HZPopPickerView alloc] initWithDelegate:self];
+    self.degreePicker = [[[HZPopPickerView alloc] initWithDelegate:self] autorelease];
     
     // init the updae
     if ([self.conditions[@"sex"] isEqualToString:@"w"]) {

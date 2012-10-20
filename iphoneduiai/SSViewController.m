@@ -12,14 +12,35 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+#import "HZPopPickerView.h"
+#import "HZAreaPickerView.h"
+#import "HZLocation.h"
 
-@interface SSViewController () <UITextFieldDelegate>
+@interface SSViewController () <UITextFieldDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
 
 @property (strong, nonatomic) NSArray *entries;
+@property (strong, nonatomic) NSString *rankNum, *companyTypeNum;
+@property (strong, nonatomic) HZPopPickerView *rankPicker, *companyTypePicker;
+@property (strong, nonatomic) UITextField *curField;
+@property (strong, nonatomic) HZAreaPickerView *homePicker, *nativePicker;
+@property (strong, nonatomic) HZLocation *homeLocation, *nativeLocaiton;
 
 @end
 
 @implementation SSViewController
+
+- (void)dealloc
+{
+    [_homeLocation release];
+    [_nativeLocaiton release];
+    [_nativePicker release];
+    [_homePicker release];
+    [_entries release];
+    [_companyTypeNum release];
+    [_rankPicker release];
+    [_companyTypePicker release];
+    [super dealloc];
+}
 
 - (NSArray *)entries
 {
@@ -29,6 +50,42 @@
     }
     
     return _entries;
+}
+
+- (HZPopPickerView *)rankPicker
+{
+    if (_rankPicker == nil) {
+        _rankPicker = [[HZPopPickerView alloc] initWithDelegate:self];
+    }
+    
+    return _rankPicker;
+}
+
+- (HZPopPickerView *)companyTypePicker
+{
+    if (_companyTypePicker == nil) {
+        _companyTypePicker = [[HZPopPickerView alloc] initWithDelegate:self];
+    }
+    
+    return _companyTypePicker;
+}
+
+- (HZAreaPickerView *)homePicker
+{
+    if (_homePicker == nil) {
+        _homePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCity delegate:self];
+    }
+    
+    return _homePicker;
+}
+
+- (HZAreaPickerView *)nativePicker
+{
+    if (_nativePicker == nil) {
+        _nativePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCity delegate:self];
+    }
+    
+    return _nativePicker;
 }
 
 - (void)viewDidLoad
@@ -188,7 +245,7 @@
         [bgView addSubview:lineView];
         
         
-        bigLabel = [[[UILabel alloc]initWithFrame:CGRectZero] autorelease];
+        bigLabel = [[[UILabel alloc]initWithFrame:CGRectMake(10, 0, 200, 44)] autorelease];
         bigLabel.backgroundColor=[UIColor clearColor];
         bigLabel.tag = bigLabelTag;
         bigLabel.opaque = YES;
@@ -221,16 +278,8 @@
         textField = (UITextField*)[cell viewWithTag:textFieldTag];
     }
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    UIImage *img = nil;
+
     UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
-    
-    if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
-        bigLabel.frame = CGRectMake(15, 0, 200, 44);
-        img = [UIImage imageNamed:[data objectForKey:@"logo"]];
-        
-    } else{
-        bigLabel.frame = CGRectMake(10, 0, 200, 44);
-    }
     
     bigLabel.text = [data objectForKey:@"text"];
     [bgView addSubview:lineView];
@@ -292,24 +341,33 @@
     return header;
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-}
-
 #pragma mark - text delegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    NSLog(@"OK: %d", textField.superview.tag);
+    self.curField = textField;
+
     NSDictionary *entry = self.entries[textField.superview.tag/1000][textField.superview.tag - (textField.superview.tag/1000)*1000];
     NSString *label = entry[@"label"];
     
-    if ([label isEqual:@"company_name"] || [label isEqual:@"speciality"]) {
+    if ([label isEqual:@"company_name"] || [label isEqual:@"university"]) {
         return YES;
     } else{
         // do here
+        if ([label isEqualToString:@"rank_condition"]) {
+            [self.rankPicker show];
+           
+        } else if ([label isEqualToString:@"company"]) {
+            [self.companyTypePicker show];
+            
+        } else if ([label isEqualToString:@"rank_condition"]) {
+            [self.rankPicker show];
+            
+        } else if ([label isEqualToString:@"home_location,home_sublocation"])
+        {
+            [self.homePicker show];
+        } else if ([label isEqualToString:@"love_location,love_sublocation"]){
+            [self.nativePicker show];
+        }
         
         return NO;
     }
@@ -319,6 +377,74 @@
 {
     [textField resignFirstResponder];
     return NO;
+}
+
+#pragma mark pop picker view
+- (NSArray *)popPickerData:(HZPopPickerView *)picker
+{
+    
+    if ([picker isEqual:self.rankPicker]) {
+        
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"jobs" withExtension:@"plist"];
+        NSMutableArray *tmp = [NSMutableArray arrayWithContentsOfURL:url];
+        [tmp removeObjectAtIndex:0];
+        return tmp;
+    } else if([picker isEqual:self.companyTypePicker]){
+        return @[@{@"label": @"1", @"desc": @"政府机关"}, @{@"label": @"2", @"desc": @"事业单位"},
+        @{@"label": @"3", @"desc": @"外企企业"}, @{@"label": @"4", @"desc": @"世界500强"},
+        @{@"label": @"5", @"desc": @"上市公司"}, @{@"label": @"6", @"desc": @"国有企业"}, @{@"label": @"7", @"desc": @"私营企业"},
+        @{@"label": @"8", @"desc": @"自有公司"}];
+    }
+    
+    return nil;
+    
+}
+
+- (NSString *)titleForPopPicker:(HZPopPickerView *)picker
+{
+    if ([picker isEqual:self.rankPicker]) {
+        return @"公司行业";
+    } else if([picker isEqual:self.companyTypePicker]){
+        return @"公司类型";
+    }
+    
+    return nil;
+}
+
+- (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
+{
+   self.curField.text = desc;
+    if ([picker isEqual:self.rankPicker]) {
+        self.rankNum = label;
+ 
+    } else if ([picker isEqual:self.companyTypePicker]){
+        self.companyTypeNum = label;
+    }
+    
+}
+
+#pragma mark - HZAreaPicker delegate
+-(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+{
+    self.curField.text = [NSString stringWithFormat:@"%@ %@", picker.locate.state, picker.locate.city];
+    if ([picker isEqual:self.homeLocation]) {
+         self.homeLocation = picker.locate;
+    } else if ([picker isEqual:self.nativePicker]){
+        self.nativeLocaiton = picker.locate;
+    }
+        
+}
+
+-(NSArray *)areaPickerData:(HZAreaPickerView *)picker
+{
+    NSArray *data;
+    if (picker.pickerStyle == HZAreaPickerWithStateAndCity) {
+        data = [[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]] autorelease];
+    } else {
+        data = [[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil]] autorelease];
+    }
+    
+    return data;
 }
 
 @end

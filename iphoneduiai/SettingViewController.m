@@ -15,6 +15,9 @@
 #import "AddPicViewController.h"
 #import "ILikeViewController.h"
 #import "BlacklistViewController.h"
+#import "AsyncImageView.h"
+#import "CustomBarButtonItem.h"
+
 #define kActionChooseImageTag 201
 @interface SettingViewController ()
 
@@ -70,7 +73,17 @@
     [footView addSubview:exitButton];
     self.tableView.tableFooterView = footView;
     [footView release];
+    
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
 }
+
+- (void)backAction
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 
 #pragma mark - Table view data source
 
@@ -101,7 +114,7 @@
     UIImageView* frontImg = nil;
     UILabel* bigLabel=nil;
     UILabel* smallLabel=nil;
-    UIImageView* behindImg=nil;
+    AsyncImageView* behindImg=nil;
     UIImageView* lineView=nil;
     UIView* bgView = nil;
     UIImageView* arrowImgView = nil;
@@ -123,10 +136,10 @@
         lineView.tag = lineTag;
         [bgView addSubview:lineView];
         
-        behindImg = [[[UIImageView alloc]initWithFrame:CGRectZero] autorelease];
+        behindImg = [[[AsyncImageView alloc]initWithFrame:CGRectZero] autorelease];
         behindImg.tag=behindImgTag;
    
-        behindImg.frame = CGRectMake(230, 2, 40,40);
+        behindImg.frame = CGRectMake(230, 4, 36, 36);
         [bgView addSubview:behindImg];
         
         
@@ -157,7 +170,7 @@
         frontImg= (UIImageView*)[cell viewWithTag:frontImgTag];
     
     if (behindImg == nil)
-        behindImg= (UIImageView*)[cell viewWithTag:behindImgTag];
+        behindImg= (AsyncImageView*)[cell viewWithTag:behindImgTag];
     
     if (bigLabel == nil)
         bigLabel = (UILabel*)[cell viewWithTag:bigLabelTag];
@@ -191,9 +204,10 @@
     } else{
         arrowImgView.image = nil;
     }
-    
+    behindImg.image = headImg;
     if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
-        headImg = [UIImage imageNamed:@"tweibo_icon.png"];
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        [behindImg loadImage:info[@"photo"]];
     }else if([[data objectForKey:@"label"] isEqualToString:@"my_photo"])
     {
         smallLabel.text = @"共2张";
@@ -204,8 +218,6 @@
         smallLabel.text = @"";
         
     }
-    
-    behindImg.image = headImg;
     
     return cell;
 }
@@ -319,4 +331,10 @@
                                 animated: YES];
     }
 }
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
+
 @end

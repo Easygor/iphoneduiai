@@ -33,7 +33,7 @@
 {
     if (_data == nil) {
         _data = [[self.dataSource popPickerData:self] retain];
-        self.titleLabel.text = [[self.dataSource titleForPopPicker:self] retain];
+        self.titleLabel.text = [self.dataSource titleForPopPicker:self];
         if (_data.count > 0) {
             self.curDesc = _data[0][@"desc"];
             self.curLabel = _data[0][@"label"];

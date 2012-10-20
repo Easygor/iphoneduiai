@@ -8,12 +8,13 @@
 
 #import "UIDevice+UIDeviceAppIndentifier.h"
 #import "SSKeychain.h"
+static NSString *name = @"theDeviceApplicationIdentifier";
 
 @implementation UIDevice (UIDeviceAppIndentifier)
 
 - (NSString *) deviceApplicationIdentifier
 {
-    static NSString *name = @"theDeviceApplicationIdentifier";
+    
     NSError *error = nil;
     NSString *uuid = [SSKeychain passwordForService:name account:@"uuid" error:&error];
     

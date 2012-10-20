@@ -236,12 +236,11 @@
 {
     [super viewDidAppear:animated];
     
-    self.pageSmileView = [[PageSmileView alloc] initWithFrame: CGRectMake(0, 45, 320, 216)
-                                                         withDataSource: self];
+    self.pageSmileView = [[[PageSmileView alloc] initWithFrame: CGRectMake(0, 45, 320, 216)
+                                                         withDataSource: self] autorelease];
     
     //    pageSmileView.backgroundColor = [UIColor redColor];
     [self.containerView addSubview:self.pageSmileView];
-    [self.pageSmileView release];
 }
 
 - (void)requestMoreAction
