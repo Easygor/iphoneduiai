@@ -127,8 +127,8 @@
     NSLog(@"prex:%f",preX);
 }
 - (void)Addbutton {
-    
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+//    
+//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                       initWithTitle:nil
                                       delegate:self
@@ -137,16 +137,11 @@
                                       otherButtonTitles:@"从资源库",@"拍照",nil];
         [actionSheet showInView:self.view];
         [actionSheet release];
-        
-    } else {
-        
-        UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        picker.delegate = self;
-        picker.allowsEditing = YES;
-        [self presentModalViewController:picker animated:YES];
-    }
-    
+
+   
+}
+-(void)AddPic{
+
     CGRect frame = CGRectMake(0, 10, 100, 100);
     int n = [gridItems count];
     int row = (n-1) / 3;
@@ -159,14 +154,14 @@
         frame.origin.x = frame.origin.x + frame.size.width * col + 10 * col + scrollview.frame.size.width * curpage;
         frame.origin.y = frame.origin.y + frame.size.height * row + 10 * row;
         
-        BJGridItem *gridItem = [[BJGridItem alloc] initWithTitle:[NSString stringWithFormat:@"%d",n-1] withImageName:nil atIndex:n-1 editable:YES];
+        preGridItem = [[BJGridItem alloc] initWithTitle:nil withImageName:nil atIndex:n-1 editable:YES];
+        [preGridItem setFrame:frame];
         
-        [gridItem setFrame:frame];
-        [gridItem setAlpha:0.5];
-        gridItem.delegate = self;
-        [gridItems insertObject:gridItem atIndex:n-1];
-        [scrollview addSubview:gridItem];
-        gridItem = nil;
+        [preGridItem setAlpha:1.0];
+        preGridItem.delegate = self;
+        [gridItems insertObject:preGridItem atIndex:n-1];
+        [scrollview addSubview:preGridItem];
+        
         
         //move the add button
         row = n / 3;
@@ -200,6 +195,7 @@
     [gridItems removeObjectAtIndex:index];
     [UIView animateWithDuration:0.2 animations:^{
         CGRect lastFrame = item.frame;
+         [addbutton setFrame:lastFrame];
         CGRect curFrame;
         for (int i=index; i < [gridItems count]; i++) {
             BJGridItem *temp = [gridItems objectAtIndex:i];
@@ -209,7 +205,7 @@
             lastFrame = curFrame;
             [temp setIndex:i];
         }
-        [addbutton setFrame:lastFrame];
+       
     }];
     [item removeFromSuperview];
     item = nil;
@@ -328,12 +324,12 @@
     [gridItems exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
 }
 
-#define mark Picker Delegate
+#pragma mark Picker Delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    [self AddPic];
     curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [addbutton setImg:curImg];
-    NSLog(@"add button tag: %d", addbutton.tag);
+    [preGridItem setImg:curImg];
     [picker dismissModalViewControllerAnimated:YES];
 
 }
@@ -342,5 +338,24 @@
 {
     return YES;
 }
+#pragma mark  actionsheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerController* imagePickerController = [[[UIImagePickerController alloc] init]autorelease];
+    
+    if (buttonIndex == 0)
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    else  if(buttonIndex==1)
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    else
+        return;
+    imagePickerController.delegate=self;
 
+    [self presentModalViewController: imagePickerController
+                            animated: YES];
+}
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+{
+    
+}
 @end
