@@ -8,10 +8,10 @@
 
 #import "AddPicViewController.h"
 #import "CustomBarButtonItem.h"
-#define columns 2
+#define columns 3
 #define rows 3
-#define itemsPerPage 6
-#define space 20
+#define itemsPerPage 9
+#define space 10
 #define gridHight 100
 #define gridWith 100
 #define unValidIndex  -1
@@ -43,15 +43,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.title = @"管理我的照片";
+    
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(saceAction)] autorelease];
     page = 0;
     isEditing = NO;
-    addbutton = [[BJGridItem alloc] initWithTitle:@"Add" withImageName:@"blueButton.jpg" atIndex:0 editable:NO];
+    addbutton = [[BJGridItem alloc] initWithTitle:nil withImageName:@"add_pic.png" atIndex:0 editable:NO];
     
     [addbutton setFrame:CGRectMake(0, 10, 100, 100)];
     addbutton.delegate = self;
     [scrollview addSubview: addbutton];
-    gridItems = [[NSMutableArray alloc] initWithCapacity:6];
+    gridItems = [[NSMutableArray alloc] initWithCapacity:9];
     [gridItems addObject:addbutton];
     scrollview.delegate = self;
     [scrollview setPagingEnabled:YES];
@@ -125,19 +127,40 @@
     NSLog(@"prex:%f",preX);
 }
 - (void)Addbutton {
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"从资源库",@"拍照",nil];
+        [actionSheet showInView:self.view];
+        [actionSheet release];
+        
+    } else {
+        
+        UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.delegate = self;
+        picker.allowsEditing = YES;
+        [self presentModalViewController:picker animated:YES];
+    }
+    
     CGRect frame = CGRectMake(0, 10, 100, 100);
     int n = [gridItems count];
-    int row = (n-1) / 2;
-    int col = (n-1) % 2;
+    int row = (n-1) / 3;
+    int col = (n-1) % 3;
     int curpage = (n-1) / itemsPerPage;
     row = row % 3;
-    if (n / 6 + 1 > 6) {
+    if (n / 9 + 1 > 9) {
         NSLog(@"不能创建更多页面");
     }else{
-        frame.origin.x = frame.origin.x + frame.size.width * col + 20 * col + scrollview.frame.size.width * curpage;
-        frame.origin.y = frame.origin.y + frame.size.height * row + 20 * row;
+        frame.origin.x = frame.origin.x + frame.size.width * col + 10 * col + scrollview.frame.size.width * curpage;
+        frame.origin.y = frame.origin.y + frame.size.height * row + 10 * row;
         
-        BJGridItem *gridItem = [[BJGridItem alloc] initWithTitle:[NSString stringWithFormat:@"%d",n-1] withImageName:@"blueButton.jpg" atIndex:n-1 editable:YES];
+        BJGridItem *gridItem = [[BJGridItem alloc] initWithTitle:[NSString stringWithFormat:@"%d",n-1] withImageName:nil atIndex:n-1 editable:YES];
+        
         [gridItem setFrame:frame];
         [gridItem setAlpha:0.5];
         gridItem.delegate = self;
@@ -146,13 +169,13 @@
         gridItem = nil;
         
         //move the add button
-        row = n / 2;
-        col = n % 2;
-        curpage = n / 6;
+        row = n / 3;
+        col = n % 3;
+        curpage = n / 9;
         row = row % 3;
-        frame = CGRectMake(20, 20, 100, 100);
-        frame.origin.x = frame.origin.x + frame.size.width * col + 20 * col + scrollview.frame.size.width * curpage;
-        frame.origin.y = frame.origin.y + frame.size.height * row + 20 * row;
+        frame = CGRectMake(0, 10, 100, 100);
+        frame.origin.x = frame.origin.x + frame.size.width * col + 10 * col + scrollview.frame.size.width * curpage;
+        frame.origin.y = frame.origin.y + frame.size.height * row + 10 * row;
         NSLog(@"add button col:%d,row:%d,page:%d",col,row,curpage);
         [scrollview setContentSize:CGSizeMake(scrollview.frame.size.width * (curpage + 1), scrollview.frame.size.height)];
         [scrollview scrollRectToVisible:CGRectMake(scrollview.frame.size.width * curpage, scrollview.frame.origin.y, scrollview.frame.size.width, scrollview.frame.size.height) animated:NO];
@@ -161,7 +184,7 @@
         }];
         addbutton.index += 1;
     }
-    
+
 }
 #pragma mark-- BJGridItemDelegate
 - (void)gridItemDidClicked:(BJGridItem *)gridItem{
@@ -182,6 +205,7 @@
             BJGridItem *temp = [gridItems objectAtIndex:i];
             curFrame = temp.frame;
             [temp setFrame:lastFrame];
+            
             lastFrame = curFrame;
             [temp setIndex:i];
         }
@@ -303,5 +327,14 @@
     ((BJGridItem *)[gridItems objectAtIndex:newIndex]).index = oldIndex;
     [gridItems exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
 }
+#define mark Picker Delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+    [addbutton setImg:curImg];
+    [picker dismissModalViewControllerAnimated:YES];
+
+}
+
 
 @end

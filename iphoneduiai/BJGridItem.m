@@ -20,6 +20,10 @@
     }
     return self;
 }
+-(void)setImg:(UIImage *)image
+{
+    normalImage = image;
+}
 - (id) initWithTitle:(NSString *)title withImageName:(NSString *)imageName atIndex:(NSInteger)aIndex editable:(BOOL)removable {
     self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
     if (self) {
