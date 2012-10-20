@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #include "BJGridItem.h"
 
-@interface AddPicViewController : UIViewController<UIScrollViewDelegate,BJGridItemDelegate,UIGestureRecognizerDelegate>
+@interface AddPicViewController : UIViewController<UIScrollViewDelegate,BJGridItemDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
     NSMutableArray *gridItems;
     BJGridItem *addbutton;
@@ -19,6 +19,7 @@
     CGRect preFrame;
     BOOL isEditing;
     UITapGestureRecognizer *singletap;
+    UIImage * curImg;
 }
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollview;
 - (void)Addbutton;

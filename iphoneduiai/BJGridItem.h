@@ -28,6 +28,7 @@ typedef enum{
 @property(nonatomic) NSInteger index;
 @property(strong,nonatomic)id<BJGridItemDelegate> delegate;
 - (id) initWithTitle:(NSString *)title withImageName:(NSString *)imageName atIndex:(NSInteger)aIndex editable:(BOOL)removable;
+-(void)setImg:(UIImage *)image;
 - (void) enableEditing;
 - (void) disableEditing;
 @end
