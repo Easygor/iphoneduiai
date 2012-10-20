@@ -13,6 +13,7 @@
 {
     NSMutableArray *gridItems;
     BJGridItem *addbutton;
+    BJGridItem *preGridItem;
     int page;
     float preX;
     BOOL isMoving;
@@ -20,6 +21,7 @@
     BOOL isEditing;
     UITapGestureRecognizer *singletap;
     UIImage * curImg;
+    
 }
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollview;
 - (void)Addbutton;

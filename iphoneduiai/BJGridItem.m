@@ -35,7 +35,6 @@
         index = aIndex;
         self.isRemovable = removable;
         
-
         // place a clickable button on top of everything
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -62,6 +61,7 @@
             [deleteButton addTarget:self action:@selector(removeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [deleteButton setHidden:YES];
             [self addSubview:deleteButton];
+            
         }
     }
     return self;
@@ -83,21 +83,21 @@
             NSLog(@"press long began");
             break;
         case UIGestureRecognizerStateEnded:
-            point = [gestureRecognizer locationInView:self];
-            [delegate gridItemDidEndMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
-            //变回原来大小
-            [self setAlpha:0.5f];
-            NSLog(@"press long ended");
-            break;
+//            point = [gestureRecognizer locationInView:self];
+//            [delegate gridItemDidEndMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
+//            //变回原来大小
+//            [self setAlpha:0.5f];
+//            NSLog(@"press long ended");
+//            break;
         case UIGestureRecognizerStateFailed:
             NSLog(@"press long failed");
             break;
         case UIGestureRecognizerStateChanged:
             //移动
             
-            [delegate gridItemDidMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
-            NSLog(@"press long changed");
-            break;
+//            [delegate gridItemDidMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
+//            NSLog(@"press long changed");
+//            break;
         default:
             NSLog(@"press long else");
             break;
