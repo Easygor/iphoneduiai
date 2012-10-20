@@ -13,7 +13,7 @@
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 
-@interface SSViewController ()
+@interface SSViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) NSArray *entries;
 
@@ -164,7 +164,6 @@
     
     
     int bigLabelTag = 102;
-    int lineTag = 105;
     int arrowTag = 107;
     int textFieldTag = 108;
     
@@ -178,6 +177,7 @@
     if (cell == nil)
     {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier]autorelease];
+        cell.selectionStyle =UITableViewCellSelectionStyleNone;
         
         bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
@@ -185,7 +185,6 @@
         
         lineView= [[[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)]autorelease];
         lineView.image =  [UIImage imageNamed:@"line.png"];
-        lineView.tag = lineTag;
         [bgView addSubview:lineView];
         
         
@@ -200,17 +199,17 @@
         textField = [[[UITextField alloc]initWithFrame:CGRectMake(100, 15, 150, 18)]autorelease];
         textField.placeholder = @"未填写";
         textField.font = [UIFont systemFontOfSize:14.0f];
+        textField.delegate = self;
         [bgView addSubview:textField];
         textField.tag = textFieldTag;
+        textField.returnKeyType = UIReturnKeyDone;
         
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         arrowImgView.tag = arrowTag;
         [cell addSubview:arrowImgView];
         
+        
     }
-    
-    if (lineView == nil)
-        lineView = (UIImageView*)[cell viewWithTag:lineTag];
     
     if (bigLabel == nil)
         bigLabel = (UILabel*)[cell viewWithTag:bigLabelTag];
@@ -242,8 +241,9 @@
         arrowImgView.image = nil;
     }
     
-    cell.selectionStyle =UITableViewCellSelectionStyleNone;
+    textField.superview.tag = 1000*indexPath.section + indexPath.row;
     
+   
     return cell;
 }
 
@@ -299,5 +299,26 @@
     
 }
 
+#pragma mark - text delegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    NSLog(@"OK: %d", textField.superview.tag);
+    NSDictionary *entry = self.entries[textField.superview.tag/1000][textField.superview.tag - (textField.superview.tag/1000)*1000];
+    NSString *label = entry[@"label"];
+    
+    if ([label isEqual:@"company_name"] || [label isEqual:@"speciality"]) {
+        return YES;
+    } else{
+        // do here
+        
+        return NO;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return NO;
+}
 
 @end
