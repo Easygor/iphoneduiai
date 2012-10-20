@@ -327,14 +327,20 @@
     ((BJGridItem *)[gridItems objectAtIndex:newIndex]).index = oldIndex;
     [gridItems exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
 }
+
 #define mark Picker Delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
     [addbutton setImg:curImg];
+    NSLog(@"add button tag: %d", addbutton.tag);
     [picker dismissModalViewControllerAnimated:YES];
 
 }
 
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
 
 @end

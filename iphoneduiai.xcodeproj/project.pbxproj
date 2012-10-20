@@ -2326,14 +2326,9 @@
 				6130267316229D3A000E1CBD /* TasksViewController.h */,
 				6130267416229D3A000E1CBD /* TasksViewController.m */,
 				6130267516229D3A000E1CBD /* TasksViewController.xib */,
-				5A3505CE16204C5C00A80A71 /* AddPicViewController.h */,
-				5A3505CF16204C5C00A80A71 /* AddPicViewController.m */,
-				5A3505D016204C5C00A80A71 /* AddPicViewController.xib */,
 				5A8042721621306A00B872D3 /* ILikeViewController.h */,
 				5A8042731621306A00B872D3 /* ILikeViewController.m */,
 				5A8042741621306A00B872D3 /* ILikeViewController.xib */,
-				5A3505D316204C8200A80A71 /* BJGridItem.h */,
-				5A3505D416204C8200A80A71 /* BJGridItem.m */,
 				61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */,
 				61BB2B6015F9DB0800AA82CC /* Supporting Files */,
 			);
@@ -2787,6 +2782,11 @@
 				61DCBE94162D58C40086294E /* ChooseMateViewController.h */,
 				61DCBE95162D58C40086294E /* ChooseMateViewController.m */,
 				61DCBE96162D58C40086294E /* ChooseMateViewController.xib */,
+				5A3505CE16204C5C00A80A71 /* AddPicViewController.h */,
+				5A3505CF16204C5C00A80A71 /* AddPicViewController.m */,
+				5A3505D016204C5C00A80A71 /* AddPicViewController.xib */,
+				5A3505D316204C8200A80A71 /* BJGridItem.h */,
+				5A3505D416204C8200A80A71 /* BJGridItem.m */,
 			);
 			name = profiles;
 			sourceTree = "<group>";

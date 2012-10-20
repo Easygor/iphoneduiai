@@ -23,6 +23,7 @@
 -(void)setImg:(UIImage *)image
 {
     normalImage = image;
+    [button setBackgroundImage:normalImage forState:UIControlStateNormal];
 }
 - (id) initWithTitle:(NSString *)title withImageName:(NSString *)imageName atIndex:(NSInteger)aIndex editable:(BOOL)removable {
     self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
