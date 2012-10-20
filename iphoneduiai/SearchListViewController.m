@@ -41,6 +41,12 @@
 @property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
 @property (strong, nonatomic) UIBarButtonItem *leftList, *leftView;
 
+@property (retain, nonatomic) IBOutlet UIButton *btn1;
+@property (retain, nonatomic) IBOutlet UIButton *btn2;
+@property (retain, nonatomic) IBOutlet UIButton *btn3;
+@property (retain, nonatomic) IBOutlet UIButton *btn4;
+
+@property (strong, nonatomic) NSMutableDictionary *conditions;
 
 @end
 
@@ -58,7 +64,20 @@
     [_selectedSex release];
 
     [_dropMenuView release];
+    [_btn1 release];
+    [_btn2 release];
+    [_btn3 release];
+    [_btn4 release];
     [super dealloc];
+}
+
+- (NSMutableDictionary *)conditions
+{
+    if (_conditions == nil) {
+        _conditions = [[NSMutableDictionary alloc] init];
+    }
+    
+    return _conditions;
 }
 
 - (NSArray *)filterEntries
@@ -76,7 +95,7 @@
 {
     if (![_selectedSex isEqualToString:selectedSex]) {
         _selectedSex = [selectedSex retain];
-        
+        self.conditions[@"sex"] = selectedSex;
         
         NSString *name = nil;
         for (NSDictionary *d in self.filterEntries) {
@@ -114,7 +133,7 @@
     [super viewDidLoad];
     self.waterTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.infoTableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 
     self.leftList = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"change_list_icon"]
                                                                                           target:self
@@ -137,7 +156,28 @@
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;
-    self.tilteBtn = btn;    
+    self.tilteBtn = btn;
+    UIImage *btnBg = [[UIImage imageNamed:@"search_choice_bg"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImage *selectedBtnBg = [[UIImage imageNamed:@"search_choice_bg_select"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    [self.btn1 setBackgroundImage:btnBg forState:UIControlStateNormal];
+    [self.btn1 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
+    [self.btn1 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    [self.btn2 setBackgroundImage:btnBg forState:UIControlStateNormal];
+    [self.btn2 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
+    [self.btn2 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    [self.btn3 setBackgroundImage:btnBg forState:UIControlStateNormal];
+    [self.btn3 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
+    [self.btn3 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    [self.btn4 setBackgroundImage:btnBg forState:UIControlStateNormal];
+    [self.btn4 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
+    [self.btn4 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    
+    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    self.conditions[@"province"] = info[@"province"];
+    self.conditions[@"city"] = info[@"city"];
+    self.conditions[@"minage"] = @"18";
+    self.conditions[@"maxage"] = @"35";
+    self.conditions[@"searchtype"] = @"detail";
   
 }
 
@@ -153,6 +193,7 @@
 - (void)jumpAction
 {
     ConditionViewController *cvc = [[ConditionViewController alloc] initWithNibName:@"ConditionViewController" bundle:nil];
+    cvc.conditions = self.conditions;
     [self.navigationController pushViewController:cvc animated:YES];
     [cvc release];
 }
@@ -196,6 +237,10 @@
     [self setWaterTableView:nil];
     [self setInfoTableView:nil];
     [self setDropMenuView:nil];
+    [self setBtn1:nil];
+    [self setBtn2:nil];
+    [self setBtn3:nil];
+    [self setBtn4:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -217,9 +262,10 @@
 - (void)doInitWork
 {
     // do something here
-    if (self.users.count <= 0 &&
+    if ((self.users.count <= 0 || [self.conditions[@"search"] boolValue]) &&
         [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
-        // todo 
+        // todo
+        self.conditions[@"search"] = @NO;
         [self.sementdView selectSegmentAtIndex:0];
     }
 #warning two time request trigger.
@@ -515,26 +561,21 @@
 
 - (void)searchReqeustWithParams:(NSMutableDictionary*)params
 {
-
-
-    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    if ([self.conditions[@"searchtype"] isEqualToString:@"id"]) {
+        params[@"id"] = self.conditions[@"id"];
+    } else{
+        [self.conditions removeObjectForKey:@"id"];
+        for (NSString *key in self.conditions.allKeys) {
+            [params setObject:self.conditions[key] forKey:key];
+        }
+    }
     
-    // select sex
-    [params setObject:self.selectedSex forKey:@"sex"];
-    
-    // area info
-    [params setObject:info[@"province"] forKey:@"province"];
-    [params setObject:info[@"city"] forKey:@"city"];
-
     if (self.orderField && ![self.orderField isEqualToString:@"distance"]) {
         [params setObject:self.orderField forKey:@"order"];
         [params setObject:@"-1" forKey:@"ordasc"];
     }
     
     // location distance
-    
-    [params setObject:@"18" forKey:@"minage"];
-    [params setObject:@"30" forKey:@"maxage"];
     [params setObject:@"21" forKey:@"pagesize"];
     
     // have pics
@@ -547,7 +588,7 @@
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-//                NSLog(@"data %@", data);
+                NSLog(@"search data %@", data);
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     self.loading = NO;

@@ -333,7 +333,11 @@
 {
     NSMutableDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
     
-    NSMutableDictionary *msg = self.messages[indexPath.row];;
+    NSMutableDictionary *msg = self.messages[indexPath.row];
+    NSMutableDictionary *msgNext = msg;
+    if (indexPath.row + 1 < self.messages.count) {
+        msgNext = self.messages[indexPath.row+1];
+    }
 
     if ([msg[@"senduid"] isEqualToString:info[@"uid"]]) {
         static NSString *CellIdentifier = @"rightBubbleCell";
@@ -346,10 +350,21 @@
         
         cell.content = msg[@"content"];
         [cell.avatarImageView loadImage:info[@"photo"]];
-        cell.data = msg;
-        if ([msg[@"needsend"] boolValue]) {
-            [cell sendMessageToRemote];
+        if ([msg[@"readtime"] integerValue] > 0) {
+            cell.isRead = YES;
+        } else{
+            cell.isRead = NO;
         }
+        
+        if (abs([msg[@"addtime"] integerValue] - [msgNext[@"addtime"] integerValue]) > 600) {
+            cell.date = [NSDate dateWithTimeIntervalSince1970:[msg[@"addtime"] integerValue]];
+        } else{
+            cell.date = nil;
+        }
+//        cell.data = msg;
+//        if ([msg[@"needsend"] boolValue]) {
+//            [cell sendMessageToRemote];
+//        }
         
         return cell;
       
@@ -365,6 +380,12 @@
         cell.content = msg[@"content"];
         [cell.avatarImageView loadImage:self.partner[@"photo"]];
         
+        if (abs([msg[@"addtime"] integerValue] - [msgNext[@"addtime"] integerValue]) > 600) {
+            cell.date = [NSDate dateWithTimeIntervalSince1970:[msg[@"addtime"] integerValue]];
+        } else{
+            cell.date = nil;
+        }
+        
         return cell;
     }
  
@@ -376,6 +397,40 @@
     
     return [cell requiredHeight];
 
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // read all message 
+    NSMutableDictionary *n = self.messages[indexPath.row];
+    
+    if ([n[@"senduid"] isEqualToString:self.partner[@"uid"]] && [n[@"readtime"] integerValue] == 0) {
+        NSMutableDictionary *params = [Utils queryParams];
+        [params setObject:n[@"tid"] forKey:@"id"];
+
+        [[RKClient sharedClient] get:[@"/uc/message.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+            NSLog(@"url: %@", request.URL);
+            
+            [request setOnDidLoadResponse:^(RKResponse *response){
+                if (response.isOK && response.isJSON) {
+                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                    //                        NSLog(@"read data: %@", data[@"message"]);
+                    NSInteger code = [data[@"error"] integerValue];
+                    if (code == 0) {
+                        n[@"readtime"] = @"1";
+
+                    }
+                    
+                }
+            }];
+            
+            [request setOnDidFailLoadWithError:^(NSError *error){
+                //                    [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+                NSLog(@"Error: %@", [error description]);
+            }];
+        }];
+    }
+    
 }
 
 #pragma mark - Table view delegate
@@ -489,6 +544,8 @@
 -(BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     if ([text isEqualToString:@"\n"]) {
+        // best practice
+        /*
         NSMutableDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
         NSMutableDictionary *newMsg = [NSMutableDictionary dictionary];
         newMsg[@"content"] = self.textView.text;
@@ -503,14 +560,58 @@
                               withRowAnimation:UITableViewRowAnimationNone];
         
         newMsg[@"needsend"] = @YES; // 必须在cell插入之后，设置发送参数，防止就会重复发送, 因为移动bottom重复显示cell一次
-        [self keepTableviewOnBottom]; // 
+        [self keepTableviewOnBottom]; //
+         */
+        
+        NSString *content = self.textView.text;
+        self.textView.text = nil;
+
+        NSMutableDictionary *dParams = [Utils queryParams];
+        [[RKClient sharedClient] post:[@"/uc/replymessage.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+            NSLog(@"send message url: %@", request.URL);
+            NSMutableDictionary *pd = [NSMutableDictionary dictionary];
+            [pd setObject:@"true" forKey:@"submitupdate"];
+            [pd setObject:content forKey:@"replycontent"];
+            [pd setObject:self.self.partner[@"uid"] forKey:@"uid"];
+            
+            
+            //            if (abs(self.curLocaiton.latitude - 0.0) > 0.001) {
+            //                [pd setObject:[NSNumber numberWithDouble:self.curLocaiton.latitude] forKey:@"wei"];
+            //                [pd setObject:[NSNumber numberWithDouble:self.curLocaiton.longitude] forKey:@"jin"];
+            //            }
+            
+            request.params = [RKParams paramsWithDictionary:pd];
+            
+            [request setOnDidFailLoadWithError:^(NSError *error){
+                NSLog(@"send message error: %@", [error description]);
+//                [self.indicatorView stopAnimating];
+
+            }];
+            
+            [request setOnDidLoadResponse:^(RKResponse *response){
+                
+                if (response.isOK && response.isJSON) {
+                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                    NSInteger code = [[data objectForKey:@"error"] integerValue];
+                    NSLog(@"return data: %@", data);
+                    if (code != 0) {
+                        NSLog(@"Fail to send messsage: %@", data[@"message"]);
+                    } else{
+                        [self requestMessageListWithPage:1];
+                    }
+                    
+                }
+                
+            }];
+            
+        }];
         
         return NO;
     }
     
     return YES;
 }
-
+/*
 -(void)growingTextViewDidChange:(HPGrowingTextView *)growingTextView
 {
 //    NSInteger nonSpaceTextLength = [[growingTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length];
@@ -535,6 +636,7 @@
 //    }
     
 }
+ */
 
 #pragma mark - emontions
 
@@ -589,7 +691,7 @@
     self.textView.text = content;
     self.textView.selectedRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
     self.lastRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
-    [self growingTextViewDidChange:self.textView];
+//    [self growingTextViewDidChange:self.textView];
 }
 
 #pragma mark - request for Feeds

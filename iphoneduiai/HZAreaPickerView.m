@@ -27,6 +27,8 @@
 
 - (void)dealloc
 {
+    self.delegate = nil;
+    self.datasource = nil;
     [_locate release];
     [_locatePicker release];
     [provinces release];
@@ -132,7 +134,7 @@
                 return [[provinces objectAtIndex:row] objectForKey:@"state"];
                 break;
             case 1:
-                return [[cities objectAtIndex:row] objectForKey:@"area"];
+                return [[cities objectAtIndex:row] objectForKey:@"city"];
                 break;
             default:
                 return @"";
@@ -204,10 +206,26 @@
         }
     }
     
+//    if([self.delegate respondsToSelector:@selector(pickerDidChaneStatus:)]) {
+//        [self.delegate pickerDidChaneStatus:self];
+//    }
+
+}
+
+- (IBAction)cancelAction:(id)sender
+{
+    [self dismiss];
+}
+
+- (IBAction)confirmAction:(id)sender
+{
+    
+    // do some here
     if([self.delegate respondsToSelector:@selector(pickerDidChaneStatus:)]) {
         [self.delegate pickerDidChaneStatus:self];
     }
-
+    [self dismiss];
 }
+
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL isRead;
 @property (assign, nonatomic) id <CustomCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (strong, nonatomic) NSDate *date;
 
 - (CGFloat)requiredHeight;
 - (void)sendMessageToRemote;

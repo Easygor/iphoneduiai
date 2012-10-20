@@ -9,7 +9,6 @@
 #import "ProfileListViewController.h"
 #import "CustomBarButtonItem.h"
 #import "SettingViewController.h"
-#import "SeniorViewController.h"
 #import "Utils.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
@@ -21,18 +20,24 @@
 #import "WeiyuWordCell.h"
 #import "BindingViewController.h"
 #import "QQSetViewController.h"
-#import "ChoosePartnerViewController.h"
+#import "ChooseMateViewController.h"
+#import "SSViewController.h"
+
+#import "HZNumberPickerView.h"
+#import "HZAreaPickerView.h"
+#import "HZPopPickerView.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 static NSInteger kActionChooseImageTag = 201;
 
-@interface ProfileListViewController () <CustomCellDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ShowPhotoDelegate>
+@interface ProfileListViewController () <CustomCellDelegate, HZAreaPickerDatasource, HZAreaPickerDelegate, HZNumberPickerDelegate, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ShowPhotoDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
 
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
 @property (retain, nonatomic) IBOutlet AvatarView *avatarView;
 @property (strong, nonatomic) NSArray *photos;
-@property (strong, nonatomic) NSDictionary *userInfo, *userBody, *userLife, *userInterest, *userWork, *marrayReq, *searchIndex;
+@property (strong, nonatomic) NSDictionary *userInfo, *userBody, *userLife, *userInterest, *userWork, *searchIndex;
+@property (strong, nonatomic) NSMutableDictionary *marrayReq;
 @property (retain, nonatomic) IBOutlet UILabel *nameAgeLabel;
 @property (retain, nonatomic) IBOutlet UILabel *timeDistanceLabel;
 
@@ -71,6 +76,13 @@ static NSInteger kActionChooseImageTag = 201;
 
 @property (strong, nonatomic) UIBarButtonItem *cancelBarItem, *saveBarItem, *settingBarItem, *changeBaritem;
 @property (nonatomic) BOOL isUploadPhoto;
+@property (nonatomic) NSInteger heightNum, weightNum;
+
+@property (strong, nonatomic) HZNumberPickerView *heightPicker, *weightPicker;
+@property (strong, nonatomic) HZAreaPickerView *areaPicker;
+@property (strong, nonatomic) HZLocation *location;
+@property (strong, nonatomic) NSString *eduNum, *incomeNum, *jobNum;
+@property (strong, nonatomic) HZPopPickerView *incomePickerView, *degreePicker, *jobPicker;
 
 @end
 
@@ -78,6 +90,14 @@ static NSInteger kActionChooseImageTag = 201;
 
 - (void)dealloc
 {
+    [_jobPicker release];
+    [_jobNum release];
+    [_incomePickerView release];
+    [_degreePicker release];
+    [_incomeNum release];
+    [_eduNum release];
+    [_areaPicker release];
+    [_location release];
     [_photos release];
     [_showPhotoView release];
     [_avatarView release];
@@ -124,7 +144,58 @@ static NSInteger kActionChooseImageTag = 201;
     [_img4 release];
     [_img5 release];
     [_img6 release];
+    [_heightPicker release];
+    [_weightPicker release];
     [super dealloc];
+}
+
+- (HZNumberPickerView *)heightPicker
+{
+    if (_heightPicker == nil) {
+        _heightPicker = [[HZNumberPickerView alloc] initWithMinNum:140 maxNum:250];
+        _heightPicker.titleLabel.text = @"你的身高(cm)";
+        _heightPicker.delegate = self;
+    }
+    
+    return _heightPicker;
+}
+
+- (HZNumberPickerView *)weightPicker
+{
+    if (_weightPicker == nil) {
+        _weightPicker = [[HZNumberPickerView alloc] initWithMinNum:35 maxNum:200];
+        _weightPicker.titleLabel.text = @"你的体重(kg)";
+        _weightPicker.delegate = self;
+    }
+    
+    return _weightPicker;
+}
+
+- (HZPopPickerView *)degreePicker
+{
+    if (_degreePicker == nil) {
+        _degreePicker = [[HZPopPickerView alloc] initWithDelegate:self];
+    }
+    
+    return _degreePicker;
+}
+
+- (HZPopPickerView *)jobPicker
+{
+    if (_jobPicker == nil) {
+        _jobPicker = [[HZPopPickerView alloc] initWithDelegate:self];
+    }
+    
+    return _jobPicker;
+}
+
+- (HZPopPickerView *)incomePickerView
+{
+    if (_incomePickerView == nil) {
+        _incomePickerView = [[HZPopPickerView alloc] initWithDelegate:self];
+    }
+    
+    return _incomePickerView;
 }
 
 - (void)setSearchIndex:(NSDictionary *)searchIndex
@@ -150,7 +221,7 @@ static NSInteger kActionChooseImageTag = 201;
     }
 }
 
-- (void)setMarrayReq:(NSDictionary *)marrayReq
+- (void)setMarrayReq:(NSMutableDictionary *)marrayReq
 {
     if (![_marrayReq isEqualToDictionary:marrayReq]) {
         _marrayReq = [marrayReq retain];
@@ -200,8 +271,25 @@ static NSInteger kActionChooseImageTag = 201;
     if (![_userBody isEqualToDictionary:userBody]) {
         _userBody = [userBody retain];
         
-        self.weightField.text = [userBody objectForKey:@"weight"];
+        self.weightField.text = [NSString stringWithFormat:@"%@kg", [userBody objectForKey:@"weight"]];
     }
+}
+
+-(void)setLocation:(HZLocation *)location
+{
+    _location = [location retain];
+    NSString *str = [NSString stringWithFormat:@"%@ %@", location.state, location.city];
+    if (![str isEqualToString:self.areaField.text]) {
+        self.areaField.text = str;
+    }
+}
+
+- (HZAreaPickerView *)areaPicker
+{
+    if (_areaPicker == nil) {
+        _areaPicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
+    }
+    return _areaPicker;
 }
 
 - (void)viewDidUnload
@@ -270,14 +358,97 @@ static NSInteger kActionChooseImageTag = 201;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    if (self.marrayReq) {
+        self.marrayReqView.marrayReq = self.marrayReq;
+    }
 
 }
 
 - (void)saveAction
 {
     // do some save here
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/uc/userinfo.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        if (self.heightNum) {
+            updateArgs[@"height"] = @(self.heightNum);
+
+        } else{
+            updateArgs[@"height"] = self.searchIndex[@"height"];
+        }
+        
+        if (self.location) {
+            updateArgs[@"province"] = @(self.location.stateId);
+            updateArgs[@"city"] = @(self.location.cityId);
+            updateArgs[@"area"] = @(self.location.areaId);
+        } else{
+            updateArgs[@"province"] = self.searchIndex[@"province"];
+            updateArgs[@"city"] = self.searchIndex[@"city"];
+            updateArgs[@"area"] = self.searchIndex[@"area"];
+        }
+        
+        if (self.incomeNum) {
+            updateArgs[@"income"] = self.incomeNum;
+            
+        } else{
+            updateArgs[@"income"] = self.searchIndex[@"income"];
+        }
+        
+        if (self.eduNum) {
+            updateArgs[@"degree"] = self.eduNum;
+        } else{
+            updateArgs[@"degree"] = self.searchIndex[@"degree"];
+        }
+        
+        if (self.jobNum) {
+            updateArgs[@"industry"] = self.jobNum;
+        } else{
+            updateArgs[@"industry"] = self.searchIndex[@"industry"];
+        }
+        
+        if (self.weightNum) {
+            updateArgs[@"weight"] = @(self.weightNum);
+        }
+        
+   
+        updateArgs[@"constellation"] = self.searchIndex[@"constellation"];
+        updateArgs[@"marriage"] = self.searchIndex[@"marriage"];
+        updateArgs[@"zodiac"] = self.searchIndex[@"zodiac"];
+        updateArgs[@"submitupdate"] = @"true";
+        
+         NSLog(@"args: %@", updateArgs);
+        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [response.bodyAsString objectFromJSONString];
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    [self grabUserInfoDetailRequest];
+                    [self.tableView setEditing:NO animated:YES];
+                    
+                    [self changeToNonEditingView];
+                    
+                    self.navigationItem.leftBarButtonItem = self.changeBaritem;
+                    self.navigationItem.rightBarButtonItem = self.settingBarItem;
+                    
+                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
+    }];
     
-    [self cancelModeAction];
 }
 
 - (void)settingModeAction
@@ -286,9 +457,10 @@ static NSInteger kActionChooseImageTag = 201;
     [self.tableView setEditing:YES animated:YES];
 
     [self changeToEditingView];
-
     self.navigationItem.leftBarButtonItem = self.cancelBarItem;
     self.navigationItem.rightBarButtonItem = self.saveBarItem;
+    
+    
 }
 
 - (void)cancelModeAction
@@ -299,6 +471,14 @@ static NSInteger kActionChooseImageTag = 201;
     
     self.navigationItem.leftBarButtonItem = self.changeBaritem;
     self.navigationItem.rightBarButtonItem = self.settingBarItem;
+    
+    // reset from remote
+    self.heightField.text = [NSString stringWithFormat:@"%@cm", [self.userInfo objectForKey:@"height"]];
+    self.areaField.text = [self.userInfo objectForKey:@"area"];
+    self.incomeField.text = [self.userInfo objectForKey:@"income"];
+    self.degreeField.text = [self.userInfo objectForKey:@"degree"];
+    self.careerField.text = [self.userInfo objectForKey:@"industry"];
+    self.weightField.text = [NSString stringWithFormat:@"%@kg", [self.userBody objectForKey:@"weight"]];
 }
 
 - (void)settingAction
@@ -595,7 +775,7 @@ static NSInteger kActionChooseImageTag = 201;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-//                NSLog(@"data: %@", data);
+                NSLog(@"user data: %@", data);
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
                 if (code == 0) {
                     NSDictionary *dataData = [data objectForKey:@"data"];
@@ -790,17 +970,20 @@ static NSInteger kActionChooseImageTag = 201;
 
 - (IBAction)seniorAction
 {
-    SeniorViewController *seniorViewController = [[[SeniorViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
-    [self.navigationController pushViewController:seniorViewController animated:YES];
+//    SeniorSettingViewController *seniorViewController = [[[SeniorSettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+//    [self.navigationController pushViewController:seniorViewController animated:YES];
+    SSViewController *svc = [[[SSViewController alloc] initWithNibName:@"SSViewController" bundle:nil] autorelease];
+    [self.navigationController pushViewController:svc animated:YES];
+
 }
 
 - (IBAction)friendAction
 {
-    NSLog(@"friend...");
-    ChoosePartnerViewController *choosePartnerViewController = [[ChoosePartnerViewController alloc]initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:choosePartnerViewController animated:YES];
-    
-    
+    ChooseMateViewController *cmvc = [[ChooseMateViewController alloc] initWithNibName:@"ChooseMateViewController" bundle:nil];
+    cmvc.marrayReq = self.marrayReq;
+    [self.navigationController pushViewController:cmvc animated:YES];
+    [cmvc release];
+
 }
 
 - (IBAction)uploadAvatarAction
@@ -913,6 +1096,118 @@ static NSInteger kActionChooseImageTag = 201;
     actionSheet.tag=index;
     [actionSheet showInView:self.view.window];
     [actionSheet release];
+}
+
+#pragma mark - text delegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.heightField]) {
+        [self.heightPicker show];
+    } else if ([textField isEqual:self.weightField]){
+        [self.weightPicker show];
+    } else if ([textField isEqual:self.areaField]){
+        [self.areaPicker show];
+    } else if ([textField isEqual:self.incomeField]){
+        [self.incomePickerView show];
+    } else if ([textField isEqual:self.degreeField]){
+        [self.degreePicker show];
+    } else if ([textField isEqual:self.careerField]){
+        [self.jobPicker show];
+    }
+    
+    return NO;
+}
+
+#pragma mark - number delegate
+- (void)numberPickerDidChange:(HZNumberPickerView *)picker
+{
+    if ([picker isEqual:self.heightPicker]) {
+        self.heightField.text = [NSString stringWithFormat:@"%dCM", picker.curNum];
+        self.heightNum = picker.curNum;
+    } else if ([picker isEqual:self.weightPicker]){
+        self.weightField.text = [NSString stringWithFormat:@"%dkg", picker.curNum];
+        self.weightNum = picker.curNum;
+    }
+    
+}
+
+#pragma mark - HZAreaPicker delegate
+-(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+{
+    if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
+        self.location = picker.locate;
+        self.areaField.text = self.location.district;
+//        self.conditions[@"province"] = @(self.location.stateId);
+//        self.conditions[@"city"] = @(self.location.cityId);
+//        self.conditions[@"provincedesc"] = self.location.state;
+//        self.conditions[@"citydesc"] = self.location.city;
+    }
+}
+
+-(NSArray *)areaPickerData:(HZAreaPickerView *)picker
+{
+    NSArray *data;
+    if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
+        data = [[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"area.plist" ofType:nil]] autorelease];
+    } else {
+        data = [[[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"city.plist" ofType:nil]] autorelease];
+    }
+    
+    return data;
+}
+
+#pragma mark pop picker view
+- (NSArray *)popPickerData:(HZPopPickerView *)picker
+{
+    
+    if ([picker isEqual:self.incomePickerView]) {
+        
+        return @[@{@"label": @"10", @"desc": @"2000元以下"}, @{@"label": @"20", @"desc": @"2000~50000元"},
+        @{@"label": @"30", @"desc": @"5000~10000元"}, @{@"label": @"40", @"desc": @"10000~20000元"},
+        @{@"label": @"50", @"desc": @"20000元以上"}];
+    } else if ([picker isEqual:self.degreePicker]){
+        return @[@{@"label": @"1", @"desc": @"中专或以下"}, @{@"label": @"2", @"desc": @"大专"},
+        @{@"label": @"3", @"desc": @"本科"}, @{@"label": @"4", @"desc": @"双学士"},
+        @{@"label": @"5", @"desc": @"硕士"}, @{@"label": @"6", @"desc": @"博士"}, @{@"label": @"7", @"desc": @"博士后"}];
+    } else if ([picker isEqual:self.jobPicker]){
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"jobs" withExtension:@"plist"];
+        NSMutableArray *tmp = [NSMutableArray arrayWithContentsOfURL:url];
+        [tmp removeObjectAtIndex:0];
+        return tmp;
+    }
+    
+    return nil;
+    
+}
+
+- (NSString *)titleForPopPicker:(HZPopPickerView *)picker
+{
+    if ([picker isEqual:self.incomePickerView]) {
+        return @"工资收入(元)";
+    } else if ([picker isEqual:self.degreePicker]){
+        return @"学历";
+    } else if ([picker isEqual:self.jobPicker]){
+        return @"职业";
+    }
+    
+    return nil;
+}
+
+- (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
+{
+    if ([picker isEqual:self.incomePickerView]) {
+        self.incomeNum = label;
+        self.incomeField.text = desc;
+
+    } else if ([picker isEqual:self.degreePicker]){
+        self.eduNum = label;
+        self.degreeField.text = desc;
+
+    } else if ([picker isEqual:self.jobPicker]){
+        self.jobNum = label;
+        self.careerField.text = desc;
+    }
+    
 }
 
 @end

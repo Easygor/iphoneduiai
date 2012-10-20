@@ -10,4 +10,6 @@
 
 @interface ConditionViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableDictionary *conditions;
+
 @end

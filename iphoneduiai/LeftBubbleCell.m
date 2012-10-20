@@ -9,17 +9,20 @@
 #import "LeftBubbleCell.h"
 #import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "NSDate-Utilities.h"
 
 #define TEXTW 185
 
 @interface LeftBubbleCell ()
 
 @property (strong, nonatomic) IBOutlet UIImageView *bubbleImageView;
-@property (strong, nonatomic) UILabel *contentLabel;
+@property (strong, nonatomic) UILabel *contentLabel, *timeLabel;
 
 @end
 
 @implementation LeftBubbleCell
+
+
 
 - (void)dealloc
 {
@@ -29,7 +32,45 @@
     [_content release];
     [_imageUrl release];
     [_contentLabel release];
+    [_timeLabel release];
     [super dealloc];
+}
+
+- (UILabel *)timeLabel
+{
+    if (_timeLabel == nil) {
+        _timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _timeLabel.font = [UIFont systemFontOfSize:12.0f];
+        _timeLabel.textColor = [UIColor whiteColor];
+        _timeLabel.textAlignment = UITextAlignmentCenter;
+        _timeLabel.backgroundColor = RGBACOLOR(0, 0, 0, 0.25);
+        _timeLabel.layer.masksToBounds = YES;
+        _timeLabel.layer.cornerRadius = 3.0f;
+    }
+    
+    return _timeLabel;
+}
+
+- (void)setDate:(NSDate *)date
+{
+    if (![_date isEqualToDate:date]) {
+        _date = [date retain];
+        
+        if (date) {
+            self.timeLabel.text = [self.date stringWithPattern:@"MM-dd HH:mm"];
+            [self.timeLabel sizeToFit];
+            
+            CGRect timeFrame = self.timeLabel.frame;
+            timeFrame.origin.x = (self.frame.size.width - self.timeLabel.frame.size.width)/2;
+            timeFrame.origin.y = self.bubbleImageView.frame.origin.y + self.bubbleImageView.frame.size.height + 5;
+            timeFrame.size.width += 8;
+            timeFrame.size.height += 4;
+            self.timeLabel.frame = timeFrame;
+            [self.contentView addSubview:self.timeLabel];
+        } else{
+            [self.timeLabel removeFromSuperview];
+        }
+    }
 }
 
 
@@ -161,7 +202,11 @@
 
 - (CGFloat)requiredHeight
 {
-    return self.bubbleImageView.frame.origin.y + self.bubbleImageView.frame.size.height + 15;
+    if (self.timeLabel.superview != nil) {
+        return self.timeLabel.frame.origin.y + self.timeLabel.frame.size.height + 15;
+    } else{
+        return self.bubbleImageView.frame.origin.y + self.bubbleImageView.frame.size.height + 15;
+    }
 }
 
 - (void)setImageUrl:(NSString *)imageUrl

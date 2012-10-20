@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *content, *imageUrl;
 @property (assign, nonatomic) id <CustomCellDelegate> delegate;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (strong, nonatomic) NSDate *date;
 
 - (CGFloat)requiredHeight;
 

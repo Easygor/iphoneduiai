@@ -1,13 +1,13 @@
 //
-//  ddddCell.h
+//  SSViewController.h
 //  iphoneduiai
 //
-//  Created by Cloud Dai on 12-10-11.
+//  Created by Cloud Dai on 12-10-20.
 //  Copyright (c) 2012年 duiai.com. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ddddCell : UITableViewCell
+@interface SSViewController : UITableViewController
 
 @end

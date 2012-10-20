@@ -11,4 +11,6 @@
 @interface BottomPopView : UIView
 - (void)showInView:(UIView *)view;
 - (void)cancelPicker;
+- (void)show;
+- (void)dismiss;
 @end

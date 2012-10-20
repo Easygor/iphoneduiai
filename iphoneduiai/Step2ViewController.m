@@ -225,17 +225,20 @@ static NSString *const wRegex = @"\\w+";
             // date picker
             [self cancelDatePicker];
             self.datePicker = [[[HZDatePickerView alloc] initWithDelegate:self] autorelease];
-            [self.datePicker showInView:self.view];
+//            [self.datePicker showInView:self.view];
+            [self.datePicker show];
         } else if ([textField isEqual:self.areaText]){
             // area
             [self cancelLocatePicker];
             self.locatePicker = [[[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self] autorelease];
-            [self.locatePicker showInView:self.view];
+//            [self.locatePicker showInView:self.view];
+            [self.locatePicker show];
         } else if ([textField isEqual:self.eduText]){
             // edu
             [self cancelDegreePicker];
             self.degreePicker = [[[HZDegreePickerView alloc] initWithDelegate:self] autorelease];
-            [self.degreePicker showInView:self.view];
+//            [self.degreePicker showInView:self.view];
+            [self.degreePicker show];
         }
 
         return NO;

@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) NSArray *levels;
 @property (strong, nonatomic) NSDictionary *degrees;
+@property (strong, nonatomic) NSString *curDegree, *curLevel;
 
 @end
 
@@ -34,7 +35,7 @@
 -(NSArray *)levels
 {
     if (_levels == nil) {
-        _levels = [[NSArray alloc] initWithObjects:@"高中以下", @"高中", @"大专", @"本科", @"硕士", @"博士", nil];
+        _levels = [[NSArray alloc] initWithObjects:@"中专或以下", @"大专", @"本科", @"双学士", @"硕士", @"博士", @"博士后", nil];
     }
     return _levels;
 }
@@ -42,8 +43,8 @@
 -(NSDictionary *)degrees
 {
     if (_degrees == nil) {
-        _degrees = [[NSDictionary alloc] initWithObjectsAndKeys:@"0", @"高中以下", @"1", @"高中", @"2", @"大专",
-                    @"3", @"本科", @"4", @"硕士", @"5", @"博士", nil];
+        _degrees = [[NSDictionary alloc] initWithObjectsAndKeys:@"1", @"中专或以下", @"2", @"大专",
+                    @"3", @"本科", @"4", @"双学士", @"5", @"硕士", @"6", @"博士", @"7", @"博士后", nil];
     }
     
     return _degrees;
@@ -55,7 +56,8 @@
     if (self) {
         self.delegate = delegate;
     }
-    
+    self.curDegree = [self.degrees objectForKey:[self.levels objectAtIndex:0]];
+    self.curLevel = [self.levels objectAtIndex:0];
     return self;
     
 }
@@ -83,12 +85,29 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    NSLog(@"hahaha");
   
-    if([self.delegate respondsToSelector:@selector(dgreePickerDidChangeStatus:withNum:withDesc:)]) {
-        [self.delegate dgreePickerDidChangeStatus:self withNum:[self.degrees objectForKey:[self.levels objectAtIndex:row]] withDesc:[self.levels objectAtIndex:row]];
-    }
+//    if([self.delegate respondsToSelector:@selector(dgreePickerDidChangeStatus:withNum:withDesc:)]) {
+//        [self.delegate dgreePickerDidChangeStatus:self withNum:[self.degrees objectForKey:[self.levels objectAtIndex:row]] withDesc:[self.levels objectAtIndex:row]];
+//    }
+//    
+    self.curDegree = [self.degrees objectForKey:[self.levels objectAtIndex:row]];
+    self.curLevel = [self.levels objectAtIndex:row];
     
+}
+
+- (IBAction)cancelAction:(id)sender
+{
+    [self dismiss];
+}
+
+- (IBAction)confirmAction:(id)sender
+{
+    
+    // do some here
+    if([self.delegate respondsToSelector:@selector(dgreePickerDidChangeStatus:withNum:withDesc:)]) {
+        [self.delegate dgreePickerDidChangeStatus:self withNum:self.curDegree withDesc:self.curLevel];
+    }
+    [self dismiss];
 }
 
 @end
