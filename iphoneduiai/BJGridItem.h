@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AsyncImageView.h"
+
 typedef enum{
     BJGridItemNormalMode = 0,
     BJGridItemEditingMode = 1,
@@ -15,6 +17,7 @@ typedef enum{
 @interface BJGridItem : UIView{
     UIImage *normalImage;
     UIImage *editingImage;
+    AsyncImageView *bgImageView;
     NSString *titleText;
     BOOL isEditing;
     BOOL isRemovable;
@@ -31,6 +34,7 @@ typedef enum{
 -(void)setImg:(UIImage *)image;
 - (void) enableEditing;
 - (void) disableEditing;
+- (void)setImgWithName:(NSString*)imageName;
 @end
 @protocol BJGridItemDelegate <NSObject>
 

@@ -150,6 +150,11 @@
                                                             image:[d objectForKey:@"icon"]
                                                            target:self
                                                       forSelector:@selector(gestureAction:)] autorelease];
+    
+    if (![d[@"action"] isEqualToString:@"add"]) {
+        round.editing = self.editing;
+    }
+
     round.tag = index;
     [self.scrollView addSubview:round];
     [self.rounds insertObject:round atIndex:index];
@@ -183,7 +188,7 @@
     
     if (self.editing) {
         if (self.rounds.count > 1) {
-            RoundThumbView *round = [self.rounds objectAtIndex:MAX(0, index-1)];
+            RoundThumbView *round = [self.rounds objectAtIndex:MAX(1, index-1)];
             [self selectedRoundView:round del:NO];
         } else{
             self.showImageView.image = nil;
@@ -249,6 +254,7 @@
                 self.showImageView.tag = i;
                 
                 if (isDel && self.editing && [self.delegate respondsToSelector:@selector(didTriggerDelPhotoAction:at:)]) {
+                    NSLog(@"im trigger");
                     [self.delegate didTriggerDelPhotoAction:self at:view.tag];
                 }
             }

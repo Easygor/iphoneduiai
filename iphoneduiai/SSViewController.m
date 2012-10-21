@@ -71,7 +71,6 @@
     [_paihangNum release];
     [_paihangPicker release];
     [_mostCostNum release];
-    [_marriagePicker release];
 
     [super dealloc];
 }

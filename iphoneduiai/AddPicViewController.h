@@ -24,6 +24,7 @@
     
 }
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollview;
+@property (strong, nonatomic) NSMutableArray *photos;
 - (void)Addbutton;
 
 @end

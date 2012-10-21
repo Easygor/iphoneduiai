@@ -33,6 +33,7 @@ static int behindImgTag = 103;
 
 - (void)dealloc
 {
+    [_photos release];
     [_entries release];
     [_avatarImageView release];
     [super dealloc];
@@ -218,7 +219,7 @@ static int behindImgTag = 103;
         self.avatarImageView = behindImg;
     }else if([[data objectForKey:@"label"] isEqualToString:@"my_photo"])
     {
-        smallLabel.text = @"共2张";
+        smallLabel.text = [NSString stringWithFormat:@"共%d张", self.photos.count];
     }else if([[data objectForKey:@"label"] isEqualToString:@"up_person"])
     {
         smallLabel.text = @"共13人";
@@ -279,6 +280,7 @@ static int behindImgTag = 103;
     } else if ([label isEqualToString:@"my_photo"]){
         
         AddPicViewController *addPicViewController  = [[[AddPicViewController alloc]init]autorelease];
+        addPicViewController.photos = self.photos;
         [self.navigationController pushViewController:addPicViewController animated:YES];
         
     } else if ([label isEqualToString:@"set_notify"]){

@@ -30,6 +30,13 @@
 @synthesize scrollview;
 
 
+- (void)dealloc
+{
+    [scrollview release];
+    [_photos release];
+    [super dealloc];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -214,25 +221,30 @@
 }
 - (void)gridItemDidDeleted:(BJGridItem *)gridItem atIndex:(NSInteger)index{
     NSLog(@"grid at index %d did deleted",gridItem.index);
-    BJGridItem * item = [gridItems objectAtIndex:index];
-    
-    [gridItems removeObjectAtIndex:index];
-    [UIView animateWithDuration:0.2 animations:^{
-        CGRect lastFrame = item.frame;
-         [addbutton setFrame:lastFrame];
-        CGRect curFrame;
-        for (int i=index; i < [gridItems count]; i++) {
-            BJGridItem *temp = [gridItems objectAtIndex:i];
-            curFrame = temp.frame;
-            [temp setFrame:lastFrame];
+    NSDictionary *photo = [self.photos objectAtIndex:index];
+    [Utils deleteImage:photo[@"pid"] block:^{
+        BJGridItem * item = [gridItems objectAtIndex:index];
+        
+        [gridItems removeObject:item];
+        [self.photos removeObject:photo];
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect lastFrame = item.frame;
+            [addbutton setFrame:lastFrame];
+            CGRect curFrame;
+            for (int i=index; i < [gridItems count]; i++) {
+                BJGridItem *temp = [gridItems objectAtIndex:i];
+                curFrame = temp.frame;
+                [temp setFrame:lastFrame];
+                
+                lastFrame = curFrame;
+                [temp setIndex:i];
+            }
             
-            lastFrame = curFrame;
-            [temp setIndex:i];
-        }
-       
+        }];
+        [item removeFromSuperview];
+        item = nil;
     }];
-    [item removeFromSuperview];
-    item = nil;
+
 }
 - (void)gridItemDidEnterEditingMode:(BJGridItem *)gridItem{
     NSLog(@"gridItems count:%d",[gridItems count]);
@@ -354,6 +366,7 @@
     NSData *data = UIImagePNGRepresentation([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]);
     [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
         if (res) {
+            [self.photos addObject:res]; // add pics 
             [self AddPic];
             curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
             [preGridItem setImg:curImg];

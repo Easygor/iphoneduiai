@@ -20,26 +20,41 @@
     }
     return self;
 }
+
 -(void)setImg:(UIImage *)image
 {
-    normalImage = image;
-    [button setBackgroundImage:normalImage forState:UIControlStateNormal];
+//    normalImage = image;
+    bgImageView.image = image;
+//    [button setBackgroundImage:normalImage forState:UIControlStateNormal];
 }
+
+- (void)setImgWithName:(NSString*)imageName
+{
+    if ([imageName hasPrefix:@"http://"]) {
+        [bgImageView loadImage:imageName];
+    } else{
+        bgImageView.image = [UIImage imageNamed:imageName];
+    }
+}
+
 - (id) initWithTitle:(NSString *)title withImageName:(NSString *)imageName atIndex:(NSInteger)aIndex editable:(BOOL)removable {
     self = [super initWithFrame:CGRectMake(0, 0, 100, 100)];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        normalImage = [UIImage imageNamed:imageName];
+//        normalImage = [UIImage imageNamed:imageName];
         titleText = title;
         self.isEditing = NO;
         index = aIndex;
         self.isRemovable = removable;
         
+        bgImageView = [[[AsyncImageView alloc] initWithFrame:self.bounds] autorelease];
+        [self setImgWithName:imageName];
+        [self addSubview:bgImageView];
         // place a clickable button on top of everything
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         [button setFrame:self.bounds];
-        [button setBackgroundImage:normalImage forState:UIControlStateNormal];
+//        [button setBackgroundImage:normalImage forState:UIControlStateNormal];
         [button setBackgroundColor:[UIColor clearColor]];
         [button setTitle:titleText forState:UIControlStateNormal];
         [button addTarget:self action:@selector(clickItem:) forControlEvents:UIControlEventTouchUpInside];

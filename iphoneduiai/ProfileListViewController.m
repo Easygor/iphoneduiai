@@ -35,7 +35,7 @@ static NSInteger kActionChooseImageTag = 201;
 
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
 @property (retain, nonatomic) IBOutlet AvatarView *avatarView;
-@property (strong, nonatomic) NSArray *photos;
+@property (strong, nonatomic) NSMutableArray *photos;
 @property (strong, nonatomic) NSDictionary *userInfo, *userBody, *userLife, *userInterest, *userWork, *searchIndex;
 @property (strong, nonatomic) NSMutableDictionary *marrayReq;
 @property (retain, nonatomic) IBOutlet UILabel *nameAgeLabel;
@@ -485,6 +485,7 @@ static NSInteger kActionChooseImageTag = 201;
 {
     
     SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
+    settingViewController.photos = self.showPhotoView.photos;
     [self.navigationController pushViewController:settingViewController animated:YES];
     
 }

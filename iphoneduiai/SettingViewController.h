@@ -10,5 +10,7 @@
 
 @interface SettingViewController : UITableViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
+@property (strong, nonatomic) NSMutableArray *photos;
+
 
 @end
