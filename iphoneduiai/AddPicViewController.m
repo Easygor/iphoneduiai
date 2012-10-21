@@ -8,6 +8,8 @@
 
 #import "AddPicViewController.h"
 #import "CustomBarButtonItem.h"
+#import "Utils.h"
+
 #define columns 3
 #define rows 3
 #define itemsPerPage 9
@@ -45,7 +47,10 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.title = @"管理我的照片";
     
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(saceAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(Addbutton)] autorelease];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
     page = 0;
     isEditing = NO;
     addbutton = [[BJGridItem alloc] initWithTitle:nil withImageName:@"add_pic.png" atIndex:0 editable:NO];
@@ -65,11 +70,11 @@
     
 }
 
-- (void)didReceiveMemoryWarning
+- (void)backAction
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
 - (void)viewDidUnload
 {
     
@@ -99,11 +104,12 @@
 	[super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-}
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+//{
+//    // Return YES for supported orientations
+//    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+//}
+
 #pragma mark-- UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -115,31 +121,49 @@
     if (frame.origin.x <= 0 && frame.origin.x > scrollView.frame.size.width - frame.size.width ) {
         self.view.frame = frame;
     }
-    NSLog(@"offset:%f",(scrollView.contentOffset.x - preX));
-    NSLog(@"origin.x:%f",frame.origin.x);
+//    NSLog(@"offset:%f",(scrollView.contentOffset.x - preX));
+//    NSLog(@"origin.x:%f",frame.origin.x);
     
 }
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     preX = scrollView.contentOffset.x;
     preFrame = self.view.frame;
     NSLog(@"prex:%f",preX);
 }
-- (void)Addbutton {
-//    
-//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+
+- (void)Addbutton
+{
+    // upload
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
         UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                       initWithTitle:nil
                                       delegate:self
                                       cancelButtonTitle:@"取消"
                                       destructiveButtonTitle:nil
                                       otherButtonTitles:@"从资源库",@"拍照",nil];
-        [actionSheet showInView:self.view];
+
+        [actionSheet showInView:self.view.window];
         [actionSheet release];
+        
+    } else {
+        
+        UIImagePickerController *picker = [[[UIImagePickerController alloc] init]autorelease];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.delegate = self;
+//        picker.allowsEditing = YES;
+        
+        [self presentModalViewController:picker animated:YES];
+    }
 
    
 }
+
+
 -(void)AddPic{
 
     CGRect frame = CGRectMake(0, 10, 100, 100);
@@ -327,9 +351,15 @@
 #pragma mark Picker Delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    [self AddPic];
-    curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
-    [preGridItem setImg:curImg];
+    NSData *data = UIImagePNGRepresentation([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]);
+    [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
+        if (res) {
+            [self AddPic];
+            curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
+            [preGridItem setImg:curImg];
+        }
+    }];
+
     [picker dismissModalViewControllerAnimated:YES];
 
 }
@@ -338,6 +368,7 @@
 {
     return YES;
 }
+
 #pragma mark  actionsheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -350,6 +381,7 @@
     else
         return;
     imagePickerController.delegate=self;
+//    imagePickerController.editing = YES;
 
     [self presentModalViewController: imagePickerController
                             animated: YES];

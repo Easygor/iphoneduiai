@@ -19,9 +19,13 @@
 #import "CustomBarButtonItem.h"
 
 #define kActionChooseImageTag 201
+static int behindImgTag = 103;
+
 @interface SettingViewController ()
 
 @property (strong, nonatomic) NSArray *entries;
+@property (strong, nonatomic) AsyncImageView *avatarImageView;
+
 @end
 
 @implementation SettingViewController
@@ -30,6 +34,7 @@
 - (void)dealloc
 {
     [_entries release];
+    [_avatarImageView release];
     [super dealloc];
 }
 
@@ -105,7 +110,7 @@
     
     int frontImgTag = 101;
     int bigLabelTag = 102;
-    int behindImgTag = 103;
+
     int smallImgTag= 104;
     int lineTag = 105;
     int bgViewTag = 106;
@@ -123,6 +128,7 @@
     if (cell == nil)
     {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier]autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)] autorelease];
         bgView.backgroundColor = [UIColor whiteColor];
@@ -145,6 +151,7 @@
         
         bigLabel = [[[UILabel alloc]initWithFrame:CGRectZero] autorelease];
         bigLabel.backgroundColor=[UIColor clearColor];
+        bigLabel.font = [UIFont systemFontOfSize:14.0f];
         bigLabel.tag=bigLabelTag;
         [bgView addSubview:bigLabel];
         
@@ -208,6 +215,7 @@
     if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
         NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
         [behindImg loadImage:info[@"photo"]];
+        self.avatarImageView = behindImg;
     }else if([[data objectForKey:@"label"] isEqualToString:@"my_photo"])
     {
         smallLabel.text = @"共2张";
@@ -335,6 +343,25 @@
 - (BOOL)hidesBottomBarWhenPushed
 {
     return YES;
+}
+
+#pragma mark –  Camera View Delegate Methods
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+
+    NSData *data = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage]);
+    [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
+        
+        if (res) {
+//            NSLog(@"hello doyou do: %@", res);
+//            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+//            user[@"info"][@"photo"] =
+            self.avatarImageView.image = [UIImage imageWithData:data];
+        }
+    }];
+    
+    [picker dismissModalViewControllerAnimated:YES];
+    
 }
 
 @end
