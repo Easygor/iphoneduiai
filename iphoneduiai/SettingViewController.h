@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ShowPhotoView.h"
 
 @interface SettingViewController : UITableViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
-@property (strong, nonatomic) NSMutableArray *photos;
+//@property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) ShowPhotoView *showPhotoView;
 
 
 @end

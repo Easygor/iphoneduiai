@@ -361,6 +361,7 @@ static NSInteger kActionChooseImageTag = 201;
     if (self.marrayReq) {
         self.marrayReqView.marrayReq = self.marrayReq;
     }
+    
 
 }
 
@@ -485,7 +486,8 @@ static NSInteger kActionChooseImageTag = 201;
 {
     
     SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
-    settingViewController.photos = self.showPhotoView.photos;
+//    settingViewController.photos = self.showPhotoView.photos;
+    settingViewController.showPhotoView = self.showPhotoView;
     [self.navigationController pushViewController:settingViewController animated:YES];
     
 }

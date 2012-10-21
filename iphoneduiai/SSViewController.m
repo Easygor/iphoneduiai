@@ -18,7 +18,7 @@
 
 @interface SSViewController () <UITextFieldDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
 
-@property (strong, nonatomic) NSArray *entries;
+@property (strong, nonatomic) NSMutableArray *entries;
 @property (strong, nonatomic) NSString *rankNum, *companyTypeNum,*nationalNum,*religiousNum,*bestParNum,*bloodtypeNum,*houseNum,*childWantNum,*parentTogetherNum,*paihangNum,*mostCostNum;
 @property (strong, nonatomic) NSString  *specialtyTypeNum,*autoNum,*childrenNum,*marriageNum,*smokeTypeNum,*drinkTypeNum,*liveCustNum;
 @property (strong, nonatomic) HZPopPickerView *rankPicker, *companyTypePicker;
@@ -26,6 +26,7 @@
 @property (strong, nonatomic) UITextField *curField;
 @property (strong, nonatomic) HZAreaPickerView *homePicker, *nativePicker;
 @property (strong, nonatomic) HZLocation *homeLocation, *nativeLocaiton;
+@property (strong, nonatomic) NSMutableDictionary *curEntry;
 
 @end
 
@@ -33,6 +34,7 @@
 
 - (void)dealloc
 {
+    [_curEntry release];
     [_homeLocation release];
     [_nativeLocaiton release];
     [_nativePicker release];
@@ -75,11 +77,11 @@
     [super dealloc];
 }
 
-- (NSArray *)entries
+- (NSMutableArray *)entries
 {
     if (_entries == nil) {
         NSURL *url = [[NSBundle mainBundle] URLForResource:@"seniorEntries" withExtension:@"plist"];
-        _entries = [[NSArray alloc] initWithContentsOfURL:url];
+        _entries = [[NSMutableArray alloc] initWithContentsOfURL:url];
     }
     
     return _entries;
@@ -471,7 +473,11 @@
     }
     
     textField.superview.tag = 1000*indexPath.section + indexPath.row;
-    
+    if (data[@"value"]) {
+        textField.text = data[@"value"];
+    } else{
+        textField.text = nil;
+    }
    
     return cell;
 }
@@ -522,12 +528,17 @@
 }
 
 #pragma mark - text delegate
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    self.curEntry[@"value"] = textField.text;
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     self.curField = textField;
 
-    NSDictionary *entry = self.entries[textField.superview.tag/1000][textField.superview.tag - (textField.superview.tag/1000)*1000];
-    NSString *label = entry[@"label"];
+    self.curEntry = self.entries[textField.superview.tag/1000][textField.superview.tag - (textField.superview.tag/1000)*1000];
+    NSString *label = self.curEntry[@"label"];
     
     if ([label isEqual:@"company_name"] || [label isEqual:@"university"]) {
         return YES;
@@ -722,7 +733,8 @@
 
 - (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
 {
-   self.curField.text = desc;
+    self.curField.text = desc;
+    self.curEntry[@"value"] = desc;
     if ([picker isEqual:self.rankPicker]) {
         self.rankNum = label;
  
@@ -767,6 +779,7 @@
 -(void)pickerDidChaneStatus:(HZAreaPickerView *)picker
 {
     self.curField.text = [NSString stringWithFormat:@"%@ %@", picker.locate.state, picker.locate.city];
+    self.curEntry[@"value"] = self.curField.text;
     if ([picker isEqual:self.homeLocation]) {
          self.homeLocation = picker.locate;
     } else if ([picker isEqual:self.nativePicker]){

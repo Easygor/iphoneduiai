@@ -32,8 +32,8 @@
 
 - (void)dealloc
 {
+    [_showPhotoView release];
     [scrollview release];
-    [_photos release];
     [super dealloc];
 }
 
@@ -54,7 +54,7 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.title = @"管理我的照片";
     
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(Addbutton)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(addbutton)] autorelease];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
@@ -73,8 +73,9 @@
     [singletap setNumberOfTapsRequired:1];
     singletap.delegate = self;
     [scrollview addGestureRecognizer:singletap];
-
-    
+    /* *******start********** */
+    [self doInitWork];
+    /* *******end********** */
 }
 
 - (void)backAction
@@ -91,31 +92,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    // Return YES for supported orientations
-//    return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-//}
 
 #pragma mark-- UIScrollViewDelegate
 
@@ -143,7 +120,7 @@
     NSLog(@"prex:%f",preX);
 }
 
-- (void)Addbutton
+- (void)addbutton
 {
     // upload
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
@@ -170,8 +147,18 @@
    
 }
 
+/* ********start********* */
+- (void)doInitWork
+{
+    for (NSDictionary *photo in self.showPhotoView.photos) {
+        [self addPic];
+        [preGridItem setImgWithName:photo[@"icon"]];
+    }
+}
+/* ********end********* */
 
--(void)AddPic{
+-(void)addPic
+{
 
     CGRect frame = CGRectMake(0, 10, 100, 100);
     int n = [gridItems count];
@@ -216,17 +203,17 @@
 - (void)gridItemDidClicked:(BJGridItem *)gridItem{
     NSLog(@"grid at index %d did clicked",gridItem.index);
     if (gridItem.index == [gridItems count]-1) {
-        [self Addbutton];
+        [self addbutton];
     }
 }
 - (void)gridItemDidDeleted:(BJGridItem *)gridItem atIndex:(NSInteger)index{
     NSLog(@"grid at index %d did deleted",gridItem.index);
-    NSDictionary *photo = [self.photos objectAtIndex:index];
+    NSDictionary *photo = [self.showPhotoView.photos objectAtIndex:index];
     [Utils deleteImage:photo[@"pid"] block:^{
         BJGridItem * item = [gridItems objectAtIndex:index];
         
         [gridItems removeObject:item];
-        [self.photos removeObject:photo];
+//        [self.photos removeObject:photo];
         [UIView animateWithDuration:0.2 animations:^{
             CGRect lastFrame = item.frame;
             [addbutton setFrame:lastFrame];
@@ -243,6 +230,8 @@
         }];
         [item removeFromSuperview];
         item = nil;
+        
+        [self.showPhotoView removePhotoAt:index];
     }];
 
 }
@@ -366,10 +355,12 @@
     NSData *data = UIImagePNGRepresentation([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]);
     [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
         if (res) {
-            [self.photos addObject:res]; // add pics 
-            [self AddPic];
+//            [self.photos addObject:res]; // add pics
+
+            [self addPic];
             curImg = [info objectForKey:UIImagePickerControllerOriginalImage];
             [preGridItem setImg:curImg];
+            [self.showPhotoView insertPhoto:res atIndex:self.showPhotoView.photos.count];
         }
     }];
 

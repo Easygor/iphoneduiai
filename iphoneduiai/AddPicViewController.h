@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #include "BJGridItem.h"
+#import "ShowPhotoView.h"
 
 @interface AddPicViewController : UIViewController<UIScrollViewDelegate,BJGridItemDelegate,UIGestureRecognizerDelegate,UIActionSheetDelegate,UINavigationBarDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 {
@@ -23,8 +24,11 @@
     UIImage * curImg;
     
 }
+
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollview;
-@property (strong, nonatomic) NSMutableArray *photos;
-- (void)Addbutton;
+//@property (strong, nonatomic) NSMutableArray *photos;
+@property (strong, nonatomic) ShowPhotoView *showPhotoView;
+
+- (void)addbutton;
 
 @end
