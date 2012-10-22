@@ -11,6 +11,8 @@
 #import "Utils.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
+#import "SendSuggestViewController.h"
 
 
 @interface StopAccountViewController ()
@@ -81,10 +83,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 -(void)stopPress
 {
-    
-    NSLog(@"stop action...");
+    SendSuggestViewController *sendSuggestViewController = [[SendSuggestViewController alloc]init];
+    [self.navigationController pushViewController:sendSuggestViewController animated:YES];
 }
+
 
 @end

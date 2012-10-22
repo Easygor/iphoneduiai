@@ -13,5 +13,5 @@
     UITextView  *contentTextView;
     UILabel *contentLabel;
 }
-
+@property(nonatomic,retain)UITextView *contentTextView;
 @end
