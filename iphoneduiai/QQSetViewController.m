@@ -7,176 +7,244 @@
 //
 
 #import "QQSetViewController.h"
+#import "CustomBarButtonItem.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
+#import "HZPopPickerView.h"
+#import "HZNumberPickerView.h"
 
-@interface QQSetViewController ()
+@interface QQSetViewController () <UITextFieldDelegate, HZNumberPickerDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
+@property (retain, nonatomic) IBOutlet UITextField *qqField;
+@property (retain, nonatomic) IBOutlet UITextField *qqEableField;
+@property (retain, nonatomic) IBOutlet UITextField *qqNumField;
+
+@property (strong, nonatomic) HZPopPickerView *qqEablePicker;
+@property (strong, nonatomic) NSString *qqEableNum;
+@property (nonatomic) NSInteger qqNumNum;
+@property (strong, nonatomic) HZNumberPickerView *qqNumPicker;
+@property (strong, nonatomic) NSMutableDictionary *contacts;
+
 @end
 
 @implementation QQSetViewController
 
+- (void)dealloc {
+    [_contacts release];
+    [_qqNumPicker release];
+    [_qqEablePicker release];
+    [_qqEableNum release];
+    [_qqField release];
+    [_qqEableField release];
+    [_qqNumField release];
+    [super dealloc];
+}
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (HZPopPickerView *)qqEablePicker
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    if (_qqEablePicker == nil) {
+        _qqEablePicker = [[HZPopPickerView alloc] initWithDelegate:self];
     }
-    return self;
+    
+    return _qqEablePicker;
+}
+
+- (HZNumberPickerView *)qqNumPicker
+{
+    if (_qqNumPicker == nil) {
+        _qqNumPicker = [[HZNumberPickerView alloc] initWithMinNum:1 maxNum:11];
+        _qqNumPicker.delegate = self;
+        _qqNumPicker.titleLabel.text = @"查看次数";
+    }
+    
+    return _qqNumPicker;
+}
+
+- (void)setContacts:(NSMutableDictionary *)contacts
+{
+    if (![_contacts isEqualToDictionary:contacts]) {
+        _contacts = [contacts retain];
+        
+        self.qqField.text = contacts[@"contact"];
+        self.qqNumField.text = [NSString stringWithFormat:@"%@次", contacts[@"maxview"]];
+        // do here
+    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.scrollEnabled = NO;
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
+                                                                                                target:self
+                                                                                                action:@selector(saveAction)] autorelease];
+    self.navigationItem.title = @"QQ设置";
     
+    [self getAllContact];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)backAction
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)saveAction
 {
-    // Return the number of sections.
-    return 2;
-}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    int  num = 0;
-    if (section == 0) {
-        num = 1;
-    }else if(section == 1)
-    {
-        num = 2;
-    }
-    return num;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    cell.contentView.backgroundColor = [UIColor clearColor];
-    
-    UIView *bgView = [[[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)]autorelease];
-    bgView.backgroundColor  = [UIColor whiteColor];
-    [cell.contentView addSubview:bgView];
-    
-    UIImageView  *lineView= [[[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)]autorelease];
-    lineView.image =  [UIImage imageNamed:@"line.png"];
-    [bgView addSubview:lineView];
-    
-    UILabel *bigLabel = [[[UILabel alloc]initWithFrame:CGRectMake(10, 13, 200, 15)] autorelease];
-    bigLabel.backgroundColor=[UIColor clearColor];
-    [bgView addSubview:bigLabel];
-    
-    
-    if ([indexPath section]==0) {
-        if ([indexPath row]==0) {
-            bigLabel.text = @"QQ";
-//            smallLabel.text = @"";
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/uc/allcontact.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        
+        // 设置POST的form表单的参数 
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        if (self.qqEableNum) {
+            updateArgs[@"settheweek"] = self.qqEableNum;
+            
         }
-
-    }else if([indexPath section]==1)
-    {
-        if ([indexPath row]==0) {
-            bigLabel.text = @"我的QQ哪天可以被查看";
-        }else if([indexPath row]==1)
-        {
-            bigLabel.text = @"QQ当天最多被查看";
+        
+        if (self.qqNumNum) {
+            updateArgs[@"maxview"] = @(self.qqNumNum);
         }
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
+        updateArgs[@"contact"] = self.qqField.text;
+        updateArgs[@"contact_type"] = @"qq";
+        updateArgs[@"submitupdate"] = @"true";
+        
+        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        // 请求失败时
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        // 请求成功时
+        [request setOnDidLoadResponse:^(RKResponse *response){
+//            NSLog(@"kkk: %@", response.bodyAsString);
+            if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
+                NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
+                NSInteger code = [data[@"error"] integerValue];  // 返回的状态
+                if (code == 0) {
+                    // 成功提交的情况
+                    // ....
+                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                } else{
+                    // 失败的情况
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
+    }];
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    float num = 0;
-    if (section ==0) {
-        num = 15.0f;
-    }else if(section == 1)
-    {
-        num = 30.0f;
+
+- (void)viewDidUnload {
+    [self setQqField:nil];
+    [self setQqEableField:nil];
+    [self setQqNumField:nil];
+    [super viewDidUnload];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if ([textField isEqual:self.qqField]) {
+        return YES;
+    } else{
+        if ([textField isEqual:self.qqEableField]) {
+            // here
+            [self.qqEablePicker show];
+        } else if ([textField isEqual:self.qqNumField]){
+            // do here
+            [self.qqNumPicker show];
+        }
+        return NO;
     }
-    return num;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.qqField resignFirstResponder];
+}
+
+
+#pragma mark pop picker view
+- (NSArray *)popPickerData:(HZPopPickerView *)picker
+{
+    
+    if ([picker isEqual:self.qqEablePicker]) {
+        
+        return @[@{@"label": @"-1", @"desc": @"每天"}, @{@"label": @"1", @"desc": @"星期一"}, @{@"label": @"2", @"desc": @"星期二"},
+        @{@"label": @"3", @"desc": @"星期三"}, @{@"label": @"4", @"desc": @"星期四"},
+        @{@"label": @"5", @"desc": @"星期五"}, @{@"label": @"6", @"desc": @"星期六"}, @{@"label": @"7", @"desc": @"星期天"}];
+    } 
+    
+    return nil;
     
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (NSString *)titleForPopPicker:(HZPopPickerView *)picker
 {
-    UIView* header= [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 35)]autorelease];
- 
-    if (section == 1) {
-        UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(10, 5, 320, 15)]autorelease];
-        label.text = @"只有注册会员才有机会查看您的QQ";
-        label.font = [UIFont systemFontOfSize:12];
-        label.textColor = RGBCOLOR(130, 130, 130);
-        label.backgroundColor = [UIColor clearColor];
-        [header addSubview:label];
+    if ([picker isEqual:self.qqEablePicker]) {
+        return @"哪天可查看";
     }
-    return header;
+    
+    return nil;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
 {
-    // Return NO if you do not want the specified item to be editable.
+    if ([picker isEqual:self.qqEablePicker]) {
+        self.qqEableNum = label;
+        self.qqEableField.text = desc;
+        
+    }
+}
+
+#pragma mark - number delegate
+- (void)numberPickerDidChange:(HZNumberPickerView *)picker
+{
+    if ([picker isEqual:self.qqNumPicker]) {
+        self.qqNumField.text = [NSString stringWithFormat:@"%d次", picker.curNum];
+        self.qqNumNum = picker.curNum;
+    } 
+    
+}
+
+- (BOOL)hidesBottomBarWhenPushed
+{
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)getAllContact
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    NSMutableDictionary *dParams = [Utils queryParams];
+    
+    [[RKClient sharedClient] get:[@"/uc/allcontact.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+//                NSLog(@"qq data: %@", data);
+                NSInteger code = [[data objectForKey:@"error"] integerValue];
+                if (code == 0) {
+                    self.contacts = data[@"data"];
+//                    NSDictionary *dataData = [data objectForKey:@"data"];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            }
+        }];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"error: %@", [error description]);
+        }];
+        
+    }];
 }
 
 @end

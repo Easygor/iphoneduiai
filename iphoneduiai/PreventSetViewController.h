@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "HZTimePickerView.h"
-@interface PreventSetViewController : UITableViewController<HZTimePickerDelegate>
+@interface PreventSetViewController : UIViewController<HZTimePickerDelegate>
 
 @end

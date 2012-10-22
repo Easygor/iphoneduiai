@@ -7,9 +7,24 @@
 //
 
 #import "PreventSetViewController.h"
+#import "CustomBarButtonItem.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
+#import "HZPopPickerView.h"
+#import "HZNumberPickerView.h"
 
-@interface PreventSetViewController ()
+@interface PreventSetViewController () <UITextFieldDelegate, HZNumberPickerDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
+@property (retain, nonatomic) IBOutlet UITextField *timeSectionField;
+@property (retain, nonatomic) IBOutlet UITextField *qqEableField;
+@property (retain, nonatomic) IBOutlet UITextField *qqNumField;
 @property (strong, nonatomic) HZTimePickerView *datePicker;
+
+@property (strong, nonatomic) HZPopPickerView *qqEablePicker;
+@property (strong, nonatomic) NSString *qqEableNum;
+@property (nonatomic) NSInteger qqNumNum;
+@property (strong, nonatomic) HZNumberPickerView *qqNumPicker;
 @end
 
 @implementation PreventSetViewController
@@ -17,150 +32,130 @@
 
 - (void)dealloc
 {
+    [_qqNumPicker release];
+    [_qqEablePicker release];
+    [_qqEableNum release];
     [_datePicker release];
+    [_timeSectionField release];
+    [_qqEableField release];
+    [_qqNumField release];
     [super dealloc];
 }
-- (id)initWithStyle:(UITableViewStyle)style
+
+- (HZPopPickerView *)qqEablePicker
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    if (_qqEablePicker == nil) {
+        _qqEablePicker = [[HZPopPickerView alloc] initWithDelegate:self];
     }
-    return self;
+    
+    return _qqEablePicker;
 }
+
+- (HZNumberPickerView *)qqNumPicker
+{
+    if (_qqNumPicker == nil) {
+        _qqNumPicker = [[HZNumberPickerView alloc] initWithMinNum:1 maxNum:11];
+        _qqNumPicker.delegate = self;
+        _qqNumPicker.titleLabel.text = @"查看次数";
+    }
+    
+    return _qqNumPicker;
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.scrollEnabled = NO;
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.title = @"防骚扰设置";
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
+                                                                                                target:self
+                                                                                                action:@selector(saveAction)] autorelease];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)backAction
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void)saveAction
 {
-    // Return the number of sections.
-    return 2;
+    // ok
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)viewDidUnload {
+    [self setTimeSectionField:nil];
+    [self setQqEableField:nil];
+    [self setQqNumField:nil];
+    [super viewDidUnload];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    int num = 0;
-    if (section == 0) {
-        num=1;
-    }else if(section ==1)
-    {
-        num =2;
+
+    if ([textField isEqual:self.qqEableField]) {
+
+        [self.qqEablePicker show];
+    } else if ([textField isEqual:self.qqNumField]){
+
+        [self.qqNumPicker show];
+    } else if ([textField isEqual:self.timeSectionField]){
+        // todo
     }
+    return NO;
 
-    return num;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark pop picker view
+- (NSArray *)popPickerData:(HZPopPickerView *)picker
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [[tableView dequeueReusableCellWithIdentifier:CellIdentifier] autorelease];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    cell.contentView.backgroundColor = [UIColor clearColor];
     
-    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 44)];
-    bgView.backgroundColor  = [UIColor whiteColor];
-    [cell.contentView addSubview:bgView];
-    
-    UIImageView  *lineView= [[UIImageView alloc]initWithFrame:CGRectMake(0, 43, 300, 1)];
-    lineView.image =  [UIImage imageNamed:@"line.png"];
-    [bgView addSubview:lineView];
-    
-    UILabel *bigLabel = [[UILabel alloc]initWithFrame:CGRectMake(23, 13, 200, 15)];
-    bigLabel.backgroundColor=[UIColor clearColor];
-    [bgView addSubview:bigLabel];
-    if ([indexPath section]==0) {
-        if ([indexPath row]==0) {
-            bigLabel.text = @"提醒接受时段";
-        }
-    }else if([indexPath section]==1)
-    {
-        if ([indexPath row]==0) {
-            bigLabel.text = @"我的QQ哪天可以被看";
-        }else if([indexPath row]==1)
-        {
-            bigLabel.text = @"QQ当天最多被查看";
-        }
+    if ([picker isEqual:self.qqEablePicker]) {
+        
+        return @[@{@"label": @"-1", @"desc": @"每天"}, @{@"label": @"1", @"desc": @"星期一"}, @{@"label": @"2", @"desc": @"星期二"},
+        @{@"label": @"3", @"desc": @"星期三"}, @{@"label": @"4", @"desc": @"星期四"},
+        @{@"label": @"5", @"desc": @"星期五"}, @{@"label": @"6", @"desc": @"星期六"}, @{@"label": @"7", @"desc": @"星期天"}];
     }
     
-    UILabel  *smallLabel = [[[UILabel alloc]initWithFrame:CGRectMake(230, 15, 50, 14)] autorelease];
-    smallLabel.backgroundColor=[UIColor clearColor];
-    [bgView addSubview:smallLabel];
-    smallLabel.font = [UIFont systemFontOfSize:12];
-    smallLabel.textColor = [UIColor grayColor];
-    [bigLabel release];
-    [smallLabel release];
-    return cell;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return nil;
     
-    float num = 0;
-    if (section == 0) {
-        num = 35.0f;
-    }else if(section == 1)
-    {
-        num =20.0f;
-    }
-    return num;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+- (NSString *)titleForPopPicker:(HZPopPickerView *)picker
 {
-     UIView* header= [[[UIView alloc]initWithFrame:CGRectZero]autorelease]
-    ;
-    if (section==0) {
-        header.frame = CGRectMake(0, 0, 320, 35);
-        UILabel *label = [[[UILabel alloc]initWithFrame:CGRectMake(33, 13, 320, 15)]autorelease];
-        label.text = @"设置提醒接受时段";
-        label.font = [UIFont systemFontOfSize:13];
-        label.textColor = RGBCOLOR(130, 130, 130);
-        label.backgroundColor = [UIColor clearColor];
-        [header addSubview:label];
+    if ([picker isEqual:self.qqEablePicker]) {
+        return @"哪天可查看";
+    }
     
-    }else if(section==1)
-    {
-        header.frame = CGRectMake(0, 0, 320, 20);
-    }
-        return header;
+    return nil;
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-    if ([indexPath section]==0) {
-        if ([indexPath row]==0) {
-            self.datePicker = [[[HZTimePickerView alloc] initWithDelegate:self] autorelease];
-            [self.datePicker showInView:self.view];
-        }
+    if ([picker isEqual:self.qqEablePicker]) {
+        self.qqEableNum = label;
+        self.qqEableField.text = desc;
+        
     }
-
 }
+
+#pragma mark - number delegate
+- (void)numberPickerDidChange:(HZNumberPickerView *)picker
+{
+    if ([picker isEqual:self.qqNumPicker]) {
+        self.qqNumField.text = [NSString stringWithFormat:@"%d次", picker.curNum];
+        self.qqNumNum = picker.curNum;
+    }
+    
+}
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
+
 
 @end

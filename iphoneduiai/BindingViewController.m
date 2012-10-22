@@ -34,9 +34,7 @@
 -(void)loadView
 {
     [super loadView];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
-                                                                                                target:self
-                                                                                                action:@selector(saceAction)] autorelease];
+
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.scrollEnabled = NO;
@@ -50,9 +48,17 @@
     tipLabel.font = [UIFont systemFontOfSize:11];
     tipLabel.backgroundColor = [UIColor clearColor];
     tipLabel.shadowColor = [UIColor whiteColor];
-    tipLabel.shadowOffset = CGSizeMake(1.0, 1.0);
+    tipLabel.shadowOffset = CGSizeMake(0, 1.0);
     [footView addSubview:tipLabel];
     self.tableView.tableFooterView = footView;
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+}
+
+- (void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad
@@ -65,10 +71,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark - 
--(void)saceAction
-{
 
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
 }
 
 #pragma mark - Table view data source

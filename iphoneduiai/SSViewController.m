@@ -297,84 +297,90 @@
 
 - (void)saveAction
 {
+    /*
     // do some save here
     NSMutableDictionary *dp = [Utils queryParams];
     [SVProgressHUD show];
-    [[RKClient sharedClient] post:[@"/uc/marrayreq.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
-        //        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
-        //        if (self.heightNum) {
-        //            updateArgs[@"height"] = @(self.heightNum);
-        //
-        //        }
-        //
-        //        if (self.location) {
-        //            updateArgs[@"province"] = @(self.location.stateId);
-        //            updateArgs[@"city"] = @(self.location.cityId);
-        //        }
-        //
-        //        if (self.incomeNum) {
-        //            updateArgs[@"income"] = self.incomeNum;
-        //
-        //        }
-        //
-        //        if (self.minAge > 0 && self.maxAge >= self.minAge) {
-        //            updateArgs[@"minage"] = @(self.minAge);
-        //            updateArgs[@"maxage"] = @(self.maxAge);
-        //
-        //        }
-        //
-        //        if (self.minHeihgt > 0 && self.maxHeight >= self.minHeihgt) {
-        //            updateArgs[@"minheight"] = @(self.minHeihgt);
-        //            updateArgs[@"maxheight"] = @(self.maxHeight);
-        //        }
-        //
-        //        if (self.houseNum) {
-        //            updateArgs[@"house"] = self.houseNum;
-        //        }
-        //
-        //        if (self.eduNum) {
-        //            updateArgs[@"degree"] = self.eduNum;
-        //        }
-        //
-        //        if (self.carNum) {
-        //            updateArgs[@"auto"] = self.carNum;
-        //        }
-        //
-        //        updateArgs[@"submitupdate"] = @"true";
-        //
-        //        NSLog(@"args: %@", updateArgs);
-        //        request.params = [RKParams paramsWithDictionary:updateArgs];
-        //
-        //        [request setOnDidFailLoadWithError:^(NSError *error){
-        //            NSLog(@"Error: %@", [error description]);
-        //        }];
-        //
-        //        [request setOnDidLoadResponse:^(RKResponse *response){
-        //            if (response.isOK && response.isJSON) {
-        //                NSDictionary *data = [response.bodyAsString objectFromJSONString];
-        //                NSInteger code = [data[@"error"] integerValue];
-        //                if (code == 0) {
-        //
-        //                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
-        //                    self.marrayReq[@"age"] = self.ageField.text;
-        //                    self.marrayReq[@"auto"] = self.carField.text;
-        //                    self.marrayReq[@"province"] = self.location.state;
-        //                    self.marrayReq[@"height"] = self.heightField.text;
-        //                    self.marrayReq[@"degree"] = self.degreeField.text;
-        //                    self.marrayReq[@"income"] = self.incomeField.text;
-        //                    self.marrayReq[@"house"] = self.houseField.text;
-        //                    self.marrayReq[@"auto"] = self.carField.text;
-        //                    [self cancelAction];
-        //                } else{
-        //                    [SVProgressHUD showErrorWithStatus:@"保存失败"];
-        //                }
-        //
-        //            } else{
-        //                [SVProgressHUD showErrorWithStatus:@"网络故障"];
-        //            }
-        //        }];
-        //
+    [[RKClient sharedClient] post:[@"/uc/userinfo.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        if (self.heightNum) {
+            updateArgs[@"height"] = @(self.heightNum);
+            
+        } else{
+            updateArgs[@"height"] = self.searchIndex[@"height"];
+        }
+        
+        if (self.location) {
+            updateArgs[@"province"] = @(self.location.stateId);
+            updateArgs[@"city"] = @(self.location.cityId);
+            updateArgs[@"area"] = @(self.location.areaId);
+        } else{
+            updateArgs[@"province"] = self.searchIndex[@"province"];
+            updateArgs[@"city"] = self.searchIndex[@"city"];
+            updateArgs[@"area"] = self.searchIndex[@"area"];
+        }
+        
+        if (self.incomeNum) {
+            updateArgs[@"income"] = self.incomeNum;
+            
+        } else{
+            updateArgs[@"income"] = self.searchIndex[@"income"];
+        }
+        
+        if (self.eduNum) {
+            updateArgs[@"degree"] = self.eduNum;
+        } else{
+            updateArgs[@"degree"] = self.searchIndex[@"degree"];
+        }
+        
+        if (self.jobNum) {
+            updateArgs[@"industry"] = self.jobNum;
+        } else{
+            updateArgs[@"industry"] = self.searchIndex[@"industry"];
+        }
+        
+        if (self.weightNum) {
+            updateArgs[@"weight"] = @(self.weightNum);
+        }
+        
+        
+        updateArgs[@"constellation"] = self.searchIndex[@"constellation"];
+        updateArgs[@"marriage"] = self.searchIndex[@"marriage"];
+        updateArgs[@"zodiac"] = self.searchIndex[@"zodiac"];
+        updateArgs[@"submitupdate"] = @"true";
+        
+        NSLog(@"args: %@", updateArgs);
+        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [response.bodyAsString objectFromJSONString];
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    [self grabUserInfoDetailRequest];
+                    [self.tableView setEditing:NO animated:YES];
+                    
+                    [self changeToNonEditingView];
+                    
+                    self.navigationItem.leftBarButtonItem = self.changeBaritem;
+                    self.navigationItem.rightBarButtonItem = self.settingBarItem;
+                    
+                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
     }];
+     */
 }
 
 - (void)didReceiveMemoryWarning

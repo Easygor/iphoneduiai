@@ -7,6 +7,10 @@
 //
 
 #import "SendSuggestViewController.h"
+#import "CustomBarButtonItem.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
 
 @interface SendSuggestViewController ()
 
@@ -54,13 +58,25 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"发送"
+                                                                                                target:self
+                                                                                                action:@selector(sendAction)] autorelease];
+    self.navigationItem.title = @"意见反馈";
 }
 
-- (void)didReceiveMemoryWarning
+- (void)backAction
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void)sendAction
+{
+    NSLog(@"sending feedback...");
+}
+
 #define UITextFieldDelegate
 -(void)textViewDidChange:(UITextView *)textView
 {

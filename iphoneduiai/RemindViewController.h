@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 
-@interface RemindViewController : UITableViewController
+@interface RemindViewController : UIViewController
 
 @end

@@ -147,7 +147,6 @@
    
 }
 
-/* ********start********* */
 - (void)doInitWork
 {
     for (NSDictionary *photo in self.showPhotoView.photos) {
@@ -155,7 +154,6 @@
         [preGridItem setImgWithName:photo[@"icon"]];
     }
 }
-/* ********end********* */
 
 -(void)addPic
 {

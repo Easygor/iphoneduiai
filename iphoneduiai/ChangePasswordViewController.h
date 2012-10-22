@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChangePasswordViewController : UITableViewController
+@interface ChangePasswordViewController : UIViewController
 
 @end

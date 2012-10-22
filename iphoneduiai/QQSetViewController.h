@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface QQSetViewController : UITableViewController
+@interface QQSetViewController : UIViewController
 
 @end

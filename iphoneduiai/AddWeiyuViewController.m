@@ -16,6 +16,7 @@
 #import "PageSmileDataSource.h"
 #import "PageSmileView.h"
 #import "SVProgressHUD.h"
+#import "PositionView.h"
 
 @interface AddWeiyuViewController () <PageSmileDataSource>
 
@@ -24,6 +25,7 @@
 @property (assign, nonatomic) NSRange lastRange;
 @property (nonatomic) CLLocationCoordinate2D curLocaiton;
 @property (strong, nonatomic) NSString *curAddress, *photoId;
+@property (retain, nonatomic) IBOutlet PositionView *positionView;
 
 @end
 
@@ -68,30 +70,30 @@
     [contentView addSubview:toolView];
     
     UIButton *picButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [picButton setImage:[UIImage imageNamed:@"messages_toolbar_photobutton_background.png"] forState:UIControlStateNormal];
+    [picButton setImage:[UIImage imageNamed:@"sub_pic_icon"] forState:UIControlStateNormal];
     [picButton setImage:[UIImage imageNamed:@"messages_toolbar_photobutton_background_highlighted"] forState:UIControlStateHighlighted ];
      picButton.frame = CGRectMake(20, 12, 24, 20);
     [picButton addTarget:self action:@selector(picSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:picButton];
     
     UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cameraButton setImage:[UIImage imageNamed:@"messages_toolbar_camerabutton_background"] forState:UIControlStateNormal];
+    [cameraButton setImage:[UIImage imageNamed:@"sub_cut_icon"] forState:UIControlStateNormal];
     [cameraButton setImage:[UIImage imageNamed:@"messages_toolbar_camerabutton_background_highlighted"] forState:UIControlStateHighlighted ];
     cameraButton.frame = CGRectMake(85, 12, 26, 21);
     [cameraButton addTarget:self action:@selector(cameraSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:cameraButton];
     
     faceButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [faceButton setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background"] forState:UIControlStateNormal];
+    [faceButton setImage:[UIImage imageNamed:@"sub_express_icon"] forState:UIControlStateNormal];
     [faceButton setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted"] forState:UIControlStateHighlighted ];
     faceButton.frame = CGRectMake(150, 12, 24, 24);
     [faceButton addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:faceButton];
     
     UIButton *locButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background"] forState:UIControlStateNormal];
+    [locButton setImage:[UIImage imageNamed:@"sub_posi_icon"] forState:UIControlStateNormal];
     [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background_highlighted"] forState:UIControlStateHighlighted ];
-    [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background_highlighted"] forState:UIControlStateApplication ];
+    [locButton setImage:[UIImage imageNamed:@"sub_posi_select_icon"] forState:UIControlStateSelected];
     locButton.frame = CGRectMake(220, 12, 18, 24);
     [locButton addTarget:self action:@selector(locSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:locButton];
@@ -117,6 +119,7 @@
     [_emontions release];
     [_imageData release];
     [_curAddress release];
+    [_positionView release];
     [super dealloc];
 }
 
@@ -125,20 +128,13 @@
     if (![_curAddress isEqualToString:curAddress]) {
         _curAddress = [curAddress retain];
         
-        UIFont *font = [UIFont systemFontOfSize:12.0f];
-        CGSize size = [curAddress sizeWithFont:font];
+        self.positionView.address = curAddress;
+        CGRect posFrame = self.positionView.frame;
+        posFrame.origin.x = 2;
+        posFrame.origin.y = contentTextView.frame.size.height - posFrame.size.height;
+        self.positionView.frame = posFrame;
         
-        UILabel *lbl = (UILabel*)[contentTextView viewWithTag:99];
-        if (lbl == nil) {
-            lbl = [[[UILabel alloc] initWithFrame:CGRectMake(5, contentTextView.frame.size.height - 16, MIN(size.width, 245), 16)] autorelease];
-            lbl.backgroundColor = [UIColor lightGrayColor];
-            lbl.font = font;
-            lbl.tag = 99;
-             [contentTextView addSubview:lbl];
-        }
-  
-        lbl.text = curAddress;
-//        [lbl sizeToFit];
+        [contentTextView addSubview:self.positionView];
         
     }
 }
@@ -205,7 +201,8 @@
 
 #pragma mark - personal method
 
-- (IBAction)picSelect:(id)sender {
+- (IBAction)picSelect:(UIButton*)btn
+{
     UIImagePickerController* picker = [[UIImagePickerController alloc]init];
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     picker.allowsEditing=YES;
@@ -215,7 +212,7 @@
     [picker release];
 }
 
--(IBAction)cameraSelect:(id)sender
+-(IBAction)cameraSelect:(UIButton*)btn
 {
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         UIImagePickerController* picker = [[UIImagePickerController alloc]init];
@@ -228,7 +225,7 @@
 
 }
 
--(IBAction)faceSelect:(id)sender
+-(IBAction)faceSelect:(UIButton*)btn
 {
     
     if (state) {
@@ -239,14 +236,14 @@
     }else
     {
         [contentTextView becomeFirstResponder];
-        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background.png"] forState:UIControlStateNormal];
-        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateNormal];
+        [faceButton setImage:[UIImage  imageNamed:@"sub_express_icon"] forState:UIControlStateNormal];
+        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted];
         state = YES;
 
     }
 }
 
--(IBAction)locSelect:(id)sender
+-(IBAction)locSelect:(UIButton*)btn
 {
     if ([LocationController sharedInstance].allow) {
         [SVProgressHUD show];
@@ -276,6 +273,7 @@
                                               if ([g[@"types"] containsObject:@"street_address"]) {
                                                    NSLog(@"name: %@", g[@"formatted_address"]);
                                                   self.curAddress = g[@"formatted_address"];
+                                                  btn.selected = YES;
                                                   break;
                                               }
                                           }
@@ -333,13 +331,6 @@
          contentView.frame = rect;
          toolView.frame = rect2;
          contentTextView.frame = rect3;
-         
-         UILabel *lbl = (UILabel*)[contentTextView viewWithTag:99];
-         if (lbl) {
-             CGRect rect4 = lbl.frame;
-             rect4.origin.y = rect3.size.height - lbl.frame.size.height;
-             lbl.frame = rect4;
-         }
 
         }];
     
@@ -360,13 +351,6 @@
          contentView.frame = rect;
          toolView.frame = rect2;
          contentTextView.frame = rect3;
-         
-         UILabel *lbl = (UILabel*)[contentTextView viewWithTag:99];
-         if (lbl) {
-             CGRect rect4 = lbl.frame;
-             rect4.origin.y = rect3.size.height - lbl.frame.size.height;
-             lbl.frame = rect4;
-         }
          
      }];
     
@@ -481,4 +465,8 @@
     [self textViewDidChange:contentTextView];
 }
 
+- (void)viewDidUnload {
+    [self setPositionView:nil];
+    [super viewDidUnload];
+}
 @end

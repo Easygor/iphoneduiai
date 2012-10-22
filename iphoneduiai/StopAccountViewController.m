@@ -7,7 +7,12 @@
 //
 
 #import "StopAccountViewController.h"
-#import "SendSuggestViewController.h"
+#import "CustomBarButtonItem.h"
+#import "Utils.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+
+
 @interface StopAccountViewController ()
 
 @end
@@ -19,18 +24,19 @@
     [super loadView];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, 290, 80)];
+    UILabel *tipLabel = [[[UILabel alloc]initWithFrame:CGRectMake(15, 15, 290, 80)] autorelease];
     tipLabel.text = @"如果您已找到对象或不需要我们，可以随时停用账号。账号停用后，你的资料将被注销，任何人都无法在搜索和联系到您。\n在您再次需要我们的时候您可以随时启用账号。";
     
-    tipLabel.textColor = RGBCOLOR(182, 182, 182);
+    tipLabel.textColor = RGBCOLOR(153, 153, 153);
     tipLabel.lineBreakMode = UILineBreakModeWordWrap;
     tipLabel.numberOfLines = 0;
 
     tipLabel.backgroundColor = [UIColor clearColor];
     tipLabel.font = [UIFont systemFontOfSize:13];
+    tipLabel.opaque = YES;
     [self.view addSubview:tipLabel];
     
-    UIButton *stopButton = [[UIButton buttonWithType:UIButtonTypeCustom]autorelease];
+    UIButton *stopButton = [UIButton buttonWithType:UIButtonTypeCustom];
     stopButton.frame = CGRectMake(10, 120, 300, 44);
     stopButton.backgroundColor =RGBCOLOR(226, 86, 89);
     
@@ -38,6 +44,17 @@
     stopButton.titleLabel.textColor = [UIColor whiteColor];
     [stopButton addTarget:self action:@selector(stopPress) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:stopButton];
+    
+    UILabel *bTipLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10, 184, 300, 10)] autorelease];
+    bTipLabel.textColor = RGBCOLOR(204, 204, 204);
+    bTipLabel.backgroundColor = [UIColor clearColor];
+    bTipLabel.opaque = YES;
+    bTipLabel.textAlignment = UITextAlignmentCenter;
+    bTipLabel.font = [UIFont systemFontOfSize:10.0f];
+    bTipLabel.text = @"这个世界，充满了诡谲，只有爱情，永远天真";
+    bTipLabel.shadowColor = [UIColor whiteColor];
+    bTipLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+    [self.view addSubview:bTipLabel];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,18 +70,21 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
+    self.navigationItem.title = @"停用帐号";
 }
 
-- (void)didReceiveMemoryWarning
+- (void)backAction
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)stopPress
 {
-    SendSuggestViewController *sendSuggestViewController = [[[SendSuggestViewController alloc]init]autorelease];
-    [self.navigationController pushViewController:sendSuggestViewController animated:YES];
+    
+    NSLog(@"stop action...");
 }
 
 @end

@@ -14,9 +14,11 @@
 #import "AboutViewController.h"
 #import "AddPicViewController.h"
 #import "ILikeViewController.h"
-#import "BlacklistViewController.h"
+#import "BlockUsersViewController.h"
 #import "AsyncImageView.h"
 #import "CustomBarButtonItem.h"
+#import "SendSuggestViewController.h"
+#import "DigoUsersViewController.h"
 
 #define kActionChooseImageTag 201
 static int behindImgTag = 103;
@@ -88,7 +90,7 @@ static int behindImgTag = 103;
 
 - (void)backAction
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -288,17 +290,17 @@ static int behindImgTag = 103;
         
     } else if ([label isEqualToString:@"set_notify"]){
         
-        RemindViewController *remindViewController = [[[RemindViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+        RemindViewController *remindViewController = [[[RemindViewController alloc]initWithNibName:@"RemindViewController" bundle:nil]autorelease];
         [self.navigationController pushViewController:remindViewController animated:YES];
         
     } else if ([label isEqualToString:@"set_nowarn"]){
         
-        PreventSetViewController *preventSetViewController = [[[PreventSetViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+        PreventSetViewController *preventSetViewController = [[[PreventSetViewController alloc]initWithNibName:@"PreventSetViewController" bundle:nil]autorelease];
         [self.navigationController pushViewController:preventSetViewController animated:YES];
         
     } else if ([label isEqualToString:@"update_pass"]){
         
-        ChangePasswordViewController *changePasswordViewController = [[[ChangePasswordViewController alloc]initWithStyle:UITableViewStylePlain]autorelease];
+        ChangePasswordViewController *changePasswordViewController = [[[ChangePasswordViewController alloc]initWithNibName:@"ChangePasswordViewController" bundle:nil]autorelease];
         [self.navigationController pushViewController:changePasswordViewController animated:YES];
         
     } else if ([label isEqualToString:@"stop_account"]){
@@ -312,9 +314,15 @@ static int behindImgTag = 103;
         [self.navigationController pushViewController:aboutViewController animated:YES];
         
     } else if([label isEqualToString:@"black_list"]){
-        BlacklistViewController *blacklistViewController = [[[BlacklistViewController alloc]init]autorelease];
-        [self.navigationController pushViewController:blacklistViewController animated:YES];
+        BlockUsersViewController *buvc = [[[BlockUsersViewController alloc] initWithNibName:@"BlockUsersViewController" bundle:nil] autorelease];
+        [self.navigationController pushViewController:buvc animated:YES];
     
+    } else if ([label isEqualToString:@"feedback"]){
+        SendSuggestViewController *sendSuggestViewController = [[[SendSuggestViewController alloc]init]autorelease];
+        [self.navigationController pushViewController:sendSuggestViewController animated:YES];
+    } else if ([label isEqualToString:@"up_person"]){
+        DigoUsersViewController *duvc = [[[DigoUsersViewController alloc] initWithNibName:@"DigoUsersViewController" bundle:nil] autorelease];
+        [self.navigationController pushViewController:duvc animated:YES];
     }
     
 }
