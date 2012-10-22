@@ -171,13 +171,6 @@
     [self.btn4 setBackgroundImage:btnBg forState:UIControlStateNormal];
     [self.btn4 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.btn4 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
-    
-    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-    self.conditions[@"province"] = info[@"province"];
-    self.conditions[@"city"] = info[@"city"];
-    self.conditions[@"minage"] = @"18";
-    self.conditions[@"maxage"] = @"35";
-    self.conditions[@"searchtype"] = @"detail";
   
 }
 
@@ -251,7 +244,14 @@
     
     [super viewDidAppear:animated];
     if ([self checkLogin]) {
-
+        
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        self.conditions[@"province"] = info[@"province"];
+        self.conditions[@"city"] = info[@"city"];
+        self.conditions[@"minage"] = @"18";
+        self.conditions[@"maxage"] = @"35";
+        self.conditions[@"searchtype"] = @"detail";
+        
         // do init things
         [self performSelector:@selector(doInitWork)
                    withObject:nil

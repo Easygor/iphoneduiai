@@ -65,7 +65,7 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"发送"
                                                                                                 target:self
                                                                                                 action:@selector(sendAction)] autorelease];
-    self.navigationItem.title = @"意见反馈";
+    self.navigationItem.title = @"停用帐号";
 }
 
 - (void)backAction
@@ -75,14 +75,13 @@
 
 - (void)sendAction
 {
-    NSLog(@"sending feedback...");
     
-    NSLog(@"stop action...");
     NSMutableDictionary *dp = [Utils queryParams];
     [SVProgressHUD show];
     [[RKClient sharedClient] post:[@"/success/stop.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
         NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
-        updateArgs[@"sendtext"] = self.contentTextView.text;        request.params = [RKParams paramsWithDictionary:updateArgs];
+        updateArgs[@"sendtext"] = self.contentTextView.text;
+        request.params = [RKParams paramsWithDictionary:updateArgs];
         
         // 请求失败时
         [request setOnDidFailLoadWithError:^(NSError *error){
