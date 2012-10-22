@@ -172,6 +172,7 @@
 		6116857F15FE2DB900D4A203 /* malebg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6116857715FE2DB900D4A203 /* malebg@2x.png */; };
 		6116858215FE343700D4A203 /* HZSementedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 6116858115FE343700D4A203 /* HZSementedControl.m */; };
 		6117A2AF1635305D0066D487 /* PositionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6117A2AE1635305D0066D487 /* PositionView.m */; };
+		6117A2B3163551530066D487 /* TagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6117A2B2163551530066D487 /* TagView.m */; };
 		611CE6E215FDCE2F0066EEA2 /* nav-top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 611CE6E015FDCE2F0066EEA2 /* nav-top@2x.png */; };
 		611CE6EC15FDCF7C0066EEA2 /* btn-left-back-bg-linked.png in Resources */ = {isa = PBXBuildFile; fileRef = 611CE6E415FDCF7C0066EEA2 /* btn-left-back-bg-linked.png */; };
 		611CE6ED15FDCF7C0066EEA2 /* btn-left-back-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 611CE6E515FDCF7C0066EEA2 /* btn-left-back-bg.png */; };
@@ -1003,6 +1004,8 @@
 		6116858115FE343700D4A203 /* HZSementedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZSementedControl.m; sourceTree = "<group>"; };
 		6117A2AD1635305D0066D487 /* PositionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PositionView.h; sourceTree = "<group>"; };
 		6117A2AE1635305D0066D487 /* PositionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PositionView.m; sourceTree = "<group>"; };
+		6117A2B1163551530066D487 /* TagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagView.h; sourceTree = "<group>"; };
+		6117A2B2163551530066D487 /* TagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagView.m; sourceTree = "<group>"; };
 		611CE6E015FDCE2F0066EEA2 /* nav-top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav-top@2x.png"; sourceTree = "<group>"; };
 		611CE6E415FDCF7C0066EEA2 /* btn-left-back-bg-linked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-left-back-bg-linked.png"; sourceTree = "<group>"; };
 		611CE6E515FDCF7C0066EEA2 /* btn-left-back-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-left-back-bg.png"; sourceTree = "<group>"; };
@@ -1777,6 +1780,19 @@
 			path = EGORefresh;
 			sourceTree = "<group>";
 		};
+		6117A2B016353E400066D487 /* pai hang  */ = {
+			isa = PBXGroup;
+			children = (
+				6141A70815FB732D00985257 /* HonorListViewController.h */,
+				6141A70915FB732D00985257 /* HonorListViewController.m */,
+				6141A70A15FB732D00985257 /* HonorListViewController.xib */,
+				6130267316229D3A000E1CBD /* TasksViewController.h */,
+				6130267416229D3A000E1CBD /* TasksViewController.m */,
+				6130267516229D3A000E1CBD /* TasksViewController.xib */,
+			);
+			name = "pai hang ";
+			sourceTree = "<group>";
+		};
 		611CE70415FDE82B0066EEA2 /* login & regigster images */ = {
 			isa = PBXGroup;
 			children = (
@@ -2327,15 +2343,10 @@
 				61729F1E161C2577004E3DA0 /* wei talk */,
 				61C7EE52161F37AE0080CAAE /* profiles */,
 				613026801622AF8F000E1CBD /* notifications */,
+				6117A2B016353E400066D487 /* pai hang  */,
 				61BB2B6815F9DB0800AA82CC /* AppDelegate.h */,
 				61BB2B6915F9DB0800AA82CC /* AppDelegate.m */,
 				6141A6ED15FB6D9800985257 /* MainWindow.xib */,
-				6141A70815FB732D00985257 /* HonorListViewController.h */,
-				6141A70915FB732D00985257 /* HonorListViewController.m */,
-				6141A70A15FB732D00985257 /* HonorListViewController.xib */,
-				6130267316229D3A000E1CBD /* TasksViewController.h */,
-				6130267416229D3A000E1CBD /* TasksViewController.m */,
-				6130267516229D3A000E1CBD /* TasksViewController.xib */,
 				5A8042721621306A00B872D3 /* ILikeViewController.h */,
 				5A8042731621306A00B872D3 /* ILikeViewController.m */,
 				5A8042741621306A00B872D3 /* ILikeViewController.xib */,
@@ -2430,6 +2441,8 @@
 				61240BE31619D8D6005C4E6C /* MoreUserInfoView.m */,
 				6117A2AD1635305D0066D487 /* PositionView.h */,
 				6117A2AE1635305D0066D487 /* PositionView.m */,
+				6117A2B1163551530066D487 /* TagView.h */,
+				6117A2B2163551530066D487 /* TagView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3682,6 +3695,7 @@
 				616D6D6E163513E400F7A20E /* BlockUsersViewController.m in Sources */,
 				616D6D8016351D1E00F7A20E /* DigoUsersViewController.m in Sources */,
 				6117A2AF1635305D0066D487 /* PositionView.m in Sources */,
+				6117A2B3163551530066D487 /* TagView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

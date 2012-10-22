@@ -18,6 +18,7 @@
 #import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TasksViewController.h"
+#import "TagView.h"
 
 #define CNUM 4
 
@@ -35,6 +36,8 @@
 @property (retain, nonatomic) IBOutlet AsyncImageView *avatarImageView;
 @property (retain, nonatomic) IBOutlet UIImageView *levelImageView;
 @property (retain, nonatomic) IBOutlet UIImageView *bigLevelImageView;
+@property (retain, nonatomic) IBOutlet TagView *bigLevelView;
+@property (retain, nonatomic) IBOutlet TagView *levelTagView;
 @property (retain, nonatomic) IBOutlet UIButton *btn;
 @property (retain, nonatomic) IBOutlet UILabel *levelLabel;
 @property (retain, nonatomic) IBOutlet UILabel *nameLabel;
@@ -62,6 +65,8 @@
     [_nameLabel release];
     [_bottomView release];
     [_vipData release];
+    [_bigLevelView release];
+    [_levelTagView release];
     [super dealloc];
 }
 
@@ -75,7 +80,7 @@
         CGRect lFrame = self.levelLabel.frame;
         lFrame.size.height = size.height;
         self.levelLabel.frame = lFrame;
-        
+        NSLog(@"vip data: %@", vipData);
         self.levelLabel.text = vipData[@"txt"];
         
         [self.btn setTitle:vipData[@"bt"] forState:UIControlStateNormal];
@@ -196,6 +201,8 @@
     [self setLevelLabel:nil];
     [self setNameLabel:nil];
     [self setBottomView:nil];
+    [self setBigLevelView:nil];
+    [self setLevelTagView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
