@@ -12,6 +12,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+#import "LoginViewController.h"
 
 @interface SendSuggestViewController ()
 
@@ -97,7 +98,10 @@
                 if (code == 0) {
                     // 成功提交的情况
                     // ....
-                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+//                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+//                    LoginViewController *lvc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+//                    [self presentModalViewController:lvc animated:YES];
+//                    [lvc release];
                 } else{
                     // 失败的情况
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
