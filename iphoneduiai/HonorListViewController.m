@@ -34,8 +34,6 @@
 @property (strong, nonatomic) UIButton *tilteBtn;
 @property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
 @property (retain, nonatomic) IBOutlet AsyncImageView *avatarImageView;
-@property (retain, nonatomic) IBOutlet UIImageView *levelImageView;
-@property (retain, nonatomic) IBOutlet UIImageView *bigLevelImageView;
 @property (retain, nonatomic) IBOutlet TagView *bigLevelView;
 @property (retain, nonatomic) IBOutlet TagView *levelTagView;
 @property (retain, nonatomic) IBOutlet UIButton *btn;
@@ -58,8 +56,6 @@
     [_selectedSex release];
     [_dropMenuView release];
     [_avatarImageView release];
-    [_levelImageView release];
-    [_bigLevelImageView release];
     [_btn release];
     [_levelLabel release];
     [_nameLabel release];
@@ -81,6 +77,8 @@
         lFrame.size.height = size.height;
         self.levelLabel.frame = lFrame;
         NSLog(@"vip data: %@", vipData);
+        self.levelTagView.content = @"Lv888888";
+        self.bigLevelView.content = @"Lv 888888";
         self.levelLabel.text = vipData[@"txt"];
         
         [self.btn setTitle:vipData[@"bt"] forState:UIControlStateNormal];
@@ -165,9 +163,9 @@
     self.nameLabel.text = info[@"niname"];
     [self.nameLabel sizeToFit];
     
-    CGRect lFrame = self.levelImageView.frame;
-    lFrame.origin.x = self.nameLabel.frame.origin.x + self.nameLabel.frame.size.width + 3;
-    self.levelImageView.frame = lFrame;
+    CGRect levelFrame = self.levelTagView.frame;
+    levelFrame.origin.x = self.nameLabel.frame.origin.x + self.nameLabel.frame.size.width + 2;
+    self.levelTagView.frame = levelFrame;
     
     self.avatarImageView.layer.masksToBounds = YES;
     self.avatarImageView.layer.cornerRadius = 5.0f;
@@ -195,8 +193,6 @@
 {
     [self setDropMenuView:nil];
     [self setAvatarImageView:nil];
-    [self setLevelImageView:nil];
-    [self setBigLevelImageView:nil];
     [self setBtn:nil];
     [self setLevelLabel:nil];
     [self setNameLabel:nil];

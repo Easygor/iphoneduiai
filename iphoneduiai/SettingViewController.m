@@ -16,7 +16,6 @@
 #import "BlockUsersViewController.h"
 #import "AsyncImageView.h"
 #import "CustomBarButtonItem.h"
-#import "SendSuggestViewController.h"
 #import "DigoUsersViewController.h"
 #import "SVProgressHUD.h"
 #import <RestKit/RestKit.h>
@@ -321,8 +320,9 @@ static int behindImgTag = 103;
         [self.navigationController pushViewController:buvc animated:YES];
         
     } else if ([label isEqualToString:@"feedback"]){
-        SendSuggestViewController *sendSuggestViewController = [[[SendSuggestViewController alloc]init]autorelease];
-        [self.navigationController pushViewController:sendSuggestViewController animated:YES];
+        // UM feedback
+//        SendSuggestViewController *sendSuggestViewController = [[[SendSuggestViewController alloc]init]autorelease];
+//        [self.navigationController pushViewController:sendSuggestViewController animated:YES];
     } else if ([label isEqualToString:@"up_person"]){
         DigoUsersViewController *duvc = [[[DigoUsersViewController alloc] initWithNibName:@"DigoUsersViewController" bundle:nil] autorelease];
         [self.navigationController pushViewController:duvc animated:YES];

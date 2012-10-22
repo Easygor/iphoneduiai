@@ -29,7 +29,7 @@
 - (void)doInitWork
 {
     self.oldWith = self.bgImageView.frame.size.width;
-    self.bgImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.bgImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
 }
 
 - (void)awakeFromNib
@@ -42,8 +42,11 @@
     if (![_content isEqualToString:content]) {
         _content = [content retain];
         
+        CGSize size = [content sizeWithFont:self.descLabel.font];
+        CGRect descFrame = self.descLabel.frame;
+        descFrame.size.width = size.width;
+        self.descLabel.frame = descFrame;
         self.descLabel.text = content;
-        [self.descLabel sizeToFit];
         
         CGRect selfFrame = self.frame;
         selfFrame.size.width = MAX(self.descLabel.frame.size.width + self.descLabel.frame.origin.x + self.oldWith/4, self.oldWith);
