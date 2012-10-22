@@ -19,6 +19,10 @@
 #import "CustomBarButtonItem.h"
 #import "SendSuggestViewController.h"
 #import "DigoUsersViewController.h"
+#import "SVProgressHUD.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "LoginViewController.h"
 
 #define kActionChooseImageTag 201
 static int behindImgTag = 103;
@@ -36,7 +40,7 @@ static int behindImgTag = 103;
 - (void)dealloc
 {
     [_showPhotoView release];
-//    [_photos release];
+    //    [_photos release];
     [_entries release];
     [_avatarImageView release];
     [super dealloc];
@@ -115,7 +119,7 @@ static int behindImgTag = 103;
     
     int frontImgTag = 101;
     int bigLabelTag = 102;
-
+    
     int smallImgTag= 104;
     int lineTag = 105;
     int bgViewTag = 106;
@@ -149,7 +153,7 @@ static int behindImgTag = 103;
         
         behindImg = [[[AsyncImageView alloc]initWithFrame:CGRectZero] autorelease];
         behindImg.tag=behindImgTag;
-   
+        
         behindImg.frame = CGRectMake(230, 4, 36, 36);
         [bgView addSubview:behindImg];
         
@@ -169,7 +173,7 @@ static int behindImgTag = 103;
         
         arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
         [cell addSubview:arrowImgView];
-
+        
     }
     
     if (bgView == nil)
@@ -284,7 +288,7 @@ static int behindImgTag = 103;
     } else if ([label isEqualToString:@"my_photo"]){
         
         AddPicViewController *addPicViewController  = [[[AddPicViewController alloc]init]autorelease];
-//        addPicViewController.photos = self.photos;
+        //        addPicViewController.photos = self.photos;
         addPicViewController.showPhotoView = self.showPhotoView;
         [self.navigationController pushViewController:addPicViewController animated:YES];
         
@@ -316,7 +320,7 @@ static int behindImgTag = 103;
     } else if([label isEqualToString:@"black_list"]){
         BlockUsersViewController *buvc = [[[BlockUsersViewController alloc] initWithNibName:@"BlockUsersViewController" bundle:nil] autorelease];
         [self.navigationController pushViewController:buvc animated:YES];
-    
+        
     } else if ([label isEqualToString:@"feedback"]){
         SendSuggestViewController *sendSuggestViewController = [[[SendSuggestViewController alloc]init]autorelease];
         [self.navigationController pushViewController:sendSuggestViewController animated:YES];
@@ -330,6 +334,24 @@ static int behindImgTag = 103;
 - (IBAction)resginAction
 {
     NSLog(@"log out");
+    
+    NSMutableDictionary *dParams = [Utils queryParams];
+    
+    [[RKClient sharedClient] get:[@"/reg/getstatus.api"
+                                  stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK &&response.isJSON) {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user"];
+                LoginViewController *lvc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+                [self presentModalViewController:lvc animated:YES];
+                [lvc release];
+                
+            }
+        }
+         
+         ];
+        
+    }];
 }
 
 #pragma mark - ActionSheet Delegate Methods
@@ -361,14 +383,14 @@ static int behindImgTag = 103;
 #pragma mark –  Camera View Delegate Methods
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-
+    
     NSData *data = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage]);
     [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
         
         if (res) {
-//            NSLog(@"hello doyou do: %@", res);
-//            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
-//            user[@"info"][@"photo"] =
+            //            NSLog(@"hello doyou do: %@", res);
+            //            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+            //            user[@"info"][@"photo"] =
             self.avatarImageView.image = [UIImage imageWithData:data];
         }
     }];

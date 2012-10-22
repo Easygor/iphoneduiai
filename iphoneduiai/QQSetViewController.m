@@ -103,7 +103,6 @@
         NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
         if (self.qqEableNum) {
             updateArgs[@"settheweek"] = self.qqEableNum;
-            
         }
         
         if (self.qqNumNum) {

@@ -11,13 +11,14 @@
 #import "Utils.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
 
 @interface SendSuggestViewController ()
 
 @end
 
 @implementation SendSuggestViewController
-
+@synthesize contentTextView;
 -(void)loadView
 {
     [super loadView];
@@ -75,6 +76,42 @@
 - (void)sendAction
 {
     NSLog(@"sending feedback...");
+    
+    NSLog(@"stop action...");
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/success/stop.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        updateArgs[@"sendtext"] = self.contentTextView.text;        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        // 请求失败时
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        // 请求成功时
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            //            NSLog(@"kkk: %@", response.bodyAsString);
+            if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
+                NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
+                NSInteger code = [data[@"error"] integerValue];  // 返回的状态
+                if (code == 0) {
+                    // 成功提交的情况
+                    // ....
+                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                } else{
+                    // 失败的情况
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+
+        
+        
+    }];
 }
 
 #define UITextFieldDelegate
