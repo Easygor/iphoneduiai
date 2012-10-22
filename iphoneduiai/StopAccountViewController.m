@@ -47,6 +47,13 @@
     [stopButton addTarget:self action:@selector(stopPress) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:stopButton];
     
+    UIButton *testButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    testButton.backgroundColor = [UIColor grayColor];
+    testButton.frame = CGRectMake(10, 300, 300, 44);
+    [testButton addTarget:self action:@selector(testPress) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:testButton];
+
+    
     UILabel *bTipLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10, 184, 300, 10)] autorelease];
     bTipLabel.textColor = RGBCOLOR(204, 204, 204);
     bTipLabel.backgroundColor = [UIColor clearColor];
@@ -89,6 +96,19 @@
     SendSuggestViewController *sendSuggestViewController = [[SendSuggestViewController alloc]init];
     [self.navigationController pushViewController:sendSuggestViewController animated:YES];
 }
-
+-(void)testPress
+{
+    NSMutableDictionary *dParams = [Utils queryParams];
+    
+    [[RKClient sharedClient] get:[@"/success/start.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+        }];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"error: %@", [error description]);
+        }];
+        
+    }];
+}
 
 @end
