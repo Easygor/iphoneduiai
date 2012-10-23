@@ -76,7 +76,7 @@
     //文本阴影颜色
     tipLabel.shadowColor = [UIColor whiteColor];
     //阴影大小
-    tipLabel.shadowOffset = CGSizeMake(1.0, 1.0);
+    tipLabel.shadowOffset = CGSizeMake(0.0, 1.0);
 
     
     tipLabel.lineBreakMode = UILineBreakModeWordWrap;
@@ -108,7 +108,7 @@
 
 - (void)backAction
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning

@@ -51,9 +51,7 @@
     tipLabel.shadowOffset = CGSizeMake(0, 1.0);
     [footView addSubview:tipLabel];
     self.tableView.tableFooterView = footView;
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
-                                                                                              target:self
-                                                                                              action:@selector(backAction)] autorelease];
+
 }
 
 - (void)backAction
@@ -64,12 +62,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.navigationItem.title = @"绑定状态";
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
 }
 
 - (BOOL)hidesBottomBarWhenPushed
@@ -142,9 +138,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* header= [[[UIView alloc]initWithFrame:CGRectZero]autorelease]
-    ;
-        header.frame = CGRectMake(0, 0, 320, 15);
+    UIView* header= [[[UIView alloc]initWithFrame:CGRectZero]autorelease];
+    header.frame = CGRectMake(0, 0, 320, 15);
     
     return header;
 }

@@ -220,9 +220,16 @@ static int behindImgTag = 103;
     }
     behindImg.image = headImg;
     if ([[data objectForKey:@"label"] isEqualToString:@"set_avatar"]) {
-        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-        [behindImg loadImage:info[@"photo"]];
+
+        NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+        NSDictionary *info = [user objectForKey:@"info"];
+        if (user[@"avatar"]) {
+            behindImg.image = [UIImage imageWithData:user[@"avatar"]];
+        } else{
+            [behindImg loadImage:info[@"photo"]];
+        }
         self.avatarImageView = behindImg;
+        
     }else if([[data objectForKey:@"label"] isEqualToString:@"my_photo"])
     {
         smallLabel.text = [NSString stringWithFormat:@"共%d张", self.showPhotoView.photos.count];
@@ -391,6 +398,12 @@ static int behindImgTag = 103;
             //            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
             //            user[@"info"][@"photo"] =
             self.avatarImageView.image = [UIImage imageWithData:data];
+            self.avatarView.imageView.image = [UIImage imageWithData:data];
+            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+            user[@"avatar"] = data;
+            [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
         }
     }];
     

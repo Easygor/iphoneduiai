@@ -330,7 +330,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+    NSMutableDictionary *info = [user objectForKey:@"info"];
     
     NSMutableDictionary *msg = self.messages[indexPath.row];
     NSMutableDictionary *msgNext = msg;
@@ -348,7 +349,12 @@
         }
         
         cell.content = msg[@"content"];
-        [cell.avatarImageView loadImage:info[@"photo"]];
+        if (user[@"avatar"]) {
+            cell.avatarImageView.image = [UIImage imageWithData:user[@"avatar"]];
+        } else{
+            [cell.avatarImageView loadImage:info[@"photo"]];            
+        }
+
         if ([msg[@"readtime"] integerValue] > 0) {
             cell.isRead = YES;
         } else{

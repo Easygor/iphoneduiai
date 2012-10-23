@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ShowPhotoView.h"
+#import "AvatarView.h"
 
 @interface SettingViewController : UITableViewController<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
 //@property (strong, nonatomic) NSMutableArray *photos;
 @property (strong, nonatomic) ShowPhotoView *showPhotoView;
+@property (strong, nonatomic) AvatarView *avatarView;
 
 
 @end

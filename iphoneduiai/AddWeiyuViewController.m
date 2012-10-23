@@ -166,8 +166,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
-    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-    [avatarImageView loadImage:info[@"photo"]];
+    NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+    NSDictionary *info = [user objectForKey:@"info"];
+    if (user[@"avatar"]) {
+        avatarImageView.image = [UIImage imageWithData:user[@"avatar"]];
+    } else{
+        [avatarImageView loadImage:info[@"photo"]];
+    }
     
 }
 

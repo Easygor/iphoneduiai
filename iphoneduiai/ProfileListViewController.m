@@ -488,6 +488,7 @@ static NSInteger kActionChooseImageTag = 201;
     SettingViewController *settingViewController = [[[SettingViewController alloc]initWithStyle:UITableViewStylePlain] autorelease];
 //    settingViewController.photos = self.showPhotoView.photos;
     settingViewController.showPhotoView = self.showPhotoView;
+    settingViewController.avatarView = self.avatarView;
     [self.navigationController pushViewController:settingViewController animated:YES];
     
 }
@@ -1068,6 +1069,10 @@ static NSInteger kActionChooseImageTag = 201;
 
             if (res) {
                 self.avatarView.imageView.image = [UIImage imageWithData:data];
+                NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+                user[@"avatar"] = data;
+                [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
             }
         }];
     }

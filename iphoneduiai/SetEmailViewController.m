@@ -23,6 +23,9 @@
 -(void)loadView
 {
     [super loadView];
+    
+    NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+
     self.view.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 
     UIView *emailView = [[[UIView alloc]initWithFrame:CGRectMake(10, 15, 300, 44)]autorelease];
@@ -33,6 +36,8 @@
     UITextField *emailField = [[[UITextField alloc]initWithFrame:CGRectMake(80, 13, 170, 18)]autorelease];
     emailField.textColor = RGBCOLOR(179, 179, 179);
     emailField.font = [UIFont systemFontOfSize:14.0f];
+    emailField.enabled = NO;
+    emailField.text = user[@"username"];
     [emailView addSubview:emailLabel];
     [emailView addSubview:emailField];
     [emailField becomeFirstResponder ];

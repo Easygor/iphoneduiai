@@ -52,7 +52,12 @@
         selfFrame.size.width = MAX(self.descLabel.frame.size.width + self.descLabel.frame.origin.x + self.oldWith/4, self.oldWith);
         self.frame = selfFrame;
         
-        UIImage *image = [self.bgImageView.image stretchableImageWithLeftCapWidth:self.oldWith/2 topCapHeight:0];
+        UIImage *image;
+        if ([self.bgImageView.image respondsToSelector:@selector(resizableImageWithCapInsets:)]) {
+            image = [self.bgImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(0, self.oldWith/2, 0, self.oldWith/5)];
+        } else {
+            image = [self.bgImageView.image stretchableImageWithLeftCapWidth:self.oldWith/2 topCapHeight:0];
+        }
         self.bgImageView.image = image;
         
     }
