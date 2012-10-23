@@ -57,7 +57,7 @@
         _date = [date retain];
         
         if (date) {
-            self.timeLabel.text = [self.date stringWithPattern:@"MM-dd HH:mm"];
+            self.timeLabel.text = self.timeLabel.text = [self.date stringForHumanLongStyle];/* [self.date stringWithPattern:@"MM-dd HH:mm"]*/;;
             [self.timeLabel sizeToFit];
             
             CGRect timeFrame = self.timeLabel.frame;

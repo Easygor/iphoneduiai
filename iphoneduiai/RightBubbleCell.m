@@ -12,6 +12,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "NSDate-Utilities.h"
+#import "NSDate-Utilities.h"
 
 #define TEXTW 185
 
@@ -66,7 +67,7 @@
         _date = [date retain];
         
         if (date) {
-            self.timeLabel.text = [self.date stringWithPattern:@"MM-dd HH:mm"];
+            self.timeLabel.text = [self.date stringForHumanLongStyle];/* [self.date stringWithPattern:@"MM-dd HH:mm"]*/;
             [self.timeLabel sizeToFit];
             
             CGRect timeFrame = self.timeLabel.frame;

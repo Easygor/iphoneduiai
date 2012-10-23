@@ -66,6 +66,7 @@
 
 - (NSString *)stringWithPattern:(NSString *)tstr;
 -(NSString *)stringForHuman;
+-(NSString*)stringForHumanLongStyle;
 
 // Decomposing dates
 @property (readonly) NSInteger nearestHour;

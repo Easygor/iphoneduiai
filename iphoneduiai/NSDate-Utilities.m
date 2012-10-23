@@ -362,46 +362,47 @@
     return str;
     
 }
+
 -(NSString*)stringForHuman
 {
     NSString *stringFormDate = @"";
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setLocale:[NSLocale currentLocale]];
    // [dateFormat setDateFormat:@"yyyy-MM-dd hh:mm"];
-       NSInteger timePassed = abs([self timeIntervalSinceNow]);
-    
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-   
-    NSDateComponents *comps = [[NSDateComponents alloc] init];
-    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
-    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
-   
-    comps = [calendar components:unitFlags fromDate:self];
-    int week = [comps weekday];
-    
+    NSInteger timePassed = abs([self timeIntervalSinceNow]);
+//    
+//    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+//   
+//    NSDateComponents *comps = [[NSDateComponents alloc] init];
+//    NSInteger unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit |
+//    NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;
+//   
+//    comps = [calendar components:unitFlags fromDate:self];
+//    int week = [comps weekday];
     if (timePassed < 60*60*24){
-        [dateFormat setDateFormat:@"hh:mm"];
+        [dateFormat setDateFormat:@"ah:mm"];
     }else  if(timePassed > 60*60*24*7){
-        [dateFormat setDateFormat:@"yy-MM-dd"];
-    }else if(timePassed >60*60*24 && timePassed <60*60*24*7)
+        [dateFormat setDateFormat:@"yy-M-d"];
+    }else if(timePassed > 60*60*24 && timePassed < 60*60*24*7)
     {
-        NSString *weekStr;
-        if (week==1)
-            weekStr = @"一";
-        else if(week == 2)
-            weekStr = @"二";
-        else if(week == 3)
-            weekStr = @"三";
-        else if(week == 4)
-            weekStr = @"四";
-        else if(week == 5)
-            weekStr = @"五";
-        else if(week == 6)
-            weekStr = @"六";
-        else if(week == 7)
-            weekStr = @"日";
-        stringFormDate = [stringFormDate stringByAppendingFormat:@"星期%@",weekStr];
-        [dateFormat setDateFormat:stringFormDate];        
+        
+//        NSString *weekStr;
+//        if (week==1)
+//            weekStr = @"一";
+//        else if(week == 2)
+//            weekStr = @"二";
+//        else if(week == 3)
+//            weekStr = @"三";
+//        else if(week == 4)
+//            weekStr = @"四";
+//        else if(week == 5)
+//            weekStr = @"五";
+//        else if(week == 6)
+//            weekStr = @"六";
+//        else if(week == 7)
+//            weekStr = @"日";
+//        stringFormDate = [stringFormDate stringByAppendingFormat:@"星期%@",weekStr];
+        [dateFormat setDateFormat:@"EEEE"];
     }
     stringFormDate = [dateFormat stringFromDate:self];
 
@@ -409,5 +410,29 @@
     return stringFormDate;
 
 }
+
+-(NSString*)stringForHumanLongStyle
+{
+    NSString *stringFormDate = @"";
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setLocale:[NSLocale currentLocale]];
+
+    NSInteger timePassed = abs([self timeIntervalSinceNow]);
+
+    if (timePassed < 60*60*24){
+        [dateFormat setDateFormat:@"ah:mm"];
+    }else  if(timePassed > 60*60*24*7){
+        [dateFormat setDateFormat:@"yyyy-M-d ah:mm"];
+    }else if(timePassed > 60*60*24 && timePassed < 60*60*24*7)
+    {
+        [dateFormat setDateFormat:@"EEEE ah:mm"];
+    }
+    stringFormDate = [dateFormat stringFromDate:self];
+    
+    [dateFormat release];
+    return stringFormDate;
+    
+}
+
 
 @end
