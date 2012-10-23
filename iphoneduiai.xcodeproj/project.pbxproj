@@ -2301,7 +2301,6 @@
 		61BB2B4815F9DB0800AA82CC = {
 			isa = PBXGroup;
 			children = (
-				5A8685811636B743001F9134 /* MessageUI.framework */,
 				6199D66415FEA6AD00BEBD00 /* Externals */,
 				61BB2B5F15F9DB0800AA82CC /* iphoneduiai */,
 				61BB2B5615F9DB0800AA82CC /* Frameworks */,
@@ -2320,6 +2319,7 @@
 		61BB2B5615F9DB0800AA82CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A8685811636B743001F9134 /* MessageUI.framework */,
 				61CB3F76160359EB00888317 /* libicucore.dylib */,
 				61CB3F311602AF9800888317 /* CoreLocation.framework */,
 				6199D68315FEA73600BEBD00 /* QuartzCore.framework */,

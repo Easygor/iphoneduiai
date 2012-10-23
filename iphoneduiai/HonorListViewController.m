@@ -158,8 +158,13 @@
     self.bottomView.layer.shadowRadius = 1.0;
     self.bottomView.layer.shouldRasterize = YES;
     
-    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-    [self.avatarImageView loadImage:info[@"photo"]];
+    NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+    NSDictionary *info = [user objectForKey:@"info"];
+    if (user[@"avatar"]) {
+        self.avatarImageView.image = [UIImage imageWithData:user[@"avatar"]];
+    } else{
+        [self.avatarImageView loadImage:info[@"photo"]];
+    }
     self.nameLabel.text = info[@"niname"];
     [self.nameLabel sizeToFit];
     
