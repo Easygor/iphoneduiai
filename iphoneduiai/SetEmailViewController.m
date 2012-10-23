@@ -12,6 +12,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+
 @interface SetEmailViewController ()
 
 @end
@@ -46,7 +47,7 @@
     verifyButton.frame = CGRectMake(10, 70, 300, 44);
     verifyButton.backgroundColor =RGBCOLOR(191, 235, 114);
     [verifyButton setTitle:@"主动验证邮箱" forState:UIControlStateNormal];
-    [verifyButton addTarget:self action:@selector(sendAction) forControlEvents:UIControlEventTouchUpInside];
+    [verifyButton addTarget:self action:@selector(sendEMail) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:verifyButton];
     
     
@@ -80,7 +81,30 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)sendAction
+//点击按钮后，触发这个方法
+-(void)sendEMail
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    
+    if (mailClass != nil)
+    {
+        if ([mailClass canSendMail])
+        {
+            [self displayComposerSheet];
+        }
+        else
+        {
+            [self launchMailAppOnDevice];
+        }
+    }
+    else
+    {
+        [self launchMailAppOnDevice];
+    }
+}
+
+//可以发送邮件的话
+- (void)displayComposerSheet
 {
     NSLog(@"sending verify action...");
    
@@ -95,11 +119,47 @@
     [mc setMessageBody:emailBody isHTML:YES];
     
     //设置收件人
-   // [mc setToRecipients:[NSArray arrayWithObjects:@"zhuqi0@126.com"];
+    [mc setToRecipients:[NSArray arrayWithObject:@"love@duai.com"]];
     
     [self presentModalViewController:mc animated:YES];
     [mc release];
 
 }
+-(void)launchMailAppOnDevice
+{
+    NSString *recipients = @"mailto:first@example.com&subject=my email!";
+    //@"mailto:first@example.com?cc=second@example.com,third@example.com&subject=my email!";
+    NSString *body = @"&body=email body!";
+    
+    NSString *email = [NSString stringWithFormat:@"%@%@", recipients, body];
+    email = [email stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    
+    [[UIApplication sharedApplication] openURL: [NSURL URLWithString:email]];
+}
 
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    NSString *msg;
+    
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            msg = @"邮件发送取消";
+            break;
+        case MFMailComposeResultSaved:
+            msg = @"邮件保存成功";
+            break;
+        case MFMailComposeResultSent:
+            msg = @"邮件发送成功";
+                       break;
+        case MFMailComposeResultFailed:
+            msg = @"邮件发送失败";
+            break;
+        default:
+            break;
+    }
+    [SVProgressHUD showSuccessWithStatus:msg];
+    [self dismissModalViewControllerAnimated:YES];
+}
 @end
