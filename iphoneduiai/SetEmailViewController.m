@@ -12,7 +12,6 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
-
 @interface SetEmailViewController ()
 
 @end
@@ -30,7 +29,7 @@
     UILabel *emailLabel = [[[UILabel alloc]initWithFrame:CGRectMake(7, 15, 40, 16)]autorelease];
     emailLabel.text = @"邮箱";
     emailLabel.font = [UIFont systemFontOfSize:16.0f];
-    UITextField *emailField = [[[UITextField alloc]initWithFrame:CGRectMake(80, 13, 170, 18)]autorelease];
+    emailField = [[[UITextField alloc]initWithFrame:CGRectMake(80, 13, 170, 18)]autorelease];
     emailField.textColor = RGBCOLOR(179, 179, 179);
     emailField.font = [UIFont systemFontOfSize:14.0f];
     [emailView addSubview:emailLabel];
@@ -79,6 +78,23 @@
 - (void)sendAction
 {
     NSLog(@"sending verify action...");
+   
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    
+    
+    [mc setSubject:@"10010310"];
+    
+    NSString *emailBody = @"对爱会员邮件验证";
+    [mc setMessageBody:emailBody isHTML:YES];
+    
+    //设置收件人
+   // [mc setToRecipients:[NSArray arrayWithObjects:@"zhuqi0@126.com"];
+    
+    [self presentModalViewController:mc animated:YES];
+    [mc release];
+
 }
 
 @end

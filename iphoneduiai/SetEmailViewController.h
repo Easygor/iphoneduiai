@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
-@interface SetEmailViewController : UIViewController
+@interface SetEmailViewController : UIViewController<MFMailComposeViewControllerDelegate>
+{
+    UITextField *emailField;
+}
 
 @end
