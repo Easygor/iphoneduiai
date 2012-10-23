@@ -95,15 +95,17 @@
     cell.descLabel.text = msg[@"subTitle"];
     cell.count = [msg[@"bageNum"] integerValue];
     NSDate *updated = msg[@"updated"];
-    cell.timeLabel.text = [updated stringWithPattern:@"M/d HH:mm"];
+   // cell.timeLabel.text = [updated stringWithPattern:@"M/d HH:mm"];
+    
+    cell.timeLabel.text = [updated stringForHuman];
+    
     if ([msg[@"logo"] hasPrefix:@"http://"]) {
 
         [cell.avatarImageView loadImage:msg[@"logo"]];
     } else{
         cell.avatarImageView.image = [UIImage imageNamed:msg[@"logo"]];
     }
-    
-    
+
     return cell;
 }
 

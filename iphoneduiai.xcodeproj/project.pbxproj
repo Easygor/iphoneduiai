@@ -34,6 +34,7 @@
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
 		5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8042731621306A00B872D3 /* ILikeViewController.m */; };
 		5A8042761621306A00B872D3 /* ILikeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8042741621306A00B872D3 /* ILikeViewController.xib */; };
+		5A8685821636B743001F9134 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8685811636B743001F9134 /* MessageUI.framework */; };
 		5ABA114A16214C040043F51A /* BindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA114816214C040043F51A /* BindingViewController.m */; };
 		5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114916214C040043F51A /* BindingViewController.xib */; };
 		5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114C16216DE90043F51A /* settingBindingEntries.plist */; };
@@ -856,6 +857,7 @@
 		5A8042721621306A00B872D3 /* ILikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILikeViewController.h; sourceTree = "<group>"; };
 		5A8042731621306A00B872D3 /* ILikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILikeViewController.m; sourceTree = "<group>"; };
 		5A8042741621306A00B872D3 /* ILikeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILikeViewController.xib; sourceTree = "<group>"; };
+		5A8685811636B743001F9134 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5ABA114716214C040043F51A /* BindingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingViewController.h; sourceTree = "<group>"; };
 		5ABA114816214C040043F51A /* BindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingViewController.m; sourceTree = "<group>"; };
 		5ABA114916214C040043F51A /* BindingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BindingViewController.xib; sourceTree = "<group>"; };
@@ -1686,6 +1688,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A8685821636B743001F9134 /* MessageUI.framework in Frameworks */,
 				6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */,
 				61CB3F77160359EB00888317 /* libicucore.dylib in Frameworks */,
 				61CB3F321602AF9800888317 /* CoreLocation.framework in Frameworks */,
@@ -2298,6 +2301,7 @@
 		61BB2B4815F9DB0800AA82CC = {
 			isa = PBXGroup;
 			children = (
+				5A8685811636B743001F9134 /* MessageUI.framework */,
 				6199D66415FEA6AD00BEBD00 /* Externals */,
 				61BB2B5F15F9DB0800AA82CC /* iphoneduiai */,
 				61BB2B5615F9DB0800AA82CC /* Frameworks */,

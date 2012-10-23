@@ -24,6 +24,7 @@
 + (NSDate *) dateWithMinutesFromNow: (NSInteger) dMinutes;
 + (NSDate *) dateWithMinutesBeforeNow: (NSInteger) dMinutes;
 
+
 // Comparing dates
 - (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;
 - (BOOL) isToday;
@@ -64,6 +65,7 @@
 - (NSInteger) daysBeforeDate: (NSDate *) aDate;
 
 - (NSString *)stringWithPattern:(NSString *)tstr;
+-(NSString *)stringForHuman;
 
 // Decomposing dates
 @property (readonly) NSInteger nearestHour;
