@@ -43,13 +43,6 @@
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.navigationItem.title = @"消息";
-    
-    NSDate *now = [NSDate date];
-    NSDateFormatter *weekday = [[[NSDateFormatter alloc] init] autorelease];
-    [weekday setLocale:[NSLocale currentLocale]];
-    [weekday setDateFormat: @"EEEE"];
-    NSLog(@"The day of the week is: %@", [weekday stringFromDate:now]);
-    NSLog(@"date:%@", [[[NSDate date] dateBySubtractingDays:3] stringForHuman]);
 
 }
 
@@ -71,7 +64,7 @@
     [super viewDidAppear:animated];
 
     [[Notification sharedInstance] updateFromRemote:^{
-        NSLog(@"sorted messages: %@", [[Notification sharedInstance] mergeAndOrderNotices]);
+
         self.messages =  [[Notification sharedInstance] mergeAndOrderNotices];
 
     }];

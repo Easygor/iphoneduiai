@@ -11,8 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "SliderView.h"
 #import "Utils.h"
+#import "SVProgressHUD.h"
 
-@interface ShowPhotoView () <SliderDataSource, UIScrollViewDelegate>
+@interface ShowPhotoView () <SliderDataSource, UIScrollViewDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet UIView *containerView;
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet AsyncImageView *showImageView;
 //@property (strong, nonatomic) IBOutlet CountView *viewCountView;
 @property (strong, nonatomic) SliderView *slider;
+@property (strong, nonatomic) UIImageView *curImageView;
 
 @end
 
@@ -34,6 +36,7 @@
     [_showImageView release];
     [_photos release];
 //    [_viewCountView release];
+    [_curImageView release];
     [_slider release];
     [_rounds release];
     [_containerView release];
@@ -334,6 +337,9 @@
     
     [oneTap requireGestureRecognizerToFail:doubleTap];
     
+    UILongPressGestureRecognizer *longPress = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressAction:)] autorelease];
+    [view addGestureRecognizer:longPress];
+    
     CGRect viewFrame = [self convertRect:self.showImageView.frame toView:self.window];
     
     AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:viewFrame] autorelease];
@@ -416,5 +422,39 @@
     
     return view;
 }
+
+- (void)longPressAction:(UILongPressGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan ||
+        gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:nil
+                                      otherButtonTitles:@"保存图片",nil];
+        self.curImageView = (UIImageView*)[gesture.view viewWithTag:gesture.view.tag-100];
+        [actionSheet showInView:self.window];
+        [actionSheet release];
+        
+    }
+}
+
+#pragma mark - ActionSheet Delegate Methods
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([actionSheet cancelButtonIndex] == buttonIndex) {
+        return;
+    }
+    
+    if (buttonIndex == 0){
+        UIImageWriteToSavedPhotosAlbum(self.curImageView.image, nil, nil, nil);
+        [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+    }
+    
+    self.curImageView = nil;
+}
+
 
 @end
