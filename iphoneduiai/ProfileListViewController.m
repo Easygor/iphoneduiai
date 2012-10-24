@@ -18,7 +18,7 @@
 #import "MarrayReqView.h"
 #import "MoreUserInfoView.h"
 #import "WeiyuWordCell.h"
-#import "BindingViewController.h"
+#import "WeiboBindingViewController.h"
 #import "QQSetViewController.h"
 #import "ChooseMateViewController.h"
 #import "SSViewController.h"
@@ -968,8 +968,8 @@ static NSInteger kActionChooseImageTag = 201;
 
 - (IBAction)bindingAction
 {
-    BindingViewController *bindingViewController = [[[BindingViewController alloc]init]autorelease];
-    [self.navigationController pushViewController:bindingViewController animated:YES];
+    WeiboBindingViewController *weiboBindingViewController = [[[WeiboBindingViewController alloc]init]autorelease];
+    [self.navigationController pushViewController:weiboBindingViewController animated:YES];
 }
 
 - (IBAction)seniorAction
