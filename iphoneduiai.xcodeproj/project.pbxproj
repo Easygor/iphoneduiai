@@ -44,11 +44,7 @@
 		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
 		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
-		5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A8042731621306A00B872D3 /* ILikeViewController.m */; };
-		5A8042761621306A00B872D3 /* ILikeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8042741621306A00B872D3 /* ILikeViewController.xib */; };
 		5A8685821636B743001F9134 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8685811636B743001F9134 /* MessageUI.framework */; };
-		5ABA114A16214C040043F51A /* BindingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA114816214C040043F51A /* BindingViewController.m */; };
-		5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114916214C040043F51A /* BindingViewController.xib */; };
 		5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114C16216DE90043F51A /* settingBindingEntries.plist */; };
 		5ABA115D1621D48B0043F51A /* SetEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA115C1621D48B0043F51A /* SetEmailViewController.m */; };
 		5AE147FA161F25B0005CC680 /* SendSuggestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE147F9161F25B0005CC680 /* SendSuggestViewController.m */; };
@@ -879,13 +875,7 @@
 		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
 		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
 		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
-		5A8042721621306A00B872D3 /* ILikeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ILikeViewController.h; sourceTree = "<group>"; };
-		5A8042731621306A00B872D3 /* ILikeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ILikeViewController.m; sourceTree = "<group>"; };
-		5A8042741621306A00B872D3 /* ILikeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ILikeViewController.xib; sourceTree = "<group>"; };
 		5A8685811636B743001F9134 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		5ABA114716214C040043F51A /* BindingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindingViewController.h; sourceTree = "<group>"; };
-		5ABA114816214C040043F51A /* BindingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindingViewController.m; sourceTree = "<group>"; };
-		5ABA114916214C040043F51A /* BindingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BindingViewController.xib; sourceTree = "<group>"; };
 		5ABA114C16216DE90043F51A /* settingBindingEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settingBindingEntries.plist; sourceTree = "<group>"; };
 		5ABA115B1621D48B0043F51A /* SetEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetEmailViewController.h; sourceTree = "<group>"; };
 		5ABA115C1621D48B0043F51A /* SetEmailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetEmailViewController.m; sourceTree = "<group>"; };
@@ -2386,9 +2376,6 @@
 				61BB2B6815F9DB0800AA82CC /* AppDelegate.h */,
 				61BB2B6915F9DB0800AA82CC /* AppDelegate.m */,
 				6141A6ED15FB6D9800985257 /* MainWindow.xib */,
-				5A8042721621306A00B872D3 /* ILikeViewController.h */,
-				5A8042731621306A00B872D3 /* ILikeViewController.m */,
-				5A8042741621306A00B872D3 /* ILikeViewController.xib */,
 				61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */,
 				61BB2B6015F9DB0800AA82CC /* Supporting Files */,
 			);
@@ -2824,9 +2811,6 @@
 				5A36A9091637C9770032EF30 /* WeiboBindingViewController.h */,
 				5A36A90A1637C9770032EF30 /* WeiboBindingViewController.m */,
 				5A36A90B1637C9770032EF30 /* WeiboBindingViewController.xib */,
-				5ABA114716214C040043F51A /* BindingViewController.h */,
-				5ABA114816214C040043F51A /* BindingViewController.m */,
-				5ABA114916214C040043F51A /* BindingViewController.xib */,
 				5A62E88616198EF600BD3958 /* PreventSetViewController.h */,
 				5A62E88716198EF600BD3958 /* PreventSetViewController.m */,
 				5A62E88816198EF600BD3958 /* PreventSetViewController.xib */,
@@ -3179,8 +3163,6 @@
 				5A3505D216204C5C00A80A71 /* AddPicViewController.xib in Resources */,
 				5A3505D7162050F700A80A71 /* blueButton.jpg in Resources */,
 				5A3505DD1620548000A80A71 /* deletbutton.png in Resources */,
-				5A8042761621306A00B872D3 /* ILikeViewController.xib in Resources */,
-				5ABA114B16214C040043F51A /* BindingViewController.xib in Resources */,
 				5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */,
 				6130267716229D3A000E1CBD /* TasksViewController.xib in Resources */,
 				6130267A1622A06C000E1CBD /* DeleteGroupMemberBtn.png in Resources */,
@@ -3724,8 +3706,6 @@
 				61C7EE5C16202B0F0080CAAE /* SSKeychain.m in Sources */,
 				5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */,
 				5A3505D516204C8200A80A71 /* BJGridItem.m in Sources */,
-				5A8042751621306A00B872D3 /* ILikeViewController.m in Sources */,
-				5ABA114A16214C040043F51A /* BindingViewController.m in Sources */,
 				6172EBB91621D5C700860F03 /* HonorTableCell.m in Sources */,
 				5ABA115D1621D48B0043F51A /* SetEmailViewController.m in Sources */,
 				6130267616229D3A000E1CBD /* TasksViewController.m in Sources */,
