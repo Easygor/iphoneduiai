@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface WeiboBindingViewController : UIViewController
+#import "SinaWeibo.h"
+@interface WeiboBindingViewController : UIViewController<SinaWeiboDelegate>
 
 @end

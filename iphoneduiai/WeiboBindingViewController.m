@@ -9,6 +9,7 @@
 #import "WeiboBindingViewController.h"
 #import "SetEmailViewController.h"
 #import "CustomBarButtonItem.h"
+#import "SinaWeibo.h"
 @interface WeiboBindingViewController ()
 @property(retain,nonatomic)IBOutlet UIButton *sinaWeiboButton;
 @property(retain,nonatomic)IBOutlet UIButton *tengxunWeiboButton;
@@ -41,6 +42,9 @@
     [_mailButton release];
     [super dealloc];
 }
+
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -83,7 +87,12 @@
 
 -(IBAction)sinaWeiboButtonPress
 {
-
+    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+    NSLog(@"%@", [keyWindow subviews]);
+   
+    
+    SinaWeibo *sinaweibo = [[SinaWeibo alloc]initWithAppKey:@"1118660852" appSecret:@"1e650633c6c72cc28583bc1bdef21a38" appRedirectURI:@"http://www.cnblogs.com/smallyin00/" andDelegate:self];
+    [sinaweibo logIn];
 }
 
 -(IBAction)tengxunWeiboButtonPress
@@ -107,5 +116,16 @@
     [self.navigationController pushViewController:setEmailViewController animated:YES];
 
 }
+#pragma mark - SinaWeibo Delegate
 
+- (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"sinaweiboDidLogIn userID = %@ accesstoken = %@ expirationDate = %@ refresh_token = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate,sinaweibo.refreshToken);
+
+}
+
+- (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
+{
+    NSLog(@"sinaweiboDidLogOut");
+}
 @end
