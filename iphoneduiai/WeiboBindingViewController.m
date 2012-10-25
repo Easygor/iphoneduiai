@@ -32,7 +32,7 @@
 @end
 
 @implementation WeiboBindingViewController
-
+@synthesize weiboEngine;
 - (void)dealloc
 {
     [_sinaWeiboButton release];
@@ -40,6 +40,7 @@
     [_qqzoneButton release];
     [_weixinButton release];
     [_mailButton release];
+     [weiboEngine release],weiboEngine = nil;
     [super dealloc];
 }
 
@@ -66,6 +67,8 @@
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
 
+    
+    
     
 }
 
@@ -97,9 +100,18 @@
 
 -(IBAction)tengxunWeiboButtonPress
 {
-    [weiboEngine logInWithDelegate:self
-                         onSuccess:@selector(onSuccessLogin)
-                         onFailure:@selector(onFailureLogin:)];
+//    TCWBEngine  *weiboEngine = [[TCWBEngine alloc]initWithAppKey:@"801259343" andSecret:@"992e606800d7b7afdc4911bc896ba371" andRedirectUrl:@"http://"];
+//    
+//    [weiboEngine logInWithDelegate:self
+//                         onSuccess:@selector(onSuccessLogin)
+//                         onFailure:@selector(onFailureLogin:)];
+    TCWBEngine *engine = [[TCWBEngine alloc] initWithAppKey:@"801259343" andSecret:@"992e606800d7b7afdc4911bc896ba371" andRedirectUrl:@"http://www.cnblogs.com/smallyin00/"];
+    [engine setRootViewController:self];
+    //[engine setRedirectURI:@"http://www.ying7wang7.com"];
+   self.weiboEngine = engine;
+    [engine release];
+    
+    [self onLogin];
 
 
 }
@@ -132,4 +144,18 @@
 {
     NSLog(@"sinaweiboDidLogOut");
 }
+
+#pragma mark - method
+
+//点击登录按钮
+- (void)onLogin {
+    [weiboEngine logInWithDelegate:self
+                         onSuccess:@selector(onSuccessLogin)
+                         onFailure:@selector(onFailureLogin:)];
+}
+
+
+
+
+
 @end
