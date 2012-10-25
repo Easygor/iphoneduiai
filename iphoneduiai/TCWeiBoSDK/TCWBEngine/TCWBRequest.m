@@ -9,7 +9,7 @@
 #import "TCWBRequest.h"
 #import "TCWBGlobalUtil.h"
 #import "NSObject+WBUtil.h"
-#import "JSON.h"
+#import <RestKit/JSONKit.h>
 
 #define kWBRequestTimeOutInterval   180.0
 #define kWBRequestStringBoundary    @"293iosfksdfkiowjksdf31jsiuwq003s02dsaffafass3qw"
@@ -109,13 +109,13 @@
 				if ([dataParam isKindOfClass:[UIImage class]]) {
 					NSData* imageData = UIImagePNGRepresentation((UIImage *)dataParam);
 					[TCWBRequest appendUTF8Body:body dataString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\";filename=\"%@\"\r\n", key,dataParam]];
-					[TCWBRequest appendUTF8Body:body dataString:[NSString stringWithString:@"Content-Type:\"image/jpeg\"\r\n\r\n"]];
+					[TCWBRequest appendUTF8Body:body dataString:@"Content-Type:\"image/jpeg\"\r\n\r\n"];
 					[body appendData:imageData];
 
 				} 
 				else if ([dataParam isKindOfClass:[NSData class]]) {
                     [TCWBRequest appendUTF8Body:body dataString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\";filename=\"%@\"\r\n", key,dataParam]];
-                    [TCWBRequest appendUTF8Body:body dataString:[NSString stringWithString:@"Content-Type:\"image/jpeg\"\r\n\r\n"]];
+                    [TCWBRequest appendUTF8Body:body dataString:@"Content-Type:\"image/jpeg\"\r\n\r\n"];
 					[body appendData:(NSData*)dataParam];
 				}
 				[TCWBRequest appendUTF8Body:body dataString:bodySuffixString];
@@ -151,21 +151,17 @@
     if (!dataString) {
         dataString = [[NSString alloc] initWithData:data encoding:CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)];
     }
-	SBJSON *jsonParser = [[SBJSON alloc]init];
+
+	id result = [dataString objectFromJSONString];
 	
-	NSError *parseError = nil;
-	id result = [jsonParser objectWithString:dataString error:&parseError];
-	
-	if (parseError){
+	if (!result){
         if (error != nil){
             *error = [self errorWithCode:TCWBErrorCodeSDK
                                 userInfo:[NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"%d", TCWBSDKErrorCodeParseError]
                                                                      forKey:TCWBSDKErrorCodeKey]];
         }
 	}
-        
-	[dataString release];
-	[jsonParser release];
+
 	
     
 	if ([result isKindOfClass:[NSDictionary class]]){

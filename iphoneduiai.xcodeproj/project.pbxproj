@@ -83,12 +83,6 @@
 		5A25017F16393201004113B8 /* UITableViewFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25011416393201004113B8 /* UITableViewFriendCell.m */; };
 		5A25018016393201004113B8 /* UIWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25011616393201004113B8 /* UIWaitingView.m */; };
 		5A25018116393201004113B8 /* WordsLeftView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25011816393201004113B8 /* WordsLeftView.m */; };
-		5A25018216393201004113B8 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25011C16393201004113B8 /* NSObject+SBJSON.m */; };
-		5A25018316393201004113B8 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25011E16393201004113B8 /* NSString+SBJSON.m */; };
-		5A25018416393201004113B8 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012016393201004113B8 /* SBJSON.m */; };
-		5A25018516393201004113B8 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012216393201004113B8 /* SBJsonBase.m */; };
-		5A25018616393201004113B8 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012416393201004113B8 /* SBJsonParser.m */; };
-		5A25018716393201004113B8 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012616393201004113B8 /* SBJsonWriter.m */; };
 		5A25018816393201004113B8 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012916393201004113B8 /* SFHFKeychainUtils.m */; };
 		5A25018916393201004113B8 /* AuthorizeDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012C16393201004113B8 /* AuthorizeDelegate.m */; };
 		5A25018A16393201004113B8 /* NSObject+WBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25012E16393201004113B8 /* NSObject+WBUtil.m */; };
@@ -1014,19 +1008,6 @@
 		5A25011616393201004113B8 /* UIWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIWaitingView.m; sourceTree = "<group>"; };
 		5A25011716393201004113B8 /* WordsLeftView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WordsLeftView.h; sourceTree = "<group>"; };
 		5A25011816393201004113B8 /* WordsLeftView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WordsLeftView.m; sourceTree = "<group>"; };
-		5A25011A16393201004113B8 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
-		5A25011B16393201004113B8 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		5A25011C16393201004113B8 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		5A25011D16393201004113B8 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
-		5A25011E16393201004113B8 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
-		5A25011F16393201004113B8 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
-		5A25012016393201004113B8 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
-		5A25012116393201004113B8 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
-		5A25012216393201004113B8 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
-		5A25012316393201004113B8 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
-		5A25012416393201004113B8 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
-		5A25012516393201004113B8 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		5A25012616393201004113B8 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		5A25012816393201004113B8 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		5A25012916393201004113B8 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		5A25012B16393201004113B8 /* AuthorizeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthorizeDelegate.h; sourceTree = "<group>"; };
@@ -1976,7 +1957,6 @@
 				5A2500F516393201004113B8 /* ImageDownloader.m */,
 				5A2500F616393201004113B8 /* RebroadcastModule */,
 				5A2500F916393201004113B8 /* RelayModule */,
-				5A25011916393201004113B8 /* SBJSON */,
 				5A25012716393201004113B8 /* SFHFKeychainUtils */,
 				5A25012A16393201004113B8 /* TCWBEngine */,
 			);
@@ -2099,26 +2079,6 @@
 				5A25011816393201004113B8 /* WordsLeftView.m */,
 			);
 			path = RelayModule;
-			sourceTree = "<group>";
-		};
-		5A25011916393201004113B8 /* SBJSON */ = {
-			isa = PBXGroup;
-			children = (
-				5A25011A16393201004113B8 /* JSON.h */,
-				5A25011B16393201004113B8 /* NSObject+SBJSON.h */,
-				5A25011C16393201004113B8 /* NSObject+SBJSON.m */,
-				5A25011D16393201004113B8 /* NSString+SBJSON.h */,
-				5A25011E16393201004113B8 /* NSString+SBJSON.m */,
-				5A25011F16393201004113B8 /* SBJSON.h */,
-				5A25012016393201004113B8 /* SBJSON.m */,
-				5A25012116393201004113B8 /* SBJsonBase.h */,
-				5A25012216393201004113B8 /* SBJsonBase.m */,
-				5A25012316393201004113B8 /* SBJsonParser.h */,
-				5A25012416393201004113B8 /* SBJsonParser.m */,
-				5A25012516393201004113B8 /* SBJsonWriter.h */,
-				5A25012616393201004113B8 /* SBJsonWriter.m */,
-			);
-			path = SBJSON;
 			sourceTree = "<group>";
 		};
 		5A25012716393201004113B8 /* SFHFKeychainUtils */ = {
@@ -4228,12 +4188,6 @@
 				5A25017F16393201004113B8 /* UITableViewFriendCell.m in Sources */,
 				5A25018016393201004113B8 /* UIWaitingView.m in Sources */,
 				5A25018116393201004113B8 /* WordsLeftView.m in Sources */,
-				5A25018216393201004113B8 /* NSObject+SBJSON.m in Sources */,
-				5A25018316393201004113B8 /* NSString+SBJSON.m in Sources */,
-				5A25018416393201004113B8 /* SBJSON.m in Sources */,
-				5A25018516393201004113B8 /* SBJsonBase.m in Sources */,
-				5A25018616393201004113B8 /* SBJsonParser.m in Sources */,
-				5A25018716393201004113B8 /* SBJsonWriter.m in Sources */,
 				5A25018816393201004113B8 /* SFHFKeychainUtils.m in Sources */,
 				5A25018916393201004113B8 /* AuthorizeDelegate.m in Sources */,
 				5A25018A16393201004113B8 /* NSObject+WBUtil.m in Sources */,
