@@ -349,7 +349,7 @@ static float		g_keyboardFrameHeightLastTime = 216;		// 默认初始键盘高度
     if (([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] == NotReachable) 
 		&& ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == NotReachable)){
         
-        NSString *strNote = [NSString stringWithString:@"网络请求失败,稍候请重试"];
+        NSString *strNote = @"网络请求失败,稍候请重试";
         [self performSelector:@selector(showNoteView:) withObject:strNote afterDelay:1.5];
     }
 
@@ -877,7 +877,7 @@ static float		g_keyboardFrameHeightLastTime = 216;		// 默认初始键盘高度
 }
 
 - (void)topicViewsubTitle:(NSString *)title {
-    textView.text = [textView.text stringByAppendingFormat:title];
+    textView.text = [textView.text stringByAppendingString:title];
 }
 - (void)viewDidUnload
 {

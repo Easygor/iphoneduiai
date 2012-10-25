@@ -705,7 +705,7 @@
         
         char c = pinyinFirstLetter([strNick characterAtIndex:0]);
         c = toupper(c);
-        NSString  *strIndex = [NSString stringWithFormat:@"%C",c];
+        NSString  *strIndex = [NSString stringWithFormat:@"%hhd",c];
         
         
         // 当 arrFriend 为空时
