@@ -74,7 +74,6 @@
 		5A25017616393201004113B8 /* FileStreame.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010116393201004113B8 /* FileStreame.m */; };
 		5A25017716393201004113B8 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010316393201004113B8 /* pinyin.c */; };
 		5A25017816393201004113B8 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010616393201004113B8 /* Reachability.m */; };
-		5A25017916393201004113B8 /* RegexKitLite.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010816393201004113B8 /* RegexKitLite.m */; };
 		5A25017A16393201004113B8 /* TCWBFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010A16393201004113B8 /* TCWBFriendViewController.m */; };
 		5A25017B16393201004113B8 /* TCWBRebroadcastMsgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010C16393201004113B8 /* TCWBRebroadcastMsgViewController.m */; };
 		5A25017C16393201004113B8 /* TCWBTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25010E16393201004113B8 /* TCWBTopicViewController.m */; };
@@ -996,8 +995,6 @@
 		5A25010416393201004113B8 /* pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		5A25010516393201004113B8 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		5A25010616393201004113B8 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		5A25010716393201004113B8 /* RegexKitLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegexKitLite.h; sourceTree = "<group>"; };
-		5A25010816393201004113B8 /* RegexKitLite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegexKitLite.m; sourceTree = "<group>"; };
 		5A25010916393201004113B8 /* TCWBFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWBFriendViewController.h; sourceTree = "<group>"; };
 		5A25010A16393201004113B8 /* TCWBFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWBFriendViewController.m; sourceTree = "<group>"; };
 		5A25010B16393201004113B8 /* TCWBRebroadcastMsgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCWBRebroadcastMsgViewController.h; sourceTree = "<group>"; };
@@ -2079,8 +2076,6 @@
 				5A25010416393201004113B8 /* pinyin.h */,
 				5A25010516393201004113B8 /* Reachability.h */,
 				5A25010616393201004113B8 /* Reachability.m */,
-				5A25010716393201004113B8 /* RegexKitLite.h */,
-				5A25010816393201004113B8 /* RegexKitLite.m */,
 				5A25010916393201004113B8 /* TCWBFriendViewController.h */,
 				5A25010A16393201004113B8 /* TCWBFriendViewController.m */,
 				5A25010B16393201004113B8 /* TCWBRebroadcastMsgViewController.h */,
@@ -4219,7 +4214,6 @@
 				5A25017616393201004113B8 /* FileStreame.m in Sources */,
 				5A25017716393201004113B8 /* pinyin.c in Sources */,
 				5A25017816393201004113B8 /* Reachability.m in Sources */,
-				5A25017916393201004113B8 /* RegexKitLite.m in Sources */,
 				5A25017A16393201004113B8 /* TCWBFriendViewController.m in Sources */,
 				5A25017B16393201004113B8 /* TCWBRebroadcastMsgViewController.m in Sources */,
 				5A25017C16393201004113B8 /* TCWBTopicViewController.m in Sources */,

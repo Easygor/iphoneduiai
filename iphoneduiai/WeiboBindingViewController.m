@@ -97,6 +97,10 @@
 
 -(IBAction)tengxunWeiboButtonPress
 {
+    [weiboEngine logInWithDelegate:self
+                         onSuccess:@selector(onSuccessLogin)
+                         onFailure:@selector(onFailureLogin:)];
+
 
 }
 

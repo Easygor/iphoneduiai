@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SinaWeibo.h"
+#import "TCWBEngine.h"
 @interface WeiboBindingViewController : UIViewController<SinaWeiboDelegate>
-
+{
+     TCWBEngine  *weiboEngine;
+}
+@property (nonatomic, retain) TCWBEngine   *weiboEngine;
 @end
