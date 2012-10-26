@@ -16,8 +16,8 @@
 #import "EGORefreshTableHeaderView.h"
 #import "AddWeiyuViewController.h"
 #import "DropMenuView.h"
-
-
+#import "CommentViewController.h"
+#import "ShowCommentViewController.h"
 @interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
     BOOL reloading;
@@ -38,7 +38,6 @@
 @end
 
 @implementation WeiTalkListViewController
-@synthesize bottomBarView;
 
 - (void)dealloc
 {
@@ -470,6 +469,19 @@
     NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
     
+    NSDictionary *data = self.weiyus[indexPath.row];
+    NSString *idStr = [data objectForKey:@"id"];
+    
+//    CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
+//    commentViewController.idStr = idStr;
+//
+//    [self.navigationController pushViewController:commentViewController animated:YES];
+//    [commentViewController release];
+
+    ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
+    showCommentViewController.weiYudic = data;
+    [self.navigationController pushViewController:showCommentViewController animated:YES];
+    [showCommentViewController release];
     
 }
 
