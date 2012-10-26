@@ -8,6 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WeiTalkListViewController : UITableViewController
+@interface WeiTalkListViewController : UITableViewController<UITextViewDelegate>
+{
+    // bottom bar
+    UIImageView* textBackImageView;
+    UIImageView* bottomBarView;
+    UITextView* commentTextView;
+    UIButton* postButton;
+    NSString* commentString;
+    BOOL isCommentTextViewEditing;
+    
+    // bottom bar button
+    UIImageView* editImageView;
+    UILabel* noticeLabel;
+    UIButton* praiseButton;
+    UIButton* forwardButton;
 
+}
+@property(nonatomic,strong) UIImageView* bottomBarView;
 @end
