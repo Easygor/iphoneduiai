@@ -38,6 +38,7 @@
 @end
 
 @implementation WeiTalkListViewController
+@synthesize bottomBarView;
 
 - (void)dealloc
 {
@@ -468,6 +469,8 @@
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
+    
+    
 }
 
 #pragma mark - drop menu 

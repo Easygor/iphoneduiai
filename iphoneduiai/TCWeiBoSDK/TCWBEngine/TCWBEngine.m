@@ -15,7 +15,7 @@
 #import "FileStreame.h"
 #import "AuthorizeDelegate.h"
 #import "TCWBRepeatViewController.h"
-
+#import "HZNavigationBar.h"
 #define BUFFERSIZE    4000  
 #define MAXADDRS    32  
 
@@ -513,7 +513,7 @@ static BOOL G_LOGOUT = NO;
 
 //function: 主页时间线
 - (void)getHomeTimelinewithFormat:(NSString *)format
-                         pageFlag:(NSUInteger)flag 
+                         pageFlag:(NSUInteger)flag
                          pageTime:(NSString *)pageTime  
                            reqNum:(NSUInteger)reqnum 
                              type:(NSUInteger)type 
@@ -1159,9 +1159,27 @@ static BOOL G_LOGOUT = NO;
     
     TCWBAuthorizeViewController *authViewController = [[TCWBAuthorizeViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:authViewController];
+   // HZNavigationBar *narBar = [[HZNavigationBar alloc]init];
+    [nav.navigationBar respondsToSelector:@selector(setBackButtonBackgroundImage:forState:barMetrics:)];
+    [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-top.png"] forBarMetrics:UIBarMetricsDefault];
+    nav.navigationBar.layer.shadowColor = [[UIColor blackColor] CGColor];
+    nav.navigationBar.layer.shadowOffset = CGSizeMake(0, 1.2);
+    nav.navigationBar.layer.shadowRadius = 1.5;
+    nav.navigationBar.layer.shadowOpacity = 0.25;
+    nav.navigationBar.layer.masksToBounds = NO;
+    nav.navigationBar.layer.shouldRasterize = YES;
+    
+    
+//    if ([nvc.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+//        [nvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-top.png"] forBarMetrics:UIBarMetricsDefault];
+//    } else {
+//        [nvc.navigationBar insertSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-top.png"]] autorelease] atIndex:1];
+//    }
+
+    
     authViewController.requestURLString = urlString;
     [authViewController setDelegate:self];    
-    [rootViewController presentModalViewController:nav animated:YES]; 
+    [rootViewController presentModalViewController:nav animated:YES];
     [authViewController release];
     [nav release];
 }

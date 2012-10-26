@@ -88,6 +88,8 @@
 		5A25018B16393201004113B8 /* TCWBAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013016393201004113B8 /* TCWBAuthorizeViewController.m */; };
 		5A25018C16393201004113B8 /* TCWBEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013216393201004113B8 /* TCWBEngine.m */; };
 		5A25018D16393201004113B8 /* TCWBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013516393201004113B8 /* TCWBRequest.m */; };
+		5A276419163A5C17009599C1 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A276417163A5C17009599C1 /* CommentViewController.m */; };
+		5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A276418163A5C17009599C1 /* CommentViewController.xib */; };
 		5A34EBC01622C647005A0232 /* QQSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A34EBBE1622C647005A0232 /* QQSetViewController.m */; };
 		5A34EBC11622C647005A0232 /* QQSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A34EBBF1622C647005A0232 /* QQSetViewController.xib */; };
 		5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3505CF16204C5C00A80A71 /* AddPicViewController.m */; };
@@ -1020,6 +1022,9 @@
 		5A25013516393201004113B8 /* TCWBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWBRequest.m; sourceTree = "<group>"; };
 		5A25013616393201004113B8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Language.strings"; sourceTree = "<group>"; };
 		5A25013716393201004113B8 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Language.strings"; sourceTree = "<group>"; };
+		5A276416163A5C17009599C1 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		5A276417163A5C17009599C1 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		5A276418163A5C17009599C1 /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
 		5A34EBBD1622C647005A0232 /* QQSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQSetViewController.h; sourceTree = "<group>"; };
 		5A34EBBE1622C647005A0232 /* QQSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQSetViewController.m; sourceTree = "<group>"; };
 		5A34EBBF1622C647005A0232 /* QQSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QQSetViewController.xib; sourceTree = "<group>"; };
@@ -2595,6 +2600,9 @@
 				6141A70315FB730B00985257 /* WeiTalkListViewController.h */,
 				6141A70415FB730B00985257 /* WeiTalkListViewController.m */,
 				6141A70515FB730B00985257 /* WeiTalkListViewController.xib */,
+				5A276416163A5C17009599C1 /* CommentViewController.h */,
+				5A276417163A5C17009599C1 /* CommentViewController.m */,
+				5A276418163A5C17009599C1 /* CommentViewController.xib */,
 				614CAA4E161C579B00C86D8F /* AddWeiyuViewController.h */,
 				614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */,
 				614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */,
@@ -4045,6 +4053,7 @@
 				5A25017016393201004113B8 /* test@2x.png in Resources */,
 				61B649511639711600400524 /* top_arrow.png in Resources */,
 				61B649521639711600400524 /* top_arrow@2x.png in Resources */,
+				5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4172,6 +4181,7 @@
 				5A25018B16393201004113B8 /* TCWBAuthorizeViewController.m in Sources */,
 				5A25018C16393201004113B8 /* TCWBEngine.m in Sources */,
 				5A25018D16393201004113B8 /* TCWBRequest.m in Sources */,
+				5A276419163A5C17009599C1 /* CommentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

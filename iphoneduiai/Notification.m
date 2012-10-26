@@ -208,7 +208,7 @@ static NSString *fileName = @"notifications.plist";
 - (void)updateFromRemote:(void(^)())block
 {
     NSMutableDictionary *dp = [Utils queryParams];
-    [dp setObject:[NSNumber numberWithInteger:0] forKey:@"accesstime"];
+//    [dp setObject:[NSNumber numberWithInteger:0] forKey:@"accesstime"];
     
     [[RKClient sharedClient] get:[@"/common/sysnotice.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
         [request setOnDidFailLoadWithError:^(NSError *error){
