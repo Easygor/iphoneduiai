@@ -342,6 +342,10 @@
 		6141A71615FB779200985257 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71415FB779100985257 /* LoginViewController.xib */; };
 		6141A71D15FB800700985257 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71B15FB800700985257 /* bg.png */; };
 		6141A71E15FB800700985257 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A71C15FB800700985257 /* bg@2x.png */; };
+		614786AA163BB6D800935E1E /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 614786A7163BB6D800935E1E /* iVersion.bundle */; };
+		614786AB163BB6D800935E1E /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 614786A9163BB6D800935E1E /* iVersion.m */; };
+		614786B0163BB6E400935E1E /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 614786AD163BB6E400935E1E /* iRate.bundle */; };
+		614786B1163BB6E400935E1E /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 614786AF163BB6E400935E1E /* iRate.m */; };
 		614CAA51161C579C00C86D8F /* AddWeiyuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */; };
 		614CAA52161C579C00C86D8F /* AddWeiyuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */; };
 		614CAA59161C7CAD00C86D8F /* DropMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 614CAA58161C7CAD00C86D8F /* DropMenuView.m */; };
@@ -1321,6 +1325,12 @@
 		6141A71415FB779100985257 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		6141A71B15FB800700985257 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		6141A71C15FB800700985257 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		614786A7163BB6D800935E1E /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
+		614786A8163BB6D800935E1E /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
+		614786A9163BB6D800935E1E /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
+		614786AD163BB6E400935E1E /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
+		614786AE163BB6E400935E1E /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
+		614786AF163BB6E400935E1E /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
 		614CAA4E161C579B00C86D8F /* AddWeiyuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddWeiyuViewController.h; sourceTree = "<group>"; };
 		614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddWeiyuViewController.m; sourceTree = "<group>"; };
 		614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddWeiyuViewController.xib; sourceTree = "<group>"; };
@@ -2434,6 +2444,26 @@
 			name = "navigation & tabbar ";
 			sourceTree = "<group>";
 		};
+		614786A6163BB6D800935E1E /* iVersion */ = {
+			isa = PBXGroup;
+			children = (
+				614786A7163BB6D800935E1E /* iVersion.bundle */,
+				614786A8163BB6D800935E1E /* iVersion.h */,
+				614786A9163BB6D800935E1E /* iVersion.m */,
+			);
+			path = iVersion;
+			sourceTree = "<group>";
+		};
+		614786AC163BB6E400935E1E /* iRate */ = {
+			isa = PBXGroup;
+			children = (
+				614786AD163BB6E400935E1E /* iRate.bundle */,
+				614786AE163BB6E400935E1E /* iRate.h */,
+				614786AF163BB6E400935E1E /* iRate.m */,
+			);
+			path = iRate;
+			sourceTree = "<group>";
+		};
 		6153D9BC161093F200AC4A2D /* Custom Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3215,6 +3245,8 @@
 		61EAE20B1606A09900552C2E /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				614786AC163BB6E400935E1E /* iRate */,
+				614786A6163BB6D800935E1E /* iVersion */,
 				5A2500B616393201004113B8 /* TCWeiBoSDK */,
 				61F863AA16383C160083E497 /* SinaWeibo */,
 				61CB40B3160489CE00888317 /* SVProgressHUD */,
@@ -4063,6 +4095,8 @@
 				61B649521639711600400524 /* top_arrow@2x.png in Resources */,
 				5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */,
 				5A276423163AA91B009599C1 /* ShowCommentViewController.xib in Resources */,
+				614786AA163BB6D800935E1E /* iVersion.bundle in Resources */,
+				614786B0163BB6E400935E1E /* iRate.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4192,6 +4226,8 @@
 				5A25018D16393201004113B8 /* TCWBRequest.m in Sources */,
 				5A276419163A5C17009599C1 /* CommentViewController.m in Sources */,
 				5A276422163AA91B009599C1 /* ShowCommentViewController.m in Sources */,
+				614786AB163BB6D800935E1E /* iVersion.m in Sources */,
+				614786B1163BB6E400935E1E /* iRate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
