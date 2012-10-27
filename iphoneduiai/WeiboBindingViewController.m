@@ -96,6 +96,7 @@
     
     SinaWeibo *sinaweibo = [[SinaWeibo alloc]initWithAppKey:@"1118660852" appSecret:@"1e650633c6c72cc28583bc1bdef21a38" appRedirectURI:@"http://www.cnblogs.com/smallyin00/" andDelegate:self];
     [sinaweibo logIn];
+    [sinaweibo release];
 }
 
 -(IBAction)tengxunWeiboButtonPress

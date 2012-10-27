@@ -90,6 +90,8 @@
 		5A25018D16393201004113B8 /* TCWBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013516393201004113B8 /* TCWBRequest.m */; };
 		5A276419163A5C17009599C1 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A276417163A5C17009599C1 /* CommentViewController.m */; };
 		5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A276418163A5C17009599C1 /* CommentViewController.xib */; };
+		5A276422163AA91B009599C1 /* ShowCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A276420163AA91B009599C1 /* ShowCommentViewController.m */; };
+		5A276423163AA91B009599C1 /* ShowCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A276421163AA91B009599C1 /* ShowCommentViewController.xib */; };
 		5A34EBC01622C647005A0232 /* QQSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A34EBBE1622C647005A0232 /* QQSetViewController.m */; };
 		5A34EBC11622C647005A0232 /* QQSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A34EBBF1622C647005A0232 /* QQSetViewController.xib */; };
 		5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3505CF16204C5C00A80A71 /* AddPicViewController.m */; };
@@ -1025,6 +1027,9 @@
 		5A276416163A5C17009599C1 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		5A276417163A5C17009599C1 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		5A276418163A5C17009599C1 /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
+		5A27641F163AA91B009599C1 /* ShowCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowCommentViewController.h; sourceTree = "<group>"; };
+		5A276420163AA91B009599C1 /* ShowCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowCommentViewController.m; sourceTree = "<group>"; };
+		5A276421163AA91B009599C1 /* ShowCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowCommentViewController.xib; sourceTree = "<group>"; };
 		5A34EBBD1622C647005A0232 /* QQSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQSetViewController.h; sourceTree = "<group>"; };
 		5A34EBBE1622C647005A0232 /* QQSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQSetViewController.m; sourceTree = "<group>"; };
 		5A34EBBF1622C647005A0232 /* QQSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QQSetViewController.xib; sourceTree = "<group>"; };
@@ -2603,6 +2608,9 @@
 				5A276416163A5C17009599C1 /* CommentViewController.h */,
 				5A276417163A5C17009599C1 /* CommentViewController.m */,
 				5A276418163A5C17009599C1 /* CommentViewController.xib */,
+				5A27641F163AA91B009599C1 /* ShowCommentViewController.h */,
+				5A276420163AA91B009599C1 /* ShowCommentViewController.m */,
+				5A276421163AA91B009599C1 /* ShowCommentViewController.xib */,
 				614CAA4E161C579B00C86D8F /* AddWeiyuViewController.h */,
 				614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */,
 				614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */,
@@ -4054,6 +4062,7 @@
 				61B649511639711600400524 /* top_arrow.png in Resources */,
 				61B649521639711600400524 /* top_arrow@2x.png in Resources */,
 				5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */,
+				5A276423163AA91B009599C1 /* ShowCommentViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4182,6 +4191,7 @@
 				5A25018C16393201004113B8 /* TCWBEngine.m in Sources */,
 				5A25018D16393201004113B8 /* TCWBRequest.m in Sources */,
 				5A276419163A5C17009599C1 /* CommentViewController.m in Sources */,
+				5A276422163AA91B009599C1 /* ShowCommentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

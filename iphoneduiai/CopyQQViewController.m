@@ -9,10 +9,13 @@
 #import "CopyQQViewController.h"
 #import "SVProgressHUD.h"
 #import "CustomBarButtonItem.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
 
 @interface CustomView :UIView
 @end
 @implementation CustomView
+
 - (void)drawRect:(CGRect)rect
 {
     //画长方形
@@ -35,7 +38,7 @@
 @end
 
 @implementation CopyQQViewController
-
+@synthesize  idStr;
 -(void)loadView
 {
     [super loadView];

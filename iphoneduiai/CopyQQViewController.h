@@ -12,5 +12,5 @@
 {
     UILabel *qqLabel;
 }
-
+@property(nonatomic,retain)NSString *idStr;
 @end
