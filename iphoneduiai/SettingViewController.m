@@ -67,6 +67,7 @@ static int behindImgTag = 103;
 {
     [super viewDidLoad];
     
+    
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -330,6 +331,7 @@ static int behindImgTag = 103;
         // UM feedback
 //        SendSuggestViewController *sendSuggestViewController = [[[SendSuggestViewController alloc]init]autorelease];
 //        [self.navigationController pushViewController:sendSuggestViewController animated:YES];
+        [self sendEMail];
     } else if ([label isEqualToString:@"up_person"]){
         DigoUsersViewController *duvc = [[[DigoUsersViewController alloc] initWithNibName:@"DigoUsersViewController" bundle:nil] autorelease];
         [self.navigationController pushViewController:duvc animated:YES];
@@ -409,6 +411,94 @@ static int behindImgTag = 103;
     
     [picker dismissModalViewControllerAnimated:YES];
     
+}
+//点击按钮后，触发这个方法
+-(void)sendEMail
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    
+    if (mailClass != nil)
+    {
+        if ([mailClass canSendMail])
+        {
+            [self displayComposerSheet];
+        }
+        else
+        {
+            [self launchMailAppOnDevice];
+        }
+    }
+    else
+    {
+        [self launchMailAppOnDevice];
+    }
+}
+
+//可以发送邮件的话
+- (void)displayComposerSheet
+{
+    NSLog(@"sending verify action...");
+    
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    
+    
+    [mc setSubject:@"给对爱的建议"];
+     NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+    NSString *info = @"对爱用户";
+    NSString *niname = user[@"info"][@"niname"];
+    NSString *model = [[UIDevice currentDevice] model];
+   
+   NSString *emailBody = [info stringByAppendingFormat:@"%@,%@",niname, model];
+
+
+    [mc setMessageBody:emailBody isHTML:YES];
+    
+    //设置收件人
+    [mc setToRecipients:[NSArray arrayWithObject:@"rose@duai.com"]];
+    
+    [self presentModalViewController:mc animated:YES];
+    [mc release];
+
+    
+}
+-(void)launchMailAppOnDevice
+{
+    NSString *recipients = @"mailto:first@example.com&subject=my email!";
+    //@"mailto:first@example.com?cc=second@example.com,third@example.com&subject=my email!";
+    NSString *body = @"&body=email body!";
+    
+    NSString *email = [NSString stringWithFormat:@"%@%@", recipients, body];
+    email = [email stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    
+    [[UIApplication sharedApplication] openURL: [NSURL URLWithString:email]];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    NSString *msg;
+    
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            msg = @"邮件发送取消";
+            break;
+        case MFMailComposeResultSaved:
+            msg = @"邮件保存成功";
+            break;
+        case MFMailComposeResultSent:
+            msg = @"邮件发送成功";
+            break;
+        case MFMailComposeResultFailed:
+            msg = @"邮件发送失败";
+            break;
+        default:
+            break;
+    }
+    [SVProgressHUD showSuccessWithStatus:msg];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end
