@@ -438,11 +438,49 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)checkQQAction
 {
-    //NSLog(@"check QQ now");
-    CopyQQViewController *copyQQViewController = [[[CopyQQViewController alloc]init]autorelease];
+    NSLog(@"check QQ now");
     
-    [self.navigationController pushViewController:copyQQViewController animated:YES];
-    
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/common/contact.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        
+        // 设置POST的form表单的参数
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        
+        updateArgs[@"uid"] = self.user[@"_id"];
+        updateArgs[@"agree"] = @"0";
+        
+        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        // 请求失败时
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        // 请求成功时
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            NSLog(@"error: %@", response.bodyAsString);
+            if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
+                NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
+                NSInteger code = [data[@"error"] integerValue];  // 返回的状态
+                if (code == 0) {
+                    // 成功提交的情况
+                    // ....
+                    CopyQQViewController *copyQQViewController = [[[CopyQQViewController alloc]init]autorelease];
+                    [self.navigationController pushViewController:copyQQViewController animated:YES];
+                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                } else{
+                    // 失败的情况
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
+    }];
+   
 }
 
 - (IBAction)moreDetailAction:(UIButton *)sender
@@ -560,4 +598,6 @@ static CGFloat dHeight2 = 0.0f;
     NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
 }
+
+
 @end
