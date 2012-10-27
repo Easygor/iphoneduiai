@@ -1924,10 +1924,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="439359407"/>
-<<<<<<< HEAD
 								<reference key="NSWindow"/>
-=======
->>>>>>> eba925d095469ad03783519023ae59289a0a4a69
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -2361,10 +2358,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="388476768"/>
-<<<<<<< HEAD
 								<reference key="NSWindow"/>
-=======
->>>>>>> eba925d095469ad03783519023ae59289a0a4a69
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
