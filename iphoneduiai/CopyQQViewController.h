@@ -12,5 +12,6 @@
 {
     UILabel *qqLabel;
 }
-@property(nonatomic,retain)NSString *idStr;
+@property(nonatomic,retain) NSDictionary *QQdata;
+
 @end

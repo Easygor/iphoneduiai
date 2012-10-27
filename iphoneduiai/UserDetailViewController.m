@@ -467,8 +467,10 @@ static CGFloat dHeight2 = 0.0f;
                     // 成功提交的情况
                     // ....
                     CopyQQViewController *copyQQViewController = [[[CopyQQViewController alloc]init]autorelease];
+                    copyQQViewController.QQdata = data;
                     [self.navigationController pushViewController:copyQQViewController animated:YES];
-                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                
+                   // [SVProgressHUD showSuccessWithStatus:@"保存成功"];
                 } else{
                     // 失败的情况
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
