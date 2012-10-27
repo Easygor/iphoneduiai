@@ -231,6 +231,7 @@
         }];
         
         [request setOnDidLoadResponse:^(RKResponse *response){
+            NSLog(@"save zeou %@", response.bodyAsString);
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [response.bodyAsString objectFromJSONString];
                 NSInteger code = [data[@"error"] integerValue];
