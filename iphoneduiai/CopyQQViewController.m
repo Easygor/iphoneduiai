@@ -15,7 +15,6 @@
 @interface CustomView :UIView
 @end
 @implementation CustomView
-
 - (void)drawRect:(CGRect)rect
 {
     //画长方形
@@ -38,7 +37,7 @@
 @end
 
 @implementation CopyQQViewController
-@synthesize  idStr;
+@synthesize QQdata;
 -(void)loadView
 {
     [super loadView];
@@ -57,7 +56,7 @@
     [upView addSubview:compositeView];
     
     qqLabel = [[[UILabel alloc]initWithFrame:CGRectMake(10, 1, 190, 38)]autorelease];
-    qqLabel.text = @"81168900";
+    qqLabel.text = self.QQdata[@"data"][@"contact"];
     qqLabel.font = [UIFont systemFontOfSize:23];
     qqLabel.backgroundColor = [UIColor clearColor];
     [compositeView addSubview:qqLabel];
@@ -89,6 +88,7 @@
     tipLabel.font = [UIFont systemFontOfSize:15];
     tipLabel.textColor = RGBCOLOR(174, 174, 174);
     [self.view addSubview:tipLabel];
+  
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -129,5 +129,6 @@
     [SVProgressHUD showSuccessWithStatus:@"复制成功"];
 
 }
+
 
 @end

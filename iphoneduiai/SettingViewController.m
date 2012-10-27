@@ -21,6 +21,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "LoginViewController.h"
+#import "iVersion.h"
 
 #define kActionChooseImageTag 201
 static int behindImgTag = 103;
@@ -446,11 +447,13 @@ static int behindImgTag = 103;
     
     [mc setSubject:@"给对爱的建议"];
      NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
-    NSString *info = @"对爱用户";
+    NSString *info = @"对爱用户:";
     NSString *niname = user[@"info"][@"niname"];
+    NSString *uid = user[@"info"][@"uid"];
+
     NSString *model = [[UIDevice currentDevice] model];
-   
-   NSString *emailBody = [info stringByAppendingFormat:@"%@,%@",niname, model];
+    NSString *version  = [[iVersion sharedInstance] applicationVersion];
+   NSString *emailBody = [info stringByAppendingFormat:@"%@%@设备:%@版本:%@",niname,uid, model,version];
 
 
     [mc setMessageBody:emailBody isHTML:YES];
