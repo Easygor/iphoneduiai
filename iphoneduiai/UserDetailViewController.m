@@ -232,7 +232,7 @@ static CGFloat dHeight2 = 0.0f;
 
 - (void)backAction
 {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated

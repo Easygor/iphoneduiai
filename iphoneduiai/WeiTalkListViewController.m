@@ -466,22 +466,23 @@
 - (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
+//    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
-    
-    NSDictionary *data = self.weiyus[indexPath.row];
-    NSString *idStr = [data objectForKey:@"id"];
-    
-//    CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
-//    commentViewController.idStr = idStr;
-//
-//    [self.navigationController pushViewController:commentViewController animated:YES];
-//    [commentViewController release];
+    NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
+    if ([status isEqualToString:@"comment"]) {
+        
+        //    CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
+        //    commentViewController.idStr = idStr;
+        //
+        //    [self.navigationController pushViewController:commentViewController animated:YES];
+        //    [commentViewController release];
+        
+        ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
+        showCommentViewController.weiYudic = weiyu;
+        [self.navigationController pushViewController:showCommentViewController animated:YES];
+        [showCommentViewController release];
+    }
 
-    ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
-    showCommentViewController.weiYudic = data;
-    [self.navigationController pushViewController:showCommentViewController animated:YES];
-    [showCommentViewController release];
     
 }
 
