@@ -290,12 +290,14 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
-    
-    NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
-    DetailNotificationViewController *detailNotificationViewController = [[DetailNotificationViewController alloc]initWithNibName:@"DetailNotificationViewController" bundle:nil];
-    detailNotificationViewController.notificationData = n;
-    [self.navigationController pushViewController:detailNotificationViewController animated:YES];
-    [detailNotificationViewController release];
+    if (indexPath.row < self.notifications.count) {
+        NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
+        DetailNotificationViewController *detailNotificationViewController = [[DetailNotificationViewController alloc]initWithNibName:@"DetailNotificationViewController" bundle:nil];
+        detailNotificationViewController.notificationData = n;
+        [self.navigationController pushViewController:detailNotificationViewController animated:YES];
+        [detailNotificationViewController release];
+    }
+
     
 }
 

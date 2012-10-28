@@ -39,8 +39,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    [self.navigationController.navigationBar setHidden:NO];
-    self.title = @"系统通知";
+
+    self.navigationItem.title = @"系统通知";
   CustomBarButtonItem  *rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
@@ -51,10 +51,9 @@
 
 }
 
-- (void)didReceiveMemoryWarning
+- (void)backAction
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
