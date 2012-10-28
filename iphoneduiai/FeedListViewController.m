@@ -11,7 +11,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
-
+#import "FeedListCell.h"
 @interface FeedListViewController ()
 
 @property (strong, nonatomic) UITableViewCell *moreCell;
@@ -50,6 +50,11 @@
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     [self.navigationController.navigationBar setHidden:NO];
+    
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"我的动态"];
+   rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
+    self.navigationItem.rightBarButtonItem = rightBarButton;
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -70,6 +75,12 @@
     return YES;
 }
 
+-(void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    //    [self.presentedViewController dismissModalViewControllerAnimated:YES];
+}
+
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -77,6 +88,20 @@
         return self.feeds.count;
     } else{
         return self.feeds.count + 1;
+    }
+    
+}
+-(void)editButton
+{
+    if (rightBarButton.title == @"编辑")
+    {
+        rightBarButton.title = @"确定";
+        [rightBarButton setStyle:UIBarButtonItemStyleDone];
+        [self setEditing:YES animated:YES];
+    }else{
+        rightBarButton.title = @"编辑";
+        [rightBarButton setStyle:UIBarButtonItemStylePlain];
+        [self setEditing:NO animated:YES];
     }
     
 }
@@ -111,18 +136,23 @@
 {
     
     static NSString *CellIdentifier = @"feedCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FeedListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     // Configure the cell...
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[[FeedListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         
         
     }
     
     NSDictionary *n = [self.feeds objectAtIndex:indexPath.row];
-    cell.textLabel.text = n[@"addtime_text"];
-    cell.detailTextLabel.text = n[@"content"];
-    
+    cell.titleLabel = n[@"addtime_text"];
+    cell.contentLabel = n[@"content"];
+  
+    if ([n[@"info"][@"photo"] isEqualToString:@""]) {
+        [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+    } else{
+        [cell.headImgView loadImage:n[@"photo"]];
+    }
     return cell;
     
 }
@@ -146,7 +176,6 @@
         return 40.0;
     }else {
         return tableView.rowHeight;
-        
     }
     
 }

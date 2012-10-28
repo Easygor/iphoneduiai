@@ -142,17 +142,17 @@
     [deleteButton setHidden:NO];
     [button setEnabled:NO];
     // start the wiggling animation
-    CGFloat rotation = 0.03;
+  //  CGFloat rotation = 0.03;
     
-    CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"transform"];
-    shake.duration = 0.13;
-    shake.autoreverses = YES;
-    shake.repeatCount  = MAXFLOAT;
-    shake.removedOnCompletion = NO;
-    shake.fromValue = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform,-rotation, 0.0 ,0.0 ,1.0)];
-    shake.toValue   = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform, rotation, 0.0 ,0.0 ,1.0)];
-    
-    [self.layer addAnimation:shake forKey:@"shakeAnimation"];
+//    CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"transform"];
+//    shake.duration = 0.13;
+//    shake.autoreverses = YES;
+//    shake.repeatCount  = MAXFLOAT;
+//    shake.removedOnCompletion = NO;
+//    shake.fromValue = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform,-rotation, 0.0 ,0.0 ,1.0)];
+//    shake.toValue   = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform, rotation, 0.0 ,0.0 ,1.0)];
+//    
+//    [self.layer addAnimation:shake forKey:@"shakeAnimation"];
     
     // inform the springboard that the menu items are now editable so that the springboard
     // will place a done button on the navigationbar 

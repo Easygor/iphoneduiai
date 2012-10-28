@@ -92,6 +92,7 @@
 		5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A276418163A5C17009599C1 /* CommentViewController.xib */; };
 		5A276422163AA91B009599C1 /* ShowCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A276420163AA91B009599C1 /* ShowCommentViewController.m */; };
 		5A276423163AA91B009599C1 /* ShowCommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A276421163AA91B009599C1 /* ShowCommentViewController.xib */; };
+		5A34D8DA163D1CAC006E6B98 /* FeedListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A34D8D9163D1CAC006E6B98 /* FeedListCell.m */; };
 		5A34EBC01622C647005A0232 /* QQSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A34EBBE1622C647005A0232 /* QQSetViewController.m */; };
 		5A34EBC11622C647005A0232 /* QQSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A34EBBF1622C647005A0232 /* QQSetViewController.xib */; };
 		5A3505D116204C5C00A80A71 /* AddPicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A3505CF16204C5C00A80A71 /* AddPicViewController.m */; };
@@ -1035,6 +1036,8 @@
 		5A27641F163AA91B009599C1 /* ShowCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowCommentViewController.h; sourceTree = "<group>"; };
 		5A276420163AA91B009599C1 /* ShowCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowCommentViewController.m; sourceTree = "<group>"; };
 		5A276421163AA91B009599C1 /* ShowCommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowCommentViewController.xib; sourceTree = "<group>"; };
+		5A34D8D8163D1CAC006E6B98 /* FeedListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedListCell.h; sourceTree = "<group>"; };
+		5A34D8D9163D1CAC006E6B98 /* FeedListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedListCell.m; sourceTree = "<group>"; };
 		5A34EBBD1622C647005A0232 /* QQSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QQSetViewController.h; sourceTree = "<group>"; };
 		5A34EBBE1622C647005A0232 /* QQSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QQSetViewController.m; sourceTree = "<group>"; };
 		5A34EBBF1622C647005A0232 /* QQSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QQSetViewController.xib; sourceTree = "<group>"; };
@@ -2486,6 +2489,8 @@
 				61FB233D16268F8E003E4485 /* RightBubbleCell.m */,
 				5A6A53C6163BF6F600C86C89 /* NotificationCell.h */,
 				5A6A53C7163BF6F600C86C89 /* NotificationCell.m */,
+				5A34D8D8163D1CAC006E6B98 /* FeedListCell.h */,
+				5A34D8D9163D1CAC006E6B98 /* FeedListCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -4236,6 +4241,7 @@
 				614786B1163BB6E400935E1E /* iRate.m in Sources */,
 				5A6A53C8163BF6F600C86C89 /* NotificationCell.m in Sources */,
 				5A6A541B163C4EDA00C86C89 /* DetailNotificationViewController.m in Sources */,
+				5A34D8DA163D1CAC006E6B98 /* FeedListCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

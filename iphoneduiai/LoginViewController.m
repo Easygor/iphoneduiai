@@ -79,7 +79,7 @@
                                                  name:UIKeyboardWillShowNotification object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:self.view.window];
-    
+    self.contentView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)viewDidUnload
@@ -265,7 +265,7 @@
     [endingFrame getValue:&frame];
     
     CGRect containerFrame = self.contentView.frame;
-    containerFrame.origin.y = self.view.bounds.size.height - (frame.size.height + containerFrame.size.height)-50;
+    containerFrame.origin.y = self.view.bounds.size.height - (frame.size.height + containerFrame.size.height);
     
     [UIView animateWithDuration:0.3 animations:^{
         self.contentView.frame = containerFrame;
@@ -278,7 +278,7 @@
 - (void)keyboardWillHide:(NSNotification *)notif
 {
     [UIView animateWithDuration:0.2 animations:^{
-        self.contentView.frame = CGRectMake(0, 200, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
+        self.contentView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
     }];
     [self.logoImgView setHidden:NO];
 }
