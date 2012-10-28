@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CustomBarButtonItem.h"
 @interface FeedListViewController : UITableViewController
-
+{
+    CustomBarButtonItem *rightBarButton;
+}
 @end
