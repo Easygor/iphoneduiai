@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NotificationListViewController : UITableViewController
+@interface NotificationListViewController : UITableViewController<UITableViewDelegate>
 
 @end

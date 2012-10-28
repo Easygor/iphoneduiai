@@ -127,6 +127,9 @@
 		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
 		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
+		5A6A53C8163BF6F600C86C89 /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A53C7163BF6F600C86C89 /* NotificationCell.m */; };
+		5A6A541B163C4EDA00C86C89 /* DetailNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A5419163C4EDA00C86C89 /* DetailNotificationViewController.m */; };
+		5A6A541C163C4EDA00C86C89 /* DetailNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A6A541A163C4EDA00C86C89 /* DetailNotificationViewController.xib */; };
 		5A8685821636B743001F9134 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8685811636B743001F9134 /* MessageUI.framework */; };
 		5ABA114D16216DEA0043F51A /* settingBindingEntries.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5ABA114C16216DE90043F51A /* settingBindingEntries.plist */; };
 		5ABA115D1621D48B0043F51A /* SetEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA115C1621D48B0043F51A /* SetEmailViewController.m */; };
@@ -1078,6 +1081,11 @@
 		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
 		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
 		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
+		5A6A53C6163BF6F600C86C89 /* NotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCell.h; sourceTree = "<group>"; };
+		5A6A53C7163BF6F600C86C89 /* NotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationCell.m; sourceTree = "<group>"; };
+		5A6A5418163C4ED900C86C89 /* DetailNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNotificationViewController.h; sourceTree = "<group>"; };
+		5A6A5419163C4EDA00C86C89 /* DetailNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailNotificationViewController.m; sourceTree = "<group>"; };
+		5A6A541A163C4EDA00C86C89 /* DetailNotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailNotificationViewController.xib; sourceTree = "<group>"; };
 		5A8685811636B743001F9134 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5ABA114C16216DE90043F51A /* settingBindingEntries.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settingBindingEntries.plist; sourceTree = "<group>"; };
 		5ABA115B1621D48B0043F51A /* SetEmailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetEmailViewController.h; sourceTree = "<group>"; };
@@ -2224,6 +2232,9 @@
 				613026A21622FA41000E1CBD /* NotificationListViewController.h */,
 				613026A31622FA41000E1CBD /* NotificationListViewController.m */,
 				613026A41622FA41000E1CBD /* NotificationListViewController.xib */,
+				5A6A5418163C4ED900C86C89 /* DetailNotificationViewController.h */,
+				5A6A5419163C4EDA00C86C89 /* DetailNotificationViewController.m */,
+				5A6A541A163C4EDA00C86C89 /* DetailNotificationViewController.xib */,
 				613026A71622FA84000E1CBD /* FeedListViewController.h */,
 				613026A81622FA84000E1CBD /* FeedListViewController.m */,
 				613026A91622FA84000E1CBD /* FeedListViewController.xib */,
@@ -2485,6 +2496,8 @@
 				61FB233A16268F77003E4485 /* LeftBubbleCell.m */,
 				61FB233C16268F8D003E4485 /* RightBubbleCell.h */,
 				61FB233D16268F8E003E4485 /* RightBubbleCell.m */,
+				5A6A53C6163BF6F600C86C89 /* NotificationCell.h */,
+				5A6A53C7163BF6F600C86C89 /* NotificationCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -4097,6 +4110,7 @@
 				5A276423163AA91B009599C1 /* ShowCommentViewController.xib in Resources */,
 				614786AA163BB6D800935E1E /* iVersion.bundle in Resources */,
 				614786B0163BB6E400935E1E /* iRate.bundle in Resources */,
+				5A6A541C163C4EDA00C86C89 /* DetailNotificationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4228,6 +4242,8 @@
 				5A276422163AA91B009599C1 /* ShowCommentViewController.m in Sources */,
 				614786AB163BB6D800935E1E /* iVersion.m in Sources */,
 				614786B1163BB6E400935E1E /* iRate.m in Sources */,
+				5A6A53C8163BF6F600C86C89 /* NotificationCell.m in Sources */,
+				5A6A541B163C4EDA00C86C89 /* DetailNotificationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
