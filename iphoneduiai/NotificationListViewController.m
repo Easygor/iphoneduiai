@@ -11,8 +11,14 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+#import "CustomBarButtonItem.h"
+#import "NotificationCell.h"
+#import "DetailNotificationViewController.h"
 
 @interface NotificationListViewController ()
+{
+    CustomBarButtonItem *rightBarButton;
+}
 
 @property (strong, nonatomic) UITableViewCell *moreCell;
 @property (nonatomic) NSInteger curPage, totalPage;
@@ -49,6 +55,12 @@
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     [self.navigationController.navigationBar setHidden:NO];
+    self.title = @"系统通知";
+    rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
+    self.navigationItem.rightBarButtonItem = rightBarButton;
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -110,17 +122,21 @@
 {
     
     static NSString *CellIdentifier = @"noticeCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    NotificationCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     // Configure the cell...
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-
-
+        cell = [[[NotificationCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+   
     }
-    
     NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
-    cell.textLabel.text = n[@"title"];
-    cell.detailTextLabel.text = n[@"content"];
+    cell.titleLabel.text  = n[@"title"];
+    cell.contentLabel.text = n[@"content"];
+    
+    if ([n[@"photo"] isEqualToString:@""]) {
+        [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+    } else{
+        [cell.headImgView loadImage:n[@"photo"]];
+    }
     
     return cell;
     
@@ -145,7 +161,6 @@
         return 40.0;
     }else {
         return tableView.rowHeight;
-        
     }
     
 }
@@ -275,6 +290,13 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+    
+    NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
+    DetailNotificationViewController *detailNotificationViewController = [[DetailNotificationViewController alloc]initWithNibName:@"DetailNotificationViewController" bundle:nil];
+    detailNotificationViewController.notificationData = n;
+    [self.navigationController pushViewController:detailNotificationViewController animated:YES];
+    [detailNotificationViewController release];
+    
 }
 
 #pragma mark - request for notifications
@@ -303,7 +325,6 @@
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
-                
             } else{
                 [SVProgressHUD showErrorWithStatus:@"获取失败"];
             }
@@ -314,6 +335,27 @@
         }];
     }];
 }
+- (void)backAction
+{
+     [self.navigationController popViewControllerAnimated:YES];
+}
 
+-(void)editButton
+{
+    if (rightBarButton.title == @"编辑")
+    {
+        rightBarButton.title = @"确定";
+        [rightBarButton setStyle:UIBarButtonItemStyleDone];
+        [self setEditing:YES animated:YES];
+    }else{
+        rightBarButton.title = @"编辑";
+        [rightBarButton setStyle:UIBarButtonItemStylePlain];
+        [self setEditing:NO animated:YES];
+    }
 
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+     return UITableViewCellEditingStyleDelete; 
+}
 @end
