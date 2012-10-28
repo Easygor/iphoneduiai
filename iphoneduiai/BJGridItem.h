@@ -14,7 +14,7 @@ typedef enum{
     BJGridItemEditingMode = 1,
 }BJMode;
 @protocol BJGridItemDelegate;
-@interface BJGridItem : UIView{
+@interface BJGridItem : UIView<UIActionSheetDelegate>{
     UIImage *normalImage;
     UIImage *editingImage;
     AsyncImageView *bgImageView;

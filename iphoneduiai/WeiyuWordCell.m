@@ -10,6 +10,7 @@
 #import "FullyLoaded.h"
 #import "SliderView.h"
 #import "SVProgressHUD.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define DW 150.0f
 #define DH 112.0f
@@ -132,7 +133,12 @@
         contentLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         contentLabel.numberOfLines = 0;
         contentLabel.text = content;
-        
+        contentLabel.shadowColor = [UIColor whiteColor];
+        contentLabel.shadowOffset = CGSizeMake(0.0, 1.0);
+   
+
+        self.layer.shadowRadius = 1.0;
+        self.layer.shouldRasterize = YES;
         AsyncImageView *imView = nil;
         if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
             imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, contentLabel.frame.size.height + 10, DW, DH)] autorelease];
