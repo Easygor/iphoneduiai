@@ -450,7 +450,7 @@
         textField.tag = textFieldTag;
         textField.returnKeyType = UIReturnKeyDone;
         
-        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 14, 9, 16)] autorelease];
+        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(290, 14, 9, 16)] autorelease];
         arrowImgView.tag = arrowTag;
         [cell addSubview:arrowImgView];
         

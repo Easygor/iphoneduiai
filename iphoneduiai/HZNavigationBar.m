@@ -32,7 +32,7 @@
 
 -(void)willMoveToWindow:(UIWindow *)newWindow{
     [super willMoveToWindow:newWindow];
-//    [self applyDefaultStyle];
+    [self applyDefaultStyle];
 }
 
 - (void)applyDefaultStyle {

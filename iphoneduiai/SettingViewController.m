@@ -171,7 +171,7 @@ static int behindImgTag = 103;
         smallLabel.font = [UIFont systemFontOfSize:12];
         smallLabel.textColor = [UIColor grayColor];
         
-        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 14, 9, 16)] autorelease];
+        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(290, 14, 9, 16)] autorelease];
         [cell addSubview:arrowImgView];
         
     }

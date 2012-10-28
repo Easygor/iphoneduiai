@@ -28,8 +28,8 @@
         [button setBackgroundImage:bgImg forState:UIControlStateNormal];
         [button setBackgroundImage:bgImgPressed forState:UIControlStateHighlighted];
         
-//        button.titleLabel.shadowColor = RGBCOLOR(210, 233, 245);
-//        button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+        button.titleLabel.shadowColor = RGBCOLOR(120, 200, 235);
+        button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
         
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateHighlighted];
@@ -95,8 +95,8 @@
         
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateHighlighted];
-        //        button.titleLabel.shadowColor = RGBCOLOR(210, 233, 245);
-        //        button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+        button.titleLabel.shadowColor = RGBCOLOR(120, 200, 235);
+        button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
         
         //        [button setTitleShadowColor:RGBCOLOR(89, 176, 218) forState:UIControlStateNormal];
         //        [button setTitleShadowColor:RGBCOLOR(89, 176, 218) forState:UIControlStateHighlighted];
@@ -116,10 +116,12 @@
 + titleForNavigationItem:(NSString*)title
 {
     UILabel *titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 20, 18.0f)] autorelease];
-    titleLabel.font = [UIFont systemFontOfSize:18.0f];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     titleLabel.textAlignment = UITextAlignmentCenter;
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.shadowColor = RGBCOLOR(120, 200, 235);
+    titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
     titleLabel.opaque = YES;
     titleLabel.text = title;
     
