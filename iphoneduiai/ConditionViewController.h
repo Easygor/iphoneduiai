@@ -12,4 +12,10 @@
 
 @property (strong, nonatomic) NSMutableDictionary *conditions;
 
+@property(strong,nonatomic)IBOutlet  UIView *idView;
+@property(strong,nonatomic)IBOutlet UIView *conditionView;
+
+
+
+-(IBAction)conditionChange:(id)sender;
 @end
