@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
-
+@property(nonatomic,retain)IBOutlet UIImageView *logoImgView;
+@property(nonatomic,retain)IBOutlet UIView *contentView;
 @end
+

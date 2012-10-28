@@ -19,7 +19,6 @@
 #import "LocationController.h"
 
 @interface LoginViewController ()
-
 @property (retain, nonatomic) IBOutlet UIButton *forgotPasswordBtn;
 @property (retain, nonatomic) IBOutlet UITextField *emailText;
 @property (retain, nonatomic) IBOutlet UITextField *passwordText;
@@ -34,7 +33,7 @@
 @synthesize passwordText;
 @synthesize errorLabel;
 @synthesize errors=_errors;
-
+@synthesize contentView,logoImgView;
 - (void)dealloc {
     [forgotPasswordBtn release];
     [emailText release];
@@ -76,6 +75,10 @@
             [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
         });
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification object:self.view.window];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification object:self.view.window];
     
 }
 
@@ -252,5 +255,33 @@
                        }];
         // do somethign here
 }
+# pragma mark - keyboard show event for resize the UI
+- (void)keyboardWillShow:(NSNotification *)notif
+{
+    //keyboard will be shown now. depending for which textfield is active, move up or move down the view appropriately
+    
+    NSValue *endingFrame = [[notif userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect frame;
+    [endingFrame getValue:&frame];
+    
+    CGRect containerFrame = self.contentView.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - (frame.size.height + containerFrame.size.height)-50;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.contentView.frame = containerFrame;
+    }];
+    
+    [self.logoImgView setHidden:YES];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notif
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        self.contentView.frame = CGRectMake(0, 200, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
+    }];
+    [self.logoImgView setHidden:NO];
+}
+
 
 @end

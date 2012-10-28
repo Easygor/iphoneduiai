@@ -40,7 +40,7 @@
 @end
 
 @implementation ConditionViewController
-
+@synthesize idView,conditionView;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -63,6 +63,8 @@
     [_heightSectionView release];
     [_incomePickerView release];
     [_incomeNum release];
+    [idView release];
+    [conditionView release];
     
     [super dealloc];
 }
@@ -145,11 +147,6 @@
     [self.rightBtn setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.rightBtn setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification object:self.view.window];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification object:self.view.window];
-    
     
     self.incomePickerView = [[[HZPopPickerView alloc] initWithDelegate:self] autorelease];
 
@@ -191,6 +188,9 @@
     if (self.conditions[@"provincedesc"] && self.conditions[@"citydesc"]) {
         self.areaField.text = [NSString stringWithFormat:@"%@ %@", self.conditions[@"provincedesc"], self.conditions[@"citydesc"]];
     }
+    
+    [self.conditionView setHidden:NO];
+    [self.idView setHidden:YES];
 }
 
 - (void)backAction
@@ -207,13 +207,23 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 
 }
-
 - (BOOL)hidesBottomBarWhenPushed
 {
     return  YES;
 }
-
-#pragma mark - delegate sememnted 
+-(IBAction)conditionChange:(id)sender
+{
+    UIButton * curButton = (UIButton*)sender;
+    if (curButton.tag==101) {
+        [self.idView setHidden:YES];
+        [self.conditionView setHidden:NO];
+    }else if( curButton.tag ==102)
+    {
+        [self.conditionView setHidden:YES];
+         [self.idView setHidden:NO];
+    }
+}
+#pragma mark - delegate sememnted
 - (void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
 {
     if ([segment isEqual:self.sementedControl]) {
