@@ -48,7 +48,8 @@
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
-    self.navigationItem.title = @"修改密码";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"修改密码"];
 }
 
 - (void)backAction

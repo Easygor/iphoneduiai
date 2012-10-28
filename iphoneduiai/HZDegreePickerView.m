@@ -94,7 +94,6 @@
     self.curLevel = [self.levels objectAtIndex:row];
     
 }
-
 - (IBAction)cancelAction:(id)sender
 {
     [self dismiss];
@@ -102,7 +101,6 @@
 
 - (IBAction)confirmAction:(id)sender
 {
-    
     // do some here
     if([self.delegate respondsToSelector:@selector(dgreePickerDidChangeStatus:withNum:withDesc:)]) {
         [self.delegate dgreePickerDidChangeStatus:self withNum:self.curDegree withDesc:self.curLevel];

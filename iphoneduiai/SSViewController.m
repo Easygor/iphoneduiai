@@ -275,7 +275,8 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.title = @"高级资料";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"高级资料"];
     
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"
                                                                                                target:self
@@ -449,7 +450,7 @@
         textField.tag = textFieldTag;
         textField.returnKeyType = UIReturnKeyDone;
         
-        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
+        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 14, 9, 16)] autorelease];
         arrowImgView.tag = arrowTag;
         [cell addSubview:arrowImgView];
         
@@ -467,7 +468,7 @@
     }
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
 
-    UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
+    UIImage *arrowImg = [UIImage imageNamed:@"arrow_more"];
     
     bigLabel.text = [data objectForKey:@"text"];
     [bgView addSubview:lineView];

@@ -211,21 +211,17 @@
 //    }
 
 }
-
 - (IBAction)cancelAction:(id)sender
 {
     [self dismiss];
 }
-
 - (IBAction)confirmAction:(id)sender
 {
-    
     // do some here
     if([self.delegate respondsToSelector:@selector(pickerDidChaneStatus:)]) {
         [self.delegate pickerDidChaneStatus:self];
     }
     [self dismiss];
 }
-
 
 @end

@@ -70,7 +70,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.navigationItem.title = @"邮箱设置";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"邮箱设置"];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];

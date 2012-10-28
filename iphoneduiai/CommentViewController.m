@@ -10,6 +10,7 @@
 #import "SVProgressHUD.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
+#import "CustomBarButtonItem.h"
 
 @interface CommentViewController ()
 
@@ -39,6 +40,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"评论微语"];
 }
 
 - (void)didReceiveMemoryWarning

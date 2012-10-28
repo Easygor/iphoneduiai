@@ -215,7 +215,8 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"资料"
                                                                                                 target:self
                                                                                                 action:@selector(detailAction)] autorelease];
-    self.navigationItem.title = self.messageData[@"uinfo"][@"niname"];
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:self.messageData[@"uinfo"][@"niname"]];
     
     // more table header
     self.headView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 30)] autorelease];

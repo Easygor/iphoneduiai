@@ -164,7 +164,8 @@ static CGFloat dHeight2 = 0.0f;
         
         self.dySexLabel.text = [NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]];
         
-        self.navigationItem.title = [userInfo objectForKey:@"niname"];
+        self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:userInfo[@"niname"]];
+
     }
 }
 

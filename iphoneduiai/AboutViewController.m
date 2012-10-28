@@ -63,7 +63,8 @@
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
-    self.navigationItem.title = @"关于我们";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"关于我们"];
 }
 
 - (void)backAction

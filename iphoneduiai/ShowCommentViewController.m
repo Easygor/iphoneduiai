@@ -10,6 +10,8 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+#import "CustomBarButtonItem.h"
+
 @interface ShowCommentViewController ()
 @property (nonatomic,retain)NSArray *contents;
 @end
@@ -36,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"微语评论"];
     [self getComment];
 }
 

@@ -67,7 +67,8 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.title = @"防骚扰设置";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"防骚扰设置"];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];

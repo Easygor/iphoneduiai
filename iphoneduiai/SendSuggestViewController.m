@@ -66,7 +66,8 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"发送"
                                                                                                 target:self
                                                                                                 action:@selector(sendAction)] autorelease];
-    self.navigationItem.title = @"停用帐号";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"停用帐号"];
 }
 
 - (void)backAction

@@ -68,7 +68,7 @@ static int behindImgTag = 103;
 {
     [super viewDidLoad];
     
-    
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"设置"];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -171,7 +171,7 @@ static int behindImgTag = 103;
         smallLabel.font = [UIFont systemFontOfSize:12];
         smallLabel.textColor = [UIColor grayColor];
         
-        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 15, 14, 14)] autorelease];
+        arrowImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(280, 14, 9, 16)] autorelease];
         [cell addSubview:arrowImgView];
         
     }
@@ -200,7 +200,7 @@ static int behindImgTag = 103;
     NSDictionary *data = [[self.entries objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     UIImage *img = nil;
     UIImage *headImg = nil;
-    UIImage *arrowImg = [UIImage imageNamed:@"statusdetail_header_arrow.png"];
+    UIImage *arrowImg = [UIImage imageNamed:@"arrow_more"];
     
     if (![[data objectForKey:@"logo"] isEqualToString:@""]) {
         bigLabel.frame = CGRectMake(40, 0, 200, 44);

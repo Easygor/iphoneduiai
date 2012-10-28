@@ -40,18 +40,15 @@
 //        [self.delegate datePickerDidChangeStatus:self withDate:sender.date];
 //    }
 }
-
 - (IBAction)cancelAction:(id)sender
 {
     [self dismiss];
 }
-
 - (IBAction)confirmAction:(id)sender
-{
-
+{    
     // do some here
     if ([self.delegate respondsToSelector:@selector(datePickerDidChangeStatus:withDate:)]) {
-
+        
         [self.delegate datePickerDidChangeStatus:self withDate:self.datePicker.date];
     }
     [self cancelPicker];

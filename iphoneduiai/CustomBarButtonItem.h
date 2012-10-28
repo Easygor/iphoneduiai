@@ -10,10 +10,10 @@
 
 @interface CustomBarButtonItem : UIBarButtonItem
 
--(id)initBackBarButtonItemWithTarget:(id)target action:(SEL)action;
--(id)initSendBarButtonItemWithTarget:(id)target action:(SEL)action;
+
 -(id)initBackBarButtonWithTitle:(NSString *)title  target:(id)target action:(SEL)action;
 -(id)initRightBarButtonWithTitle:(NSString *)title  target:(id)target action:(SEL)action;
 -(id)initBarButtonWithImage:(UIImage *)image  target:(id)target action:(SEL)action;
 
++ titleForNavigationItem:(NSString*)title;
 @end

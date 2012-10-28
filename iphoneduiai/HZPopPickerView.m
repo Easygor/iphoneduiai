@@ -88,7 +88,6 @@
     self.curLabel = self.data[row][@"label"];
     
 }
-
 - (IBAction)cancelAction:(id)sender
 {
     [self dismiss];
@@ -99,7 +98,7 @@
     if ([self.delegate respondsToSelector:@selector(popPickerDidChangeStatus:withLabel:withDesc:)]) {
         [self.delegate popPickerDidChangeStatus:self withLabel:self.curLabel withDesc:self.curDesc];
     }
-
+    
     [self dismiss];
 }
 

@@ -495,7 +495,7 @@
 #pragma mark - semented delegate
 - (void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
 {
-    NSLog(@"text: %@", text);
+
 
     switch (index) {
         case 0:

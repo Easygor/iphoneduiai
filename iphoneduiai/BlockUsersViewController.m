@@ -49,6 +49,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor =  [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"我的黑名单"];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];

@@ -46,9 +46,10 @@
         self.contentLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.contentLabel];
         
-        self.arrowImgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"statusdetail_header_arrow.png"]];
-        self.arrowImgView.frame = CGRectMake(300, 20, 14, 14);
-        [self.contentView addSubview:arrowImgView];
+        self.arrowImgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_more"]];
+        self.arrowImgView.frame = CGRectMake(0, 0, 9, 16);
+//        [self.contentView addSubview:arrowImgView];
+        self.accessoryView = self.arrowImgView;
         
         
     }

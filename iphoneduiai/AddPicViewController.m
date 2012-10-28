@@ -52,8 +52,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.title = @"管理我的照片";
-    
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"管理我的照片"];
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"上传照片"target:self action:@selector(addbutton)] autorelease];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self

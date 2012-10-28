@@ -39,8 +39,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    
 
-    self.navigationItem.title = @"系统通知";
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"通知详情"];
   CustomBarButtonItem  *rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
@@ -51,10 +52,6 @@
     self.timeLabel.text = self.notificationData[@"addtime"];
 }
 
-- (void)backAction
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];

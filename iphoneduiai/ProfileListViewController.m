@@ -262,7 +262,7 @@ static NSInteger kActionChooseImageTag = 201;
         
         self.dySexLabel.text = @"我的动态"/*[NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]]*/;
         
-        self.navigationItem.title = [userInfo objectForKey:@"niname"];
+        self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:userInfo[@"niname"]];
     }
 }
 

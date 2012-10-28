@@ -42,7 +42,7 @@
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.title = @"消息";
+
 
 }
 

@@ -143,7 +143,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.title = @"择偶条件";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"择偶条件"];
 
     self.sexLabel.text = self.marrayReq[@"sex"];
     self.ageField.text = self.marrayReq[@"age"];

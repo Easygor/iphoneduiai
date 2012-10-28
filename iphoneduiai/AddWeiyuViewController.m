@@ -156,7 +156,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.title = @"发表新微语";
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"发表新微语"];
+
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];

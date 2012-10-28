@@ -154,7 +154,8 @@ static NSString *const wRegex = @"\\w+";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"创建帐号";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"创建帐号"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self

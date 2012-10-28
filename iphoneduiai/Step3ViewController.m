@@ -54,7 +54,8 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"昵称及联系方式";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"昵称及联系方式"];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
 
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"

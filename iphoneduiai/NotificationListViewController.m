@@ -55,7 +55,8 @@
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     [self.navigationController.navigationBar setHidden:NO];
-    self.title = @"系统通知";
+
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"系统通知"];
     rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
     self.navigationItem.rightBarButtonItem = rightBarButton;
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
