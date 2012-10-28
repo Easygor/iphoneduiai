@@ -17,10 +17,12 @@
 #import "Utils.h"
 #import "RegexKitLite.h"
 #import "SVProgressHUD.h"
+#import "HZNumberPickerView.h"
+#import "HZPopPickerView.h"
 
 static NSString *const wRegex = @"\\w+";
 
-@interface Step2ViewController () <HZSementdControlDelegate, HZAreaPickerDelegate, HZDatePickerDelegate, HZDegreePickerDelegate, HZAreaPickerDatasource>
+@interface Step2ViewController () <HZSementdControlDelegate, HZNumberPickerDelegate, HZAreaPickerDelegate, HZDatePickerDelegate, HZDegreePickerDelegate, HZAreaPickerDatasource>
 @property (retain, nonatomic) IBOutlet HZSementedControl *sexSegemnter;
 @property (retain, nonatomic) IBOutlet UITextField *birthdayText;
 @property (retain, nonatomic) IBOutlet UITextField *areaText;
@@ -35,6 +37,10 @@ static NSString *const wRegex = @"\\w+";
 @property (strong, nonatomic) HZLocation *location;
 @property (retain, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) NSString *eduNum;
+@property (strong, nonatomic) HZNumberPickerView *heightPicker;
+@property (nonatomic) NSInteger heightNum;
+@property (strong, nonatomic) NSString *incomeNum;
+@property (strong, nonatomic) HZPopPickerView *incomePickerView;
 
 @end
 
@@ -54,6 +60,8 @@ static NSString *const wRegex = @"\\w+";
 
 
 - (void)dealloc {
+    [_incomeNum release];
+    [_incomePickerView release];
     [_datePicker release];
     [_location release];
     [_sex release];
@@ -65,7 +73,55 @@ static NSString *const wRegex = @"\\w+";
     [salaryText release];
     [_locatePicker release];
     [containerView release];
+    [_heightPicker release];
     [super dealloc];
+}
+
+- (HZNumberPickerView *)heightPicker
+{
+    if (_heightPicker == nil) {
+        _heightPicker = [[HZNumberPickerView alloc] initWithMinNum:140 maxNum:250];
+        _heightPicker.titleLabel.text = @"你的身高(cm)";
+        _heightPicker.delegate = self;
+    }
+    
+    return _heightPicker;
+}
+
+- (HZDatePickerView *)datePicker
+{
+    if (_datePicker == nil) {
+        _datePicker = [[HZDatePickerView alloc] initWithDelegate:self];
+    }
+    
+    return _datePicker;
+}
+
+- (HZAreaPickerView *)locatePicker
+{
+    if (_locatePicker == nil) {
+        _locatePicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
+    }
+    
+    return _locatePicker;
+}
+
+- (HZPopPickerView *)incomePickerView
+{
+    if (_incomePickerView == nil) {
+        _incomePickerView = [[HZPopPickerView alloc] initWithDelegate:self];
+    }
+    
+    return _incomePickerView;
+}
+
+- (HZDegreePickerView *)degreePicker
+{
+    if (_degreePicker == nil) {
+        _degreePicker = [[HZDegreePickerView alloc] initWithDelegate:self];
+    }
+    
+    return _degreePicker;
 }
 
 -(void)setLocation:(HZLocation *)location
@@ -165,15 +221,15 @@ static NSString *const wRegex = @"\\w+";
     if (self.location) {
         [d setObject:[self.location toDictionary] forKey:@"location"];
     }
-    if ([self.heighText.text isMatchedByRegex:wRegex]) {
-        [d setObject:self.heighText.text  forKey:@"height"];
+    if (self.heightNum) {
+        d[@"height"] = @(self.heightNum);
     }
     if (self.eduNum) {
         [d setObject:self.eduNum forKey:@"degree"];
         [d setObject:self.eduText.text forKey:@"edu"];
     }
-    if ([self.salaryText.text isMatchedByRegex:wRegex]) {
-        [d setObject:self.salaryText.text forKey:@"income"];
+    if (self.incomeNum) {
+        d[@"income"] = self.incomeNum;
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:d forKey:@"step2"];
@@ -207,8 +263,8 @@ static NSString *const wRegex = @"\\w+";
 - (BOOL)checkinputs
 {
     if (self.birthday && self.location &&
-        [self.heighText.text isMatchedByRegex:wRegex] && self.eduNum &&
-        [self.salaryText.text isMatchedByRegex:wRegex] && self.sex) {
+        self.heightNum && self.eduNum &&
+        self.incomeNum && self.sex) {
         return YES;
     }
     return NO;
@@ -216,36 +272,73 @@ static NSString *const wRegex = @"\\w+";
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if ([textField isEqual:self.heighText] || [textField isEqual:self.salaryText]) {
-        return YES;
-    } else{
-        [self.heighText resignFirstResponder];
-        [self.salaryText resignFirstResponder];
-        if ([textField isEqual:self.birthdayText]){
-            // date picker
-            [self cancelDatePicker];
-            self.datePicker = [[[HZDatePickerView alloc] initWithDelegate:self] autorelease];
-//            [self.datePicker showInView:self.view];
-            [self.datePicker show];
-        } else if ([textField isEqual:self.areaText]){
-            // area
-            [self cancelLocatePicker];
-            self.locatePicker = [[[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self] autorelease];
-//            [self.locatePicker showInView:self.view];
-            [self.locatePicker show];
-        } else if ([textField isEqual:self.eduText]){
-            // edu
-            [self cancelDegreePicker];
-            self.degreePicker = [[[HZDegreePickerView alloc] initWithDelegate:self] autorelease];
-//            [self.degreePicker showInView:self.view];
-            [self.degreePicker show];
-        }
 
-        return NO;
-        
+
+    if ([textField isEqual:self.birthdayText]){
+
+        [self.datePicker show];
+    } else if ([textField isEqual:self.areaText]){
+        // area
+        [self.locatePicker show];
+
+    } else if ([textField isEqual:self.eduText]){
+        // edu
+        [self.degreePicker show];
+    } else if([textField isEqual:self.salaryText]){
+        [self.incomePickerView show];
+    } else if([textField isEqual:self.heighText]){
+        [self.heightPicker show];
     }
+
+    return NO;
+    
+
 }
 
+
+#pragma mark pop picker view
+- (NSArray *)popPickerData:(HZPopPickerView *)picker
+{
+    
+    if ([picker isEqual:self.incomePickerView]) {
+        
+        return @[@{@"label": @"0", @"desc": @"不限"}, @{@"label": @"10", @"desc": @"2000元以下"}, @{@"label": @"20", @"desc": @"2000~50000元"},
+        @{@"label": @"30", @"desc": @"5000~10000元"}, @{@"label": @"40", @"desc": @"10000~20000元"},
+        @{@"label": @"50", @"desc": @"20000元以上"}];
+    } 
+    
+    return nil;
+    
+}
+
+- (NSString *)titleForPopPicker:(HZPopPickerView *)picker
+{
+    if ([picker isEqual:self.incomePickerView]) {
+        return @"工资收入(元)";
+    }
+    
+    return nil;
+}
+
+- (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
+{
+    if ([picker isEqual:self.incomePickerView]) {
+        self.incomeNum = label;
+        self.salaryText.text = desc;
+        
+    } 
+    
+}
+
+#pragma mark - number delegate
+- (void)numberPickerDidChange:(HZNumberPickerView *)picker
+{
+    if ([picker isEqual:self.heightPicker]) {
+        self.heighText.text = [NSString stringWithFormat:@"%dCM", picker.curNum];
+        self.heightNum = picker.curNum;
+    }
+    
+}
 
 #pragma mark HZ segment 
 -(void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
