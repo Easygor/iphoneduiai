@@ -123,7 +123,9 @@
 }
 
 - (void) removeButtonClicked:(id) sender  {
-    [delegate gridItemDidDeleted:self atIndex:index];
+    UIActionSheet *actionsheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"删除照片", nil];
+    [actionsheet showInView:self];
+   
 }
 
 #pragma mark - Custom Methods
@@ -177,5 +179,11 @@
         [super removeFromSuperview];
     }]; 
 }
-
+# pragma mark - acitonsheet
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0) {
+         [delegate gridItemDidDeleted:self atIndex:index];
+    }
+}
 @end
