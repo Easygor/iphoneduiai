@@ -47,13 +47,18 @@
 
     [self.headImgView loadImage:self.notificationData[@"photo"]];
     self.titleLabel.text  = self.notificationData[@"title"];
-    self.contentLabel.text = notificationData[@"content"];
-
+    self.contentLabel.text = self.notificationData[@"content"];
+    self.timeLabel.text = self.notificationData[@"addtime"];
 }
 
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 @end
