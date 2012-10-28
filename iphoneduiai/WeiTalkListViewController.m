@@ -18,6 +18,8 @@
 #import "DropMenuView.h"
 #import "CommentViewController.h"
 #import "ShowCommentViewController.h"
+#import "UserDetailViewController.h"
+
 @interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
     BOOL reloading;
@@ -141,6 +143,8 @@
     [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateHighlighted];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
+    btn.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+    [btn setTitleShadowColor:RGBCOLOR(120, 200, 235) forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = btn;
     self.tilteBtn = btn;
@@ -325,6 +329,11 @@
     
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 #pragma mark UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -481,6 +490,15 @@
         showCommentViewController.weiYudic = weiyu;
         [self.navigationController pushViewController:showCommentViewController animated:YES];
         [showCommentViewController release];
+    } else if ([status isEqualToString:@"minus"]){
+        // minus
+    } else if ([status isEqualToString:@"plus"]){
+        // plus
+    } else if ([status isEqualToString:@"tap_avatar"]){
+        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+        udvc.user = @{@"_id": weiyu[@"uid"], @"niname": weiyu[@"uinfo"][@"niname"], @"photo": weiyu[@"uinfo"][@"photo"]};
+        [self.navigationController pushViewController:udvc animated:YES];
+        [udvc release];
     }
 
     

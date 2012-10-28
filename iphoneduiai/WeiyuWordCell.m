@@ -26,6 +26,7 @@
 @property (nonatomic) NSInteger digoNum, shitNum, commentNum;
 @property (strong, nonatomic) NSString *addTimeDesc, *content;
 @property (strong, nonatomic) NSMutableArray *photos;
+@property (retain, nonatomic) IBOutlet UIView *shadowView;
 
 @property (strong, nonatomic) SliderView *slider;
 @property (strong, nonatomic) UIImageView *curImageView;
@@ -57,6 +58,7 @@
     [_photos release];
     [_slider release];
     [_curImageView release];
+    [_shadowView release];
     [super dealloc];
 }
 
@@ -133,12 +135,7 @@
         contentLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         contentLabel.numberOfLines = 0;
         contentLabel.text = content;
-        contentLabel.shadowColor = [UIColor whiteColor];
-        contentLabel.shadowOffset = CGSizeMake(0.0, 1.0);
-   
 
-        self.layer.shadowRadius = 1.0;
-        self.layer.shouldRasterize = YES;
         AsyncImageView *imView = nil;
         if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
             imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, contentLabel.frame.size.height + 10, DW, DH)] autorelease];
@@ -251,6 +248,34 @@
         }
         
         [self resizeFrameWithHeight:dHeight+addressH+10];
+    }
+}
+
+- (void)doInitWork
+{
+    self.shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.shadowView.layer.shadowOffset = CGSizeMake(1.0, 1.5);
+    self.shadowView.layer.shadowOpacity = 0.35;
+    self.shadowView.layer.shouldRasterize = YES;
+    self.shadowView.layer.shadowRadius = 1.0f;
+}
+
+- (void)awakeFromNib
+{
+    [self doInitWork];
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatarAction:)] autorelease];
+    self.avaterImageView.userInteractionEnabled = YES;
+    [self.avaterImageView addGestureRecognizer:singleTap];
+}
+
+
+- (void)tapAvatarAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
+            [self.delegate didChangeStatus:self toStatus:@"tap_avatar"];
+        }
     }
 }
 
@@ -419,13 +444,14 @@
     self.mainView.frame = mainFrame;
     
     
-    CGRect footerFrame = self.footerView.frame;
-    footerFrame.origin.y = self.mainView.frame.origin.y + self.mainView.frame.size.height;
-    self.footerView.frame = footerFrame;
+//    CGRect footerFrame = self.footerView.frame;
+//    footerFrame.origin.y = self.mainView.frame.origin.y + self.mainView.frame.size.height;
+//    self.footerView.frame = footerFrame;
     
     CGRect containerFrame = self.containerView.frame;
-    containerFrame.size.height = self.footerView.frame.origin.y + self.footerView.frame.size.height;
+    containerFrame.size.height = self.mainView.frame.origin.y + self.mainView.frame.size.height + self.footerView.frame.size.height;
     self.containerView.frame = containerFrame;
+    self.shadowView.frame = containerFrame;
 }
 
 - (CGFloat)requiredHeight

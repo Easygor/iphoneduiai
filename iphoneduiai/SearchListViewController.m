@@ -155,6 +155,8 @@
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
+    btn.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+    [btn setTitleShadowColor:RGBCOLOR(120, 200, 235) forState:UIControlStateNormal];
     self.navigationItem.titleView = btn;
     self.tilteBtn = btn;
     UIImage *btnBg = [[UIImage imageNamed:@"search_choice_bg"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
@@ -471,6 +473,8 @@
         
         
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
 }
 

@@ -18,7 +18,7 @@
     if (self != nil) {
         UIFont *textFont = [UIFont boldSystemFontOfSize:14.0f];
         CGSize size = [title sizeWithFont:textFont];
-        CGFloat width = MAX(size.width+14, 54);
+        CGFloat width = MAX(size.width+24, 54);
         UIImage *bgImg = [[UIImage imageNamed:@"nav_back_btn"] stretchableImageWithLeftCapWidth:15 topCapHeight:0];
         UIImage *bgImgPressed = [[UIImage imageNamed:@"nav_back_btn_highlight"] stretchableImageWithLeftCapWidth:15 topCapHeight:0];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -28,14 +28,14 @@
         [button setBackgroundImage:bgImg forState:UIControlStateNormal];
         [button setBackgroundImage:bgImgPressed forState:UIControlStateHighlighted];
         
-        button.titleLabel.shadowColor = RGBCOLOR(120, 200, 235);
-        button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+       
         
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateHighlighted];
         
-//        [button setTitleShadowColor:RGBCOLOR(89, 176, 218) forState:UIControlStateNormal];
-//        [button setTitleShadowColor:RGBCOLOR(89, 176, 218) forState:UIControlStateHighlighted];
+         button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+        [button setTitleShadowColor:RGBCOLOR(120, 200, 235) forState:UIControlStateNormal];
+
         button.titleLabel.font = textFont;
         
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -95,11 +95,9 @@
         
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateHighlighted];
-        button.titleLabel.shadowColor = RGBCOLOR(120, 200, 235);
         button.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
+        [button setTitleShadowColor:RGBCOLOR(120, 200, 235) forState:UIControlStateNormal];
         
-        //        [button setTitleShadowColor:RGBCOLOR(89, 176, 218) forState:UIControlStateNormal];
-        //        [button setTitleShadowColor:RGBCOLOR(89, 176, 218) forState:UIControlStateHighlighted];
         button.titleLabel.font = textFont;
         
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -124,6 +122,7 @@
     titleLabel.shadowOffset = CGSizeMake(0.0, 1.0);
     titleLabel.opaque = YES;
     titleLabel.text = title;
+    [titleLabel sizeToFit];
     
     return titleLabel;
 }

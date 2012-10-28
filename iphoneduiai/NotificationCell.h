@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+
 @interface NotificationCell : UITableViewCell
 
-@property(strong,nonatomic)UIImageView *arrowImgView;
-@property(strong,nonatomic)AsyncImageView *headImgView;
-@property(strong,nonatomic)UILabel* titleLabel,*contentLabel;
-@property(strong,nonatomic)UIView *backgroundView,*selectedBackgroundView;
+@property (strong, nonatomic) UIImageView *arrowImgView;
+@property (strong, nonatomic) AsyncImageView *headImgView;
+@property (strong, nonatomic) UILabel* titleLabel, *contentLabel;
+@property (strong, nonatomic) UIView *backgroundView, *selectedBackgroundView;
+@property (assign, nonatomic) BOOL read;
+
 @end
 

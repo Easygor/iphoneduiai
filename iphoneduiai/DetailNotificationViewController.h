@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+
 @interface DetailNotificationViewController : UIViewController
-@property(nonatomic,retain)IBOutlet AsyncImageView *headImgView;
-@property(nonatomic,retain)IBOutlet UILabel *titleLabel,*contentLabel,*timeLabel;
-@property(nonatomic,retain)NSDictionary *notificationData;
+
+@property (nonatomic, retain) IBOutlet AsyncImageView *headImgView;
+@property (nonatomic, retain) IBOutlet UILabel *titleLabel, *contentLabel, *timeLabel;
+@property (nonatomic, retain) NSMutableDictionary *notificationData;
+
 @end

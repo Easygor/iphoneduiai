@@ -22,6 +22,8 @@
 #import "QQSetViewController.h"
 #import "ChooseMateViewController.h"
 #import "SSViewController.h"
+#import "ShowCommentViewController.h"
+#import "CommentViewController.h"
 
 #import "HZNumberPickerView.h"
 #import "HZAreaPickerView.h"
@@ -30,6 +32,7 @@
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 static NSInteger kActionChooseImageTag = 201;
+static NSInteger kDelWeiyuTag = 204;
 
 @interface ProfileListViewController () <CustomCellDelegate, HZAreaPickerDatasource, HZAreaPickerDelegate, HZNumberPickerDelegate, UITextFieldDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ShowPhotoDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
 
@@ -84,12 +87,16 @@ static NSInteger kActionChooseImageTag = 201;
 @property (strong, nonatomic) NSString *eduNum, *incomeNum, *jobNum;
 @property (strong, nonatomic) HZPopPickerView *incomePickerView, *degreePicker, *jobPicker;
 
+@property (strong, nonatomic) NSIndexPath *curIndexPath;
+@property (nonatomic) BOOL isEditing;
+
 @end
 
 @implementation ProfileListViewController
 
 - (void)dealloc
 {
+    [_curIndexPath release];
     [_jobPicker release];
     [_jobNum release];
     [_incomePickerView release];
@@ -455,18 +462,20 @@ static NSInteger kActionChooseImageTag = 201;
 - (void)settingModeAction
 {
 
-    [self.tableView setEditing:YES animated:YES];
+//    [self.tableView setEditing:YES animated:YES];
+
 
     [self changeToEditingView];
     self.navigationItem.leftBarButtonItem = self.cancelBarItem;
     self.navigationItem.rightBarButtonItem = self.saveBarItem;
     
-    
+    self.isEditing = YES;
 }
 
 - (void)cancelModeAction
 {
-    [self.tableView setEditing:NO animated:YES];
+//    [self.tableView setEditing:NO animated:YES];
+
     
     [self changeToNonEditingView];
     
@@ -480,6 +489,8 @@ static NSInteger kActionChooseImageTag = 201;
     self.degreeField.text = [self.userInfo objectForKey:@"degree"];
     self.careerField.text = [self.userInfo objectForKey:@"industry"];
     self.weightField.text = [NSString stringWithFormat:@"%@kg", [self.userBody objectForKey:@"weight"]];
+    
+    self.isEditing = NO;
 }
 
 - (void)settingAction
@@ -704,16 +715,17 @@ static NSInteger kActionChooseImageTag = 201;
     }
 }
 
-
+/*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
-    if (self.weiyus.count == indexPath.row) {
-        return NO;
-    }
-    
-    return YES;
+//    if (self.weiyus.count == indexPath.row) {
+//        return NO;
+//    }
+//    
+//    return YES;
+    return NO;
 }
 
 // Override to support editing the table view.
@@ -752,21 +764,31 @@ static NSInteger kActionChooseImageTag = 201;
 //        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 //    }   
 }
-
+*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.isEditing && indexPath.row < self.weiyus.count) {
+        
+        self.curIndexPath = indexPath;
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:@"删除微语"
+                                      otherButtonTitles:nil];
+        
+        actionSheet.tag = kDelWeiyuTag;
+        [actionSheet showInView:self.view.window];
+        [actionSheet release];
+
+    }
 }
+
 
 - (void)grabUserInfoDetailRequest
 {
@@ -954,9 +976,30 @@ static NSInteger kActionChooseImageTag = 201;
 - (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
+//    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
+    NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
+    if ([status isEqualToString:@"comment"]) {
+        
+        //    CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
+        //    commentViewController.idStr = idStr;
+        //
+        //    [self.navigationController pushViewController:commentViewController animated:YES];
+        //    [commentViewController release];
+        
+        ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
+        showCommentViewController.weiYudic = weiyu;
+        [self.navigationController pushViewController:showCommentViewController animated:YES];
+        [showCommentViewController release];
+    } else if ([status isEqualToString:@"minus"]){
+        // minus
+    } else if ([status isEqualToString:@"plus"]){
+        // plus
+    }
+    
+
 }
+
 
 - (IBAction)contractAction
 {
@@ -1039,6 +1082,36 @@ static NSInteger kActionChooseImageTag = 201;
         }
         [self presentModalViewController: imagePickerController
                                 animated: YES];
+    } else if (actionSheet.tag == kDelWeiyuTag){
+        if ([actionSheet destructiveButtonIndex] == buttonIndex) {
+            
+            NSMutableDictionary *weiyu = self.weiyus[self.curIndexPath.row];
+            
+            NSMutableDictionary *dParams = [Utils queryParams];
+            [dParams setObject:weiyu[@"id"] forKey:@"id"];
+            [SVProgressHUD show];
+            [[RKClient sharedClient] get:[@"/v/delete.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+                [request setOnDidFailLoadWithError:^(NSError *error){
+                    NSLog(@"delete weiyu error: %@", [error description]);
+                    [SVProgressHUD showErrorWithStatus:@"网络链接错误"];
+                }];
+                [request setOnDidLoadResponse:^(RKResponse *response){
+                    if (response.isOK && response.isJSON) {
+                        NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                        NSInteger code = [data[@"error"] integerValue];
+                        if (code == 0) {
+                            [self.weiyus removeObject:weiyu];
+                            [self.tableView deleteRowsAtIndexPaths:@[self.curIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+                            [SVProgressHUD dismiss];
+                        } else{
+                            [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                        }
+                    } else{
+                        [SVProgressHUD showErrorWithStatus:@"错误返回"];
+                    }
+                }];
+            }];
+        }
     }else{
         if ([actionSheet destructiveButtonIndex] == buttonIndex) {
             NSDictionary *photo = [self.showPhotoView.photos objectAtIndex:actionSheet.tag];

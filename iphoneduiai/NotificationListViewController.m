@@ -15,15 +15,13 @@
 #import "NotificationCell.h"
 #import "DetailNotificationViewController.h"
 
-@interface NotificationListViewController ()
-{
-    CustomBarButtonItem *rightBarButton;
-}
+@interface NotificationListViewController () <UIActionSheetDelegate>
 
 @property (strong, nonatomic) UITableViewCell *moreCell;
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (nonatomic) BOOL loading;
 @property (strong, nonatomic) NSMutableArray *notifications;
+@property (strong, nonatomic) UIBarButtonItem *backBarItem, *delAllBarItem;
 
 @end
 
@@ -31,6 +29,8 @@
 
 - (void)dealloc
 {
+    [_backBarItem release];
+    [_delAllBarItem release];
     [_moreCell release];
     [_notifications release];
     [super dealloc];
@@ -57,11 +57,44 @@
     [self.navigationController.navigationBar setHidden:NO];
 
     self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"系统通知"];
-    rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
+    
+    UIImage *bg = [[UIImage imageNamed:@"nav_btn"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+    UIImage *bgs = [[UIImage imageNamed:@"nav_btn_highlight"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+    [self.editButtonItem setBackgroundImage:bg forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [self.editButtonItem setBackgroundImage:bgs forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    
+    self.backBarItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                         target:self
+                                                                         action:@selector(backAction)] autorelease];
+    self.delAllBarItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"全部删除"
+                                                                           target:self
+                                                                           action:@selector(backAction)] autorelease];
     
     
+    self.navigationItem.rightBarButtonItem = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"
+                                                                                               target:self
+                                                                                               action:@selector(editAction)];
+
+    self.navigationItem.leftBarButtonItem = self.backBarItem;
+    
+    
+}
+
+- (void)editAction
+{
+    UIButton *rbtn = (UIButton*)self.navigationItem.rightBarButtonItem.customView;
+    
+    if (self.editing) {
+        [rbtn setTitle:@"编辑" forState:UIControlStateNormal];
+        [rbtn setTitle:@"编辑" forState:UIControlStateHighlighted];
+        self.navigationItem.leftBarButtonItem = self.backBarItem;
+    } else{
+        [rbtn setTitle:@"完成" forState:UIControlStateNormal];
+        [rbtn setTitle:@"完成" forState:UIControlStateHighlighted];
+        self.navigationItem.leftBarButtonItem = self.delAllBarItem;
+    }
+    
+    [self setEditing:!self.editing animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -132,6 +165,7 @@
     NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
     cell.titleLabel.text  = n[@"title"];
     cell.contentLabel.text = n[@"content"];
+    cell.read = ([n[@"read"] integerValue] != 0);
     
     if ([n[@"photo"] isEqualToString:@""]) {
         [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
@@ -188,40 +222,6 @@
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self loadNextInfoList];
         });
-    } else{
-        NSMutableDictionary *n = [self.notifications objectAtIndex:indexPath.row];
-
-        if ([n[@"read"] integerValue] == 0) {
-             NSMutableDictionary *params = [Utils queryParams];
-            [params setObject:n[@"tid"] forKey:@"tid[]"];
-//            [SVProgressHUD show];
-            [[RKClient sharedClient] post:[@"/common/readnotice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-                NSLog(@"url: %@", request.URL);
-                
-                request.params = [RKParams paramsWithDictionary:@{@"tid" : n[@"tid"], @"submitupdate": @"true"}];
-                
-                [request setOnDidLoadResponse:^(RKResponse *response){
-                    if (response.isOK && response.isJSON) {
-                        NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-//                        NSLog(@"read data: %@", data[@"message"]);
-                        NSInteger code = [data[@"error"] integerValue];
-                        if (code == 0) {
-                            n[@"read"] = @"1";
-//                            [SVProgressHUD dismiss];
-                        } else{
-//                            [SVProgressHUD showErrorWithStatus:data[@"message"]];
-                        }
-                        
-                    } else{
-//                        [SVProgressHUD showErrorWithStatus:@"获取失败"];
-                    }
-                }];
-                [request setOnDidFailLoadWithError:^(NSError *error){
-//                    [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
-                    NSLog(@"Error: %@", [error description]);
-                }];
-            }];
-        }
     }
     
 }
@@ -283,19 +283,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
     if (indexPath.row < self.notifications.count) {
-        NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
+        NSMutableDictionary *n = [self.notifications objectAtIndex:indexPath.row];
+        
         DetailNotificationViewController *detailNotificationViewController = [[DetailNotificationViewController alloc]initWithNibName:@"DetailNotificationViewController" bundle:nil];
         detailNotificationViewController.notificationData = n;
         [self.navigationController pushViewController:detailNotificationViewController animated:YES];
+        
         [detailNotificationViewController release];
     }
 
@@ -338,27 +332,77 @@
         }];
     }];
 }
+
 - (void)backAction
 {
-     [self.navigationController popViewControllerAnimated:YES];
-}
+    if (self.editing) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                      initWithTitle:nil
+                                      delegate:self
+                                      cancelButtonTitle:@"取消"
+                                      destructiveButtonTitle:@"删除全部通知"
+                                      otherButtonTitles:nil];
+        
+        [actionSheet showInView:self.view.window];
+        [actionSheet release];
 
--(void)editButton
-{
-    if (rightBarButton.title == @"编辑")
-    {
-        rightBarButton.title = @"确定";
-        [rightBarButton setStyle:UIBarButtonItemStyleDone];
-        [self setEditing:YES animated:YES];
-    }else{
-        rightBarButton.title = @"编辑";
-        [rightBarButton setStyle:UIBarButtonItemStylePlain];
-        [self setEditing:NO animated:YES];
+    } else{
+        [self.navigationController popViewControllerAnimated:YES];
     }
-
+     
 }
+
+
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
      return UITableViewCellEditingStyleDelete; 
 }
+
+#pragma mark - ActionSheet Delegate Methods
+- (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([actionSheet cancelButtonIndex] == buttonIndex) {
+        return;
+    }
+
+    if ([actionSheet destructiveButtonIndex] == buttonIndex) {
+        
+        NSMutableDictionary *params = [Utils queryParams];
+        //        [params setObject:n[@"tid"] forKey:@"tid[]"];
+        [SVProgressHUD show];
+        [[RKClient sharedClient] post:[@"/common/delnotice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+            NSLog(@"url: %@", request.URL);
+            NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+            for (NSDictionary *d in self.notifications) {
+                updateArgs[[NSString stringWithFormat:@"tid[%@]", d[@"tid"]]] = d[@"tid"];
+            }
+            
+            updateArgs[@"submitupdate"] = @"true";
+            
+            request.params = [RKParams paramsWithDictionary:updateArgs];
+            
+            [request setOnDidLoadResponse:^(RKResponse *response){
+                if (response.isOK && response.isJSON) {
+                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                    NSInteger code = [data[@"error"] integerValue];
+                    if (code == 0) {
+                        [self requestNotificationListWithPage:1];
+                        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+                    } else{
+                        [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                    }
+                    
+                } else{
+                    [SVProgressHUD showErrorWithStatus:@"获取失败"];
+                }
+            }];
+            [request setOnDidFailLoadWithError:^(NSError *error){
+                [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+                NSLog(@"Error: %@", [error description]);
+            }];
+        }];
+    }
+
+}
+
 @end

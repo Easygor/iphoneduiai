@@ -8,13 +8,21 @@
 
 #import "NotificationCell.h"
 
+#define CELLH 56
+
+@interface NotificationCell ()
+
+@property (strong, nonatomic) UIView *readBgView, *unReadBgView;
+
+@end
+
 @implementation NotificationCell
-@synthesize titleLabel,contentLabel,headImgView,arrowImgView,backgroundView,selectedBackgroundView;
+@synthesize titleLabel,contentLabel,headImgView,arrowImgView;
 
 -(void)dealloc
 {
-    [backgroundView release];
-    [selectedBackgroundView release];
+    [_readBgView release];
+    [_unReadBgView release];
     [titleLabel release];
     [contentLabel release];
     [headImgView release];
@@ -22,15 +30,51 @@
     [super dealloc];
 }
 
+- (UIView *)readBgView
+{
+    if (_readBgView == nil) {
+        _readBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, CELLH)];
+        _readBgView.backgroundColor = RGBCOLOR(251, 251, 251);
+        UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, CELLH-1, 320, 1)];
+        lbl.backgroundColor = RGBCOLOR(216, 216, 216);
+        [_readBgView addSubview:lbl];
+    }
+    
+    return _readBgView;
+}
+
+- (UIView*)unReadBgView
+{
+    if (_unReadBgView == nil) {
+        UIImageView *v = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, CELLH)];
+        UIImage *bg = [[UIImage imageNamed:@"notice_unread_bg"] stretchableImageWithLeftCapWidth:3 topCapHeight:0];
+        v.image = bg;
+        _unReadBgView = v;
+    }
+    
+    return _unReadBgView;
+}
+
+- (void)setRead:(BOOL)read
+{
+//    if (read != _read) {
+        _read = read;
+        
+        if (read) {
+            self.backgroundView = self.readBgView;
+
+        } else{
+
+            self.backgroundView = self.unReadBgView;
+        }
+//    }
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)];
-        [self.contentView addSubview:self.selectedBackgroundView];
-        self.backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)];
-        [self.contentView addSubview:self.backgroundView];
         
         self.headImgView = [[[AsyncImageView alloc]initWithFrame: CGRectMake(10, 10, 38, 38)] autorelease];
         [self.contentView addSubview:self.headImgView];
