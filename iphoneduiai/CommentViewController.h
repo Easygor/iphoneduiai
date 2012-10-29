@@ -15,11 +15,12 @@
     UITextField *commentField;
     UIButton *sendButton;
     NSString  *idStr;
-   
+
 }
 @property (strong, nonatomic) NSString *idStr;
-@property(nonatomic,retain) IBOutlet  UITextField *commentField;
+@property(nonatomic,retain) UITextView *contentView;
+@property(nonatomic,retain) UIView *toolView;
+@property(nonatomic,retain) UIView *bgView;
 
--(IBAction)sendButtonPress:(id)sender;
 
 @end

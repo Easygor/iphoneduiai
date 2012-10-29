@@ -126,6 +126,8 @@
 		5A62E8851619755100BD3958 /* RemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E8831619755100BD3958 /* RemindViewController.xib */; };
 		5A62E88916198EF600BD3958 /* PreventSetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A62E88716198EF600BD3958 /* PreventSetViewController.m */; };
 		5A62E88A16198EF600BD3958 /* PreventSetViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A62E88816198EF600BD3958 /* PreventSetViewController.xib */; };
+		5A63EE65163E8AE600E3D7E8 /* DetailWeiyuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A63EE63163E8AE600E3D7E8 /* DetailWeiyuViewController.m */; };
+		5A63EE66163E8AE600E3D7E8 /* DetailWeiyuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A63EE64163E8AE600E3D7E8 /* DetailWeiyuViewController.xib */; };
 		5A6A53C8163BF6F600C86C89 /* NotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A53C7163BF6F600C86C89 /* NotificationCell.m */; };
 		5A6A541B163C4EDA00C86C89 /* DetailNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A5419163C4EDA00C86C89 /* DetailNotificationViewController.m */; };
 		5A6A541C163C4EDA00C86C89 /* DetailNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A6A541A163C4EDA00C86C89 /* DetailNotificationViewController.xib */; };
@@ -1080,6 +1082,9 @@
 		5A62E88616198EF600BD3958 /* PreventSetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreventSetViewController.h; sourceTree = "<group>"; };
 		5A62E88716198EF600BD3958 /* PreventSetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreventSetViewController.m; sourceTree = "<group>"; };
 		5A62E88816198EF600BD3958 /* PreventSetViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreventSetViewController.xib; sourceTree = "<group>"; };
+		5A63EE62163E8AE600E3D7E8 /* DetailWeiyuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailWeiyuViewController.h; sourceTree = "<group>"; };
+		5A63EE63163E8AE600E3D7E8 /* DetailWeiyuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailWeiyuViewController.m; sourceTree = "<group>"; };
+		5A63EE64163E8AE600E3D7E8 /* DetailWeiyuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailWeiyuViewController.xib; sourceTree = "<group>"; };
 		5A6A53C6163BF6F600C86C89 /* NotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCell.h; sourceTree = "<group>"; };
 		5A6A53C7163BF6F600C86C89 /* NotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationCell.m; sourceTree = "<group>"; };
 		5A6A5418163C4ED900C86C89 /* DetailNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailNotificationViewController.h; sourceTree = "<group>"; };
@@ -2650,6 +2655,9 @@
 				614CAA4E161C579B00C86D8F /* AddWeiyuViewController.h */,
 				614CAA4F161C579B00C86D8F /* AddWeiyuViewController.m */,
 				614CAA50161C579B00C86D8F /* AddWeiyuViewController.xib */,
+				5A63EE62163E8AE600E3D7E8 /* DetailWeiyuViewController.h */,
+				5A63EE63163E8AE600E3D7E8 /* DetailWeiyuViewController.m */,
+				5A63EE64163E8AE600E3D7E8 /* DetailWeiyuViewController.xib */,
 			);
 			name = "wei talk";
 			sourceTree = "<group>";
@@ -4108,6 +4116,7 @@
 				613155BB163CDA3700982496 /* notice_btn@2x.png in Resources */,
 				613155BC163CDA3700982496 /* notice_unread_bg.png in Resources */,
 				613155BD163CDA3700982496 /* notice_unread_bg@2x.png in Resources */,
+				5A63EE66163E8AE600E3D7E8 /* DetailWeiyuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4242,6 +4251,7 @@
 				5A6A53C8163BF6F600C86C89 /* NotificationCell.m in Sources */,
 				5A6A541B163C4EDA00C86C89 /* DetailNotificationViewController.m in Sources */,
 				5A34D8DA163D1CAC006E6B98 /* FeedListCell.m in Sources */,
+				5A63EE65163E8AE600E3D7E8 /* DetailWeiyuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
 @interface FeedListCell : UITableViewCell
-@property(strong,nonatomic)UIImageView *arrowImgView;
+
 @property(strong,nonatomic)AsyncImageView *headImgView;
 @property(strong,nonatomic)UILabel* titleLabel,*contentLabel;
-@property(strong,nonatomic)UIView *backgroundView,*selectedBackgroundView;
 
 @end

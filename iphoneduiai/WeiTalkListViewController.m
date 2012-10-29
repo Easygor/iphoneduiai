@@ -19,6 +19,7 @@
 #import "CommentViewController.h"
 #import "ShowCommentViewController.h"
 #import "UserDetailViewController.h"
+#import "DetailWeiyuViewController.h"
 
 @interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
@@ -328,6 +329,10 @@
     return 20.0f;
     
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -449,6 +454,7 @@
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
 //                NSLog(@"weiyu list data: %@", data);
                 NSInteger code = [data[@"error"] integerValue];
+                NSLog(@"%@",data);
                 if (code == 0) {
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
@@ -478,18 +484,19 @@
 //    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
     NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
+    NSString *idStr = weiyu[@"id"];
     if ([status isEqualToString:@"comment"]) {
         
-        //    CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
-        //    commentViewController.idStr = idStr;
-        //
-        //    [self.navigationController pushViewController:commentViewController animated:YES];
-        //    [commentViewController release];
+        CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
+            commentViewController.idStr = idStr;
         
-        ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
-        showCommentViewController.weiYudic = weiyu;
-        [self.navigationController pushViewController:showCommentViewController animated:YES];
-        [showCommentViewController release];
+        [self.navigationController pushViewController:commentViewController animated:YES];
+        [commentViewController release];
+        
+        //ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
+        //showCommentViewController.weiYudic = weiyu;
+        //[self.navigationController pushViewController:showCommentViewController animated:YES];
+        //[showCommentViewController release];
     } else if ([status isEqualToString:@"minus"]){
         // minus
     } else if ([status isEqualToString:@"plus"]){
