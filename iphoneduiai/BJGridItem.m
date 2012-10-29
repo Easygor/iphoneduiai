@@ -67,11 +67,11 @@
         if (self.isRemovable) {
             // place a remove button on top right corner for removing item from the board
             deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            float w = 20;
-            float h = 20;
+            float w = 100;
+            float h = 100;
             
             [deleteButton setFrame:CGRectMake(self.frame.origin.x,self.frame.origin.y, w, h)];
-            [deleteButton setImage:[UIImage imageNamed:@"deletbutton.png"] forState:UIControlStateNormal];
+            //[deleteButton setImage:[UIImage imageNamed:@"deletbutton.png"] forState:UIControlStateNormal];
             deleteButton.backgroundColor = [UIColor clearColor];
             [deleteButton addTarget:self action:@selector(removeButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
             [deleteButton setHidden:YES];
@@ -85,39 +85,39 @@
 #pragma mark - UI actions
 
 - (void) clickItem:(id)sender {
-    [delegate gridItemDidClicked:self];
+    [delegate gridItemDidEnterEditingMode:self];
 }
 - (void) pressedLong:(UILongPressGestureRecognizer *) gestureRecognizer{
     
-    switch (gestureRecognizer.state) {
-        case UIGestureRecognizerStateBegan:
-            point = [gestureRecognizer locationInView:self];
-            [delegate gridItemDidEnterEditingMode:self];
-            //放大这个item
-            [self setAlpha:1.0];
-            NSLog(@"press long began");
-            break;
-        case UIGestureRecognizerStateEnded:
+//    switch (gestureRecognizer.state) {
+//        case UIGestureRecognizerStateBegan:
 //            point = [gestureRecognizer locationInView:self];
-//            [delegate gridItemDidEndMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
-//            //变回原来大小
-//            [self setAlpha:0.5f];
-//            NSLog(@"press long ended");
+//            [delegate gridItemDidEnterEditingMode:self];
+//            //放大这个item
+//            [self setAlpha:1.0];
+//            NSLog(@"press long began");
 //            break;
-        case UIGestureRecognizerStateFailed:
-            NSLog(@"press long failed");
-            break;
-        case UIGestureRecognizerStateChanged:
-            //移动
-            
-//            [delegate gridItemDidMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
-//            NSLog(@"press long changed");
+//        case UIGestureRecognizerStateEnded:
+////            point = [gestureRecognizer locationInView:self];
+////            [delegate gridItemDidEndMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
+////            //变回原来大小
+////            [self setAlpha:0.5f];
+////            NSLog(@"press long ended");
+////            break;
+//        case UIGestureRecognizerStateFailed:
+//            NSLog(@"press long failed");
 //            break;
-        default:
-            NSLog(@"press long else");
-            break;
-    }
-    
+//        case UIGestureRecognizerStateChanged:
+//            //移动
+//            
+////            [delegate gridItemDidMoved:self withLocation:point moveGestureRecognizer:gestureRecognizer];
+////            NSLog(@"press long changed");
+////            break;
+//        default:
+//            NSLog(@"press long else");
+//            break;
+//    }
+//    
     //CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"transform"];
     
 }
@@ -140,24 +140,7 @@
     
     // make the remove button visible
     [deleteButton setHidden:NO];
-    [button setEnabled:NO];
-    // start the wiggling animation
-  //  CGFloat rotation = 0.03;
-    
-//    CABasicAnimation *shake = [CABasicAnimation animationWithKeyPath:@"transform"];
-//    shake.duration = 0.13;
-//    shake.autoreverses = YES;
-//    shake.repeatCount  = MAXFLOAT;
-//    shake.removedOnCompletion = NO;
-//    shake.fromValue = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform,-rotation, 0.0 ,0.0 ,1.0)];
-//    shake.toValue   = [NSValue valueWithCATransform3D:CATransform3DRotate(self.layer.transform, rotation, 0.0 ,0.0 ,1.0)];
-//    
-//    [self.layer addAnimation:shake forKey:@"shakeAnimation"];
-    
-    // inform the springboard that the menu items are now editable so that the springboard
-    // will place a done button on the navigationbar 
-    //[(SESpringBoard *)self.delegate enableEditingMode];
-    
+    [button setEnabled:NO];    
 }
 
 - (void) disableEditing {

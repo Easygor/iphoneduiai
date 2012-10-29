@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WeiTalkListViewController : UITableViewController
+@interface WeiTalkListViewController : UITableViewController<UITableViewDelegate>
 
 @end

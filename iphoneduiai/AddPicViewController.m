@@ -157,7 +157,6 @@
 
 -(void)addPic
 {
-
     CGRect frame = CGRectMake(0, 10, 100, 100);
     int n = [gridItems count];
     int row = (n-1) / 3;
@@ -224,7 +223,6 @@
                 lastFrame = curFrame;
                 [temp setIndex:i];
             }
-            
         }];
         [item removeFromSuperview];
         item = nil;
@@ -239,9 +237,7 @@
         NSLog(@"%d",item.index);
         [item enableEditing];
     }
-    //[addbutton enableEditing];
     isEditing = YES;
-    
 }
 - (void)gridItemDidMoved:(BJGridItem *)gridItem withLocation:(CGPoint)point moveGestureRecognizer:(UILongPressGestureRecognizer *)recognizer{
     CGRect frame = gridItem.frame;

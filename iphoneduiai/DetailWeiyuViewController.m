@@ -1,33 +1,21 @@
 //
-//  ShowCommentViewController.m
+//  DetailWeiyuViewController.m
 //  iphoneduiai
 //
-//  Created by yinliping on 12-10-26.
+//  Created by yinliping on 12-10-29.
 //  Copyright (c) 2012年 duiai.com. All rights reserved.
 //
 
-#import "ShowCommentViewController.h"
-#import <RestKit/RestKit.h>
-#import <RestKit/JSONKit.h>
-#import "SVProgressHUD.h"
-#import "CustomBarButtonItem.h"
+#import "DetailWeiyuViewController.h"
 
-@interface ShowCommentViewController ()
-@property (nonatomic,retain)NSArray *contents;
+@interface DetailWeiyuViewController ()
+
 @end
 
-@implementation ShowCommentViewController
-@synthesize weiYudic;
+@implementation DetailWeiyuViewController
 
--(void)dealloc
+- (id)initWithStyle:(UITableViewStyle)style
 {
-    [weiYudic release];
-    [_contents release];
-    [super dealloc];
-}
-- (id)initWithStyle:(UITableViewStyle)style 
-{
-    
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
@@ -38,9 +26,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"微语评论"];
-    [self getComment];
-}
+
+   }
 
 - (void)didReceiveMemoryWarning
 {
@@ -53,13 +40,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.contents count];
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -69,8 +56,7 @@
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
-    NSDictionary *comment = self.contents[[indexPath row]];
-    cell.textLabel.text = comment[@"content"];
+    
     // Configure the cell...
     
     return cell;
@@ -127,36 +113,6 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
-}
-- (void)getComment
-{
-    NSMutableDictionary *dParams = [Utils queryParams];
-    dParams[@"id"] = self.weiYudic[@"id"];
-    [[RKClient sharedClient] get:[@"/v/getreply.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
-        [request setOnDidLoadResponse:^(RKResponse *response){
-            if (response.isOK && response.isJSON) {
-                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-
-                NSInteger code = [[data objectForKey:@"error"] integerValue];
-                if (code == 0) {
-                    if (data[@"data"] != [NSNull null])
-                    {
-                        self.contents = data[@"data"];
-                        [self.tableView reloadData];
-                    }
-                    } else{
-                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
-                }
-                
-            }
-        }];
-        
-        [request setOnDidFailLoadWithError:^(NSError *error){
-            NSLog(@"error: %@", [error description]);
-        }];
-        
-    }];
-    
 }
 
 @end

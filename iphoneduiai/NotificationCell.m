@@ -9,12 +9,10 @@
 #import "NotificationCell.h"
 
 @implementation NotificationCell
-@synthesize titleLabel,contentLabel,headImgView,arrowImgView,backgroundView,selectedBackgroundView;
+@synthesize titleLabel,contentLabel,headImgView,arrowImgView;
 
 -(void)dealloc
 {
-    [backgroundView release];
-    [selectedBackgroundView release];
     [titleLabel release];
     [contentLabel release];
     [headImgView release];
@@ -27,10 +25,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.selectedBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)];
-        [self.contentView addSubview:self.selectedBackgroundView];
-        self.backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 55)];
-        [self.contentView addSubview:self.backgroundView];
         
         self.headImgView = [[[AsyncImageView alloc]initWithFrame: CGRectMake(10, 10, 38, 38)] autorelease];
         [self.contentView addSubview:self.headImgView];

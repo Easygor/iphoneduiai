@@ -140,18 +140,16 @@
     // Configure the cell...
     if (cell == nil) {
         cell = [[[FeedListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-        
-        
     }
     
     NSDictionary *n = [self.feeds objectAtIndex:indexPath.row];
-    cell.titleLabel = n[@"addtime_text"];
-    cell.contentLabel = n[@"content"];
-  
+    cell.contentLabel.text = n[@"addtime_text"];
+    cell.titleLabel.text = n[@"content"];
+    
     if ([n[@"info"][@"photo"] isEqualToString:@""]) {
         [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
     } else{
-        [cell.headImgView loadImage:n[@"photo"]];
+        [cell.headImgView loadImage:n[@"uinfo"][@"photo"]];
     }
     return cell;
     
