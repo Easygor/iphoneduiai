@@ -18,7 +18,7 @@
     if (self != nil) {
         UIFont *textFont = [UIFont boldSystemFontOfSize:14.0f];
         CGSize size = [title sizeWithFont:textFont];
-        CGFloat width = MAX(size.width+24, 54);
+        CGFloat width = MAX(size.width+20, 54);
         UIImage *bgImg = [[UIImage imageNamed:@"nav_back_btn"] stretchableImageWithLeftCapWidth:15 topCapHeight:0];
         UIImage *bgImgPressed = [[UIImage imageNamed:@"nav_back_btn_highlight"] stretchableImageWithLeftCapWidth:15 topCapHeight:0];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -27,8 +27,8 @@
         
         [button setBackgroundImage:bgImg forState:UIControlStateNormal];
         [button setBackgroundImage:bgImgPressed forState:UIControlStateHighlighted];
-        
-       
+
+        button.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
         
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitle:title forState:UIControlStateHighlighted];
