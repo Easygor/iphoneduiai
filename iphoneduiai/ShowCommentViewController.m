@@ -72,7 +72,6 @@
     NSDictionary *comment = self.contents[[indexPath row]];
     cell.textLabel.text = comment[@"content"];
     // Configure the cell...
-    
     return cell;
 }
 
