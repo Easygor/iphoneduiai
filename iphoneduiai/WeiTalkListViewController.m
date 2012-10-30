@@ -448,7 +448,7 @@
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
 //                NSLog(@"weiyu list data: %@", data);
                 NSInteger code = [data[@"error"] integerValue];
-                NSLog(@"%@",data);
+//                NSLog(@"%@",data);
                 if (code == 0) {
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
@@ -478,14 +478,8 @@
 //    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
     NSLog(@"status: %@", status);
     NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
-    NSString *idStr = weiyu[@"id"];
+//    NSString *idStr = weiyu[@"id"];
     if ([status isEqualToString:@"comment"]) {
-        
-//        CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
-//            commentViewController.idStr = idStr;
-//        
-//        [self.navigationController pushViewController:commentViewController animated:YES];
-//        [commentViewController release];
         
         ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
         showCommentViewController.weiYuDic = weiyu;

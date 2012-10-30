@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+#import "CustomCellDelegate.h"
+
 @interface ShowCommentCell : UITableViewCell
 
-@property(strong,nonatomic)AsyncImageView *headImgView;
-@property(strong,nonatomic)UILabel* titleLabel,*contentLabel;
+@property (strong, nonatomic) AsyncImageView *headImgView;
+@property (strong, nonatomic) UILabel* titleLabel;
+@property (strong, nonatomic) NSString *content;
+@property (assign, nonatomic) id <CustomCellDelegate> delegate;
 
 @end

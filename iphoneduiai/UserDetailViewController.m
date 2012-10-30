@@ -381,7 +381,10 @@ static CGFloat dHeight2 = 0.0f;
                     self.userInterest = [dataData objectForKey:@"user_interest"];
                     self.userWork = [dataData objectForKey:@"user_work"];
                     self.marrayReq = [dataData objectForKey:@"marray_req"];
-                    self.searchIndex = [dataData objectForKey:@"searchindex"];
+                    if (dataData[@"searchindex"] != [NSNull null]) {
+                        self.searchIndex = [dataData objectForKey:@"searchindex"];
+                    }
+                    
                 }
             }
         }];
