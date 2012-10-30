@@ -16,5 +16,6 @@
 @property (strong, nonatomic) UILabel* titleLabel;
 @property (strong, nonatomic) NSString *content;
 @property (assign, nonatomic) id <CustomCellDelegate> delegate;
+@property (strong, nonatomic) UILabel* timeLabel;
 
 @end

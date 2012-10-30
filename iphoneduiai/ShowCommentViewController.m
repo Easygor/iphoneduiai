@@ -189,6 +189,7 @@
         NSDictionary *comment = self.contents[[indexPath row]];
         cell.content = comment[@"content"];
         cell.titleLabel.text = comment[@"uinfo"][@"niname"];
+        cell.timeLabel.text =comment[@"addtime_text"];
         if ([comment[@"unifo"][@"photo"] isEqualToString:@""]) {
             [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
         } else{
