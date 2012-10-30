@@ -11,17 +11,18 @@
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 #import "CustomBarButtonItem.h"
-
+#import "WeiyuWordCell.h"
+#import "ShowCommentCell.h"
 @interface ShowCommentViewController ()
 @property (nonatomic,retain)NSArray *contents;
 @end
 
 @implementation ShowCommentViewController
-@synthesize weiYudic;
+@synthesize weiYuDic;
 
 -(void)dealloc
 {
-    [weiYudic release];
+    [weiYuDic release];
     [_contents release];
     [super dealloc];
 }
@@ -38,7 +39,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"微语评论"];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
+    
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"评论微语"];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"评论"target:self action:@selector(addbutton)] autorelease];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                              target:self
+                                                                                              action:@selector(backAction)] autorelease];
     [self getComment];
 }
 
@@ -46,6 +53,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - actions
+-(void)backAction
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -65,14 +78,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    static NSString *CellIdentifier1 = @"weiyuWordCell";
+     
+    if ([indexPath row]==0) {
+        WeiyuWordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier1];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:2];
+            cell.delegate = self;
+        }
+        cell.weiyu = self.weiYuDic;
+        return cell;
+
+    }else {
+        ShowCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[ShowCommentCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        }
+        NSDictionary *comment = self.contents[[indexPath row]];
+        cell.contentLabel.text = comment[@"content"];
+        cell.titleLabel.text = comment[@"uinfo"][@"niname"];
+        if ([comment[@"unifo"][@"photo"] isEqualToString:@""]) {
+            [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+        } else{
+            [cell.headImgView loadImage:comment[@"uinfo"][@"photo"]];
+        }
+          return cell;
     }
-    NSDictionary *comment = self.contents[[indexPath row]];
-    cell.textLabel.text = comment[@"content"];
-    // Configure the cell...
-    return cell;
 }
 
 /*
@@ -127,22 +159,47 @@
      [detailViewController release];
      */
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([indexPath row]==0) {
+        WeiyuWordCell *cell = (WeiyuWordCell *)[self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
+        return [cell requiredHeight];
+    }else
+    {
+        return 60.0f;
+    }
+    
+}
+- (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"weiyuWordCell";
+    WeiyuWordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:2];
+        cell.delegate = self;
+    }
+    
+    // Configure the cell...
+    cell.weiyu = weiYuDic;
+    return cell;
+}
 - (void)getComment
 {
     NSMutableDictionary *dParams = [Utils queryParams];
-    dParams[@"id"] = self.weiYudic[@"id"];
+    dParams[@"id"] = self.weiYuDic[@"id"];
     [[RKClient sharedClient] get:[@"/v/getreply.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
                 if (code == 0) {
                     if (data[@"data"] != [NSNull null])
                     {
                         self.contents = data[@"data"];
-                        [self.tableView reloadData];
                     }
+                     [self.tableView reloadData];
                     } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }

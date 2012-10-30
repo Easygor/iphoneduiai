@@ -54,7 +54,8 @@
         self.agreeBtn.hidden = NO;
         self.rejectBtn.hidden = NO;
         btnHeight = self.agreeBtn.frame.size.height + 5;
-    } else{
+    } else
+    {
         self.agreeBtn.hidden = YES;
         self.rejectBtn.hidden = YES;
     }

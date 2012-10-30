@@ -88,6 +88,7 @@
 		5A25018B16393201004113B8 /* TCWBAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013016393201004113B8 /* TCWBAuthorizeViewController.m */; };
 		5A25018C16393201004113B8 /* TCWBEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013216393201004113B8 /* TCWBEngine.m */; };
 		5A25018D16393201004113B8 /* TCWBRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A25013516393201004113B8 /* TCWBRequest.m */; };
+		5A256317163FE2A7000ED113 /* ShowCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A256316163FE2A6000ED113 /* ShowCommentCell.m */; };
 		5A276419163A5C17009599C1 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A276417163A5C17009599C1 /* CommentViewController.m */; };
 		5A27641A163A5C17009599C1 /* CommentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A276418163A5C17009599C1 /* CommentViewController.xib */; };
 		5A276422163AA91B009599C1 /* ShowCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A276420163AA91B009599C1 /* ShowCommentViewController.m */; };
@@ -1032,6 +1033,8 @@
 		5A25013516393201004113B8 /* TCWBRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCWBRequest.m; sourceTree = "<group>"; };
 		5A25013616393201004113B8 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Language.strings"; sourceTree = "<group>"; };
 		5A25013716393201004113B8 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Language.strings"; sourceTree = "<group>"; };
+		5A256315163FE2A6000ED113 /* ShowCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowCommentCell.h; sourceTree = "<group>"; };
+		5A256316163FE2A6000ED113 /* ShowCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowCommentCell.m; sourceTree = "<group>"; };
 		5A276416163A5C17009599C1 /* CommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
 		5A276417163A5C17009599C1 /* CommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
 		5A276418163A5C17009599C1 /* CommentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommentViewController.xib; sourceTree = "<group>"; };
@@ -2496,6 +2499,8 @@
 				5A6A53C7163BF6F600C86C89 /* NotificationCell.m */,
 				5A34D8D8163D1CAC006E6B98 /* FeedListCell.h */,
 				5A34D8D9163D1CAC006E6B98 /* FeedListCell.m */,
+				5A256315163FE2A6000ED113 /* ShowCommentCell.h */,
+				5A256316163FE2A6000ED113 /* ShowCommentCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -4252,6 +4257,7 @@
 				5A6A541B163C4EDA00C86C89 /* DetailNotificationViewController.m in Sources */,
 				5A34D8DA163D1CAC006E6B98 /* FeedListCell.m in Sources */,
 				5A63EE65163E8AE600E3D7E8 /* DetailWeiyuViewController.m in Sources */,
+				5A256317163FE2A7000ED113 /* ShowCommentCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

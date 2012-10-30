@@ -92,7 +92,6 @@
         [self.tilteBtn setTitle:name forState:UIControlStateNormal];
         [self.tilteBtn setTitle:name forState:UIControlStateHighlighted];
         
-        
         [self reloadList];
     }
 }
@@ -189,7 +188,6 @@
     AddWeiyuViewController *awvc = [[AddWeiyuViewController alloc] initWithNibName:@"AddWeiyuViewController" bundle:nil];
     [self.navigationController pushViewController:awvc animated:YES];
     [awvc release];
-    
 }
 
 - (void)viewDidUnload
@@ -483,16 +481,17 @@
     NSString *idStr = weiyu[@"id"];
     if ([status isEqualToString:@"comment"]) {
         
-        CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
-            commentViewController.idStr = idStr;
+//        CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
+//            commentViewController.idStr = idStr;
+//        
+//        [self.navigationController pushViewController:commentViewController animated:YES];
+//        [commentViewController release];
         
-        [self.navigationController pushViewController:commentViewController animated:YES];
-        [commentViewController release];
+        ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
+        showCommentViewController.weiYuDic = weiyu;
+        [self.navigationController pushViewController:showCommentViewController animated:YES];
+        [showCommentViewController release];
         
-        //ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
-        //showCommentViewController.weiYudic = weiyu;
-        //[self.navigationController pushViewController:showCommentViewController animated:YES];
-        //[showCommentViewController release];
     } else if ([status isEqualToString:@"minus"]){
         // minus
     } else if ([status isEqualToString:@"plus"]){
@@ -502,9 +501,7 @@
         udvc.user = @{@"_id": weiyu[@"uid"], @"niname": weiyu[@"uinfo"][@"niname"], @"photo": weiyu[@"uinfo"][@"photo"]};
         [self.navigationController pushViewController:udvc animated:YES];
         [udvc release];
-    }
-
-    
+    }    
 }
 
 #pragma mark - drop menu 

@@ -17,17 +17,14 @@
 @end
 
 @implementation CommentViewController
-@synthesize idStr,contentView;
-@synthesize toolView;
-@synthesize bgView;
 
 
 -(void)dealloc
 {
-    [bgView release];
-    [contentView release];
-    [toolView release];
-    [idStr release];
+    [_bgView release];
+    [_contentView release];
+    [_toolView release];
+    [_idStr release];
     [super dealloc];
 }
 
@@ -35,24 +32,24 @@
 -(void)loadView
 {
     [super loadView];
-    bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 165)];
+    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 165)];
     
-    contentView = [[UITextView alloc]initWithFrame:CGRectMake(5, 5, 310, 165)];
-    contentView.backgroundColor = [UIColor clearColor];
-    [bgView addSubview:contentView];
+    self.contentView = [[UITextView alloc]initWithFrame:CGRectMake(5, 5, 310, 50)];
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    [self.bgView addSubview:self.contentView];
     
-    toolView = [[UIView alloc]initWithFrame:CGRectMake(0, 140, 320, 40)];
-    toolView.backgroundColor = RGBCOLOR(246, 246, 246);
-    [bgView addSubview:toolView];
+    self.toolView = [[UIView alloc]initWithFrame:CGRectMake(0, 140, 320, 40)];
+    self.toolView.backgroundColor = RGBCOLOR(246, 246, 246);
+    [self.bgView addSubview:self.toolView];
     
     UIButton *picButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [picButton setImage:[UIImage imageNamed:@"sub_pic_icon"] forState:UIControlStateNormal];
-    [picButton setImage:[UIImage imageNamed:@"messages_toolbar_photobutton_background_highlighted"] forState:UIControlStateHighlighted ];
-    picButton.frame = CGRectMake(20, 12, 24, 20);
+    [picButton setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background"] forState:UIControlStateNormal];
+    [picButton setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted"] forState:UIControlStateHighlighted ];
+    picButton.frame = CGRectMake(20, 12, 24, 24);
     [picButton addTarget:self action:@selector(picSelect:)forControlEvents:UIControlEventTouchUpInside];
     
-    [toolView addSubview:picButton];
-    [self.view addSubview:bgView];
+    [self.toolView addSubview:picButton];
+    [self.view addSubview:self.bgView];
 }
 
 - (void)viewDidLoad
@@ -65,10 +62,8 @@
     self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"发表评论"];
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"发布"target:self action:@selector(sendButtonPress:)] autorelease];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"取消"target:self action:@selector(backAction)] autorelease];
-    [contentView becomeFirstResponder];
+    [self.contentView becomeFirstResponder];
     
-    
-
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -91,7 +86,6 @@
 -(void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
-    //    [self.presentedViewController dismissModalViewControllerAnimated:YES];
 }
 
 -(void)sendButtonPress:(id)sender
@@ -150,7 +144,7 @@
     self.toolView.frame = rect;
     
     CGRect rect2 = self.contentView.frame;
-    rect2.size.height = 400-r.size.height;
+    rect2.size.height = 350-r.size.height;
     self.contentView.frame = rect2;
    }
 
