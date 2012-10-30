@@ -52,8 +52,7 @@
     [self.navigationController.navigationBar setHidden:NO];
     
     self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"我的动态"];
-   rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(editButton)] autorelease];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
+
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"target:self action:@selector(backAction)] autorelease];
 }
 
@@ -88,20 +87,6 @@
         return self.feeds.count;
     } else{
         return self.feeds.count + 1;
-    }
-    
-}
--(void)editButton
-{
-    if (rightBarButton.title == @"编辑")
-    {
-        rightBarButton.title = @"确定";
-        [rightBarButton setStyle:UIBarButtonItemStyleDone];
-        [self setEditing:YES animated:YES];
-    }else{
-        rightBarButton.title = @"编辑";
-        [rightBarButton setStyle:UIBarButtonItemStylePlain];
-        [self setEditing:NO animated:YES];
     }
     
 }
@@ -145,7 +130,7 @@
     NSDictionary *n = [self.feeds objectAtIndex:indexPath.row];
     cell.contentLabel.text = n[@"addtime_text"];
     cell.titleLabel.text = n[@"content"];
-    
+    NSLog(@"feed data: %@", n);
     if ([n[@"info"][@"photo"] isEqualToString:@""]) {
         [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
     } else{

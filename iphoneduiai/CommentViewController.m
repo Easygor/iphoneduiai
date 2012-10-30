@@ -30,15 +30,7 @@
     [idStr release];
     [super dealloc];
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
 
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 -(void)loadView
 {
@@ -49,7 +41,7 @@
     contentView.backgroundColor = [UIColor clearColor];
     [bgView addSubview:contentView];
     
-    toolView = [[[UIView alloc]initWithFrame:CGRectMake(0, 140, 320, 40)]autorelease];
+    toolView = [[UIView alloc]initWithFrame:CGRectMake(0, 140, 320, 40)];
     toolView.backgroundColor = RGBCOLOR(246, 246, 246);
     [bgView addSubview:toolView];
     
@@ -68,11 +60,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    [self.navigationController.navigationBar setHidden:NO];
+
     
     self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"发表评论"];
-    CustomBarButtonItem  *rightBarButton = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"发布"target:self action:@selector(sendButtonPress:)] autorelease];
-    self.navigationItem.rightBarButtonItem = rightBarButton;
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"发布"target:self action:@selector(sendButtonPress:)] autorelease];
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"取消"target:self action:@selector(backAction)] autorelease];
     [contentView becomeFirstResponder];
     

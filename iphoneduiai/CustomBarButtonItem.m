@@ -7,7 +7,6 @@
 //
 
 #import "CustomBarButtonItem.h"
-#import "UIImage+mergeImages.h"
 
 @implementation CustomBarButtonItem
 
