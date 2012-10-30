@@ -988,7 +988,7 @@ static NSInteger kDelWeiyuTag = 204;
         //    [commentViewController release];
         
         ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
-        showCommentViewController.weiYudic = weiyu;
+        showCommentViewController.weiYuDic = weiyu;
         [self.navigationController pushViewController:showCommentViewController animated:YES];
         [showCommentViewController release];
     } else if ([status isEqualToString:@"minus"]){

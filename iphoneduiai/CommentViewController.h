@@ -14,8 +14,6 @@
 
     UITextField *commentField;
     UIButton *sendButton;
-    NSString  *idStr;
-
 }
 @property (strong, nonatomic) NSString *idStr;
 @property(nonatomic,retain) UITextView *contentView;
