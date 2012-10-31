@@ -40,6 +40,7 @@
 @property (retain, nonatomic) IBOutlet MesgPoperView *poperView;
 
 @property (strong, nonatomic) NSMutableDictionary *partner;
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -48,6 +49,8 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.timer invalidate];
+    self.timer = nil;
     [_tableView release];
     [_textView release];
     [_messageView release];
@@ -231,6 +234,7 @@
     [self.headView addSubview:btn];
     
     [self requestMessageListWithPage:1];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -242,6 +246,25 @@
     
     //    pageSmileView.backgroundColor = [UIColor redColor];
     [self.containerView addSubview:self.pageSmileView];
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30
+                                                  target:self
+                                                selector:@selector(autoGetList)
+                                                userInfo:nil
+                                                 repeats:YES];
+}
+
+//- (void)viewDidDisappear:(BOOL)animated
+//{
+//    [super viewDidDisappear:animated];
+//    
+//    [self.timer invalidate];
+//    self.timer = nil;
+//}
+
+- (void)autoGetList
+{
+    [self requestMessageListWithPage:1];
 }
 
 - (void)requestMoreAction
@@ -707,8 +730,8 @@
     
     [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [params setObject:@"20" forKey:@"pagesize"];
-    if (self.messageData[@"tid"]) {
-        [params setObject:self.messageData[@"tid"] forKey:@"id"];
+    if (self.messageData[@"msgtoken"]) {
+        [params setObject:self.messageData[@"msgtoken"] forKey:@"msgtoken"];
     }
     
     [SVProgressHUD show];

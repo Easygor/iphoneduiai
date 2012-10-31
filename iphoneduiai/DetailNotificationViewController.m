@@ -11,6 +11,7 @@
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "NSDate-Utilities.h"
+#import "SVProgressHUD.h"
 
 @interface DetailNotificationViewController ()
 @property (retain, nonatomic) IBOutlet UIView *containerView;
@@ -44,7 +45,9 @@
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     
     CGFloat btnHeight = 0;
-    if ([self.notificationData[@"msgcontent"] isEqualToString:@"agreecontact"]) {
+    if ([self.notificationData[@"msgcontent"] isEqualToString:@"agreecontact"] &&
+        [self.notificationData[@"agent"] integerValue] == 1) {
+        
         UIImage *bg = [[UIImage imageNamed:@"notice_btn"] stretchableImageWithLeftCapWidth:15 topCapHeight:0];
         UIImage *bgs = [[UIImage imageNamed:@"notice_btn_linked"] stretchableImageWithLeftCapWidth:15 topCapHeight:0];
         [self.agreeBtn setBackgroundImage:bg forState:UIControlStateNormal];
@@ -54,6 +57,7 @@
         self.agreeBtn.hidden = NO;
         self.rejectBtn.hidden = NO;
         btnHeight = self.agreeBtn.frame.size.height + 5;
+        
     } else
     {
         self.agreeBtn.hidden = YES;
@@ -120,14 +124,49 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)answerWith:(NSString*)v
+{
+    NSMutableDictionary *params = [Utils queryParams];
+    [params setObject:self.notificationData[@"tid"] forKey:@"tid[]"];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/common/agreeview.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+        NSLog(@"url: %@", request.URL);
+        
+        request.params = [RKParams paramsWithDictionary:@{@"msgid" : self.notificationData[@"tid"], @"agree": v, @"submitupdate": @"true"}];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                //                        NSLog(@"read data: %@", data[@"message"]);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    [SVProgressHUD dismiss];
+                    [self.navigationController popViewControllerAnimated:YES];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+
+}
+
 - (IBAction)rejectAction
 {
-    NSLog(@"reject action ....");
+
+    [self answerWith:@"no"];
 }
 
 - (IBAction)agreeAction:(id)sender
 {
-    NSLog(@"agree action ....");
+    [self answerWith:@"yes"];
 }
 
 - (void)viewDidUnload {
