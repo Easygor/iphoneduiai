@@ -20,6 +20,7 @@
 
 -(void)dealloc
 {
+    [_titleLabel release];
     [_headImgView release];
     [_titleLabel release];
     [_contentLabel release];
@@ -68,6 +69,13 @@
         self.contentLabel.numberOfLines = 0;
         self.contentLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         [self.contentView addSubview:self.contentLabel];
+        
+        self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 10, 60, 20)];
+        self.timeLabel.backgroundColor = [UIColor clearColor];
+        self.timeLabel.font = [UIFont systemFontOfSize:13];
+        self.timeLabel.textColor = [UIColor grayColor];
+        [self.contentView addSubview:self.timeLabel];
+        
 
     }
     return self;
