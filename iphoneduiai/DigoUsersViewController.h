@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface DigoUsersViewController : UITableViewController
+#import "CustomCellDelegate.h"
+@interface DigoUsersViewController : UITableViewController<CustomCellDelegate>
 
 @end
