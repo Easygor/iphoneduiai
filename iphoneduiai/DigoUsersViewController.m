@@ -40,12 +40,25 @@
 
 - (void)setUsers:(NSMutableArray *)users
 {
+    /*
     if (![_users isEqualToArray:users]) {
         _users = [users retain];
         
         [self.emptyDataView removeFromSuperview];
     }
     [self.tableView reloadData];
+     */
+    if (![_users isEqualToArray:users]) {
+        if (self.curPage > 1) {
+            [_users addObjectsFromArray:users];
+            
+        } else{
+            _users = [[NSMutableArray alloc] initWithArray:users];
+        }
+        
+        [self.tableView reloadData]; // reload which one?
+
+    }
 }
 
 - (void)viewDidUnload
@@ -86,7 +99,14 @@
 {
     // Return the number of rows in the section.
     //return self.users.count;
-    return self.users.count/3+(self.users.count%3==0?0:1);
+//    return self.users.count/3+(self.users.count%3==0?0:1);
+    
+    if (self.totalPage <= self.curPage) {
+        return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1);
+    } else{
+        
+        return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1)+1;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
