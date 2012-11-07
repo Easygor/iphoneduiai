@@ -59,9 +59,9 @@
         [button setTitle:titleText forState:UIControlStateNormal];
         [button addTarget:self action:@selector(clickItem:) forControlEvents:UIControlEventTouchUpInside];
         
-        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedLong:)];
-        [self addGestureRecognizer:longPress];
-        longPress = nil;
+//        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedLong:)];
+//        [self addGestureRecognizer:longPress];
+//        longPress = nil;
         [self addSubview:button];
         
         if (self.isRemovable) {
