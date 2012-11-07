@@ -11,5 +11,6 @@
 @interface SessionViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate>
 
 @property (strong, nonatomic) NSMutableDictionary *messageData;
+@property (strong, nonatomic) NSString *senduid;
 
 @end

@@ -328,8 +328,6 @@
 		6141A6D315FB512400985257 /* tabbar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6D115FB512400985257 /* tabbar-bg@2x.png */; };
 		6141A6DA15FB68BA00985257 /* UIImage+mergeImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6D915FB68BA00985257 /* UIImage+mergeImages.m */; };
 		6141A6E415FB691A00985257 /* CustomBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6DC15FB691A00985257 /* CustomBarButtonItem.m */; };
-		6141A6E515FB691A00985257 /* CustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6DE15FB691A00985257 /* CustomTabBarController.m */; };
-		6141A6E615FB691A00985257 /* CustomTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6E015FB691A00985257 /* CustomTabBarView.m */; };
 		6141A6E715FB691A00985257 /* HZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6E215FB691A00985257 /* HZNavigationBar.m */; };
 		6141A6E815FB691A00985257 /* TabBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6E315FB691A00985257 /* TabBarView.xib */; };
 		6141A6EE15FB6D9800985257 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6141A6ED15FB6D9800985257 /* MainWindow.xib */; };
@@ -861,6 +859,7 @@
 		61DCBE93162D185B0086294E /* jobs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61DCBE92162D185B0086294E /* jobs.plist */; };
 		61DCBE97162D58C40086294E /* ChooseMateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DCBE95162D58C40086294E /* ChooseMateViewController.m */; };
 		61DCBE98162D58C40086294E /* ChooseMateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61DCBE96162D58C40086294E /* ChooseMateViewController.xib */; };
+		61E70E531642B679005B8117 /* RaisedCenterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E70E521642B678005B8117 /* RaisedCenterButton.m */; };
 		61EC9F041611370A00C9DC6E /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EC9F031611370A00C9DC6E /* User.m */; };
 		61EEFECE162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFEC6162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png */; };
 		61EEFECF162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61EEFEC7162324D1008E375F /* VOIPReceiverVoiceNodeBkg@2x.png */; };
@@ -1312,10 +1311,6 @@
 		6141A6D915FB68BA00985257 /* UIImage+mergeImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+mergeImages.m"; sourceTree = "<group>"; };
 		6141A6DB15FB691A00985257 /* CustomBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBarButtonItem.h; sourceTree = "<group>"; };
 		6141A6DC15FB691A00985257 /* CustomBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBarButtonItem.m; sourceTree = "<group>"; };
-		6141A6DD15FB691A00985257 /* CustomTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTabBarController.h; sourceTree = "<group>"; };
-		6141A6DE15FB691A00985257 /* CustomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabBarController.m; sourceTree = "<group>"; };
-		6141A6DF15FB691A00985257 /* CustomTabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTabBarView.h; sourceTree = "<group>"; };
-		6141A6E015FB691A00985257 /* CustomTabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabBarView.m; sourceTree = "<group>"; };
 		6141A6E115FB691A00985257 /* HZNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZNavigationBar.h; sourceTree = "<group>"; };
 		6141A6E215FB691A00985257 /* HZNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZNavigationBar.m; sourceTree = "<group>"; };
 		6141A6E315FB691A00985257 /* TabBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TabBarView.xib; sourceTree = "<group>"; };
@@ -1906,6 +1901,8 @@
 		61DCBE94162D58C40086294E /* ChooseMateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseMateViewController.h; sourceTree = "<group>"; };
 		61DCBE95162D58C40086294E /* ChooseMateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseMateViewController.m; sourceTree = "<group>"; };
 		61DCBE96162D58C40086294E /* ChooseMateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseMateViewController.xib; sourceTree = "<group>"; };
+		61E70E511642B678005B8117 /* RaisedCenterButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RaisedCenterButton.h; sourceTree = "<group>"; };
+		61E70E521642B678005B8117 /* RaisedCenterButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RaisedCenterButton.m; sourceTree = "<group>"; };
 		61EC9F021611370A00C9DC6E /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		61EC9F031611370A00C9DC6E /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		61EEFEC6162324D1008E375F /* VOIPReceiverVoiceNodeBkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VOIPReceiverVoiceNodeBkg.png; sourceTree = "<group>"; };
@@ -2851,10 +2848,6 @@
 				610DBF451625C10B00563D26 /* MesgPoperView.m */,
 				6141A6DB15FB691A00985257 /* CustomBarButtonItem.h */,
 				6141A6DC15FB691A00985257 /* CustomBarButtonItem.m */,
-				6141A6DD15FB691A00985257 /* CustomTabBarController.h */,
-				6141A6DE15FB691A00985257 /* CustomTabBarController.m */,
-				6141A6DF15FB691A00985257 /* CustomTabBarView.h */,
-				6141A6E015FB691A00985257 /* CustomTabBarView.m */,
 				6141A6E315FB691A00985257 /* TabBarView.xib */,
 				6141A6E115FB691A00985257 /* HZNavigationBar.h */,
 				6141A6E215FB691A00985257 /* HZNavigationBar.m */,
@@ -2864,6 +2857,8 @@
 				61BB2B7C15FA158100AA82CC /* HZTabBar.m */,
 				61CB4050160386CF00888317 /* HZLocation.h */,
 				61CB4051160386CF00888317 /* HZLocation.m */,
+				61E70E511642B678005B8117 /* RaisedCenterButton.h */,
+				61E70E521642B678005B8117 /* RaisedCenterButton.m */,
 				61AA9C0E15FBD607009D67AD /* ShadowUpView.h */,
 				61AA9C0F15FBD607009D67AD /* ShadowUpView.m */,
 				61AA9C1115FBD68A009D67AD /* ShadowDownView.h */,
@@ -4138,8 +4133,6 @@
 				61BB2B7D15FA158100AA82CC /* HZTabBar.m in Sources */,
 				6141A6DA15FB68BA00985257 /* UIImage+mergeImages.m in Sources */,
 				6141A6E415FB691A00985257 /* CustomBarButtonItem.m in Sources */,
-				6141A6E515FB691A00985257 /* CustomTabBarController.m in Sources */,
-				6141A6E615FB691A00985257 /* CustomTabBarView.m in Sources */,
 				6141A6E715FB691A00985257 /* HZNavigationBar.m in Sources */,
 				6141A6FC15FB72D000985257 /* SearchListViewController.m in Sources */,
 				6141A70115FB72E300985257 /* MessageListViewController.m in Sources */,
@@ -4258,6 +4251,7 @@
 				5A34D8DA163D1CAC006E6B98 /* FeedListCell.m in Sources */,
 				5A63EE65163E8AE600E3D7E8 /* DetailWeiyuViewController.m in Sources */,
 				5A256317163FE2A7000ED113 /* ShowCommentCell.m in Sources */,
+				61E70E531642B679005B8117 /* RaisedCenterButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

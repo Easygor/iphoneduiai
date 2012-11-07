@@ -10,6 +10,8 @@
 #import <RestKit/RestKit.h>
 #import "LocationController.h"
 #import "Notification.h"
+#import <RestKit/JSONKit.h>
+#import "RaisedCenterButton.h"
 
 @implementation AppDelegate
 
@@ -19,6 +21,8 @@
     [_managedObjectContext release];
     [_managedObjectModel release];
     [_persistentStoreCoordinator release];
+    [_tabBarController release];
+    [_raisedBtn release];
     [super dealloc];
 }
 
@@ -35,6 +39,29 @@
     
 //    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
+    RaisedCenterButton *button = [RaisedCenterButton buttonWithBgImage:[UIImage imageNamed:@"icon-weiyu"] hlImage:[UIImage imageNamed:@"icon-weiyu-linked"] forTabBarController:self.tabBarController];
+    self.raisedBtn = button;
+    [self.tabBarController.tabBar addSubview:button];
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")) {
+        
+//        [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_indicator_bg.png"]];
+        // config the tab bar items
+//        [self.indexItem setFinishedSelectedImage:[UIImage imageNamed:@"home_w.png"]
+//                     withFinishedUnselectedImage:[UIImage imageNamed:@"home_g.png"]];
+//        [self.cateItem setFinishedSelectedImage:[UIImage imageNamed:@"list_w.png"]
+//                    withFinishedUnselectedImage:[UIImage imageNamed:@"list_g.png"]];
+//        [self.collectItem setFinishedSelectedImage:[UIImage imageNamed:@"love_w.png"]
+//                       withFinishedUnselectedImage:[UIImage imageNamed:@"love_g.png"]];
+//        [self.myTaoItem setFinishedSelectedImage:[UIImage imageNamed:@"mytaobao_pressed"]
+//                     withFinishedUnselectedImage:[UIImage imageNamed:@"mytaobao"]];
+//        [self.moreItem setFinishedSelectedImage:[UIImage imageNamed:@"more_w.png"]
+//                    withFinishedUnselectedImage:[UIImage imageNamed:@"more_g.png"]];
+        [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbar-bg"]];
+    } else {
+        [self.tabBarController.tabBar insertSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tabbar-bg"]] autorelease]  atIndex:0];
+    }
+    
     [self configRestKit];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -52,7 +79,8 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     [[Notification sharedInstance] saveDataToPlist];
+    [[Notification sharedInstance] saveDataToPlist];
+    [self updateLocationAndUserInfo];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -68,6 +96,7 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
+        [self updateLocationAndUserInfo];
     });
 }
 
@@ -208,4 +237,106 @@
     NSLog(@"Error in registration. Error: %@", error);
 }
 
+#pragma mark - networking request
+-(void)updateLocationAndUserInfo
+{
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"user"]) {
+        return;
+    }
+    
+    if ([LocationController sharedInstance].allow) {
+        CLLocationCoordinate2D curLocation = [[[LocationController sharedInstance] location] coordinate];
+        [self updateRequestWithLocation:curLocation];
+    } else{
+        [self updateRequestWithLocation:CLLocationCoordinate2DMake(0.0, 0.0)];
+    }
+    
+}
+
+-(void)updateRequestWithLocation:(CLLocationCoordinate2D)curLocation
+{
+
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNumber numberWithFloat:curLocation.longitude], @"jin",
+                          [NSNumber numberWithFloat:curLocation.latitude], @"wei",
+                          @"true", @"submitupdate",
+                          nil];
+    
+    RKParams *params = [RKParams paramsWithDictionary:data];
+    
+    // per
+    [[RKClient sharedClient] post:[@"/uc/updatelocation.api" stringByAppendingQueryParameters:[Utils queryParams]]
+                       usingBlock:^(RKRequest *request){
+                           // set params
+                           [request setParams:params];
+                           
+                           // set successful block
+                           [request setOnDidLoadResponse:^(RKResponse *response){
+                               if (response.isOK && response.isJSON) {
+                                   NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+//                                   NSLog(@"res: %@", data);
+                                   if ([[data objectForKey:@"error"] intValue] == 0) {
+                  
+                                       NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+                                       user[@"username"] = data[@"data"][@"searchindex"][@"username"];
+                                       user[@"info"] = data[@"data"][@"userinfo"];
+                                       [[NSUserDefaults standardUserDefaults] setObject:[data objectForKey:@"accesskey"] forKey:@"accesskey"];
+                                       [[NSUserDefaults standardUserDefaults] setObject:user  forKey:@"user"];
+                                       [[NSUserDefaults standardUserDefaults] synchronize];
+
+                                   } else{
+
+                                       NSLog(@"fail: %@", [data objectForKey:@"message"]);
+                                   }
+                                   
+                               }
+                           }];
+                           
+                           // set error block
+                           [request setOnDidFailLoadWithError:^(NSError *error){
+                               NSLog(@"Network Error: %@", [error localizedDescription]);
+                           }];
+                       }];
+
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
+{
+    // unselected the button
+    NSInteger index = [tabBarController.viewControllers indexOfObject:viewController];
+    if (index != 2 && self.raisedBtn.selected) {
+        self.raisedBtn.selected = NO;
+    }
+    
+    // hide or not
+//    if (viewController.hidesBottomBarWhenPushed) {
+//        self.raisedBtn.hidden = YES;
+//    } else{
+//        self.raisedBtn.hidden = NO;
+//    }
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (viewController.hidesBottomBarWhenPushed) {
+        float_t delayInSeconds = 0.2;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.raisedBtn.hidden = YES;
+        });
+//        self.raisedBtn.hidden = YES;
+    }
+
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (!viewController.hidesBottomBarWhenPushed) {
+//        float_t delayInSeconds = 0.3;
+//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            self.raisedBtn.hidden = NO;
+//        });
+    }
+}
 @end

@@ -92,7 +92,7 @@
         tag = data;
         name = data;
     }
-    
+
     if ([self.delegate respondsToSelector:@selector(didSelectedMenuCell:withTag:name:)]) {
 
         [self.delegate didSelectedMenuCell:self withTag:tag name:name];

@@ -26,6 +26,7 @@
 
 - (void)dealloc
 {
+    NSLog(@"be called");
     [_moreCell release];
     [_feeds release];
     [super dealloc];

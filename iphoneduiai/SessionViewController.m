@@ -42,6 +42,7 @@
 @property (strong, nonatomic) NSMutableDictionary *partner;
 @property (strong, nonatomic) NSTimer *timer;
 
+
 @end
 
 @implementation SessionViewController
@@ -49,8 +50,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self.timer invalidate];
-    self.timer = nil;
+    [_senduid release];
     [_tableView release];
     [_textView release];
     [_messageView release];
@@ -254,13 +254,14 @@
                                                  repeats:YES];
 }
 
-//- (void)viewDidDisappear:(BOOL)animated
-//{
-//    [super viewDidDisappear:animated];
-//    
-//    [self.timer invalidate];
-//    self.timer = nil;
-//}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.timer invalidate];
+    self.timer = nil;
+    [super viewDidDisappear:animated];
+    
+
+}
 
 - (void)autoGetList
 {
@@ -407,8 +408,10 @@
         }
         
         cell.content = msg[@"content"];
-        [cell.avatarImageView loadImage:self.partner[@"photo"]];
-        
+        [cell.avatarImageView loadImage:msg[@"uinfo"][@"photo"]];
+        if (self.senduid == nil) {
+            self.senduid = msg[@"senduid"];
+        }
         if (abs([msg[@"addtime"] integerValue] - [msgNext[@"addtime"] integerValue]) > 600) {
             cell.date = [NSDate dateWithTimeIntervalSince1970:[msg[@"addtime"] integerValue]];
         } else{
@@ -433,7 +436,7 @@
     // read all message 
     NSMutableDictionary *n = self.messages[indexPath.row];
     
-    if ([n[@"senduid"] isEqualToString:self.partner[@"uid"]] && [n[@"readtime"] integerValue] == 0) {
+    if ([n[@"senduid"] isEqualToString:self.senduid] && [n[@"readtime"] integerValue] == 0) {
         NSMutableDictionary *params = [Utils queryParams];
         [params setObject:n[@"tid"] forKey:@"id"];
 
@@ -601,7 +604,7 @@
             NSMutableDictionary *pd = [NSMutableDictionary dictionary];
             [pd setObject:@"true" forKey:@"submitupdate"];
             [pd setObject:content forKey:@"replycontent"];
-            [pd setObject:self.self.partner[@"uid"] forKey:@"uid"];
+            [pd setObject:self.senduid forKey:@"uid"];
             
             
             //            if (abs(self.curLocaiton.latitude - 0.0) > 0.001) {
