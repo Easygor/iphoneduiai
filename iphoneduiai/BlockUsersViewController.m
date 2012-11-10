@@ -13,12 +13,14 @@
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 #import "UserDetailViewController.h"
-
+#import "UserCardTableCell.h"
 @interface BlockUsersViewController ()
 
 @property (strong, nonatomic) NSMutableArray *users;
 @property (retain, nonatomic) IBOutlet UIView *emptyDataView;
-
+@property (nonatomic) NSInteger curPage, totalPage;
+@property (strong, nonatomic) UITableViewCell *moreCell;
+@property (nonatomic) BOOL loading;
 @end
 
 @implementation BlockUsersViewController
@@ -27,15 +29,22 @@
 {
     [_emptyDataView release];
     [_users release];
+    [_moreCell  release];
     [super dealloc];
 }
 
 - (void)setUsers:(NSMutableArray *)users
 {
     if (![_users isEqualToArray:users]) {
-        _users = [users retain];
+        if (self.curPage > 1) {
+            [_users addObjectsFromArray:users];
+            
+        } else{
+            _users = [[NSMutableArray alloc] initWithArray:users];
+        }
         
-        [self.emptyDataView removeFromSuperview];
+        [self.tableView reloadData]; // reload which one?
+        
     }
 }
 
@@ -57,24 +66,20 @@
                                                                                                 target:self
                                                                                                 action:@selector(editAction)] autorelease];
 }
-
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)editAction
-{
-    [self setEditing:YES animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if (self.users.count <= 0) {
-        [self.tableView addSubview:self.emptyDataView];
-    }
+    //    if (self.users.count <= 0) {
+    //        [self.tableView addSubview:self.emptyDataView];
+    //    }
+    
+    [self blockReqeustWithPage:1];
 }
 
 #pragma mark - Table view data source
@@ -82,57 +87,162 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-     return self.users.count;
+    //return self.users.count;
+    //    return self.users.count/3+(self.users.count%3==0?0:1);
+    
+    if (self.totalPage <= self.curPage) {
+        return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1);
+    } else{
+        
+        return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1)+1;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==(self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1))) {
+        return 40.0f;
+    }else
+    {
+        return 110.0f;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"blackUserCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    
+    
+    if (indexPath.row == (self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1))) {
+        return [self createMoreCell:tableView cellForRowAtIndexPath:indexPath];
+    }else {
+        return [self creatNormalCell:tableView cellForRowAtIndexPath:indexPath];
     }
     
-    // Configure the cell...
+}
+
+-(UITableViewCell *)createMoreCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	
+	UITableViewCell *cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"moretag"] autorelease];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	
+	UILabel *labelNumber = [[UILabel alloc] initWithFrame:CGRectMake(110, 10, 100, 20)];
+    labelNumber.textAlignment = UITextAlignmentCenter;
     
+    if (self.totalPage <= self.curPage){
+        labelNumber.text = @"";
+    } else {
+        labelNumber.text = @"更多";
+    }
+    
+	[labelNumber setTag:1];
+	labelNumber.backgroundColor = [UIColor clearColor];
+	labelNumber.font = [UIFont boldSystemFontOfSize:18];
+	[cell.contentView addSubview:labelNumber];
+	[labelNumber release];
+	
+    self.moreCell = cell;
+    
+    return self.moreCell;
+}
+
+
+- (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*3, MIN(3, self.users.count-indexPath.row*3))]];
+    static NSString *CellIdenttifier = @"userCardCell";
+    UserCardTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdenttifier];
+    if (cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:1];
+        cell.delegate = self;
+    }
+    cell.users = users;
     return cell;
+    
 }
 
-
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)loadNextInfoList
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    UILabel *label = (UILabel*)[self.moreCell.contentView viewWithTag:1];
+    label.text = @"正在加载..."; // bug no reload table not show it.
+    
+    if (!self.loading) {
+        [self blockReqeustWithPage:self.curPage+1];
+        self.loading = YES;
+    }
+    
 }
-
-
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    if (indexPath.row == (self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1))) {
+        double delayInSeconds = 0.3;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self loadNextInfoList];
+        });
+    }
+    
 }
-
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-
+    
     UserDetailViewController *detailViewController = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
     detailViewController.user = self.users[indexPath.row];
     [self.navigationController pushViewController:detailViewController animated:YES];
     [detailViewController release];
-
+    
+}
+#pragma mark - request
+- (void)blockReqeustWithPage:(NSInteger)page
+{
+    [SVProgressHUD show];
+    NSMutableDictionary *dParams = [Utils queryParams];
+    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [self blockReqeustWithParams:dParams];
+    
 }
 
+-(void)blockReqeustWithParams:(NSMutableDictionary*)params
+{
+    [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+        NSLog(@"url: %@", request.URL);
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                NSLog(@"block data %@", data);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    self.loading = NO;
+                    self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
+                    self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
+                    // 此行须在前两行后面
+                    if ([data[@"data"] isEqual:[NSNull null]]) {
+                        self.users = nil;
+                    } else{
+                        self.users = [data objectForKey:@"data"];
+                    }
+                    
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+                
+            } else{
+                //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+    
+}
 
 @end

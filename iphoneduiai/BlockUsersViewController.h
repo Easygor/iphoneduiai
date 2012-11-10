@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomCellDelegate.h"
 
-@interface BlockUsersViewController : UITableViewController
+@interface BlockUsersViewController : UITableViewController<CustomCellDelegate>
 
 @end
