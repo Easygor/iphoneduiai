@@ -108,4 +108,9 @@
     [self.oldPassField resignFirstResponder];
 }
 
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
+
 @end

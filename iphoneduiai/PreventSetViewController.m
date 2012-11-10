@@ -14,8 +14,9 @@
 #import "SVProgressHUD.h"
 #import "HZPopPickerView.h"
 #import "HZNumberPickerView.h"
+#import "HZTimeSectionPickerView.h"
 
-@interface PreventSetViewController () <UITextFieldDelegate, HZNumberPickerDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
+@interface PreventSetViewController () <UITextFieldDelegate, HZTimeSectionDelegate, HZNumberPickerDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
 @property (retain, nonatomic) IBOutlet UITextField *timeSectionField;
 @property (retain, nonatomic) IBOutlet UITextField *qqEableField;
 @property (retain, nonatomic) IBOutlet UITextField *qqNumField;
@@ -25,6 +26,8 @@
 @property (strong, nonatomic) NSString *qqEableNum;
 @property (nonatomic) NSInteger qqNumNum;
 @property (strong, nonatomic) HZNumberPickerView *qqNumPicker;
+@property (strong, nonatomic) NSDictionary *protectInfo;
+@property (strong, nonatomic) HZTimeSectionPickerView *timeSectionPicker;
 @end
 
 @implementation PreventSetViewController
@@ -39,7 +42,19 @@
     [_timeSectionField release];
     [_qqEableField release];
     [_qqNumField release];
+    [_protectInfo release];
+    [_timeSectionPicker release];
     [super dealloc];
+}
+
+- (HZTimeSectionPickerView *)timeSectionPicker
+{
+    if (_timeSectionPicker == nil) {
+        _timeSectionPicker = [[HZTimeSectionPickerView alloc] initTimeSection];
+        _timeSectionPicker.delegate = self;
+    }
+    
+    return _timeSectionPicker;
 }
 
 - (HZPopPickerView *)qqEablePicker
@@ -62,6 +77,47 @@
     return _qqNumPicker;
 }
 
+- (void)setProtectInfo:(NSDictionary *)protectInfo
+{
+    if (![_protectInfo isEqualToDictionary:protectInfo]) {
+        _protectInfo = [protectInfo retain];
+        NSInteger cc = [protectInfo[@"settheweek"] intValue];
+        NSString *descc = nil;
+        switch (cc) {
+
+            case 1:
+                descc = @"星期一";
+                break;
+            case 2:
+                descc = @"星期二";
+                break;
+            case 3:
+                descc = @"星期三";
+                break;
+            case 4:
+                descc = @"星期四";
+                break;
+            case 5:
+                descc = @"星期五";
+                break;
+            case 6:
+                descc = @"星期六";
+                break;
+            case 7:
+                descc = @"星期日";
+                break;
+            default:
+                descc = @"每天";
+                break;
+ 
+        }
+        self.qqEableField.text = descc;
+        self.qqEableNum = protectInfo[@"settheweek"];
+        self.qqNumField.text = [NSString stringWithFormat:@"%@次", protectInfo[@"setsmsdaymax"]];
+        self.qqNumNum = [protectInfo[@"setsmsdaymax"] intValue];
+        
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -75,6 +131,12 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
                                                                                                 target:self
                                                                                                 action:@selector(saveAction)] autorelease];
+    NSDictionary *msgTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"msg_time"];
+    if (msgTime) {
+        self.timeSectionField.text = [NSString stringWithFormat:@"%@~%@", msgTime[@"min_time"], msgTime[@"max_time"]];
+    }
+
+    [self getAllProtectInfo];
 }
 
 - (void)backAction
@@ -84,7 +146,49 @@
 
 - (void)saveAction
 {
-    // ok
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/uc/protect.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        
+        // 设置POST的form表单的参数
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        if (self.qqEableNum) {
+            updateArgs[@"settheweek"] = self.qqEableNum;
+        }
+        
+        if (self.qqNumNum) {
+            updateArgs[@"setsmsdaymax"] = @(self.qqNumNum);
+        }
+        updateArgs[@"setcontact"] = @"2";
+        updateArgs[@"submitupdate"] = @"true";
+        
+        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        // 请求失败时
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        // 请求成功时
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            
+            if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
+                NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
+                NSInteger code = [data[@"error"] integerValue];  // 返回的状态
+                if (code == 0) {
+                    // 成功提交的情况
+                    [SVProgressHUD showSuccessWithStatus:data[@"message"]];
+                } else{
+                    // 失败的情况
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
+    }];
 }
 
 - (void)viewDidUnload {
@@ -104,10 +208,18 @@
 
         [self.qqNumPicker show];
     } else if ([textField isEqual:self.timeSectionField]){
-        // todo
+        [self.timeSectionPicker show];
     }
     return NO;
 
+}
+
+#pragma mark time delegate 
+-  (void)timeSectionPickerDidChange:(HZTimeSectionPickerView *)picker
+{
+    self.timeSectionField.text = [NSString stringWithFormat:@"%@~%@", picker.curMinDesc, picker.curMaxDesc];
+    [[NSUserDefaults standardUserDefaults] setObject:@{@"min_time": picker.curMinDesc, @"max_time": picker.curMaxDesc} forKey:@"msg_time"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark pop picker view
@@ -158,5 +270,30 @@
     return YES;
 }
 
+- (void)getAllProtectInfo
+{
+    NSMutableDictionary *dParams = [Utils queryParams];
+    
+    [[RKClient sharedClient] get:[@"/uc/protect.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
 
+                NSInteger code = [[data objectForKey:@"error"] integerValue];
+                if (code == 0) {
+                    self.protectInfo = data[@"data"];
+                    //                    NSDictionary *dataData = [data objectForKey:@"data"];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            }
+        }];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"error: %@", [error description]);
+        }];
+        
+    }];
+}
 @end

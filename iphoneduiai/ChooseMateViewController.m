@@ -153,7 +153,11 @@
     self.houseField.text = self.marrayReq[@"house"];
     self.incomeField.text = self.marrayReq[@"income"];
     self.carField.text = self.marrayReq[@"auto"];
-    self.areaField.text = [NSString stringWithFormat:@"%@ %@", self.marrayReq[@"province"], self.marrayReq[@"city"]];
+    if ([self.marrayReq[@"province"] isEqualToString:@"不限"]) {
+        self.areaField.text = self.marrayReq[@"province"];
+    } else{
+        self.areaField.text = [NSString stringWithFormat:@"%@ %@", self.marrayReq[@"province"], self.marrayReq[@"city"]];
+    }
     
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"target:self action:@selector(cancelAction)] autorelease];
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"target:self action:@selector(saveAction)] autorelease];
@@ -224,7 +228,6 @@
         
         updateArgs[@"submitupdate"] = @"true";
         
-        NSLog(@"args: %@", updateArgs);
         request.params = [RKParams paramsWithDictionary:updateArgs];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
@@ -232,22 +235,26 @@
         }];
         
         [request setOnDidLoadResponse:^(RKResponse *response){
-            NSLog(@"save zeou %@", response.bodyAsString);
+
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [response.bodyAsString objectFromJSONString];
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
 
-                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
                     self.marrayReq[@"age"] = self.ageField.text;
                     self.marrayReq[@"auto"] = self.carField.text;
-                    self.marrayReq[@"province"] = self.location.state;
+                    if (self.location) {
+                        self.marrayReq[@"province"] = self.location.state;
+                        self.marrayReq[@"city"] = self.location.city;
+                    }
+ 
                     self.marrayReq[@"height"] = self.heightField.text;
                     self.marrayReq[@"degree"] = self.degreeField.text;
                     self.marrayReq[@"income"] = self.incomeField.text;
                     self.marrayReq[@"house"] = self.houseField.text;
                     self.marrayReq[@"auto"] = self.carField.text;
                     [self cancelAction];
+                    [SVProgressHUD showSuccessWithStatus:data[@"message"]];
                 } else{
                     [SVProgressHUD showErrorWithStatus:@"保存失败"];
                 }

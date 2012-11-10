@@ -255,4 +255,11 @@
     }];
 
 }
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
+
+
 @end

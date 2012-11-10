@@ -1,38 +1,39 @@
 //
-//  HZSectionPickerView.m
+//  HZTimeSectionPickerView.m
 //  iphoneduiai
 //
-//  Created by Cloud Dai on 12-10-15.
+//  Created by Cloud Dai on 12-11-10.
 //  Copyright (c) 2012年 duiai.com. All rights reserved.
 //
 
-#import "HZSectionPickerView.h"
+#import "HZTimeSectionPickerView.h"
 
-@interface HZSectionPickerView ()
+@interface HZTimeSectionPickerView ()
 
 @property (strong, nonatomic) IBOutlet UIPickerView *picker;
 
 @end
 
-@implementation HZSectionPickerView
+@implementation HZTimeSectionPickerView
 
 - (void)dealloc
 {
     self.delegate = nil;
     [_picker release];
-    [_titleLabel release];
     [super dealloc];
 }
 
--(id)initWithMinNum:(NSInteger)minNum maxNum:(NSInteger)maxNum
+-(id)initTimeSection
 {
-    self = [[[[NSBundle mainBundle] loadNibNamed:@"HZAreaPickerView" owner:self options:nil] objectAtIndex:4] retain];
+    self = [[[[NSBundle mainBundle] loadNibNamed:@"HZAreaPickerView" owner:self options:nil] objectAtIndex:6] retain];
     if (self) {
+        self.curMaxDesc = @"24:00";
+        self.curMinDesc = @"00:00";
         
+        self.minNum = 0;
+        self.maxNum = 24;
     }
-    
-    self.curMinNum = self.minNum = minNum;
-    self.curMaxNum = self.maxNum = maxNum;
+
     
     return self;
     
@@ -59,9 +60,9 @@
 {
     
     if (component == 0) {
-        return [NSString stringWithFormat:@"%d", self.minNum+row];
+        return [NSString stringWithFormat:@"%d:00", self.minNum+row];
     } else if (component == 1) {
-        return [NSString stringWithFormat:@"%d", self.curMinNum+row];
+        return [NSString stringWithFormat:@"%d:00", self.curMinNum+row+1];
     }
     
     return @"";
@@ -79,8 +80,8 @@
             
             break;
         case 1:
-            self.curMaxNum = self.curMinNum + row;
-
+            self.curMaxNum = self.curMinNum + row+1;
+            
             break;
         default:
             break;
@@ -94,8 +95,10 @@
 
 - (IBAction)confirmAction:(id)sender
 {
-    if ([self.delegate respondsToSelector:@selector(sectionPickerDidChange:)]) {
-        [self.delegate sectionPickerDidChange:self];
+    if ([self.delegate respondsToSelector:@selector(timeSectionPickerDidChange:)]) {
+        self.curMaxDesc = [NSString stringWithFormat:@"%d:00", self.curMaxNum];
+        self.curMinDesc = [NSString stringWithFormat:@"%d:00", self.curMinNum+1];
+        [self.delegate timeSectionPickerDidChange:self];
     }
     
     [self dismiss];

@@ -458,6 +458,7 @@
 		615BAE96162BAB4C00E0EBFF /* btn_021.disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615BAE8F162BAB4C00E0EBFF /* btn_021.disable@2x.png */; };
 		615BAE97162BAB4C00E0EBFF /* btn_021.press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615BAE90162BAB4C00E0EBFF /* btn_021.press@2x.png */; };
 		615BAE98162BAB4C00E0EBFF /* btn_021@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615BAE91162BAB4C00E0EBFF /* btn_021@2x.png */; };
+		616AC146164EACD100EF660C /* HZTimeSectionPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */; };
 		616D6D6E163513E400F7A20E /* BlockUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D6D6C163513E300F7A20E /* BlockUsersViewController.m */; };
 		616D6D6F163513E400F7A20E /* BlockUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D6D6D163513E400F7A20E /* BlockUsersViewController.xib */; };
 		616D6D8016351D1E00F7A20E /* DigoUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D6D7E16351D1C00F7A20E /* DigoUsersViewController.m */; };
@@ -1465,6 +1466,8 @@
 		615BAE8F162BAB4C00E0EBFF /* btn_021.disable@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_021.disable@2x.png"; sourceTree = "<group>"; };
 		615BAE90162BAB4C00E0EBFF /* btn_021.press@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_021.press@2x.png"; sourceTree = "<group>"; };
 		615BAE91162BAB4C00E0EBFF /* btn_021@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_021@2x.png"; sourceTree = "<group>"; };
+		616AC144164EACD100EF660C /* HZTimeSectionPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTimeSectionPickerView.h; sourceTree = "<group>"; };
+		616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimeSectionPickerView.m; sourceTree = "<group>"; };
 		616D6D6B163513E300F7A20E /* BlockUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockUsersViewController.h; sourceTree = "<group>"; };
 		616D6D6C163513E300F7A20E /* BlockUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockUsersViewController.m; sourceTree = "<group>"; };
 		616D6D6D163513E400F7A20E /* BlockUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlockUsersViewController.xib; sourceTree = "<group>"; };
@@ -2382,6 +2385,8 @@
 				619FEA09162BF7CD00B98434 /* HZSectionPickerView.m */,
 				61DCBE8F162D09A20086294E /* HZNumberPickerView.h */,
 				61DCBE90162D09A20086294E /* HZNumberPickerView.m */,
+				616AC144164EACD100EF660C /* HZTimeSectionPickerView.h */,
+				616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */,
 			);
 			name = "picker views";
 			sourceTree = "<group>";
@@ -2793,12 +2798,12 @@
 				5A1A18161618491700D0B782 /* Setting images */,
 				6159B17B16180F5200705835 /* Profile images */,
 				6159B1381617F31F00705835 /* tabbar icons */,
+				611CE70415FDE82B0066EEA2 /* login & regigster images */,
+				615BAE8B162BAB4B00E0EBFF /* bg_023@2x.png */,
 				6153D9A916104E3100AC4A2D /* Default-568h@2x.png */,
 				61CB40DB1604CB6600888317 /* city.plist */,
 				61CB40DC1604CB6600888317 /* area.plist */,
 				61397A911607FC2A009FDAF9 /* degree.plist */,
-				611CE70415FDE82B0066EEA2 /* login & regigster images */,
-				615BAE8B162BAB4B00E0EBFF /* bg_023@2x.png */,
 				615BAE8C162BAB4B00E0EBFF /* btn_020.disable@2x.png */,
 				615BAE8D162BAB4B00E0EBFF /* btn_020.press@2x.png */,
 				615BAE8E162BAB4B00E0EBFF /* btn_020@2x.png */,
@@ -4252,6 +4257,7 @@
 				5A63EE65163E8AE600E3D7E8 /* DetailWeiyuViewController.m in Sources */,
 				5A256317163FE2A7000ED113 /* ShowCommentCell.m in Sources */,
 				61E70E531642B679005B8117 /* RaisedCenterButton.m in Sources */,
+				616AC146164EACD100EF660C /* HZTimeSectionPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

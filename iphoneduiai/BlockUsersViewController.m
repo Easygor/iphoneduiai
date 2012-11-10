@@ -66,6 +66,13 @@
                                                                                                 target:self
                                                                                                 action:@selector(editAction)] autorelease];
 }
+
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
+
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];

@@ -71,4 +71,9 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
 @end
