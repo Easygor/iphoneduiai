@@ -82,7 +82,7 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
                                                                                                 target:self
                                                                                                 action:@selector(saveAction)] autorelease];
-    self.navigationItem.title = @"QQ设置";
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"QQ设置"];
     
     [self getAllContact];
 }
@@ -121,14 +121,13 @@
         
         // 请求成功时
         [request setOnDidLoadResponse:^(RKResponse *response){
-            NSLog(@"error: %@", response.bodyAsString);
+
             if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
                 NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
                 NSInteger code = [data[@"error"] integerValue];  // 返回的状态
-                if (code == 0) {
+                if (code == 1) {
                     // 成功提交的情况
-                    // ....
-                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                    [SVProgressHUD showSuccessWithStatus:data[@"message"]];
                 } else{
                     // 失败的情况
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
