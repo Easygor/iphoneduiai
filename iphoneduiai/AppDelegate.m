@@ -41,7 +41,7 @@
     // Override point for customization after application launch.
     RaisedCenterButton *button = [RaisedCenterButton buttonWithBgImage:[UIImage imageNamed:@"icon-weiyu"] hlImage:[UIImage imageNamed:@"icon-weiyu-linked"] forTabBarController:self.tabBarController];
     self.raisedBtn = button;
-    [self.tabBarController.tabBar addSubview:button];
+    [self.tabBarController.view addSubview:button];
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")) {
         
@@ -308,35 +308,31 @@
         self.raisedBtn.selected = NO;
     }
     
-    // hide or not
-//    if (viewController.hidesBottomBarWhenPushed) {
-//        self.raisedBtn.hidden = YES;
-//    } else{
-//        self.raisedBtn.hidden = NO;
-//    }
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
 {
     if (viewController.hidesBottomBarWhenPushed) {
-        float_t delayInSeconds = 0.2;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            self.raisedBtn.hidden = YES;
-        });
-//        self.raisedBtn.hidden = YES;
+        CGRect newFrame = self.raisedBtn.frame;
+        newFrame.origin.x = -self.raisedBtn.frame.size.width;
+        [UIView animateWithDuration:0.2
+                         animations:^{
+                             self.raisedBtn.frame = newFrame;
+                         }
+                         completion:^(BOOL finish){
+                             self.raisedBtn.hidden = YES;
+                         }];
+        
+    } else{
+        self.raisedBtn.hidden = NO;
+        CGRect newFrame = self.raisedBtn.frame;
+        newFrame.origin.x = (self.tabBarController.view.frame.size.width - self.raisedBtn.frame.size.width) / 2;
+        [UIView animateWithDuration:0.3785
+                         animations:^{
+                             self.raisedBtn.frame = newFrame;
+                         }];
     }
 
 }
 
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
-    if (!viewController.hidesBottomBarWhenPushed) {
-//        float_t delayInSeconds = 0.3;
-//        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            self.raisedBtn.hidden = NO;
-//        });
-    }
-}
 @end
