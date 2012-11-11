@@ -13,14 +13,18 @@
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 #import "UserDetailViewController.h"
-#import "UserCardTableCell.h"
-@interface BlockUsersViewController ()
+#import "BlockUserCell.h"
+
+@interface BlockUsersViewController () <CustomCellDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) NSMutableArray *users;
 @property (retain, nonatomic) IBOutlet UIView *emptyDataView;
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (strong, nonatomic) UITableViewCell *moreCell;
-@property (nonatomic) BOOL loading;
+@property (nonatomic) BOOL loading, editing;
+@property (strong, nonatomic) NSDictionary *curUser;
+@property (strong, nonatomic) UIBarButtonItem *cancelItem, *editItem;
+
 @end
 
 @implementation BlockUsersViewController
@@ -30,6 +34,9 @@
     [_emptyDataView release];
     [_users release];
     [_moreCell  release];
+    [_curUser release];
+    [_cancelItem release];
+    [_editItem release];
     [super dealloc];
 }
 
@@ -43,7 +50,12 @@
             _users = [[NSMutableArray alloc] initWithArray:users];
         }
         
-        [self.tableView reloadData]; // reload which one?
+        if (_users.count > 0) {
+            [self.emptyDataView removeFromSuperview];
+            [self.tableView reloadData];
+        } else{
+            [self.tableView addSubview:self.emptyDataView];
+        }
         
     }
 }
@@ -62,11 +74,37 @@
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"
-                                                                                                target:self
-                                                                                                action:@selector(editAction)] autorelease];
+    self.editItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"
+                                                                       target:self
+                                                                       action:@selector(editAction)] autorelease];
+    self.cancelItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"
+                                                                       target:self
+                                                                       action:@selector(editAction)] autorelease];
+
+    self.navigationItem.rightBarButtonItem = self.editItem;
+
+    [self blockReqeustWithPage:1];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.users.count <= 0) {
+        [self.tableView addSubview:self.emptyDataView];
+    }
+}
+
+- (void)editAction
+{
+    if (self.editing) {
+        self.editing = NO;
+        self.navigationItem.rightBarButtonItem = self.editItem;
+    } else{
+        self.editing = YES;
+        self.navigationItem.rightBarButtonItem = self.cancelItem;
+    }
+    [self.tableView reloadData];
+}
 
 - (BOOL)hidesBottomBarWhenPushed
 {
@@ -78,24 +116,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    //    if (self.users.count <= 0) {
-    //        [self.tableView addSubview:self.emptyDataView];
-    //    }
-    
-    [self blockReqeustWithPage:1];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    //return self.users.count;
-    //    return self.users.count/3+(self.users.count%3==0?0:1);
     
     if (self.totalPage <= self.curPage) {
         return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1);
@@ -117,8 +141,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
+        
     if (indexPath.row == (self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1))) {
         return [self createMoreCell:tableView cellForRowAtIndexPath:indexPath];
     }else {
@@ -157,14 +180,15 @@
 - (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*3, MIN(3, self.users.count-indexPath.row*3))]];
-    static NSString *CellIdenttifier = @"userCardCell";
-    UserCardTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdenttifier];
+    static NSString *CellIdenttifier = @"blockUserCell";
+    BlockUserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdenttifier];
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
-        cell = [nib objectAtIndex:1];
+        cell = [nib objectAtIndex:8];
         cell.delegate = self;
     }
     cell.users = users;
+    cell.isEditing = self.editing;
     return cell;
     
 }
@@ -216,14 +240,14 @@
 
 -(void)blockReqeustWithParams:(NSMutableDictionary*)params
 {
-    [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+    [[RKClient sharedClient] get:[@"/uc/black.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
         NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                NSLog(@"block data %@", data);
+//                NSLog(@"block data %@", data);
                 NSInteger code = [data[@"error"] integerValue];
-                if (code == 0) {
+                if (code == 0 && [data[@"data"] isKindOfClass:[NSDictionary class]]) {
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
                     self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
@@ -236,6 +260,7 @@
                     
                     [SVProgressHUD dismiss];
                 } else{
+
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
                 
@@ -252,4 +277,62 @@
     
 }
 
+#pragma mark custom cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSInteger index = indexPath.row*3 + [status integerValue];
+    NSDictionary *user = [self.users objectAtIndex:index];
+    self.curUser = user;
+    if (self.editing) {
+        UIActionSheet *actionsheet = [[UIActionSheet alloc]initWithTitle:nil
+                                                                delegate:self
+                                                       cancelButtonTitle:@"取消"
+                                                  destructiveButtonTitle:@"移出黑名单"
+                                                       otherButtonTitles:nil];
+        [actionsheet showInView:self.view.window];
+    } else{
+        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+        udvc.user = user;
+        [self.navigationController pushViewController:udvc animated:YES];
+        [udvc release];
+    }
+
+}
+
+# pragma mark - acitonsheet
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
+        NSMutableDictionary *dParams = [Utils queryParams];
+        [dParams setObject:self.curUser[@"_id"] forKey:@"uid"];
+        
+        [SVProgressHUD show];
+        // cancel the block user
+        [[RKClient sharedClient] get:[@"/common/delblack.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+            NSLog(@"url: %@", request.URL);
+            [request setOnDidLoadResponse:^(RKResponse *response){
+                if (response.isOK && response.isJSON) {
+                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+//                    NSLog(@"block data %@", data);
+                    NSInteger code = [data[@"error"] integerValue];
+                    if (code == 0) {
+                        [self blockReqeustWithPage:1];
+                        
+                        [SVProgressHUD dismiss];
+                    } else{
+                        [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                    }
+                    
+                } else{
+                    //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+                }
+            }];
+            [request setOnDidFailLoadWithError:^(NSError *error){
+                [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+                NSLog(@"Error: %@", [error description]);
+            }];
+        }];
+    }
+}
 @end

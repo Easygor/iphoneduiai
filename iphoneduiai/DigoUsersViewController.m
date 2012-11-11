@@ -80,16 +80,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    
-//    if (self.users.count <= 0) {
-//        [self.tableView addSubview:self.emptyDataView];
-//    }
-//    
-//    
-//}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if (self.users.count <= 0) {
+        [self.tableView addSubview:self.emptyDataView];
+    }
+}
 
 #pragma mark - Table view data source
 

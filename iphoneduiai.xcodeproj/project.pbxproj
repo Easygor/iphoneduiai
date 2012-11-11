@@ -460,6 +460,9 @@
 		615BAE98162BAB4C00E0EBFF /* btn_021@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615BAE91162BAB4C00E0EBFF /* btn_021@2x.png */; };
 		616AC146164EACD100EF660C /* HZTimeSectionPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */; };
 		616AC149164F6F5500EF660C /* DigoUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616AC148164F6F5500EF660C /* DigoUserCell.m */; };
+		616AC173164F80D500EF660C /* mailapp_delBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 616AC171164F80D500EF660C /* mailapp_delBtn.png */; };
+		616AC174164F80D500EF660C /* mailapp_delBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 616AC172164F80D500EF660C /* mailapp_delBtn@2x.png */; };
+		616AC17A164F824200EF660C /* BlockUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616AC179164F824200EF660C /* BlockUserCell.m */; };
 		616D6D6E163513E400F7A20E /* BlockUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D6D6C163513E300F7A20E /* BlockUsersViewController.m */; };
 		616D6D6F163513E400F7A20E /* BlockUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D6D6D163513E400F7A20E /* BlockUsersViewController.xib */; };
 		616D6D8016351D1E00F7A20E /* DigoUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D6D7E16351D1C00F7A20E /* DigoUsersViewController.m */; };
@@ -1471,6 +1474,10 @@
 		616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimeSectionPickerView.m; sourceTree = "<group>"; };
 		616AC147164F6F5400EF660C /* DigoUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigoUserCell.h; sourceTree = "<group>"; };
 		616AC148164F6F5500EF660C /* DigoUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigoUserCell.m; sourceTree = "<group>"; };
+		616AC171164F80D500EF660C /* mailapp_delBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mailapp_delBtn.png; sourceTree = "<group>"; };
+		616AC172164F80D500EF660C /* mailapp_delBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mailapp_delBtn@2x.png"; sourceTree = "<group>"; };
+		616AC178164F824200EF660C /* BlockUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockUserCell.h; sourceTree = "<group>"; };
+		616AC179164F824200EF660C /* BlockUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockUserCell.m; sourceTree = "<group>"; };
 		616D6D6B163513E300F7A20E /* BlockUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockUsersViewController.h; sourceTree = "<group>"; };
 		616D6D6C163513E300F7A20E /* BlockUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockUsersViewController.m; sourceTree = "<group>"; };
 		616D6D6D163513E400F7A20E /* BlockUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlockUsersViewController.xib; sourceTree = "<group>"; };
@@ -2508,6 +2515,8 @@
 				5A256316163FE2A6000ED113 /* ShowCommentCell.m */,
 				616AC147164F6F5400EF660C /* DigoUserCell.h */,
 				616AC148164F6F5500EF660C /* DigoUserCell.m */,
+				616AC178164F824200EF660C /* BlockUserCell.h */,
+				616AC179164F824200EF660C /* BlockUserCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -2809,6 +2818,8 @@
 				61CB40DB1604CB6600888317 /* city.plist */,
 				61CB40DC1604CB6600888317 /* area.plist */,
 				61397A911607FC2A009FDAF9 /* degree.plist */,
+				616AC171164F80D500EF660C /* mailapp_delBtn.png */,
+				616AC172164F80D500EF660C /* mailapp_delBtn@2x.png */,
 				615BAE8C162BAB4B00E0EBFF /* btn_020.disable@2x.png */,
 				615BAE8D162BAB4B00E0EBFF /* btn_020.press@2x.png */,
 				615BAE8E162BAB4B00E0EBFF /* btn_020@2x.png */,
@@ -4127,6 +4138,8 @@
 				613155BC163CDA3700982496 /* notice_unread_bg.png in Resources */,
 				613155BD163CDA3700982496 /* notice_unread_bg@2x.png in Resources */,
 				5A63EE66163E8AE600E3D7E8 /* DetailWeiyuViewController.xib in Resources */,
+				616AC173164F80D500EF660C /* mailapp_delBtn.png in Resources */,
+				616AC174164F80D500EF660C /* mailapp_delBtn@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4264,6 +4277,7 @@
 				61E70E531642B679005B8117 /* RaisedCenterButton.m in Sources */,
 				616AC146164EACD100EF660C /* HZTimeSectionPickerView.m in Sources */,
 				616AC149164F6F5500EF660C /* DigoUserCell.m in Sources */,
+				616AC17A164F824200EF660C /* BlockUserCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
