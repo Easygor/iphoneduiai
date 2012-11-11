@@ -80,7 +80,7 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[Notification sharedInstance] saveDataToPlist];
-    [self updateLocationAndUserInfo];
+
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -255,29 +255,24 @@
 
 -(void)updateRequestWithLocation:(CLLocationCoordinate2D)curLocation
 {
-
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
-                          [NSNumber numberWithFloat:curLocation.longitude], @"jin",
-                          [NSNumber numberWithFloat:curLocation.latitude], @"wei",
-                          @"true", @"submitupdate",
-                          nil];
-    
-    RKParams *params = [RKParams paramsWithDictionary:data];
-    
     // per
     [[RKClient sharedClient] post:[@"/uc/updatelocation.api" stringByAppendingQueryParameters:[Utils queryParams]]
                        usingBlock:^(RKRequest *request){
                            // set params
-                           [request setParams:params];
+                           request.params = [RKParams paramsWithDictionary:@{
+                                             @"jin": @(curLocation.longitude),
+                                             @"wei": @(curLocation.latitude),
+                                             @"submitupdate": @"true"}];
                            
                            // set successful block
                            [request setOnDidLoadResponse:^(RKResponse *response){
                                if (response.isOK && response.isJSON) {
-                                   NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                                   NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
 //                                   NSLog(@"res: %@", data);
-                                   if ([[data objectForKey:@"error"] intValue] == 0) {
+                                   if ([data[@"error"] intValue] == 0) {
                   
                                        NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+                                       
                                        user[@"username"] = data[@"data"][@"searchindex"][@"username"];
                                        user[@"info"] = data[@"data"][@"userinfo"];
                                        [[NSUserDefaults standardUserDefaults] setObject:[data objectForKey:@"accesskey"] forKey:@"accesskey"];
@@ -286,7 +281,7 @@
 
                                    } else{
 
-                                       NSLog(@"fail: %@", [data objectForKey:@"message"]);
+                                       NSLog(@"fail: %@", data[@"message"]);
                                    }
                                    
                                }

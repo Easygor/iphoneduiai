@@ -170,6 +170,7 @@
         frame.origin.y = frame.origin.y + frame.size.height * row + 10 * row;
         
         preGridItem = [[BJGridItem alloc] initWithTitle:nil withImageName:nil atIndex:n-1 editable:YES];
+        [preGridItem enableEditing];
         [preGridItem setFrame:frame];
         
         [preGridItem setAlpha:1.0];

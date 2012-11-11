@@ -51,18 +51,7 @@
         [self setImgWithName:imageName];
         [self addSubview:bgImageView];
         // place a clickable button on top of everything
-        button = [UIButton buttonWithType:UIButtonTypeCustom];
-        
-        [button setFrame:self.bounds];
-//        [button setBackgroundImage:normalImage forState:UIControlStateNormal];
-        [button setBackgroundColor:[UIColor clearColor]];
-        [button setTitle:titleText forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(clickItem:) forControlEvents:UIControlEventTouchUpInside];
-        
-//        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedLong:)];
-//        [self addGestureRecognizer:longPress];
-//        longPress = nil;
-        [self addSubview:button];
+
         
         if (self.isRemovable) {
             // place a remove button on top right corner for removing item from the board
@@ -77,6 +66,19 @@
             [deleteButton setHidden:YES];
             [self addSubview:deleteButton];
             
+        } else{
+            button = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            [button setFrame:self.bounds];
+            //        [button setBackgroundImage:normalImage forState:UIControlStateNormal];
+            [button setBackgroundColor:[UIColor clearColor]];
+            [button setTitle:titleText forState:UIControlStateNormal];
+            [button addTarget:self action:@selector(clickItem:) forControlEvents:UIControlEventTouchUpInside];
+            
+            //        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(pressedLong:)];
+            //        [self addGestureRecognizer:longPress];
+            //        longPress = nil;
+            [self addSubview:button];
         }
     }
     return self;
@@ -84,9 +86,11 @@
 
 #pragma mark - UI actions
 
-- (void) clickItem:(id)sender {
-    [delegate gridItemDidEnterEditingMode:self];
+- (void) clickItem:(id)sender
+{
+    [delegate gridItemDidClicked:self];
 }
+
 - (void) pressedLong:(UILongPressGestureRecognizer *) gestureRecognizer{
     
 //    switch (gestureRecognizer.state) {
@@ -122,15 +126,21 @@
     
 }
 
-- (void) removeButtonClicked:(id) sender  {
-    UIActionSheet *actionsheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"删除照片", nil];
+- (void) removeButtonClicked:(id) sender
+{
+    UIActionSheet *actionsheet = [[UIActionSheet alloc]initWithTitle:nil
+                                                            delegate:self
+                                                   cancelButtonTitle:@"取消"
+                                              destructiveButtonTitle:@"删除照片"
+                                                   otherButtonTitles:nil];
     [actionsheet showInView:self];
    
 }
 
 #pragma mark - Custom Methods
 
-- (void) enableEditing {
+- (void) enableEditing
+{
     
     if (self.isEditing == YES)
         return;
@@ -143,7 +153,8 @@
     [button setEnabled:NO];    
 }
 
-- (void) disableEditing {
+- (void) disableEditing
+{
     [self.layer removeAnimationForKey:@"shakeAnimation"];
     [deleteButton setHidden:YES];
     [button setEnabled:YES];
@@ -152,7 +163,8 @@
 
 # pragma mark - Overriding UiView Methods
 
-- (void) removeFromSuperview {
+- (void) removeFromSuperview
+{
     
     [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0.0;
@@ -162,10 +174,11 @@
         [super removeFromSuperview];
     }]; 
 }
+
 # pragma mark - acitonsheet
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex==0) {
+    if (buttonIndex == actionSheet.destructiveButtonIndex) {
          [delegate gridItemDidDeleted:self atIndex:index];
     }
 }
