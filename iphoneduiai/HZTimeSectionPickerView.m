@@ -62,7 +62,7 @@
     if (component == 0) {
         return [NSString stringWithFormat:@"%d:00", self.minNum+row];
     } else if (component == 1) {
-        return [NSString stringWithFormat:@"%d:00", self.curMinNum+row+1];
+        return [NSString stringWithFormat:@"%d:00", self.curMaxNum+row];
     }
     
     return @"";
@@ -74,13 +74,13 @@
     switch (component) {
         case 0:
             self.curMinNum = self.minNum + row;
-            self.curMaxNum = self.curMinNum;
+            self.curMaxNum = self.curMinNum+1;
             [self.picker selectRow:0 inComponent:1 animated:YES];
             [self.picker reloadComponent:1];
             
             break;
         case 1:
-            self.curMaxNum = self.curMinNum + row+1;
+            self.curMaxNum += row;
             
             break;
         default:
@@ -97,7 +97,7 @@
 {
     if ([self.delegate respondsToSelector:@selector(timeSectionPickerDidChange:)]) {
         self.curMaxDesc = [NSString stringWithFormat:@"%d:00", self.curMaxNum];
-        self.curMinDesc = [NSString stringWithFormat:@"%d:00", self.curMinNum+1];
+        self.curMinDesc = [NSString stringWithFormat:@"%d:00", self.curMinNum];
         [self.delegate timeSectionPickerDidChange:self];
     }
     

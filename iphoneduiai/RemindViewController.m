@@ -19,8 +19,6 @@
 
 @implementation RemindViewController
 
-
-
 - (void)dealloc
 {
 
@@ -41,11 +39,31 @@
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
+
+    [self.messageSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"message_can_receive"]];
+    [self.dynamicSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"dynamic_can_receive"]];
+    [self.goodMeSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:@"digome_can_receive"]];
 }
 
 - (BOOL)hidesBottomBarWhenPushed
 {
     return YES;
+}
+
+- (IBAction)messageSwitchAction:(UISwitch*)sw
+{
+    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:@"message_can_receive"];
+
+}
+
+- (IBAction)dynamicSwitchAction:(UISwitch*)sw
+{
+    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:@"dynamic_can_receive"];
+}
+
+- (IBAction)digoMeAction:(UISwitch*)sw
+{
+    [[NSUserDefaults standardUserDefaults] setBool:sw.isOn forKey:@"digome_can_receive"];
 }
 
 - (void)backAction
