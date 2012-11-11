@@ -459,6 +459,7 @@
 		615BAE97162BAB4C00E0EBFF /* btn_021.press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615BAE90162BAB4C00E0EBFF /* btn_021.press@2x.png */; };
 		615BAE98162BAB4C00E0EBFF /* btn_021@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 615BAE91162BAB4C00E0EBFF /* btn_021@2x.png */; };
 		616AC146164EACD100EF660C /* HZTimeSectionPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */; };
+		616AC149164F6F5500EF660C /* DigoUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 616AC148164F6F5500EF660C /* DigoUserCell.m */; };
 		616D6D6E163513E400F7A20E /* BlockUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D6D6C163513E300F7A20E /* BlockUsersViewController.m */; };
 		616D6D6F163513E400F7A20E /* BlockUsersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 616D6D6D163513E400F7A20E /* BlockUsersViewController.xib */; };
 		616D6D8016351D1E00F7A20E /* DigoUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 616D6D7E16351D1C00F7A20E /* DigoUsersViewController.m */; };
@@ -1468,6 +1469,8 @@
 		615BAE91162BAB4C00E0EBFF /* btn_021@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_021@2x.png"; sourceTree = "<group>"; };
 		616AC144164EACD100EF660C /* HZTimeSectionPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTimeSectionPickerView.h; sourceTree = "<group>"; };
 		616AC145164EACD100EF660C /* HZTimeSectionPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTimeSectionPickerView.m; sourceTree = "<group>"; };
+		616AC147164F6F5400EF660C /* DigoUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigoUserCell.h; sourceTree = "<group>"; };
+		616AC148164F6F5500EF660C /* DigoUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigoUserCell.m; sourceTree = "<group>"; };
 		616D6D6B163513E300F7A20E /* BlockUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlockUsersViewController.h; sourceTree = "<group>"; };
 		616D6D6C163513E300F7A20E /* BlockUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlockUsersViewController.m; sourceTree = "<group>"; };
 		616D6D6D163513E400F7A20E /* BlockUsersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BlockUsersViewController.xib; sourceTree = "<group>"; };
@@ -2484,11 +2487,11 @@
 				6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */,
 				6153D9D71610B49200AC4A2D /* UserCardView.h */,
 				6153D9D81610B49200AC4A2D /* UserCardView.m */,
+				6153D9DA1610B61600AC4A2D /* UserCardTableCell.h */,
 				6153D9DB1610B61700AC4A2D /* UserCardTableCell.m */,
 				61240BF21619F1E8005C4E6C /* WeiyuWordCell.h */,
 				61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */,
 				61240BF51619F7A5005C4E6C /* CustomCellDelegate.h */,
-				6153D9DA1610B61600AC4A2D /* UserCardTableCell.h */,
 				61C7EE53161F3F850080CAAE /* MessageTableCell.h */,
 				61C7EE54161F3F850080CAAE /* MessageTableCell.m */,
 				6172EBB71621D5C600860F03 /* HonorTableCell.h */,
@@ -2503,6 +2506,8 @@
 				5A34D8D9163D1CAC006E6B98 /* FeedListCell.m */,
 				5A256315163FE2A6000ED113 /* ShowCommentCell.h */,
 				5A256316163FE2A6000ED113 /* ShowCommentCell.m */,
+				616AC147164F6F5400EF660C /* DigoUserCell.h */,
+				616AC148164F6F5500EF660C /* DigoUserCell.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -4258,6 +4263,7 @@
 				5A256317163FE2A7000ED113 /* ShowCommentCell.m in Sources */,
 				61E70E531642B679005B8117 /* RaisedCenterButton.m in Sources */,
 				616AC146164EACD100EF660C /* HZTimeSectionPickerView.m in Sources */,
+				616AC149164F6F5500EF660C /* DigoUserCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

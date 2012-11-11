@@ -15,10 +15,10 @@
 #import "UserDetailViewController.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
-#import "UserCardTableCell.h"
+#import "DigoUserCell.h"
 
 
-@interface DigoUsersViewController ()
+@interface DigoUsersViewController () <CustomCellDelegate>
 
 @property (strong, nonatomic) NSMutableArray *users;
 @property (retain, nonatomic) IBOutlet UIView *emptyDataView;
@@ -40,14 +40,6 @@
 
 - (void)setUsers:(NSMutableArray *)users
 {
-    /*
-    if (![_users isEqualToArray:users]) {
-        _users = [users retain];
-        
-        [self.emptyDataView removeFromSuperview];
-    }
-    [self.tableView reloadData];
-     */
     if (![_users isEqualToArray:users]) {
         if (self.curPage > 1) {
             [_users addObjectsFromArray:users];
@@ -56,7 +48,12 @@
             _users = [[NSMutableArray alloc] initWithArray:users];
         }
         
-        [self.tableView reloadData]; // reload which one?
+        if (_users.count > 0) {
+            [self.emptyDataView removeFromSuperview];
+            [self.tableView reloadData];
+        } else{
+            [self.tableView addSubview:self.emptyDataView];
+        }
 
     }
 }
@@ -75,6 +72,7 @@
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
     self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"我的赞的用户"];
+    [self digoReqeustWithPage:1];
 }
 
 - (void)backAction
@@ -82,24 +80,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:animated];
+//    
 //    if (self.users.count <= 0) {
 //        [self.tableView addSubview:self.emptyDataView];
 //    }
-    
-    [self digoReqeustWithPage:1];
-}
+//    
+//    
+//}
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    //return self.users.count;
-//    return self.users.count/3+(self.users.count%3==0?0:1);
     
     if (self.totalPage <= self.curPage) {
         return self.users.count/3 + (self.users.count%3 == 0 ? 0 : 1);
@@ -160,14 +155,16 @@
 
 - (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*3, MIN(3, self.users.count-indexPath.row*3))]];
-    static NSString *CellIdenttifier = @"userCardCell";
-    UserCardTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdenttifier];
+    
+    static NSString *CellIdenttifier = @"digoUserCell";
+    DigoUserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdenttifier];
     if (cell == nil) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
-        cell = [nib objectAtIndex:1];
+        cell = [nib objectAtIndex:7];
         cell.delegate = self;
     }
+    
+    NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*3, MIN(3, self.users.count-indexPath.row*3))]];
     cell.users = users;
     return cell;
 
@@ -196,18 +193,6 @@
 
 }
 
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    
-    UserDetailViewController *detailViewController = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
-    detailViewController.user = self.users[indexPath.row];
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];
-    
-}
 #pragma mark - request
 - (void)digoReqeustWithPage:(NSInteger)page
 {
@@ -220,12 +205,12 @@
 
 -(void)digoReqeustWithParams:(NSMutableDictionary*)params
 {
-    [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+    [[RKClient sharedClient] get:[@"/common/getdigouser.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+//        NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                NSLog(@"digo data %@", data);
+//                NSLog(@"digo data %@", data);
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     self.loading = NO;
@@ -261,5 +246,17 @@
     return YES;
 }
 
+#pragma mark custom cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSInteger index = indexPath.row*3 + [status integerValue];
+    NSDictionary *user = [self.users objectAtIndex:index];
+    
+    UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+    udvc.user = user;
+    [self.navigationController pushViewController:udvc animated:YES];
+    [udvc release];
+}
 
 @end
