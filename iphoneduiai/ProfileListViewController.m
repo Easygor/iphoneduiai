@@ -89,6 +89,7 @@ static NSInteger kDelWeiyuTag = 204;
 
 @property (strong, nonatomic) NSIndexPath *curIndexPath;
 @property (nonatomic) BOOL isEditing;
+@property (strong, nonatomic) NSDictionary *existedData;
 
 @end
 
@@ -96,6 +97,7 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (void)dealloc
 {
+    [_existedData release];
     [_curIndexPath release];
     [_jobPicker release];
     [_jobNum release];
@@ -372,6 +374,12 @@ static NSInteger kDelWeiyuTag = 204;
 
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self infoRequestFromRemote];
+}
+
 - (void)saveAction
 {
     // do some save here
@@ -379,6 +387,92 @@ static NSInteger kDelWeiyuTag = 204;
     [SVProgressHUD show];
     [[RKClient sharedClient] post:[@"/uc/userinfo.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
         NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        if(self.existedData[@"rank_condition"]){
+            
+            updateArgs[@"rank_condition"] = self.existedData[@"rank_condition"][@"val"];
+        }
+        
+        if(self.existedData[@"company"]){
+            updateArgs[@"company"] = self.existedData[@"company"][@"val"];
+        }
+        
+        if(self.existedData[@"nation"]){
+            updateArgs[@"nation"] = self.existedData[@"nation"][@"val"];
+        }
+        
+        if(self.existedData[@"belief"]){
+            updateArgs[@"belief"] = self.existedData[@"belief"][@"val"];
+        }
+        
+        if(self.existedData[@"best_par"]){
+            updateArgs[@"best_par"] = self.existedData[@"best_par"][@"val"];
+        }
+        
+        if(self.existedData[@"bloodtype"]){
+            updateArgs[@"bloodtype"] = self.existedData[@"bloodtype"][@"val"];
+        }
+        
+        if(self.existedData[@"house"]){
+            updateArgs[@"house"] = self.existedData[@"house"][@"val"];
+        }
+        
+        if(self.existedData[@"children"]){
+            updateArgs[@"children"] = self.existedData[@"children"][@"val"];
+        }
+        
+        if(self.existedData[@"parent_together"]){
+            updateArgs[@"parent_together"] = self.existedData[@"parent_together"][@"val"];
+        }
+        
+        if(self.existedData[@"paihang"]){
+            updateArgs[@"paihang"] = self.existedData[@"paihang"][@"val"];
+        }
+        
+        if(self.existedData[@"most_cost"]){
+            updateArgs[@"most_cost"] = self.existedData[@"most_cost"][@"val"];
+        }
+        
+        if(self.existedData[@"speciality"]){
+            updateArgs[@"speciality"] = self.existedData[@"speciality"][@"val"];
+        }
+        
+        if(self.existedData[@"auto"]){
+            updateArgs[@"auto"] = self.existedData[@"auto"][@"val"];
+        }
+        
+        if(self.existedData[@"company_name"]){
+            updateArgs[@"company_name"] = self.existedData[@"company_name"][@"val"];
+        }
+        
+        if(self.existedData[@"university"]){
+            updateArgs[@"university"] = self.existedData[@"university"][@"val"];
+        }
+        
+        if(updateArgs[@"home_location"] && updateArgs[@"home_sublocation"]){
+            updateArgs[@"home_location"] = self.existedData[@"home_location"][@"val"];
+            updateArgs[@"home_sublocation"] = self.existedData[@"home_sublocation"][@"val"];
+        }
+        
+        if(self.existedData[@"child_want"]){
+            updateArgs[@"child_want"] = self.existedData[@"child_want"][@"val"];
+        }
+        
+        if(self.existedData[@"marriage"]){
+            updateArgs[@"marriage"] = self.existedData[@"marriage"][@"val"];
+        }
+        
+        if(self.existedData[@"smoke_typ"]){
+            updateArgs[@"smoke_typ"] = self.existedData[@"smoke_typ"][@"val"];
+        }
+        
+        if(self.existedData[@"drink_type"]){
+            updateArgs[@"drink_type"] = self.existedData[@"drink_type"][@"val"];
+        }
+        
+        if(self.existedData[@"live_cust"]){
+            updateArgs[@"live_cust"] = self.existedData[@"live_cust"][@"val"];
+        }
+
         if (self.heightNum) {
             updateArgs[@"height"] = @(self.heightNum);
 
@@ -1288,6 +1382,38 @@ static NSInteger kDelWeiyuTag = 204;
         self.jobNum = label;
         self.careerField.text = desc;
     }
+    
+}
+
+-(void)infoRequestFromRemote
+{
+    
+
+    [[RKClient sharedClient] get:[@"/uc/userinfo.api" stringByAppendingQueryParameters:[Utils queryParams]] usingBlock:^(RKRequest *request){
+        //        NSLog(@"url: %@", request.URL);
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                //                NSLog(@"digo data %@", data);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    // 此行须在前两行后面
+                    NSLog(@"all user info: %@", data);
+                    self.existedData = data[@"data"][@"issetlist"];
+
+                } else{
+//                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+//            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
     
 }
 

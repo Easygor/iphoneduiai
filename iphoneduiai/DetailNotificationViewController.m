@@ -158,6 +158,11 @@
 
 }
 
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
+}
+
 - (IBAction)rejectAction
 {
 

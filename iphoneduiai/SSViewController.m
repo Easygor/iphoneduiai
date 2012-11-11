@@ -27,6 +27,8 @@
 @property (strong, nonatomic) HZAreaPickerView *homePicker, *nativePicker;
 @property (strong, nonatomic) HZLocation *homeLocation, *nativeLocaiton;
 @property (strong, nonatomic) NSMutableDictionary *curEntry;
+@property (strong, nonatomic) NSDictionary *existedData;
+@property (strong, nonatomic) NSString *companyName, *schoolName;
 
 @end
 
@@ -34,6 +36,7 @@
 
 - (void)dealloc
 {
+    [_existedData release];
     [_curEntry release];
     [_homeLocation release];
     [_nativeLocaiton release];
@@ -75,6 +78,14 @@
     [_mostCostNum release];
 
     [super dealloc];
+}
+
+- (void)setExistedData:(NSDictionary *)existedData
+{
+    if (![_existedData isEqualToDictionary:existedData]) {
+        _existedData = [existedData retain];
+        [self.tableView reloadData];
+    }
 }
 
 - (NSMutableArray *)entries
@@ -281,9 +292,12 @@
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"
                                                                                                target:self
                                                                                                action:@selector(cancelAction)] autorelease];
+    
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
-                                                                                                target:self
-                                                                                                action:@selector(saveAction)] autorelease];
+                                                                                                 target:self
+                                                                                                 action:@selector(saveAction)] autorelease];
+    
+    [self infoRequestFromRemote];                                          
 }
 
 - (BOOL)hidesBottomBarWhenPushed
@@ -298,56 +312,151 @@
 
 - (void)saveAction
 {
-    /*
+
     // do some save here
     NSMutableDictionary *dp = [Utils queryParams];
     [SVProgressHUD show];
     [[RKClient sharedClient] post:[@"/uc/userinfo.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
         NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
-        if (self.heightNum) {
-            updateArgs[@"height"] = @(self.heightNum);
-            
-        } else{
-            updateArgs[@"height"] = self.searchIndex[@"height"];
+        if (self.rankNum) {
+            updateArgs[@"rank_condition"] = self.rankNum;
+        } else if(self.existedData[@"rank_condition"]){
+
+            updateArgs[@"rank_condition"] = self.existedData[@"rank_condition"][@"val"];
+        }
+     
+        if (self.companyTypeNum) {
+            updateArgs[@"company"] = self.companyTypeNum;
+        } else if(self.existedData[@"company"]){
+            updateArgs[@"company"] = self.existedData[@"company"][@"val"];
         }
         
-        if (self.location) {
-            updateArgs[@"province"] = @(self.location.stateId);
-            updateArgs[@"city"] = @(self.location.cityId);
-            updateArgs[@"area"] = @(self.location.areaId);
-        } else{
-            updateArgs[@"province"] = self.searchIndex[@"province"];
-            updateArgs[@"city"] = self.searchIndex[@"city"];
-            updateArgs[@"area"] = self.searchIndex[@"area"];
+        if (self.nationalNum) {
+            updateArgs[@"nation"] = self.nationalNum;
+        } else if(self.existedData[@"nation"]){
+            updateArgs[@"nation"] = self.existedData[@"nation"][@"val"];
         }
         
-        if (self.incomeNum) {
-            updateArgs[@"income"] = self.incomeNum;
-            
-        } else{
-            updateArgs[@"income"] = self.searchIndex[@"income"];
+        if (self.religiousNum) {
+            updateArgs[@"belief"] = self.religiousNum;
+        } else if(self.existedData[@"belief"]){
+            updateArgs[@"belief"] = self.existedData[@"belief"][@"val"];
         }
         
-        if (self.eduNum) {
-            updateArgs[@"degree"] = self.eduNum;
-        } else{
-            updateArgs[@"degree"] = self.searchIndex[@"degree"];
+        if (self.bestParNum) {
+            updateArgs[@"best_par"] = self.bestParNum;
+        } else if(self.existedData[@"best_par"]){
+            updateArgs[@"best_par"] = self.existedData[@"best_par"][@"val"];
         }
         
-        if (self.jobNum) {
-            updateArgs[@"industry"] = self.jobNum;
-        } else{
-            updateArgs[@"industry"] = self.searchIndex[@"industry"];
+        if (self.bloodtypeNum) {
+            updateArgs[@"bloodtype"] = self.bloodtypeNum;
+        } else if(self.existedData[@"bloodtype"]){
+            updateArgs[@"bloodtype"] = self.existedData[@"bloodtype"][@"val"];
         }
         
-        if (self.weightNum) {
-            updateArgs[@"weight"] = @(self.weightNum);
+        if (self.houseNum) {
+            updateArgs[@"house"] = self.houseNum;
+        } else if(self.existedData[@"house"]){
+            updateArgs[@"house"] = self.existedData[@"house"][@"val"];
+        } 
+        
+        if (self.childrenNum) {
+            updateArgs[@"children"] = self.childrenNum;
+        } else if(self.existedData[@"children"]){
+            updateArgs[@"children"] = self.existedData[@"children"][@"val"];
         }
         
+        if (self.parentTogetherNum) {
+            updateArgs[@"parent_together"] = self.parentTogetherNum;
+        } else if(self.existedData[@"parent_together"]){
+            updateArgs[@"parent_together"] = self.existedData[@"parent_together"][@"val"];
+        }
         
-        updateArgs[@"constellation"] = self.searchIndex[@"constellation"];
-        updateArgs[@"marriage"] = self.searchIndex[@"marriage"];
-        updateArgs[@"zodiac"] = self.searchIndex[@"zodiac"];
+        if (self.paihangNum) {
+            updateArgs[@"paihang"] = self.paihangNum;
+        } else if(self.existedData[@"paihang"]){
+            updateArgs[@"paihang"] = self.existedData[@"paihang"][@"val"]; 
+        }
+        
+        if (self.mostCostNum) {
+            updateArgs[@"most_cost"] = self.mostCostNum;
+        } else if(self.existedData[@"most_cost"]){
+            updateArgs[@"most_cost"] = self.existedData[@"most_cost"][@"val"];  
+        }
+
+        if (self.specialtyTypeNum) {
+            updateArgs[@"speciality"] = self.specialtyTypeNum;
+        } else if(self.existedData[@"speciality"]){
+            updateArgs[@"speciality"] = self.existedData[@"speciality"][@"val"]; 
+        }
+        
+        if (self.autoNum) {
+            updateArgs[@"auto"] = self.autoNum;
+        } else if(self.existedData[@"auto"]){
+            updateArgs[@"auto"] = self.existedData[@"auto"][@"val"]; 
+        }
+        
+        if (self.homeLocation) {
+            updateArgs[@"home_location"] = @(self.homeLocation.stateId);
+            updateArgs[@"home_sublocation"] = @(self.homeLocation.cityId);
+
+        } else if(updateArgs[@"home_location"] && updateArgs[@"home_sublocation"]){
+            updateArgs[@"home_location"] = self.existedData[@"home_location"][@"val"];
+            updateArgs[@"home_sublocation"] = self.existedData[@"home_sublocation"][@"val"];
+        }
+        
+        if (self.childWantNum) {
+            updateArgs[@"child_want"] = self.childWantNum;
+        } else if(self.existedData[@"child_want"]){
+            updateArgs[@"child_want"] = self.existedData[@"child_want"][@"val"];
+        }
+        
+        if (self.marriageNum) {
+            updateArgs[@"marriage"] = self.marriageNum;
+        } else if(self.existedData[@"marriage"]){
+            updateArgs[@"marriage"] = self.existedData[@"marriage"][@"val"];
+        }
+        
+        if (self.smokeTypeNum) {
+            updateArgs[@"smoke_typ"] = self.smokeTypeNum;
+        } else if(self.existedData[@"smoke_typ"]){
+            updateArgs[@"smoke_typ"] = self.existedData[@"smoke_typ"][@"val"];
+        }
+        
+        if (self.companyName) {
+            updateArgs[@"company_name"] = self.companyName;
+        } else if(self.existedData[@"company_name"]){
+            updateArgs[@"company_name"] = self.existedData[@"company_name"][@"val"];
+        }
+        
+        if (self.schoolName) {
+            updateArgs[@"university"] = self.schoolName;
+        } else if(self.existedData[@"university"]){
+            updateArgs[@"university"] = self.existedData[@"university"][@"val"];
+        }
+        
+        if (self.drinkTypeNum) {
+            updateArgs[@"drink_type"] = self.drinkTypeNum;
+        } else if(self.existedData[@"drink_type"]){
+            updateArgs[@"drink_type"] = self.existedData[@"drink_type"][@"val"];
+        }
+        
+        if (self.liveCustNum) {
+            updateArgs[@"live_cust"] = self.liveCustNum;
+        }else if(self.existedData[@"live_cust"]){
+            updateArgs[@"live_cust"] = self.existedData[@"live_cust"][@"val"];
+        }
+        
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+        updateArgs[@"province"] = info[@"province"];
+        updateArgs[@"city"] = info[@"city"];
+        updateArgs[@"area"] = info[@"area"];
+        updateArgs[@"height"] = self.existedData[@"height"][@"val"];
+        updateArgs[@"zodiac"] = self.existedData[@"zodiac"][@"val"];
+        updateArgs[@"degree"] = self.existedData[@"degree"][@"val"];
+        updateArgs[@"income"] = self.existedData[@"income"][@"val"];
+        updateArgs[@"constellation"] = self.existedData[@"constellation"][@"val"];
         updateArgs[@"submitupdate"] = @"true";
         
         NSLog(@"args: %@", updateArgs);
@@ -362,13 +471,7 @@
                 NSDictionary *data = [response.bodyAsString objectFromJSONString];
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
-                    [self grabUserInfoDetailRequest];
-                    [self.tableView setEditing:NO animated:YES];
                     
-                    [self changeToNonEditingView];
-                    
-                    self.navigationItem.leftBarButtonItem = self.changeBaritem;
-                    self.navigationItem.rightBarButtonItem = self.settingBarItem;
                     
                     [SVProgressHUD showSuccessWithStatus:@"保存成功"];
                 } else{
@@ -381,13 +484,7 @@
         }];
         
     }];
-     */
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -486,6 +583,29 @@
         textField.text = nil;
     }
    
+    if ([data[@"label"] isEqualToString:@"home_location,home_sublocation"] ||
+        [data[@"label"] isEqualToString:@"love_location,love_sublocation"])
+    {
+        NSArray *farry  = [data[@"label"] componentsSeparatedByString:@","];
+        NSDictionary *f1 = self.existedData[farry[0]];
+        NSDictionary *f2 = self.existedData[farry[1]];
+        if (f1 && f2) {
+            textField.text = [NSString stringWithFormat:@"%@ %@", f1[@"valdata"], f2[@"valdata"]];
+        }
+        
+    } else{
+        NSDictionary *field = self.existedData[data[@"label"]];
+
+        if ([data[@"label"] isEqualToString:@"company_name"] ||
+            [data[@"label"] isEqualToString:@"university"]) {
+            textField.text = field[@"val"];
+        } else{
+           textField.text = field[@"valdata"]; 
+        }
+        
+
+    }
+    
     return cell;
 }
 
@@ -537,6 +657,11 @@
 #pragma mark - text delegate
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if ([self.curEntry[@"label"] isEqual:@"company_name"]) {
+        self.companyName = textField.text;
+    } else if ([self.curEntry[@"label"] isEqual:@"university"]) {
+        self.schoolName = textField.text;
+    }
     self.curEntry[@"value"] = textField.text;
 }
 
@@ -805,6 +930,43 @@
     }
     
     return data;
+}
+
+- (void)setInitValueForFieldWith:(NSDictionary*)data
+{
+    
+}
+
+-(void)infoRequestFromRemote
+{
+    
+    [SVProgressHUD show];
+    [[RKClient sharedClient] get:[@"/uc/userinfo.api" stringByAppendingQueryParameters:[Utils queryParams]] usingBlock:^(RKRequest *request){
+        //        NSLog(@"url: %@", request.URL);
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                //                NSLog(@"digo data %@", data);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    // 此行须在前两行后面
+                    NSLog(@"all user info: %@", data);
+                    self.existedData = data[@"data"][@"issetlist"];
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+    
 }
 
 @end
