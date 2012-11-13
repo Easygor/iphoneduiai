@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *descLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *bgImageView;
-@property (nonatomic) CGFloat oldWith;
+@property (nonatomic) CGFloat oldWith, oldHeight;
 
 @end
 
@@ -29,6 +29,7 @@
 - (void)doInitWork
 {
     self.oldWith = self.bgImageView.frame.size.width;
+    self.oldHeight = self.bgImageView.frame.size.height;
     self.bgImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
 }
 
@@ -52,9 +53,9 @@
         selfFrame.size.width = MAX(self.descLabel.frame.size.width + self.descLabel.frame.origin.x + self.oldWith/4, self.oldWith);
         self.frame = selfFrame;
         
-        UIImage *image;
+        UIImage *image = nil;
         if ([self.bgImageView.image respondsToSelector:@selector(resizableImageWithCapInsets:)]) {
-            image = [self.bgImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(0, self.oldWith/2, 0, self.oldWith/5)];
+            image = [self.bgImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(self.oldHeight/2, self.oldWith/2, self.oldHeight/2, self.oldWith/5)];
         } else {
             image = [self.bgImageView.image stretchableImageWithLeftCapWidth:self.oldWith/2 topCapHeight:0];
         }
