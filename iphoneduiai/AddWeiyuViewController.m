@@ -71,28 +71,28 @@
     
     UIButton *picButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [picButton setImage:[UIImage imageNamed:@"sub_pic_icon"] forState:UIControlStateNormal];
-    [picButton setImage:[UIImage imageNamed:@"messages_toolbar_photobutton_background_highlighted"] forState:UIControlStateHighlighted ];
+    [picButton setImage:[UIImage imageNamed:@"sub_pic_icon_linked"] forState:UIControlStateHighlighted ];
      picButton.frame = CGRectMake(20, 12, 24, 20);
     [picButton addTarget:self action:@selector(picSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:picButton];
     
     UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [cameraButton setImage:[UIImage imageNamed:@"sub_cut_icon"] forState:UIControlStateNormal];
-    [cameraButton setImage:[UIImage imageNamed:@"messages_toolbar_camerabutton_background_highlighted"] forState:UIControlStateHighlighted ];
+    [cameraButton setImage:[UIImage imageNamed:@"sub_cut_icon_linked"] forState:UIControlStateHighlighted ];
     cameraButton.frame = CGRectMake(85, 12, 26, 21);
     [cameraButton addTarget:self action:@selector(cameraSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:cameraButton];
     
     faceButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [faceButton setImage:[UIImage imageNamed:@"sub_express_icon"] forState:UIControlStateNormal];
-    [faceButton setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted"] forState:UIControlStateHighlighted ];
+    [faceButton setImage:[UIImage imageNamed:@"sub_express_icon_linked"] forState:UIControlStateHighlighted ];
     faceButton.frame = CGRectMake(150, 12, 24, 24);
     [faceButton addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:faceButton];
     
     UIButton *locButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [locButton setImage:[UIImage imageNamed:@"sub_posi_icon"] forState:UIControlStateNormal];
-    [locButton setImage:[UIImage imageNamed:@"messages_toolbar_locationbutton_background_highlighted"] forState:UIControlStateHighlighted ];
+    [locButton setImage:[UIImage imageNamed:@"sub_posi_icon_linkded"] forState:UIControlStateHighlighted ];
     [locButton setImage:[UIImage imageNamed:@"sub_posi_select_icon"] forState:UIControlStateSelected];
     locButton.frame = CGRectMake(220, 12, 18, 24);
     [locButton addTarget:self action:@selector(locSelect:)forControlEvents:UIControlEventTouchUpInside];
@@ -236,14 +236,14 @@
     
     if (state) {
         [contentTextView resignFirstResponder];
-        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_keyboardbutton_background.png"] forState:UIControlStateNormal];
-        [faceButton setImage:[UIImage imageNamed:@"messages_toolbar_keyboardbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
+//        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_keyboardbutton_background.png"] forState:UIControlStateNormal];
+//        [faceButton setImage:[UIImage imageNamed:@"messages_toolbar_keyboardbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
         state = NO;
     }else
     {
         [contentTextView becomeFirstResponder];
-        [faceButton setImage:[UIImage  imageNamed:@"sub_express_icon"] forState:UIControlStateNormal];
-        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted];
+//        [faceButton setImage:[UIImage  imageNamed:@"sub_express_icon"] forState:UIControlStateNormal];
+//        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted];
         state = YES;
 
     }

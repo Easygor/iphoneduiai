@@ -35,8 +35,6 @@
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (strong, nonatomic) NSString *orderField;
 
-@property (strong, nonatomic) NSString *selectedSex;
-@property (strong, nonatomic) NSArray *filterEntries;
 @property (strong, nonatomic) UIButton *tilteBtn;
 @property (retain, nonatomic) IBOutlet DropMenuView *dropMenuView;
 @property (strong, nonatomic) UIBarButtonItem *leftList, *leftView;
@@ -59,9 +57,7 @@
     [_users release];
     [_moreCell release];
     [_orderField release];
-    [_filterEntries release];
     [_tilteBtn release];
-    [_selectedSex release];
 
     [_dropMenuView release];
     [_btn1 release];
@@ -78,39 +74,6 @@
     }
     
     return _conditions;
-}
-
-- (NSArray *)filterEntries
-{
-    if (_filterEntries == nil) {
-        _filterEntries = [[NSArray alloc] initWithArray:@[
-                          @{@"tag":@"w", @"name":@"同城女生"},
-                          @{@"tag":@"m", @"name":@"同城男生"}]];
-    }
-    
-    return _filterEntries;
-}
-
-- (void)setSelectedSex:(NSString *)selectedSex
-{
-    if (![_selectedSex isEqualToString:selectedSex]) {
-        _selectedSex = [selectedSex retain];
-        self.conditions[@"sex"] = selectedSex;
-        
-        NSString *name = nil;
-        for (NSDictionary *d in self.filterEntries) {
-            if ([[d objectForKey:@"tag"] isEqualToString:selectedSex]) {
-                name = [d objectForKey:@"name"];
-                break;
-            }
-            
-        }
-        
-        [self.tilteBtn setTitle:name forState:UIControlStateNormal];
-        [self.tilteBtn setTitle:name forState:UIControlStateHighlighted];
-        
-        [self reloadList];
-    }
 }
 
 - (void)setUsers:(NSMutableArray *)users
@@ -141,24 +104,14 @@
     self.leftView = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"change_view_icon"]
                                                                                           target:self
                                                                                           action:@selector(exchangeAction)] autorelease];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"搜索条件"
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"筛选条件"
                                                                                               target:self
                                                                                               action:@selector(jumpAction)] autorelease];
     
     self.navigationItem.leftBarButtonItem = self.leftList;
     
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"杭州女生"];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, 100, 44);
-    [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:@"top_arrow"] forState:UIControlStateHighlighted];
-    btn.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
-    btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
-    [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
-    btn.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
-    [btn setTitleShadowColor:RGBCOLOR(120, 200, 235) forState:UIControlStateNormal];
-    self.navigationItem.titleView = btn;
-    self.tilteBtn = btn;
     UIImage *btnBg = [[UIImage imageNamed:@"search_choice_bg"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     UIImage *selectedBtnBg = [[UIImage imageNamed:@"search_choice_bg_select"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [self.btn1 setBackgroundImage:btnBg forState:UIControlStateNormal];
@@ -248,11 +201,18 @@
     if ([self checkLogin]) {
         
         NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-        self.conditions[@"province"] = info[@"province"];
-        self.conditions[@"city"] = info[@"city"];
-        self.conditions[@"minage"] = @"18";
-        self.conditions[@"maxage"] = @"35";
-        self.conditions[@"searchtype"] = @"detail";
+        if (self.conditions.count <= 0) {
+            self.conditions[@"province"] = info[@"province"];
+            self.conditions[@"city"] = info[@"city"];
+            self.conditions[@"minage"] = @"18";
+            self.conditions[@"maxage"] = @"35";
+            self.conditions[@"searchtype"] = @"detail";
+            if ([info[@"sex"] isEqualToString:@"m"]) {
+                self.conditions[@"sex"] = @"w";
+            } else{
+                self.conditions[@"sex"] = @"m";
+            }
+        }
         
         // do init things
         [self performSelector:@selector(doInitWork)
@@ -270,7 +230,7 @@
         self.conditions[@"search"] = @NO;
         [self.sementdView selectSegmentAtIndex:0];
     }
-#warning two time request trigger.
+
     [LocationController sharedInstance].delegate = self;
 
 }
@@ -346,7 +306,7 @@
         // do on here
         cell.nameLabel.text = [user objectForKey:@"niname"];
         if ([user[@"photo"] isEqualToString:@""]) {
-            [cell.avatarImageView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+            [cell.avatarImageView loadImage:@"http://img.zhuohun.com/sys/nologo.jpg"];
         } else{
             [cell.avatarImageView loadImage:user[@"photo"]];
         }
@@ -500,7 +460,6 @@
 - (void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
 {
 
-
     switch (index) {
         case 0:
             // go next
@@ -519,17 +478,8 @@
             self.orderField = nil;
             break;
     }
-    if (self.selectedSex) {
-        [self reloadList];
-    } else{
-        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
-        if ([info[@"sex"] isEqualToString:@"m"]) {
-            self.selectedSex = @"w";
-        } else{
-            self.selectedSex = @"m";
-        }
-    }
-
+    
+    [self reloadList];
 }
 
 - (void)reloadList
@@ -563,6 +513,25 @@
     }
 }
 
+- (void)updateTitle
+{
+    NSLog(@"conditions: %@", self.conditions);
+    NSString *sex, *city = nil;
+    if (self.conditions[@"citydesc"]) {
+        city = self.conditions[@"citydesc"];
+    } else{
+        city = @"同城";
+    }
+    
+    if ([self.conditions[@"sex"] isEqualToString:@"m"]) {
+        sex = @"男生";
+    } else{
+        sex = @"女生";
+    }
+    
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:[city stringByAppendingString:sex]];
+}
+
 - (void)searchReqeustWithParams:(NSMutableDictionary*)params
 {
     if ([self.conditions[@"searchtype"] isEqualToString:@"id"]) {
@@ -583,7 +552,10 @@
     [params setObject:@"21" forKey:@"pagesize"];
     
     // have pics
-//    [params setObject:@"1" forKey:@"photo"];
+    if (![self.orderField isEqualToString:@"regtime"]) {
+        [params setObject:@"1" forKey:@"photo"];
+    }
+
     [params setObject:@"niname,age,height,photo,photocount,sex,acctime,distance,weibolist,position,last_weiyu" forKey:@"fields"];
     
 
@@ -604,7 +576,7 @@
                     } else{
                         self.users = [data objectForKey:@"data"];
                     }
-                    
+                    [self updateTitle];
                     [SVProgressHUD dismiss];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
@@ -663,26 +635,21 @@
 }
 
 #pragma mark - drop menu
-- (NSArray *)dropMenuViewData:(DropMenuView *)dropView
-{
-    return self.filterEntries;
-    
-}
-
-- (void)didSelectedMenuCell:(DropMenuView *)dropView withTag:(NSString *)tag name:(NSString *)name
-{
-    
-    if (self.waterTableView.isDecelerating ||
-        self.waterTableView.isDragging ||
-        self.waterTableView.isEditing ||
-        self.infoTableView.isDecelerating ||
-        self.infoTableView.isDragging ||
-        self.infoTableView.isEditing) {
-        return;
-    }
-    
-    self.selectedSex = tag;
-    
-}
+//
+//- (void)didSelectedMenuCell:(DropMenuView *)dropView withTag:(NSString *)tag name:(NSString *)name
+//{
+//    
+//    if (self.waterTableView.isDecelerating ||
+//        self.waterTableView.isDragging ||
+//        self.waterTableView.isEditing ||
+//        self.infoTableView.isDecelerating ||
+//        self.infoTableView.isDragging ||
+//        self.infoTableView.isEditing) {
+//        return;
+//    }
+//    
+//    self.selectedSex = tag;
+//    
+//}
 
 @end

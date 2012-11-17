@@ -32,6 +32,7 @@
 @property (strong, nonatomic) UIImageView *curImageView;
 
 @property (nonatomic) NSInteger state;
+@property (strong, nonatomic) NSDictionary *faqInfo;
 
 @end
 

@@ -114,12 +114,13 @@
     [super viewDidLoad];
 
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"图"
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"只看图片"
                                                                                                target:self
                                                                                                action:@selector(exchangeAction:)] autorelease];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"添加"
-                                                                                               target:self
-                                                                                               action:@selector(addAction)] autorelease];
+
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"weiyu_add_content"]
+                                                                                           target:self
+                                                                                           action:@selector(addAction)] autorelease];
     
     if (self.refreshHeaderView == nil) {
 		
@@ -169,12 +170,12 @@
     }
     if (self.onlyPhoto) {
         self.onlyPhoto = NO;
-        self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"图"
+        self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"只看图片"
                                                                                                    target:self
                                                                                                    action:@selector(exchangeAction:)] autorelease];
     } else{
         self.onlyPhoto = YES;
-        self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"全"
+        self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"查看全部"
                                                                                                    target:self
                                                                                                    action:@selector(exchangeAction:)] autorelease];
     }
@@ -434,7 +435,7 @@
     if (self.onlyPhoto) {
         [dParams setObject:@"photo" forKey:@"a"];
     }
-    
+    dParams[@"gmd"] = @"uc";
 //    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
 
     [dParams setObject:self.selectedSex forKey:@"sex"];

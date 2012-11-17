@@ -52,7 +52,12 @@
     if (self) {
         // Initialization code
         AsyncImageView *center = [[[AsyncImageView alloc] initWithFrame:CGRectMake(1, 1, frame.size.width-2, frame.size.height-2)] autorelease];
-        [center loadImage:imageUrl];
+        if ([imageUrl hasPrefix:@"http://"]) {
+            [center loadImage:imageUrl];
+        } else{
+            center.image = [UIImage imageNamed:imageUrl ];
+        }
+        
         center.layer.cornerRadius = frame.size.width/2-1;
         center.layer.masksToBounds = YES;
         [self addSubview:center];

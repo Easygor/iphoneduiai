@@ -351,10 +351,10 @@ static NSInteger kDelWeiyuTag = 204;
     dHeight2 = self.moreUserInfoView.frame.size.height;
     self.tableView.alwaysBounceVertical = YES;
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.changeBaritem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"转"target:self action:@selector(settingModeAction)] autorelease];
+    self.changeBaritem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"target:self action:@selector(settingModeAction)] autorelease];
     self.cancelBarItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"target:self action:@selector(cancelModeAction)] autorelease];
     self.saveBarItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"target:self action:@selector(saveAction)] autorelease];
-    self.settingBarItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"设置"target:self action:@selector(settingAction)] autorelease];
+    self.settingBarItem = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"set_icon"] target:self action:@selector(settingAction)] autorelease];
     self.navigationItem.leftBarButtonItem = self.changeBaritem;
     self.navigationItem.rightBarButtonItem = self.settingBarItem;
     

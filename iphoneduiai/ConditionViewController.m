@@ -129,12 +129,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
-    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"搜索条件"];
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"筛选条件"];
 
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"搜索"
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"确定"
                                                                                                 target:self
                                                                                                 action:@selector(searchAction)] autorelease];
     
