@@ -463,7 +463,10 @@
 {
     if (![_weiyu isEqualToDictionary:weiyu]) {
         _weiyu = [weiyu retain];
-        
+        if ([weiyu[@"vtype"] isEqualToString:@"faq"]) {
+            NSLog(@"weiyu: %@", weiyu);
+        }
+
         // user info
         self.nameLabel.text = [[weiyu objectForKey:@"uinfo"] objectForKey:@"niname"];
         [self.avaterImageView loadImage:[[weiyu objectForKey:@"uinfo"] objectForKey:@"photo"]];

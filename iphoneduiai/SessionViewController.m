@@ -629,6 +629,7 @@
                     if (code != 0) {
                         NSLog(@"Fail to send messsage: %@", data[@"message"]);
                     } else{
+                        self.messageData[@"msgtoken"] = data[@"jsondata"][@"msgtoken"];
                         [self requestMessageListWithPage:1];
                     }
                     
@@ -729,6 +730,10 @@
 #pragma mark - request for Feeds
 - (void)requestMessageListWithPage:(NSInteger)page
 {
+    if (self.messageData[@"msgtoken"] == nil) {
+        return;
+    }
+    
     NSMutableDictionary *params = [Utils queryParams];
     
     [params setObject:[NSNumber numberWithInteger:page] forKey:@"page"];

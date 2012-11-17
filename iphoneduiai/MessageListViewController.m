@@ -144,6 +144,7 @@
         
         SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
         svc.messageData = msg[@"data"];
+        svc.senduid = msg[@"data"][@"senduid"];
         [self.navigationController pushViewController:svc animated:YES];
         [svc release];
         

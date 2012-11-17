@@ -18,6 +18,7 @@
 #import "WeiyuWordCell.h"
 #import "CustomBarButtonItem.h"
 #import "CopyQQViewController.h"
+#import "SessionViewController.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -209,6 +210,7 @@ static CGFloat dHeight2 = 0.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSLog(@"user data:%@", self.user);
     dHeight = self.marrayReqView.frame.size.height;
     dHeight2 = self.moreUserInfoView.frame.size.height;
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
@@ -438,6 +440,18 @@ static CGFloat dHeight2 = 0.0f;
 - (IBAction)sendMsgAction
 {
     NSLog(@"send message...");
+    SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
+    NSMutableDictionary *info = [[[NSMutableDictionary alloc] init] autorelease];
+    NSMutableDictionary *tmp = [[[NSMutableDictionary alloc] init] autorelease];
+    info[@"niname"] = self.user[@"niname"];
+    tmp[@"senduid"] = self.user[@"_id"];
+    tmp[@"uinfo"] = info;
+    
+    svc.messageData = tmp;
+    svc.senduid = self.user[@"_id"];
+    [self.navigationController pushViewController:svc animated:YES];
+    [svc release];
+    
 }
 
 - (IBAction)checkQQAction
