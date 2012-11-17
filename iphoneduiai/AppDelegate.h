@@ -17,7 +17,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (retain, nonatomic) IBOutlet UITabBarController *tabBarController;
-@property (strong, nonatomic) RaisedCenterButton *raisedBtn;
+//@property (strong, nonatomic) RaisedCenterButton *raisedBtn;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

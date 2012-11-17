@@ -26,6 +26,7 @@
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_avatarImageView release];
     [_bubbleImageView release];
     [_indicatorView release];
@@ -82,6 +83,19 @@
     longPress.minimumPressDuration = 1.0;
     self.bubbleImageView.userInteractionEnabled = YES;
     [self.bubbleImageView  addGestureRecognizer:longPress];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willHideEditMenu) name:UIMenuControllerWillHideMenuNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didHideEditMenu) name:UIMenuControllerDidHideMenuNotification object:nil];
+}
+
+//- (void)willHideEditMenu
+//{
+//    self.bubbleImageView.highlighted = NO;
+//}
+
+- (void)didHideEditMenu
+{
+    self.bubbleImageView.highlighted = NO;
 }
 
 - (void)awakeFromNib
@@ -117,7 +131,7 @@
     pasteboard.string = self.content;
     
     [self resignFirstResponder];
-    self.bubbleImageView.highlighted = YES;
+    self.bubbleImageView.highlighted = NO;
     
 }
 
@@ -125,7 +139,7 @@
 {
     NSLog(@"do delete");
     [self resignFirstResponder];
-    self.bubbleImageView.highlighted = YES;
+    self.bubbleImageView.highlighted = NO;
     
     if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
         [self.delegate didChangeStatus:self toStatus:nil];
@@ -184,11 +198,13 @@
         [self.contentLabel sizeToFit];
         
         UIImage *bgImage = [self.bubbleImageView.image stretchableImageWithLeftCapWidth:20 topCapHeight:30];
+        UIImage *hlbgImage = [self.bubbleImageView.highlightedImage stretchableImageWithLeftCapWidth:20 topCapHeight:30];
         CGRect bFrame = self.bubbleImageView.frame;
         bFrame.size.width = MAX(self.contentLabel.frame.size.width+self.contentLabel.frame.origin.x+15, 58);
-        bFrame.size.height = MAX(self.contentLabel.frame.size.height+self.contentLabel.frame.origin.y+10, 48);
+        bFrame.size.height = MAX(self.contentLabel.frame.size.height+self.contentLabel.frame.origin.y+10, 38);
         self.bubbleImageView.frame = bFrame;
         self.bubbleImageView.image = bgImage;
+        self.bubbleImageView.highlightedImage = hlbgImage;
         
         CGRect iFrame = self.indicatorView.frame;
         iFrame.origin.x = self.bubbleImageView.frame.size.width + self.bubbleImageView.frame.origin.x + 8;

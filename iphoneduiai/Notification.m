@@ -71,7 +71,7 @@ static NSString *fileName = @"notifications.plist";
                         [NSMutableDictionary dictionaryWithObjectsAndKeys:@"notice", @"type",
                          @"系统通知", @"title",
                          @"来自系统的温馨提示", @"subTitle",
-                         @"AppShareBook.png", @"logo",
+                         @"inform_icon", @"logo",
                          [NSNumber numberWithInteger:0], @"bageNum",
                          [NSDate date], @"updated",
                          nil], @"data",  nil] retain];
@@ -79,7 +79,7 @@ static NSString *fileName = @"notifications.plist";
                        [NSMutableDictionary dictionaryWithObjectsAndKeys:@"feed", @"type",
                         @"我的动态", @"title",
                         @"来自你的最新最热的动态", @"subTitle",
-                        @"AppShareimage.png", @"logo",
+                        @"feed_icon", @"logo",
                         [NSNumber numberWithInteger:0], @"bageNum",
                         [NSDate date], @"updated",
                         nil], @"data",  nil] retain];
@@ -135,7 +135,7 @@ static NSString *fileName = @"notifications.plist";
        _feed[@"data"] = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"feed", @"type",
          @"我的动态", @"title",
          @"来自你的最新最热的动态", @"subTitle",
-         @"AppShareimage.png", @"logo",
+         @"feed_icon", @"logo",
          [NSNumber numberWithInteger:0], @"bageNum",
          [NSDate date], @"updated",
          nil];
@@ -156,7 +156,7 @@ static NSString *fileName = @"notifications.plist";
         _notice[@"data"] = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"notice", @"type",
          @"系统通知", @"title",
          @"来自系统的温馨提示", @"subTitle",
-         @"AppShareBook.png", @"logo",
+         @"inform_icon", @"logo",
          [NSNumber numberWithInteger:0], @"bageNum",
          [NSDate date], @"updated",
          nil];

@@ -164,14 +164,14 @@
     
     UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusBtn setImage:[UIImage imageNamed:@"chat_add_icon"] forState:UIControlStateNormal];
-    [plusBtn setImage:[UIImage imageNamed:@"mailapp_addBtn2.png"] forState:UIControlStateHighlighted ];
+    [plusBtn setImage:[UIImage imageNamed:@"chat_add_icon_linked"] forState:UIControlStateHighlighted ];
     plusBtn.frame = CGRectMake(6, 5, 33, 34);
     [plusBtn addTarget:self action:@selector(plusAction:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:plusBtn];
     
     self.faceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.faceBtn setImage:[UIImage imageNamed:@"chat_express_icon"] forState:UIControlStateNormal];
-    [self.faceBtn setImage:[UIImage imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
+    [self.faceBtn setImage:[UIImage imageNamed:@"chat_express_icon_linked"] forState:UIControlStateHighlighted ];
     self.faceBtn.frame = CGRectMake(44, 5, 33, 34);
     [self.faceBtn addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:self.faceBtn];
@@ -492,11 +492,11 @@
     // exchange facet btn
     if (self.isKeyboardShow || height == 0) {
         [self.faceBtn setImage:[UIImage  imageNamed:@"chat_express_icon"] forState:UIControlStateNormal];
-        [self.faceBtn setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted];
+        [self.faceBtn setImage:[UIImage  imageNamed:@"chat_express_icon_linked"] forState:UIControlStateHighlighted];
         self.faceBtn.tag = 0;
     } else{
-        [self.faceBtn setImage:[UIImage  imageNamed:@"messages_toolbar_keyboardbutton_background.png"] forState:UIControlStateNormal];
-        [self.faceBtn setImage:[UIImage imageNamed:@"messages_toolbar_keyboardbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
+        [self.faceBtn setImage:[UIImage  imageNamed:@"chat_type_icon"] forState:UIControlStateNormal];
+        [self.faceBtn setImage:[UIImage imageNamed:@"chat_type_icon_linked"] forState:UIControlStateHighlighted ];
         self.faceBtn.tag = 1;
     }
     

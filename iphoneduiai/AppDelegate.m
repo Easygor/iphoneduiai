@@ -11,7 +11,17 @@
 #import "LocationController.h"
 #import "Notification.h"
 #import <RestKit/JSONKit.h>
-#import "RaisedCenterButton.h"
+//#import "RaisedCenterButton.h"
+
+@interface AppDelegate ()
+
+@property (retain, nonatomic) IBOutlet UITabBarItem *searchItem;
+@property (retain, nonatomic) IBOutlet UITabBarItem *messageItem;
+@property (retain, nonatomic) IBOutlet UITabBarItem *weiyuItem;
+@property (retain, nonatomic) IBOutlet UITabBarItem *meItem;
+
+
+@end
 
 @implementation AppDelegate
 
@@ -22,7 +32,11 @@
     [_managedObjectModel release];
     [_persistentStoreCoordinator release];
     [_tabBarController release];
-    [_raisedBtn release];
+//    [_raisedBtn release];
+    [_searchItem release];
+    [_messageItem release];
+    [_weiyuItem release];
+    [_meItem release];
     [super dealloc];
 }
 
@@ -39,27 +53,29 @@
     
 //    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
-    RaisedCenterButton *button = [RaisedCenterButton buttonWithBgImage:[UIImage imageNamed:@"icon-weiyu"] hlImage:[UIImage imageNamed:@"icon-weiyu-linked"] forTabBarController:self.tabBarController];
-    self.raisedBtn = button;
-    [self.tabBarController.view addSubview:button];
+    /* **raise center item**
+//    RaisedCenterButton *button = [RaisedCenterButton buttonWithBgImage:[UIImage imageNamed:@"icon-weiyu"] hlImage:[UIImage imageNamed:@"icon-weiyu-linked"] forTabBarController:self.tabBarController];
+//    self.raisedBtn = button;
+//    [self.tabBarController.view addSubview:button];
+     */
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0")) {
         
-//        [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_indicator_bg.png"]];
+        [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_indicator_bg"]];
+        [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tabbar_bg"]];
+        [[UITabBar appearance] setTintColor:[UIColor redColor]];
         // config the tab bar items
-//        [self.indexItem setFinishedSelectedImage:[UIImage imageNamed:@"home_w.png"]
-//                     withFinishedUnselectedImage:[UIImage imageNamed:@"home_g.png"]];
-//        [self.cateItem setFinishedSelectedImage:[UIImage imageNamed:@"list_w.png"]
-//                    withFinishedUnselectedImage:[UIImage imageNamed:@"list_g.png"]];
-//        [self.collectItem setFinishedSelectedImage:[UIImage imageNamed:@"love_w.png"]
-//                       withFinishedUnselectedImage:[UIImage imageNamed:@"love_g.png"]];
-//        [self.myTaoItem setFinishedSelectedImage:[UIImage imageNamed:@"mytaobao_pressed"]
-//                     withFinishedUnselectedImage:[UIImage imageNamed:@"mytaobao"]];
-//        [self.moreItem setFinishedSelectedImage:[UIImage imageNamed:@"more_w.png"]
-//                    withFinishedUnselectedImage:[UIImage imageNamed:@"more_g.png"]];
-        [self.tabBarController.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbar-bg"]];
+        [self.searchItem setFinishedSelectedImage:[UIImage imageNamed:@"icon-search-linked"]
+                      withFinishedUnselectedImage:[UIImage imageNamed:@"icon-search"]];
+        [self.messageItem setFinishedSelectedImage:[UIImage imageNamed:@"icon-message-linked"]
+                      withFinishedUnselectedImage:[UIImage imageNamed:@"icon-message"]];
+        [self.weiyuItem setFinishedSelectedImage:[UIImage imageNamed:@"icon-weiyu-linked"]
+                      withFinishedUnselectedImage:[UIImage imageNamed:@"icon-weiyu"]];
+        [self.meItem setFinishedSelectedImage:[UIImage imageNamed:@"icon-me-linked"]
+                      withFinishedUnselectedImage:[UIImage imageNamed:@"icon-me"]];
+
     } else {
-        [self.tabBarController.tabBar insertSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tabbar-bg"]] autorelease]  atIndex:0];
+        [self.tabBarController.tabBar insertSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tabbar_bg"]] autorelease]  atIndex:0];
     }
     
     [self configRestKit];
@@ -295,6 +311,7 @@
 
 }
 
+/*  888 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
     // unselected the button
@@ -329,5 +346,7 @@
     }
 
 }
+ 
+ */
 
 @end
