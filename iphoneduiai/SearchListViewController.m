@@ -110,19 +110,21 @@
     
     self.navigationItem.leftBarButtonItem = self.leftList;
     
-    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"杭州女生"];
     
     UIImage *btnBg = [[UIImage imageNamed:@"search_choice_bg"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     UIImage *selectedBtnBg = [[UIImage imageNamed:@"search_choice_bg_select"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [self.btn1 setBackgroundImage:btnBg forState:UIControlStateNormal];
     [self.btn1 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.btn1 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    
     [self.btn2 setBackgroundImage:btnBg forState:UIControlStateNormal];
     [self.btn2 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.btn2 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    
     [self.btn3 setBackgroundImage:btnBg forState:UIControlStateNormal];
     [self.btn3 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.btn3 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
+    
     [self.btn4 setBackgroundImage:btnBg forState:UIControlStateNormal];
     [self.btn4 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.btn4 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
@@ -315,7 +317,7 @@
         NSInteger d = [[user objectForKey:@"distance"] integerValue];
         cell.timeDistanceLabel.text = [NSString stringWithFormat:@"%@·%@", [Utils descriptionForDistance:d], [Utils descriptionForTime:actime]];
         cell.pictureNum.text = [[user objectForKey:@"photocount"] description];
-        cell.graphLabel.text = [[user objectForKey:@"last_weiyu"] description];
+        cell.graphText = [[user objectForKey:@"last_weiyu"] description];
         
         return cell;
         
@@ -535,7 +537,7 @@
 - (void)searchReqeustWithParams:(NSMutableDictionary*)params
 {
     if ([self.conditions[@"searchtype"] isEqualToString:@"id"]) {
-        params[@"id"] = self.conditions[@"id"];
+        params[@"gotouid"] = self.conditions[@"id"];
     } else{
         [self.conditions removeObjectForKey:@"id"];
         for (NSString *key in self.conditions.allKeys) {

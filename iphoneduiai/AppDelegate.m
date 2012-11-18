@@ -63,7 +63,7 @@
         
         [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"tab_indicator_bg"]];
         [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"tabbar_bg"]];
-        [[UITabBar appearance] setTintColor:[UIColor redColor]];
+
         // config the tab bar items
         [self.searchItem setFinishedSelectedImage:[UIImage imageNamed:@"icon-search-linked"]
                       withFinishedUnselectedImage:[UIImage imageNamed:@"icon-search"]];

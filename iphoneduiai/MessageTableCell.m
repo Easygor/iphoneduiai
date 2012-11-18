@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *countLabel;
 @property (strong, nonatomic) IBOutlet UIView *countView;
+@property (retain, nonatomic) IBOutlet UIImageView *bottomLineImgView;
 
 @end
 
@@ -25,6 +26,7 @@
     [_nameLabel release];
     [_timeLabel release];
     [_descLabel release];
+    [_bottomLineImgView release];
     [super dealloc];
 }
 
@@ -40,8 +42,8 @@
                 countString = @"N";
             }
             self.countLabel.text = countString;
-            self.descLabel.textColor = RGBCOLOR(113, 181, 64);
-            self.descLabel.highlightedTextColor = RGBCOLOR(113, 181, 64);
+            self.descLabel.textColor = RGBCOLOR(115, 180, 51);
+            self.descLabel.highlightedTextColor = RGBCOLOR(115, 180, 51);
         } else{
             self.countView.hidden = YES;
             self.descLabel.textColor = RGBCOLOR(136, 136, 136);
@@ -50,6 +52,22 @@
         }
         
 //    }
+}
+
+- (void)doMessageInitWork
+{
+    CGFloat scale = [[UIScreen mainScreen] scale];
+    if (scale > 1.0) {
+        CGRect frame = self.bottomLineImgView.frame;
+        frame.size.height /= 2;
+        frame.origin.y += 1;
+        self.bottomLineImgView.frame = frame;
+    }
+}
+
+- (void)awakeFromNib
+{
+    [self doMessageInitWork];
 }
 
 @end

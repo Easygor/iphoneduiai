@@ -49,9 +49,11 @@
     for (UIButton *b in self.controls) {
         if ([b isEqual:btn]) {
             b.selected = YES;
+            b.enabled = NO;
             b.backgroundColor = [UIColor whiteColor];
         } else{
             b.selected = NO;
+            b.enabled = YES;
             b.backgroundColor = RGBCOLOR(238, 238, 238);
         }
     }

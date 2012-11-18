@@ -11,6 +11,7 @@
 #import "SliderView.h"
 #import "SVProgressHUD.h"
 #import <QuartzCore/QuartzCore.h>
+#import "FaqInnerView.h"
 
 #define DW 150.0f
 #define DH 112.0f
@@ -121,6 +122,8 @@
         
         // reset photos
         _photos = nil;
+        _faqInfo = nil;
+        
         for (UIView *view in [self.mainView subviews]) {
             [view removeFromSuperview];
         }
@@ -182,6 +185,7 @@
         
         // reset content
         _content = nil;
+        _faqInfo = nil;
         
         for (UIView *view in [self.mainView subviews]) {
             [view removeFromSuperview];
@@ -252,13 +256,58 @@
     }
 }
 
+- (void)setFaqInfo:(NSDictionary *)faqInfo
+{
+    if (![_faqInfo isEqualToDictionary:faqInfo]) {
+        _faqInfo = [faqInfo retain];
+        
+        // reset content
+        _content = nil;
+        _photos = nil;
+        
+        for (UIView *view in [self.mainView subviews]) {
+            [view removeFromSuperview];
+        }
+        
+        NSString *qContent = faqInfo[@"answer"];
+        NSString *aContent = [NSString stringWithFormat:@"%@: %@", faqInfo[@"uinfo"][@"niname"], faqInfo[@"question"]];
+
+        UILabel *qLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10, 15, 220, 14)] autorelease];
+        qLabel.font = [UIFont systemFontOfSize:14.0f];
+        qLabel.numberOfLines = 0;
+        qLabel.lineBreakMode = UILineBreakModeCharacterWrap;
+        qLabel.backgroundColor = [UIColor clearColor];
+        qLabel.opaque = YES;
+        
+        CGSize qSzie =[qContent sizeWithFont:qLabel.font
+                           constrainedToSize:CGSizeMake(qLabel.frame.size.width, 500)
+                               lineBreakMode:UILineBreakModeCharacterWrap];
+        qLabel.frame = CGRectMake(10, 15, 220, qSzie.height);
+        qLabel.text = qContent;
+        [self.mainView addSubview:qLabel];
+        
+        FaqInnerView *faqView = [[[FaqInnerView alloc] initWithFrame:CGRectMake(10, qLabel.frame.origin.y+qLabel.frame.size.height+10, 235, 14)] autorelease];
+        faqView.innerContent = aContent;
+        
+        [self.mainView addSubview:faqView];
+        
+        [self resizeFrameWithHeight:faqView.frame.origin.y+faqView.frame.size.height+10];
+        
+    }
+}
+
 - (void)doInitWork
 {
-    self.shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.shadowView.layer.shadowOffset = CGSizeMake(1.0, 1.5);
-    self.shadowView.layer.shadowOpacity = 0.35;
+    self.shadowView.layer.shadowColor = [RGBCOLOR(153, 153, 153) CGColor];
+    self.shadowView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
+    self.shadowView.layer.shadowOpacity = 0.45;
     self.shadowView.layer.shouldRasterize = YES;
-    self.shadowView.layer.shadowRadius = 1.0f;
+    self.shadowView.layer.shadowRadius = 0.5f;
+    
+    self.shadowView.layer.cornerRadius = 3.0f;
+    
+    self.containerView.layer.cornerRadius = 3.0f;
+    self.containerView.layer.masksToBounds = YES;
 }
 
 - (void)awakeFromNib
@@ -464,9 +513,7 @@
 {
     if (![_weiyu isEqualToDictionary:weiyu]) {
         _weiyu = [weiyu retain];
-        if ([weiyu[@"vtype"] isEqualToString:@"faq"]) {
-            NSLog(@"weiyu: %@", weiyu);
-        }
+
 
         // user info
         self.nameLabel.text = [[weiyu objectForKey:@"uinfo"] objectForKey:@"niname"];
@@ -486,9 +533,12 @@
         // content
         if ([[weiyu objectForKey:@"photolist"] count] > 0) {
             self.photos = [weiyu objectForKey:@"photolist"];
+        } else if([weiyu[@"vtype"] isEqualToString:@"faq"]) {
+            NSLog(@"weiyu faq: %@", weiyu[@"faqinfo"]);
+            self.faqInfo = weiyu[@"faqinfo"];   
         } else{
             self.content = [weiyu objectForKey:@"oldcontent"];
-        }
+        } 
         
     }
     

@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel, *graphLabel, *ageHightLabel, *timeDistanceLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *iconR, *iconL, *iconM;
 @property (strong, nonatomic) IBOutlet UILabel *pictureNum;
+@property (strong, nonatomic) NSString *graphText;
 
 @end
