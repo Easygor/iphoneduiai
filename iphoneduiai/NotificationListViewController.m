@@ -168,7 +168,7 @@
     cell.read = ([n[@"read"] integerValue] != 0);
     
     if ([n[@"photo"] isEqualToString:@""]) {
-        [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+        [cell.headImgView loadImage:DEFAULTAVATAR];
     } else{
         [cell.headImgView loadImage:n[@"photo"]];
     }

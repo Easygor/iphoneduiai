@@ -308,15 +308,25 @@
         // do on here
         cell.nameLabel.text = [user objectForKey:@"niname"];
         if ([user[@"photo"] isEqualToString:@""]) {
-            [cell.avatarImageView loadImage:@"http://img.zhuohun.com/sys/nologo.jpg"];
+            [cell.avatarImageView loadImage:DEFAULTAVATAR];
         } else{
             [cell.avatarImageView loadImage:user[@"photo"]];
         }
         cell.ageHightLabel.text = [NSString stringWithFormat:@"%@岁·%@cm", [user objectForKey:@"age"], [user objectForKey:@"height"]];
         NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
         NSInteger d = [[user objectForKey:@"distance"] integerValue];
-        cell.timeDistanceLabel.text = [NSString stringWithFormat:@"%@·%@", [Utils descriptionForDistance:d], [Utils descriptionForTime:actime]];
-        cell.pictureNum.text = [[user objectForKey:@"photocount"] description];
+        NSString *desc = @"";
+        if (d > 0) {
+            desc = [[Utils descriptionForDistance:d] stringByAppendingString:@"·"];
+        }
+        cell.timeDistanceLabel.text = [desc stringByAppendingString: [Utils descriptionForTime:actime]];
+        if([user[@"photocount"] integerValue] > 0 && [user[@"photocount"] integerValue] < 10){
+            cell.xLabel.hidden = NO;
+            cell.pictureNum.text = [NSString stringWithFormat:@"%d", [[user objectForKey:@"photocount"] integerValue]];
+        } else{
+            cell.xLabel.hidden = YES;
+            cell.pictureNum.text = nil;
+        }
         cell.graphText = [[user objectForKey:@"last_weiyu"] description];
         
         return cell;

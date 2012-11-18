@@ -39,10 +39,12 @@
     [self.view addSubview:tipLabel];
     
     UIButton *stopButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    stopButton.frame = CGRectMake(10, 120, 300, 44);
-    stopButton.backgroundColor =RGBCOLOR(226, 86, 89);
+    stopButton.frame = CGRectMake(9, 120, 302, 48);
+//    stopButton.backgroundColor =RGBCOLOR(226, 86, 89);
     
     [stopButton setTitle:@"停用账号" forState:UIControlStateNormal];
+    [stopButton setTitle:@"停用账号" forState:UIControlStateHighlighted];
+    [stopButton setBackgroundImage:[UIImage imageNamed:@"red_btn"] forState:UIControlStateNormal];
     stopButton.titleLabel.textColor = [UIColor whiteColor];
     [stopButton addTarget:self action:@selector(stopPress) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:stopButton];

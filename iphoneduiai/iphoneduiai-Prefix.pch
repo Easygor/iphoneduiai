@@ -37,4 +37,6 @@
 #define KEY @"iosapi"
 #define PASS @"N3HSP2SREzuKmaDe"
 
+#define DEFAULTAVATAR @"http://img.zhuohun.com/sys/nologo.jpg"
+
 #endif

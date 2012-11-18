@@ -63,7 +63,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC43OTYwNzg0MzE0IDAuNzk2MDc4NDMxNCAwLjc5NjA3ODQzMTQAA</bytes>
 								</object>
-								<object class="NSColor" key="IBUIDisabledTitleColor" id="73599334">
+								<object class="NSColor" key="IBUIDisabledTitleColor" id="655824613">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC42IDAuNiAwLjYAA</bytes>
 								</object>
@@ -129,7 +129,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC43OTYwNzg0MzE0IDAuNzk2MDc4NDMxNCAwLjc5NjA3ODQzMTQAA</bytes>
 								</object>
-								<reference key="IBUIDisabledTitleColor" ref="73599334"/>
+								<reference key="IBUIDisabledTitleColor" ref="655824613"/>
 								<object class="NSColor" key="IBUISelectedTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC42IDAuNiAwLjYAA</bytes>
@@ -180,7 +180,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC43OTYwNzg0MzE0IDAuNzk2MDc4NDMxNCAwLjc5NjA3ODQzMTQAA</bytes>
 								</object>
-								<reference key="IBUIDisabledTitleColor" ref="73599334"/>
+								<reference key="IBUIDisabledTitleColor" ref="655824613"/>
 								<object class="NSColor" key="IBUISelectedTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC42IDAuNiAwLjYAA</bytes>
@@ -228,7 +228,7 @@
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC43OTYwNzg0MzE0IDAuNzk2MDc4NDMxNCAwLjc5NjA3ODQzMTQAA</bytes>
 								</object>
-								<reference key="IBUIDisabledTitleColor" ref="73599334"/>
+								<reference key="IBUIDisabledTitleColor" ref="655824613"/>
 								<object class="NSColor" key="IBUISelectedTitleColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC42IDAuNiAwLjYAA</bytes>
@@ -763,20 +763,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">HZSementedControl</string>
 					<string key="superclassName">UIView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="btn2Action:">UIButton</string>
-						<string key="btnAction:">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="btn2Action:">
-							<string key="name">btn2Action:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBActionInfo" key="btnAction:">
-							<string key="name">btnAction:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">delegate</string>
 						<string key="NS.object.0">id</string>

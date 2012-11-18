@@ -64,15 +64,26 @@
             view.hidden = NO;
             
             if ([user[@"photo"] isEqualToString:@""]) {
-                [view.imageView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+                [view.imageView loadImage:DEFAULTAVATAR];
             } else{
                 [view.imageView loadImage:user[@"photo"]];
             }
+            
+            if ([user[@"photocount"] integerValue] > 0) {
+                view.picNumLabel.hidden = NO;
 
-            view.picNumLabel.text = [NSString stringWithFormat:@"%@P", [user objectForKey:@"photocount"]];
-            view.infoLabel.text = [NSString stringWithFormat:@"%@ %@岁 %@cm",
-                                   [Utils descriptionForDistance:[[user objectForKey:@"distance"] intValue]],
-                                   [user objectForKey:@"age"], [user objectForKey:@"height"]];
+                view.picNumLabel.text = [NSString stringWithFormat:@"%@P", [user objectForKey:@"photocount"]];
+            } else{
+                view.picNumLabel.hidden = YES;
+            }
+            
+            NSString *desc = @"";
+            if ([user[@"distance"] floatValue] > 0) {
+                desc = [[Utils descriptionForDistance:[user[@"distance"] intValue]] stringByAppendingString:@" "];
+            }
+
+            view.infoLabel.text = [desc stringByAppendingString: [NSString stringWithFormat:@"%@岁 %@cm",
+                                   [user objectForKey:@"age"], [user objectForKey:@"height"]]];
         }
         
         for (int i=users.count; i<self.arry.count; i++) {

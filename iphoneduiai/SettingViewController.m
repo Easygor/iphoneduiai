@@ -76,11 +76,13 @@ static int behindImgTag = 103;
     UIView *footView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 120)];
     
     UIButton *exitButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    exitButton.frame = CGRectMake(10, 50, 300, 44);
-    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
+    exitButton.frame = CGRectMake(9, 50, 302, 48);
+//    exitButton.backgroundColor =RGBCOLOR(226, 86, 89);
     
     [exitButton setTitle:@"退出" forState:UIControlStateNormal];
-    exitButton.titleLabel.text = @"退出";
+    [exitButton setTitle:@"退出" forState:UIControlStateHighlighted];
+    [exitButton setBackgroundImage:[UIImage imageNamed:@"red_btn"] forState:UIControlStateNormal];
+
     exitButton.titleLabel.textColor = [UIColor whiteColor];
     [exitButton addTarget:self action:@selector(resginAction) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:exitButton];

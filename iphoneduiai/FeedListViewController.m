@@ -134,7 +134,7 @@
     cell.titleLabel.text = n[@"content"];
     NSLog(@"feed data: %@", n);
     if ([n[@"info"][@"photo"] isEqualToString:@""]) {
-        [cell.headImgView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+        [cell.headImgView loadImage:DEFAULTAVATAR];
     } else{
         [cell.headImgView loadImage:n[@"uinfo"][@"photo"]];
     }

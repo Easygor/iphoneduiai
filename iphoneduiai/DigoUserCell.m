@@ -63,7 +63,7 @@
             view.hidden = NO;
             
             if ([user[@"photo"] isEqualToString:@""]) {
-                [view.imageView loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+                [view.imageView loadImage:DEFAULTAVATAR];
             } else{
                 [view.imageView loadImage:user[@"photo"]];
             }

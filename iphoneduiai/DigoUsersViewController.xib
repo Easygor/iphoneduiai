@@ -39,6 +39,7 @@
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor" id="372048328">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -124,13 +125,14 @@
 						<string key="NSFrame">{{60, 183}, {200, 12}}</string>
 						<reference key="NSSuperview" ref="1072155417"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">你将收不到黑名单用户发给你的信息</string>
+						<string key="IBUIText">你将收藏你赞过和喜欢的她或他</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC44IDAuOCAwLjgAA</bytes>
@@ -153,13 +155,17 @@
 					<object class="IBUIImageView" id="96279675">
 						<reference key="NSNextResponder" ref="1072155417"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{115, 61}, {90, 90}}</string>
+						<string key="NSFrame">{{112, 59}, {95, 95}}</string>
 						<reference key="NSSuperview" ref="1072155417"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="28628908"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">list_cover_pic.png</string>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrameSize">{320, 200}</string>
@@ -311,6 +317,10 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">list_cover_pic.png</string>
+			<string key="NS.object.0">{95, 95}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
 </archive>

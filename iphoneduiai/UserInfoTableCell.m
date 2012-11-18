@@ -14,6 +14,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *graphBgImgView;
 
 
+
 @end
 
 @implementation UserInfoTableCell
@@ -31,6 +32,7 @@
     [_pictureNum release];
     [_bottomLineImgView release];
     [_graphBgImgView release];
+    [_xLabel release];
     [super dealloc];
 }
 

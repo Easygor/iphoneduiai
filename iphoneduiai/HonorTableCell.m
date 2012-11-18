@@ -59,7 +59,7 @@
             NSDictionary *user = [users objectAtIndex:i];
             view.hidden = NO;
             if ([user[@"photo"] isEqualToString:@""]) {
-                [view loadImage:@"http://img.zhuohun.com/sys/nopic-w.jpg"];
+                [view loadImage:DEFAULTAVATAR];
             } else{
                 [view loadImage:user[@"photo"]];
             }

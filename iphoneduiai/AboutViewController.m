@@ -21,7 +21,8 @@
     [super loadView];
      self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     
-    UIImageView *duiAiImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 160)]autorelease];
+    UIImageView *duiAiImgView = [[[UIImageView alloc]initWithFrame:CGRectMake(1, 0, 318, 176)]autorelease];
+    duiAiImgView.image = [UIImage imageNamed:@"duiai_about"];
     duiAiImgView.backgroundColor = [UIColor yellowColor];
     
     [self.view addSubview:duiAiImgView];

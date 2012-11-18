@@ -514,7 +514,6 @@
     if (![_weiyu isEqualToDictionary:weiyu]) {
         _weiyu = [weiyu retain];
 
-
         // user info
         self.nameLabel.text = [[weiyu objectForKey:@"uinfo"] objectForKey:@"niname"];
         [self.avaterImageView loadImage:[[weiyu objectForKey:@"uinfo"] objectForKey:@"photo"]];
@@ -534,7 +533,7 @@
         if ([[weiyu objectForKey:@"photolist"] count] > 0) {
             self.photos = [weiyu objectForKey:@"photolist"];
         } else if([weiyu[@"vtype"] isEqualToString:@"faq"]) {
-            NSLog(@"weiyu faq: %@", weiyu[@"faqinfo"]);
+
             self.faqInfo = weiyu[@"faqinfo"];   
         } else{
             self.content = [weiyu objectForKey:@"oldcontent"];
