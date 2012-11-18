@@ -132,7 +132,7 @@
         CGSize size = [content sizeWithFont:font
                           constrainedToSize:CGSizeMake(self.mainView.frame.size.width, 2000)
                               lineBreakMode:UILineBreakModeCharacterWrap];
-        UILabel *contentLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 5, size.width, size.height)] autorelease];
+        UILabel *contentLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 15, size.width, size.height)] autorelease];
         contentLabel.font = font;
         contentLabel.backgroundColor = [UIColor clearColor];
         contentLabel.opaque = YES;
@@ -142,7 +142,7 @@
 
         AsyncImageView *imView = nil;
         if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
-            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, contentLabel.frame.size.height + 10, DW, DH)] autorelease];
+            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, contentLabel.frame.size.height + 15, DW, DH)] autorelease];
             [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
             //                imView.tag = 0;
             imView.userInteractionEnabled = YES;
@@ -174,7 +174,7 @@
             [self.mainView addSubview:self.addressView];
         }
         
-        [self resizeFrameWithHeight:MAX(totalH+10, 10.0f)];
+        [self resizeFrameWithHeight:MAX(totalH+30, 15.0f)];
     }
 }
 
@@ -195,7 +195,7 @@
         if (photos.count > 0) {
             if (photos.count == 1) {
                 NSDictionary *d = [photos objectAtIndex:0];
-                AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 10, DW, DH)] autorelease];
+                AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 15, DW, DH)] autorelease];
                 [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
 //                imView.tag = 0;
                 imView.userInteractionEnabled = YES;
@@ -225,7 +225,7 @@
                         }
                         
                         NSDictionary *d = [photos objectAtIndex:index];
-                        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0 + j*(w+2), 10 + i*(h+2), w, h)] autorelease];
+                        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0 + j*(w+2), 15 + i*(h+2), w, h)] autorelease];
                         [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
                         imView.userInteractionEnabled = YES;
 //                        imView.tag = index;
@@ -252,7 +252,7 @@
             [self.mainView addSubview:self.addressView];
         }
         
-        [self resizeFrameWithHeight:dHeight+addressH+10];
+        [self resizeFrameWithHeight:dHeight+addressH+20];
     }
 }
 
@@ -291,7 +291,7 @@
         
         [self.mainView addSubview:faqView];
         
-        [self resizeFrameWithHeight:faqView.frame.origin.y+faqView.frame.size.height+10];
+        [self resizeFrameWithHeight:faqView.frame.origin.y+faqView.frame.size.height+15];
         
     }
 }

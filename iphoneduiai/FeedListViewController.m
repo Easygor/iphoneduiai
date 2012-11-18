@@ -126,6 +126,7 @@
     // Configure the cell...
     if (cell == nil) {
         cell = [[[FeedListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     NSDictionary *n = [self.feeds objectAtIndex:indexPath.row];

@@ -1337,7 +1337,7 @@ static NSInteger kDelWeiyuTag = 204;
     
     if ([picker isEqual:self.incomePickerView]) {
         
-        return @[@{@"label": @"10", @"desc": @"2000元以下"}, @{@"label": @"20", @"desc": @"2000~50000元"},
+        return @[@{@"label": @"10", @"desc": @"2000元以下"}, @{@"label": @"20", @"desc": @"2000~5000元"},
         @{@"label": @"30", @"desc": @"5000~10000元"}, @{@"label": @"40", @"desc": @"10000~20000元"},
         @{@"label": @"50", @"desc": @"20000元以上"}];
     } else if ([picker isEqual:self.degreePicker]){

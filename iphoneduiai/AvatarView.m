@@ -10,7 +10,7 @@
 
 @interface AvatarView ()
 
-@property (strong, nonatomic) IBOutlet UIImageView *sexView;
+@property (strong, nonatomic) IBOutlet UIImageView *sexView, *takePicView;
 @property (strong, nonatomic) IBOutlet UIButton *uploadBtn;
 
 @end
@@ -46,9 +46,11 @@
         if (editing) {
             self.sexView.hidden = YES;
             self.uploadBtn.hidden = NO;
+            self.takePicView.hidden = NO;
         } else{
             self.sexView.hidden = NO;
             self.uploadBtn.hidden = YES;
+            self.takePicView.hidden = YES;
         }
     }
 

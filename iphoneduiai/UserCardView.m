@@ -23,7 +23,7 @@
 - (void)doRadius
 {
     self.picNumLabel.clipsToBounds = YES;
-    self.picNumLabel.layer.cornerRadius = 3;
+    self.picNumLabel.layer.cornerRadius = self.picNumLabel.frame.size.height/2;
 }
 
 - (void)awakeFromNib

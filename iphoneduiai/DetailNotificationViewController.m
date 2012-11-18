@@ -96,6 +96,7 @@
             request.params = [RKParams paramsWithDictionary:@{@"tid" : self.notificationData[@"tid"], @"submitupdate": @"true"}];
             
             [request setOnDidLoadResponse:^(RKResponse *response){
+
                 if (response.isOK && response.isJSON) {
                     NSDictionary *data = [[response bodyAsString] objectFromJSONString];
                     //                        NSLog(@"read data: %@", data[@"message"]);

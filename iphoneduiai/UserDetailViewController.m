@@ -204,6 +204,7 @@ static CGFloat dHeight2 = 0.0f;
     [self setDySexLabel:nil];
     [self setMoreUserInfoView:nil];
     [self setCountView:nil];
+
     [super viewDidUnload];
 }
 
@@ -219,6 +220,7 @@ static CGFloat dHeight2 = 0.0f;
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
     [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
+
 }
 
 - (void)scoreGestureAction:(UITapGestureRecognizer*)gesture

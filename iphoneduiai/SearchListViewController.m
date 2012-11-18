@@ -111,8 +111,8 @@
     self.navigationItem.leftBarButtonItem = self.leftList;
     
     
-    UIImage *btnBg = [[UIImage imageNamed:@"search_choice_bg"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    UIImage *selectedBtnBg = [[UIImage imageNamed:@"search_choice_bg_select"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    UIImage *btnBg = [[UIImage imageNamed:@"search_choice_bg"] stretchableImageWithLeftCapWidth:2 topCapHeight:0];
+    UIImage *selectedBtnBg = [[UIImage imageNamed:@"search_choice_bg_select"] stretchableImageWithLeftCapWidth:2 topCapHeight:0];
     [self.btn1 setBackgroundImage:btnBg forState:UIControlStateNormal];
     [self.btn1 setBackgroundImage:selectedBtnBg forState:UIControlStateHighlighted];
     [self.btn1 setBackgroundImage:selectedBtnBg forState:UIControlStateSelected];
@@ -230,7 +230,7 @@
         [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         // todo
         self.conditions[@"search"] = @NO;
-        [self.sementdView selectSegmentAtIndex:0];
+        [self.sementdView selectSegment2AtIndex:0];
     }
 
     [LocationController sharedInstance].delegate = self;
@@ -603,7 +603,7 @@
             [self reloadList];
         } else{
             if (self.users.count <= 0) {
-                [self.sementdView selectSegmentAtIndex:0];
+                [self.sementdView selectSegment2AtIndex:0];
             }
         }
     }

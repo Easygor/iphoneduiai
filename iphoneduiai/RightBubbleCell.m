@@ -174,7 +174,7 @@
 {
     if (_contentLabel == nil) {
         _contentLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _contentLabel.font = [UIFont systemFontOfSize:14.0f];
+        _contentLabel.font = [UIFont systemFontOfSize:16.0f];
         _contentLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         _contentLabel.backgroundColor = [UIColor clearColor];
         _contentLabel.opaque = YES;
@@ -206,7 +206,7 @@
                           constrainedToSize:CGSizeMake(TEXTW, 10000)
                               lineBreakMode:UILineBreakModeCharacterWrap];
 
-        self.contentLabel.frame = CGRectMake(15, 10, TEXTW, size.height);
+        self.contentLabel.frame = CGRectMake(15, 11, TEXTW, size.height);
         self.contentLabel.text = content;
         [self.contentLabel sizeToFit];
         
@@ -216,7 +216,7 @@
         CGFloat rightX = bFrame.size.width + bFrame.origin.x;
 
         bFrame.size.width = MAX(self.contentLabel.frame.size.width+self.contentLabel.frame.origin.x+15, 58);
-        bFrame.size.height = MAX(self.contentLabel.frame.size.height+self.contentLabel.frame.origin.y+10, 38);
+        bFrame.size.height = MAX(self.contentLabel.frame.size.height+self.contentLabel.frame.origin.y+10, 45);
         bFrame.origin.x = rightX - bFrame.size.width;
         
         self.bubbleImageView.frame = bFrame;

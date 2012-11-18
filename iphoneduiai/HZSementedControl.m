@@ -49,11 +49,34 @@
     for (UIButton *b in self.controls) {
         if ([b isEqual:btn]) {
             b.selected = YES;
+//            b.enabled = NO;
+//            [b setTitleColor:RGBCOLOR(153, 153, 153) forState:UIControlStateNormal];
+            b.backgroundColor = [UIColor whiteColor];
+        } else{
+            b.selected = NO;
+//            b.enabled = YES;
+//            [b setTitleColor:RGBCOLOR(203, 203, 203) forState:UIControlStateNormal];
+            b.backgroundColor = RGBCOLOR(238, 238, 238);
+        }
+    }
+    
+    if ([self.delegate respondsToSelector:@selector(didChange:atIndex:forValue:)]) {
+        [self.delegate didChange:self atIndex:[self.controls indexOfObject:btn] forValue:btn.titleLabel.text];
+    }
+}
+
+- (IBAction)btn2Action:(UIButton *)btn
+{
+    for (UIButton *b in self.controls) {
+        if ([b isEqual:btn]) {
+            b.selected = YES;
             b.enabled = NO;
+            [b setTitleColor:RGBCOLOR(153, 153, 153) forState:UIControlStateNormal];
             b.backgroundColor = [UIColor whiteColor];
         } else{
             b.selected = NO;
             b.enabled = YES;
+            [b setTitleColor:RGBCOLOR(203, 203, 203) forState:UIControlStateNormal];
             b.backgroundColor = RGBCOLOR(238, 238, 238);
         }
     }
@@ -71,4 +94,14 @@
         [self btnAction:[self.controls objectAtIndex:index]];
     }
 }
+
+-(void)selectSegment2AtIndex:(NSInteger)index
+{
+    if (index > self.controls.count) {
+        [self btn2Action:nil];
+    } else{
+        [self btn2Action:[self.controls objectAtIndex:index]];
+    }
+}
+
 @end

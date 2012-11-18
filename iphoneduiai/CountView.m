@@ -36,7 +36,7 @@
         
         CGRect selfFrame = self.frame;
         selfFrame.size.width = self.countLabel.frame.size.width + self.logo.frame.size.width + 20;
-        selfFrame.origin.x = 320 - 20 - selfFrame.size.width;
+        selfFrame.origin.x = 320 - 10 - selfFrame.size.width;
         self.frame = selfFrame;  
        
     }
@@ -46,7 +46,7 @@
 - (void)doInitWork
 {
     self.clipsToBounds = YES;
-    self.layer.cornerRadius = 3.0f;
+    self.layer.cornerRadius = 4.0f;
 }
 
 - (void)awakeFromNib

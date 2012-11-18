@@ -23,5 +23,6 @@
 @property (assign, nonatomic) IBOutlet id <HZSementdControlDelegate> delegate;
 
 - (void)selectSegmentAtIndex:(NSInteger)index;
+-(void)selectSegment2AtIndex:(NSInteger)index;
 
 @end
