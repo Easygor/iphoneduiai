@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+#import "CustomCellDelegate.h"
+
 @interface FeedListCell : UITableViewCell
 
 @property(strong,nonatomic)AsyncImageView *headImgView;
 @property(strong,nonatomic)UILabel* titleLabel,*contentLabel;
+@property (assign, nonatomic) id <CustomCellDelegate> delegate;
 
 @end

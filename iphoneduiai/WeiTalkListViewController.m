@@ -546,7 +546,7 @@
 - (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
+
 //    NSLog(@"status: %@", status);
     NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
 //    NSString *idStr = weiyu[@"id"];

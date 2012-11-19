@@ -13,6 +13,7 @@
 
 -(void)dealloc
 {
+    self.delegate = nil;
     [titleLabel release];
     [contentLabel release];
     [headImgView release];
@@ -40,8 +41,22 @@
         self.contentLabel.font = [UIFont systemFontOfSize:13];
         self.contentLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.contentLabel];
+        
+        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatarAction:)] autorelease];
+        self.headImgView.userInteractionEnabled = YES;
+        [self.headImgView addGestureRecognizer:singleTap];
     }
     return self;
+}
+
+- (void)tapAvatarAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
+            [self.delegate didChangeStatus:self toStatus:@"tap_avatar"];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

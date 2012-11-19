@@ -14,8 +14,10 @@
 #import "CustomBarButtonItem.h"
 #import "NotificationCell.h"
 #import "DetailNotificationViewController.h"
+#import "CustomCellDelegate.h"
+#import "UserDetailViewController.h"
 
-@interface NotificationListViewController () <UIActionSheetDelegate>
+@interface NotificationListViewController () <UIActionSheetDelegate, CustomCellDelegate>
 
 @property (strong, nonatomic) UITableViewCell *moreCell;
 @property (nonatomic) NSInteger curPage, totalPage;
@@ -160,7 +162,7 @@
     // Configure the cell...
     if (cell == nil) {
         cell = [[[NotificationCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
-   
+        cell.delegate = self;
     }
     NSDictionary *n = [self.notifications objectAtIndex:indexPath.row];
     cell.titleLabel.text  = n[@"title"];
@@ -404,5 +406,22 @@
     }
 
 }
+
+#pragma mark - cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
+    //    NSLog(@"status: %@", status);
+    NSDictionary *n = self.notifications[indexPath.row];
+    //    NSString *idStr = weiyu[@"id"];
+    if ([status isEqualToString:@"tap_avatar"] && n[@"suid"]){
+        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+        udvc.user = @{@"_id": n[@"suid"], @"niname": @"", @"photo": n[@"photo"]};
+        [self.navigationController pushViewController:udvc animated:YES];
+        [udvc release];
+    }    
+}
+
 
 @end

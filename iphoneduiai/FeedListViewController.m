@@ -12,7 +12,9 @@
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 #import "FeedListCell.h"
-@interface FeedListViewController ()
+#import "UserDetailViewController.h"
+
+@interface FeedListViewController () <CustomCellDelegate>
 
 @property (strong, nonatomic) UITableViewCell *moreCell;
 @property (nonatomic) NSInteger curPage, totalPage;
@@ -26,7 +28,7 @@
 
 - (void)dealloc
 {
-    NSLog(@"be called");
+
     [_moreCell release];
     [_feeds release];
     [super dealloc];
@@ -127,12 +129,13 @@
     if (cell == nil) {
         cell = [[[FeedListCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.delegate = self;
     }
     
     NSDictionary *n = [self.feeds objectAtIndex:indexPath.row];
     cell.contentLabel.text = n[@"addtime_text"];
     cell.titleLabel.text = n[@"content"];
-    NSLog(@"feed data: %@", n);
+
     if ([n[@"info"][@"photo"] isEqualToString:@""]) {
         [cell.headImgView loadImage:DEFAULTAVATAR];
     } else{
@@ -243,6 +246,23 @@
             NSLog(@"Error: %@", [error description]);
         }];
     }];
+}
+
+
+#pragma mark - cell delegate
+- (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    //    NSLog(@"status: %@", status);
+    NSDictionary *n = self.feeds[indexPath.row];
+    //    NSString *idStr = weiyu[@"id"];
+    if ([status isEqualToString:@"tap_avatar"] && n[@"uid"]){
+        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+        udvc.user = @{@"_id": n[@"uid"], @"niname": n[@"uinfo"][@"niname"], @"photo": n[@"uinfo"][@"photo"]};
+        [self.navigationController pushViewController:udvc animated:YES];
+        [udvc release];
+    }
 }
 
 @end

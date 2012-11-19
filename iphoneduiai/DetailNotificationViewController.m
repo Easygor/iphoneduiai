@@ -12,6 +12,7 @@
 #import <RestKit/JSONKit.h>
 #import "NSDate-Utilities.h"
 #import "SVProgressHUD.h"
+#import "UserDetailViewController.h"
 
 @interface DetailNotificationViewController ()
 @property (retain, nonatomic) IBOutlet UIView *containerView;
@@ -79,7 +80,23 @@
     
     self.titleLabel.text  = self.notificationData[@"title"];
     self.contentLabel.text = self.notificationData[@"content"];
-    self.timeLabel.text = [[NSDate dateWithTimeIntervalSince1970:[self.notificationData[@"addtime"] integerValue]] stringForHuman] ;
+    self.timeLabel.text = [[NSDate dateWithTimeIntervalSince1970:[self.notificationData[@"addtime"] integerValue]] stringForHuman];
+    
+    UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatarAction:)] autorelease];
+    self.headImgView.userInteractionEnabled = YES;
+    [self.headImgView addGestureRecognizer:singleTap];
+
+}
+
+- (void)tapAvatarAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+        udvc.user = @{@"_id": self.notificationData[@"suid"], @"niname": @"", @"photo": self.notificationData[@"photo"]};
+        [self.navigationController pushViewController:udvc animated:YES];
+        [udvc release];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AsyncImageView.h"
+#import "CustomCellDelegate.h"
 
 @interface NotificationCell : UITableViewCell
 
@@ -16,6 +17,7 @@
 @property (strong, nonatomic) UILabel* titleLabel, *contentLabel;
 @property (strong, nonatomic) UIView *backgroundView, *selectedBackgroundView;
 @property (assign, nonatomic) BOOL read;
+@property (assign, nonatomic) id <CustomCellDelegate> delegate;
 
 @end
 

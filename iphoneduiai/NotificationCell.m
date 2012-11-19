@@ -21,6 +21,7 @@
 
 -(void)dealloc
 {
+    self.delegate = nil;
     [_readBgView release];
     [_unReadBgView release];
     [titleLabel release];
@@ -95,9 +96,22 @@
 //        [self.contentView addSubview:arrowImgView];
         self.accessoryView = self.arrowImgView;
         
-        
+        UITapGestureRecognizer *singleTap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAvatarAction:)] autorelease];
+        self.headImgView.userInteractionEnabled = YES;
+        [self.headImgView addGestureRecognizer:singleTap];
     }
     return self;
+}
+
+
+- (void)tapAvatarAction:(UITapGestureRecognizer*)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateChanged ||
+        gesture.state == UIGestureRecognizerStateEnded) {
+        if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
+            [self.delegate didChangeStatus:self toStatus:@"tap_avatar"];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

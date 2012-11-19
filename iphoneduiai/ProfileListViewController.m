@@ -91,12 +91,16 @@ static NSInteger kDelWeiyuTag = 204;
 @property (nonatomic) BOOL isEditing;
 @property (strong, nonatomic) NSDictionary *existedData;
 
+@property (strong, nonatomic) NSMutableArray *digoList, *shitList;
+
 @end
 
 @implementation ProfileListViewController
 
 - (void)dealloc
 {
+    [_digoList release];
+    [_shitList release];
     [_existedData release];
     [_curIndexPath release];
     [_jobPicker release];
@@ -156,6 +160,24 @@ static NSInteger kDelWeiyuTag = 204;
     [_heightPicker release];
     [_weightPicker release];
     [super dealloc];
+}
+
+- (NSMutableArray *)digoList
+{
+    if (_digoList == nil) {
+        _digoList = [[NSMutableArray alloc] init];
+    }
+    
+    return _digoList;
+}
+
+- (NSMutableArray *)shitList
+{
+    if (_shitList == nil) {
+        _shitList = [[NSMutableArray alloc] init];
+    }
+    
+    return _shitList;
 }
 
 - (HZNumberPickerView *)heightPicker
@@ -1066,34 +1088,83 @@ static NSInteger kDelWeiyuTag = 204;
     
 }
 
+- (void)digoWeiyu:(NSMutableDictionary*)weiyu cell:(WeiyuWordCell*)cell shit:(BOOL)isShit
+{
+    NSMutableDictionary *params = [Utils queryParams];
+    
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/v/digo.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+        NSLog(@"url: %@", request.URL);
+        
+        request.params = [RKParams paramsWithDictionary:@{@"id" : weiyu[@"id"], @"shit": @(isShit), @"submitupdate": @"true"}];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                //                        NSLog(@"read data: %@", data[@"message"]);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    if (isShit) {
+                        
+                        cell.shitNum += 1;
+                        [self.shitList addObject:weiyu[@"id"]];
+                    } else{
+                        if ([self.digoList containsObject:weiyu[@"id"]]) {
+                            [self.digoList removeObject:weiyu[@"id"]];
+                            cell.digoNum -= 1;
+                        } else{
+                            [self.digoList addObject:weiyu[@"id"]];
+                            cell.digoNum += 1;
+                        }
+                        
+                    }
+                    
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+}
+
 #pragma mark - cell delegate
 - (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-//    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
-    NSLog(@"status: %@", status);
+    //    NSLog(@"status: %@", status);
     NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
+    //    NSString *idStr = weiyu[@"id"];
     if ([status isEqualToString:@"comment"]) {
-        
-        //    CommentViewController *commentViewController = [[CommentViewController alloc] initWithNibName:@"CommentViewController" bundle:nil];
-        //    commentViewController.idStr = idStr;
-        //
-        //    [self.navigationController pushViewController:commentViewController animated:YES];
-        //    [commentViewController release];
         
         ShowCommentViewController *showCommentViewController = [[ShowCommentViewController alloc]initWithNibName:@"ShowCommentViewController" bundle:nil];
         showCommentViewController.weiYuDic = weiyu;
         [self.navigationController pushViewController:showCommentViewController animated:YES];
         [showCommentViewController release];
+        
     } else if ([status isEqualToString:@"minus"]){
         // minus
+        if (![self.shitList containsObject:weiyu[@"id"]]) {
+            [self digoWeiyu:weiyu cell:(WeiyuWordCell*)cell shit:YES];
+        }
+        
     } else if ([status isEqualToString:@"plus"]){
         // plus
+        
+        [self digoWeiyu:weiyu cell:(WeiyuWordCell*)cell shit:NO];
+        
+        
     }
     
-
 }
-
 
 - (IBAction)contractAction
 {
