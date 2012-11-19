@@ -37,6 +37,7 @@
 @property (strong, nonatomic) NSString *citySex;
 @property (strong, nonatomic) NSArray *filterEntries;
 @property (strong, nonatomic) UIButton *tilteBtn;
+@property (strong, nonatomic) NSMutableArray *digoList, *shitList;
 
 @end
 
@@ -54,7 +55,27 @@
     [_citySex release];
     [_filterEntries release];
     [_tilteBtn release];
+    [_digoList release];
+    [_shitList release];
     [super dealloc];
+}
+
+- (NSMutableArray *)digoList
+{
+    if (_digoList == nil) {
+        _digoList = [[NSMutableArray alloc] init];
+    }
+    
+    return _digoList;
+}
+
+- (NSMutableArray *)shitList
+{
+    if (_shitList == nil) {
+        _shitList = [[NSMutableArray alloc] init];
+    }
+    
+    return _shitList;
 }
 
 - (NSArray *)filterEntries
@@ -156,7 +177,7 @@
 {
     CGRect posFrame = [self.navigationItem.titleView.superview convertRect:self.navigationItem.titleView.frame toView:self.view.window];
     [self.dropMenuView showMeAtView:self.view
-                            atPoint:CGPointMake(posFrame.origin.x, posFrame.origin.y+posFrame.size.height)
+                            atPoint:CGPointMake((320-self.dropMenuView.frame.size.width)/2, posFrame.origin.y+posFrame.size.height)
                            animated:YES];
 
 }
@@ -472,13 +493,61 @@
     }];
 }
 
+- (void)digoWeiyu:(NSMutableDictionary*)weiyu cell:(WeiyuWordCell*)cell shit:(BOOL)isShit
+{
+    NSMutableDictionary *params = [Utils queryParams];
+
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/v/digo.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+        NSLog(@"url: %@", request.URL);
+        
+        request.params = [RKParams paramsWithDictionary:@{@"id" : weiyu[@"id"], @"shit": @(isShit), @"submitupdate": @"true"}];
+        
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                //                        NSLog(@"read data: %@", data[@"message"]);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    if (isShit) {
+
+                        cell.shitNum += 1;
+                        [self.shitList addObject:weiyu[@"id"]];
+                    } else{
+                        if ([self.digoList containsObject:weiyu[@"id"]]) {
+                            [self.digoList removeObject:weiyu[@"id"]];
+                            cell.digoNum -= 1;
+                        } else{
+                            [self.digoList addObject:weiyu[@"id"]];
+                            cell.digoNum += 1;
+                        }
+
+                    }
+                    
+                    [SVProgressHUD dismiss];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
+}
+
 
 #pragma mark - cell delegate
 - (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-//    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
-    NSLog(@"status: %@", status);
+    NSLog(@"weiyu data: %@", [self.weiyus objectAtIndex:indexPath.row]);
+//    NSLog(@"status: %@", status);
     NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
 //    NSString *idStr = weiyu[@"id"];
     if ([status isEqualToString:@"comment"]) {
@@ -490,8 +559,16 @@
         
     } else if ([status isEqualToString:@"minus"]){
         // minus
+        if (![self.shitList containsObject:weiyu[@"id"]]) {
+            [self digoWeiyu:weiyu cell:(WeiyuWordCell*)cell shit:YES];
+        }
+
     } else if ([status isEqualToString:@"plus"]){
         // plus
+
+        [self digoWeiyu:weiyu cell:(WeiyuWordCell*)cell shit:NO];
+
+        
     } else if ([status isEqualToString:@"tap_avatar"]){
         UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
         udvc.user = @{@"_id": weiyu[@"uid"], @"niname": weiyu[@"uinfo"][@"niname"], @"photo": weiyu[@"uinfo"][@"photo"]};

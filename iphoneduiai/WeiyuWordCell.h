@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet AsyncImageView *avaterImageView;
 @property (assign, nonatomic) id <CustomCellDelegate> delegate;
 @property (strong, nonatomic) NSMutableDictionary *weiyu;
+@property (nonatomic) NSInteger digoNum, shitNum, commentNum;
 
 - (CGFloat)requiredHeight;
 

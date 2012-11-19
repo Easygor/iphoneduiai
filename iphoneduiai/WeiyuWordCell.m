@@ -24,7 +24,6 @@
 @property (strong, nonatomic) IBOutlet UIView *footerView, *mainView, *containerView, *addressView;
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel, *fromLabel, *addressLabel;
 
-@property (nonatomic) NSInteger digoNum, shitNum, commentNum;
 @property (strong, nonatomic) NSString *addTimeDesc, *content;
 @property (strong, nonatomic) NSMutableArray *photos;
 @property (retain, nonatomic) IBOutlet UIView *shadowView;

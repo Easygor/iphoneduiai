@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *tableVew;
 @property (strong, nonatomic) NSArray *options;
 @property (strong, nonatomic) UIView *containerView;
+@property (retain, nonatomic) IBOutlet UIImageView *bgImgView;
 
 @end
 
@@ -27,6 +28,7 @@
     self.dataSource = nil;
     [_tableVew release];
     [_options release];
+    [_bgImgView release];
     [super dealloc];
 }
 
@@ -48,6 +50,13 @@
     return  YES;
 }
 
+- (void)awakeFromNib
+{
+
+    self.bgImgView.image = [[UIImage imageNamed:@"tips_bg"] stretchableImageWithLeftCapWidth:0 topCapHeight:35];
+//    self.bgImgView.image = [[UIImage imageNamed:@"tips_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 50, 30, 5)];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.options.count;
@@ -60,14 +69,27 @@
     UITableViewCell *cell = [tableView  dequeueReusableCellWithIdentifier:CellIndentifierId];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIndentifierId] autorelease];
-        UIView *selectedView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)] autorelease];
-        selectedView.backgroundColor = RGBCOLOR(255, 95, 143);
+        UIImageView *selectedView = [[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cell.bounds.size.width, cell.bounds.size.height)] autorelease];
+        selectedView.image = [[UIImage imageNamed:@"tips_btn"] stretchableImageWithLeftCapWidth:20 topCapHeight:0];
+
         cell.selectedBackgroundView = selectedView;
         
         cell.textLabel.textColor = RGBCOLOR(102, 102, 102);
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
         cell.textLabel.highlightedTextColor = [UIColor blackColor];
+        
+        // line
+        CGFloat scale = [[UIScreen mainScreen] scale];
+        UIImageView *bgLine = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tips_line"]] autorelease];
+        if (scale > 1.0) {
+            bgLine.frame = CGRectMake(0, 35, cell.bounds.size.width, 1);
+
+        } else{
+            bgLine.frame = CGRectMake(0, 34, cell.bounds.size.width, 2);
+        }
+        
+        [cell.contentView addSubview:bgLine];
     }
     
     id data = [self.options objectAtIndex:indexPath.row];
