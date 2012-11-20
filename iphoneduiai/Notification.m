@@ -31,6 +31,7 @@ static NSString *fileName = @"notifications.plist";
     [_message release];
     [_notice release];
     [_updated release];
+    [_filePath release];
     [super dealloc];
 }
 
@@ -108,7 +109,7 @@ static NSString *fileName = @"notifications.plist";
     
     self.messageCount = [message[@"icount"] integerValue];
     if (message[@"list"]) {
-        for (NSDictionary *d in message[@"list"]) {
+        for (NSMutableDictionary *d in message[@"list"]) {
             NSString *uid = d[@"senduid"];
             _message[@"data"][uid] =[NSMutableDictionary dictionaryWithDictionary:@{@"title": d[@"uinfo"][@"niname"], @"subTitle": d[@"content"],
                                      @"bageNum": d[@"newcount"], @"logo": d[@"uinfo"][@"photo"], @"type": @"message",
@@ -173,7 +174,7 @@ static NSString *fileName = @"notifications.plist";
     [tmp addObject:self.notice[@"data"]];
     [tmp addObject:self.feed[@"data"]];
     
-    [tmp sortUsingComparator:^NSComparisonResult(NSDictionary *d1, NSDictionary *d2){
+    [tmp sortUsingComparator:^NSComparisonResult(NSMutableDictionary *d1, NSMutableDictionary *d2){
         NSDate *date1 = d1[@"updated"];
         NSDate *date2 = d2[@"updated"];
         
@@ -183,7 +184,7 @@ static NSString *fileName = @"notifications.plist";
     return tmp;
 }
 
-- (void)removeNoticeObject:(NSDictionary*)d
+- (void)removeNoticeObject:(NSMutableDictionary*)d
 {
     if ([d[@"type"] isEqualToString:@"message"]) {
         [self.message[@"data"] removeObjectForKey:d[@"data"][@"senduid"]];
@@ -274,7 +275,7 @@ static NSString *fileName = @"notifications.plist";
 - (void)saveDataToPlist
 {
   
-    NSDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
+    NSMutableDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
     [d writeToFile:self.filePath atomically:YES];
 }
 

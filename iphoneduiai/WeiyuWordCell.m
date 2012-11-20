@@ -164,7 +164,7 @@
             if (imView) {
                 addFrame.origin.y = imView.frame.origin.y + imView.frame.size.height + 10;
             } else{
-                addFrame.origin.y = contentLabel.frame.size.height + 10;
+                addFrame.origin.y = contentLabel.frame.origin.y + contentLabel.frame.size.height + 10;
             }
             
             self.addressView.frame = addFrame;
