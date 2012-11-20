@@ -162,13 +162,13 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 100, 44);
     [btn setImage:[UIImage imageNamed:@"arrow_icon"] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:@"arrow_icon"] forState:UIControlStateHighlighted];
+    [btn setImage:[UIImage imageNamed:@"arrow_icon_linked"] forState:UIControlStateHighlighted];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, -15, 0, 0);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -160);
     btn.titleLabel.shadowOffset = CGSizeMake(0.0, 1);
     [btn setTitleShadowColor:RGBCOLOR(120, 200, 235) forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(selectAeraAction:) forControlEvents:UIControlEventTouchUpInside];
-    [btn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [btn setTitleColor:RGBCOLOR(232, 247, 253) forState:UIControlStateHighlighted];
     self.navigationItem.titleView = btn;
     self.tilteBtn = btn;
 }

@@ -127,11 +127,11 @@
             [view removeFromSuperview];
         }
         
-        UIFont *font = [UIFont systemFontOfSize:14.0f];
+        UIFont *font = [UIFont systemFontOfSize:15.0f];
         CGSize size = [content sizeWithFont:font
-                          constrainedToSize:CGSizeMake(self.mainView.frame.size.width, 2000)
+                          constrainedToSize:CGSizeMake(235, 2000)
                               lineBreakMode:UILineBreakModeCharacterWrap];
-        UILabel *contentLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 15, size.width, size.height)] autorelease];
+        UILabel *contentLabel = [[[UILabel alloc] initWithFrame:CGRectMake(6, 15, size.width, size.height)] autorelease];
         contentLabel.font = font;
         contentLabel.backgroundColor = [UIColor clearColor];
         contentLabel.opaque = YES;
@@ -141,7 +141,7 @@
 
         AsyncImageView *imView = nil;
         if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
-            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, contentLabel.frame.size.height + 15, DW, DH)] autorelease];
+            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(6, contentLabel.frame.size.height + 15, DW, DH)] autorelease];
             [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
             //                imView.tag = 0;
             imView.userInteractionEnabled = YES;
@@ -194,7 +194,7 @@
         if (photos.count > 0) {
             if (photos.count == 1) {
                 NSDictionary *d = [photos objectAtIndex:0];
-                AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0, 15, DW, DH)] autorelease];
+                AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(6, 15, DW, DH)] autorelease];
                 [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
 //                imView.tag = 0;
                 imView.userInteractionEnabled = YES;
@@ -213,8 +213,8 @@
                 
                 rows = photos.count/columns + (photos.count%columns == 0 ? 0 : 1);
                 
-                CGFloat w = 80;
-                CGFloat h = 80*DH/DW;
+                CGFloat w = 75;
+                CGFloat h = 75*DH/DW;
                 
                 for (int i=0; i<rows; i++) {
                     for (int j=0; j<columns; j++) {
@@ -224,7 +224,7 @@
                         }
                         
                         NSDictionary *d = [photos objectAtIndex:index];
-                        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(0 + j*(w+2), 15 + i*(h+2), w, h)] autorelease];
+                        AsyncImageView *imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(6 + j*(w+4), 15 + i*(h+4), w, h)] autorelease];
                         [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
                         imView.userInteractionEnabled = YES;
 //                        imView.tag = index;
@@ -233,7 +233,7 @@
                     }
 
                 }
-                dHeight = rows*(h+2) + 10;
+                dHeight = rows*(h+4) + 10;
 
             }
         } else{
@@ -271,8 +271,8 @@
         NSString *qContent = faqInfo[@"answer"];
         NSString *aContent = [NSString stringWithFormat:@"%@: %@", faqInfo[@"uinfo"][@"niname"], faqInfo[@"question"]];
 
-        UILabel *qLabel = [[[UILabel alloc] initWithFrame:CGRectMake(10, 15, 220, 14)] autorelease];
-        qLabel.font = [UIFont systemFontOfSize:14.0f];
+        UILabel *qLabel = [[[UILabel alloc] initWithFrame:CGRectMake(6, 15, 235, 15)] autorelease];
+        qLabel.font = [UIFont systemFontOfSize:15.0f];
         qLabel.numberOfLines = 0;
         qLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         qLabel.backgroundColor = [UIColor clearColor];
@@ -281,11 +281,11 @@
         CGSize qSzie =[qContent sizeWithFont:qLabel.font
                            constrainedToSize:CGSizeMake(qLabel.frame.size.width, 500)
                                lineBreakMode:UILineBreakModeCharacterWrap];
-        qLabel.frame = CGRectMake(10, 15, 220, qSzie.height);
+        qLabel.frame = CGRectMake(6, 15, 235, qSzie.height);
         qLabel.text = qContent;
         [self.mainView addSubview:qLabel];
         
-        FaqInnerView *faqView = [[[FaqInnerView alloc] initWithFrame:CGRectMake(10, qLabel.frame.origin.y+qLabel.frame.size.height+10, 235, 14)] autorelease];
+        FaqInnerView *faqView = [[[FaqInnerView alloc] initWithFrame:CGRectMake(6, qLabel.frame.origin.y+qLabel.frame.size.height+10, 230, 15)] autorelease];
         faqView.innerContent = aContent;
         
         [self.mainView addSubview:faqView];
@@ -299,7 +299,7 @@
 {
     self.shadowView.layer.shadowColor = [RGBCOLOR(153, 153, 153) CGColor];
     self.shadowView.layer.shadowOffset = CGSizeMake(0.0, 1.0);
-    self.shadowView.layer.shadowOpacity = 0.45;
+    self.shadowView.layer.shadowOpacity = 0.65;
     self.shadowView.layer.shouldRasterize = YES;
     self.shadowView.layer.shadowRadius = 0.5f;
     

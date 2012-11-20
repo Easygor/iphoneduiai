@@ -55,7 +55,7 @@ static NSString *fileName = @"notifications.plist";
     NSMutableDictionary *notiData =nil;
 
     if ([[NSFileManager defaultManager] fileExistsAtPath:self.filePath]) {
-        notiData = [NSDictionary dictionaryWithContentsOfFile:self.filePath];
+        notiData = [NSMutableDictionary dictionaryWithContentsOfFile:self.filePath];
         
     }
     

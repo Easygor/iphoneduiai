@@ -95,7 +95,7 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [[Notification sharedInstance] saveDataToPlist];
+//    [[Notification sharedInstance] saveDataToPlist];
 
 }
 
@@ -112,14 +112,14 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [[[LocationController sharedInstance] locationManager] stopUpdatingLocation];
-        [self updateLocationAndUserInfo];
+//        [self updateLocationAndUserInfo];
     });
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Saves changes in the application's managed object context before the application terminates.
-    [[Notification sharedInstance] saveDataToPlist];
+//    [[Notification sharedInstance] saveDataToPlist];
     [self saveContext];
 }
 

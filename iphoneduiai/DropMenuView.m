@@ -77,7 +77,7 @@
         cell.textLabel.textColor = RGBCOLOR(102, 102, 102);
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.textLabel.font = [UIFont systemFontOfSize:14.0f];
-        cell.textLabel.highlightedTextColor = [UIColor blackColor];
+        cell.textLabel.highlightedTextColor = [UIColor whiteColor];
         
         // line
         CGFloat scale = [[UIScreen mainScreen] scale];
