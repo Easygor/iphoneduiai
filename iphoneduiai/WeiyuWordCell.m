@@ -390,13 +390,16 @@
     [view addSubview:imView];
     
     CGSize size = view.frame.size;
+    [oldView.indicatorView startAnimating];
     [imView loadImage:[d objectForKey:@"url"] withPlaceholdImage:oldView.image withBlock:^{
+       [oldView.indicatorView stopAnimating];
        [UIView animateWithDuration:0.3 animations:^{
            CGSize imgsize = imView.image.size;
            CGFloat imgWidth = MIN(imgsize.width, size.width);
            CGFloat imgHeight = imgWidth*imgsize.height/imgsize.width;
            
            imView.frame = CGRectMake((size.width-imgWidth)/2, (size.height - imgHeight)/2, imgWidth, imgHeight);
+
        }];
    }];
     

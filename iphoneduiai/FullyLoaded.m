@@ -27,11 +27,11 @@
 #import "FullyLoaded.h"
 #import "SynthesizeSingleton.h"
 
-#define MAXIMUM_CACHED_ITEMS 100
+#define MAXIMUM_CACHED_ITEMS 200
 
 @interface FullyLoaded()
 
-@property (atomic, retain) NSMutableDictionary *imageCache;
+@property (strong, nonatomic) NSMutableDictionary *imageCache;
 
 @end
 
@@ -72,7 +72,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(FullyLoaded);
     UIImage *image = nil;
     if ((image = [[[self.imageCache objectForKey:imageURL] retain] autorelease])) {
         return image;
-    } else if ((image = [UIImage imageWithContentsOfFile:[self pathForImageURL:imageURL]])) {
+    } else if ((image = [[[UIImage imageWithContentsOfFile:[self pathForImageURL:imageURL]] retain] autorelease])) {
         if ([self.imageCache count] > MAXIMUM_CACHED_ITEMS) 
             [self emptyCache];
         [self.imageCache setObject:image forKey:imageURL];

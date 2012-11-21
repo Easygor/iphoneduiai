@@ -275,7 +275,7 @@ static NSString *fileName = @"notifications.plist";
 - (void)saveDataToPlist
 {
   
-    NSMutableDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
+    NSDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
     [d writeToFile:self.filePath atomically:YES];
 }
 
