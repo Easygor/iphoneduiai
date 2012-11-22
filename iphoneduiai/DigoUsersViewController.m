@@ -195,8 +195,9 @@
 {
     [SVProgressHUD show];
     NSMutableDictionary *dParams = [Utils queryParams];
+    dParams[@"gettype"] = @"me";
     [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
-                [self digoReqeustWithParams:dParams];
+    [self digoReqeustWithParams:dParams];
     
 }
 

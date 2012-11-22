@@ -41,6 +41,7 @@
     if (_indicatorView == nil) {
         _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         _indicatorView.hidesWhenStopped = YES;
+        [_indicatorView setColor:RGBCOLOR(141, 201, 242)];
         [_indicatorView stopAnimating];
         _indicatorView.frame = CGRectMake((self.frame.size.width-37)/2, (self.frame.size.height-37)/2, 37, 37);
         [self addSubview:_indicatorView];
@@ -76,6 +77,9 @@
         UIImage *image = [[FullyLoaded sharedFullyLoaded] imageForURL:imageURL];
         if (image){
             self.image = image;
+            if (block) {
+                block();
+            }
         } else{
             [self downloadImage:imageURL withBlock:block];
         }

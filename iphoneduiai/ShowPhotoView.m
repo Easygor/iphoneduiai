@@ -351,8 +351,10 @@
     NSString *iconUrl = [d objectForKey:@"icon"];
 
     CGSize size = view.frame.size;
+    [imView startAnimating];
     [imView loadImage:[iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]]
    withPlaceholdImage:self.showImageView.image withBlock:^{
+       [imView stopAnimating];
         [UIView animateWithDuration:0.3 animations:^{
             CGSize imgsize = imView.image.size;
             CGFloat imgWidth = MIN(imgsize.width, size.width);
