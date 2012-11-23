@@ -58,6 +58,7 @@ static CGFloat dHeight2 = 0.0f;
 @property (nonatomic) NSInteger curPage, totalPage;
 @property (nonatomic) BOOL loading;
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
+@property (strong, nonatomic) NSDictionary *existedData;
 
 @end
 
@@ -65,6 +66,7 @@ static CGFloat dHeight2 = 0.0f;
 
 - (void)dealloc
 {
+    [_existedData release];
     [_digoList release];
     [_shitList release];
     [_photos release];
@@ -102,6 +104,15 @@ static CGFloat dHeight2 = 0.0f;
     [_countView release];
     [_searchIndex release];
     [super dealloc];
+}
+
+- (void)setExistedData:(NSDictionary *)existedData
+{
+    if (![_existedData isEqualToDictionary:existedData]) {
+        _existedData = [existedData retain];
+        
+        self.moreUserInfoView.moreUserInfo = existedData;
+    }
 }
 
 - (NSMutableArray *)digoList
@@ -267,6 +278,7 @@ static CGFloat dHeight2 = 0.0f;
     [super viewDidAppear:animated];
     [self grabUserInfoDetailRequest];
     [self grabMyWeiyuListReqeustWithPage:1];
+    [self infoRequestFromRemote];
 }
 
 #pragma mark - Table view data source
@@ -710,6 +722,38 @@ static CGFloat dHeight2 = 0.0f;
         
         
     }
+    
+}
+
+-(void)infoRequestFromRemote
+{
+    
+    
+    [[RKClient sharedClient] get:[@"/uc/userinfo.api" stringByAppendingQueryParameters:[Utils queryParams]] usingBlock:^(RKRequest *request){
+        //        NSLog(@"url: %@", request.URL);
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                //                NSLog(@"digo data %@", data);
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0) {
+                    // 此行须在前两行后面
+                    NSLog(@"all user info: %@", data);
+                    self.existedData = data[@"data"][@"issetlist"];
+                    
+                } else{
+                    //                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+            }
+        }];
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            //            [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+            NSLog(@"Error: %@", [error description]);
+        }];
+    }];
     
 }
 

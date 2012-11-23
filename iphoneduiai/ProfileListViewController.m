@@ -99,6 +99,7 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (void)dealloc
 {
+
     [_digoList release];
     [_shitList release];
     [_existedData release];
@@ -160,6 +161,15 @@ static NSInteger kDelWeiyuTag = 204;
     [_heightPicker release];
     [_weightPicker release];
     [super dealloc];
+}
+
+- (void)setExistedData:(NSDictionary *)existedData
+{
+    if (![_existedData isEqualToDictionary:existedData]) {
+        _existedData = [existedData retain];
+        
+        self.moreUserInfoView.moreUserInfo = existedData;
+    }
 }
 
 - (NSMutableArray *)digoList

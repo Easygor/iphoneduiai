@@ -141,7 +141,7 @@
 
         AsyncImageView *imView = nil;
         if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
-            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(6, contentLabel.frame.size.height + 15, DW, DH)] autorelease];
+            imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(6, contentLabel.frame.size.height + 15+5, DW, DH)] autorelease];
             [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
             //                imView.tag = 0;
             imView.userInteractionEnabled = YES;
@@ -515,7 +515,7 @@
 {
     if (![_weiyu isEqualToDictionary:weiyu]) {
         _weiyu = [weiyu retain];
-
+//        NSLog(@"weiyu detail: %@", _weiyu);
         // user info
         self.nameLabel.text = [[weiyu objectForKey:@"uinfo"] objectForKey:@"niname"];
         [self.avaterImageView loadImage:[[weiyu objectForKey:@"uinfo"] objectForKey:@"photo"]];
@@ -538,7 +538,7 @@
 
             self.faqInfo = weiyu[@"faqinfo"];   
         } else{
-            self.content = [weiyu objectForKey:@"oldcontent"];
+            self.content = [weiyu objectForKey:@"content"];
         } 
         
     }
