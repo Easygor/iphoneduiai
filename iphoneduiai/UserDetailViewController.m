@@ -244,7 +244,7 @@ static CGFloat dHeight2 = 0.0f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"user data:%@", self.user);
+//    NSLog(@"user data:%@", self.user);
     dHeight = self.marrayReqView.frame.size.height;
     dHeight2 = self.moreUserInfoView.frame.size.height;
     self.tableView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
@@ -254,6 +254,7 @@ static CGFloat dHeight2 = 0.0f;
                                                                                               action:@selector(backAction)] autorelease];
     [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
 
+    [self infoRequestFromRemote];
 }
 
 - (void)scoreGestureAction:(UITapGestureRecognizer*)gesture
@@ -278,7 +279,7 @@ static CGFloat dHeight2 = 0.0f;
     [super viewDidAppear:animated];
     [self grabUserInfoDetailRequest];
     [self grabMyWeiyuListReqeustWithPage:1];
-    [self infoRequestFromRemote];
+ 
 }
 
 #pragma mark - Table view data source
@@ -386,18 +387,6 @@ static CGFloat dHeight2 = 0.0f;
 }
 
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
-}
 
 - (void)grabUserInfoDetailRequest
 {
@@ -728,8 +717,10 @@ static CGFloat dHeight2 = 0.0f;
 -(void)infoRequestFromRemote
 {
     
+    NSMutableDictionary *dParams  = [Utils queryParams];
+    dParams[@"uid"] = self.user[@"_id"];
     
-    [[RKClient sharedClient] get:[@"/uc/userinfo.api" stringByAppendingQueryParameters:[Utils queryParams]] usingBlock:^(RKRequest *request){
+    [[RKClient sharedClient] get:[@"/uc/userinfo.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         //        NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
@@ -738,7 +729,7 @@ static CGFloat dHeight2 = 0.0f;
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     // 此行须在前两行后面
-                    NSLog(@"all user info: %@", data);
+//                    NSLog(@"all user profile info: %@", data);
                     self.existedData = data[@"data"][@"issetlist"];
                     
                 } else{
@@ -746,7 +737,7 @@ static CGFloat dHeight2 = 0.0f;
                 }
                 
             } else{
-                //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
             }
         }];
         [request setOnDidFailLoadWithError:^(NSError *error){

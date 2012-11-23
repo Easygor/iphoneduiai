@@ -1436,7 +1436,7 @@
 					</object>
 					<object class="IBUIView" id="1045392532">
 						<reference key="NSNextResponder" ref="504564550"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">269</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUILabel" id="100019921">
 								<reference key="NSNextResponder" ref="1045392532"/>
@@ -1539,6 +1539,7 @@
 								<string key="NSFrame">{{161, 2}, {159, 50}}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -2043,6 +2044,7 @@
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="439359407"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -2215,7 +2217,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">21~25岁</string>
+								<string key="IBUIText">安徽 无为</string>
 								<nil key="IBUITextColor"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -2341,7 +2343,7 @@
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">浙江 杭州</string>
+								<string key="IBUIText">安徽 合肥</string>
 								<nil key="IBUITextColor"/>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -3381,6 +3383,7 @@
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="629245040"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>

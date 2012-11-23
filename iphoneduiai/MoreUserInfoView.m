@@ -70,25 +70,25 @@
         if (moreUserInfo[@"home_location"] && moreUserInfo[@"home_sublocation"]) {
             self.homeLabel.text = [NSString stringWithFormat:@"%@ %@", moreUserInfo[@"home_location"][@"valdata"], moreUserInfo[@"home_sublocation"][@"valdata"]];
         } else{
-            self.houseLabel.text = @"未填写";
+            self.homeLabel.text = @"未填写";
         }
         
         if (moreUserInfo[@"love_location"] && moreUserInfo[@"love_sublocation"]) {
             self.loveLocationLabel.text = [NSString stringWithFormat:@"%@ %@", moreUserInfo[@"love_location"][@"valdata"], moreUserInfo[@"love_sublocation"][@"valdata"]];
         } else{
-            self.houseLabel.text = @"未填写";
+            self.loveLocationLabel.text = @"未填写";
         }
         
         if (moreUserInfo[@"marriage"]) {
             self.marriageLabel.text = moreUserInfo[@"marriage"][@"valdata"];
         } else{
-            self.houseLabel.text = @"未填写";
+            self.marriageLabel.text = @"未填写";
         }
         
         if (moreUserInfo[@"auto"]) {
             self.autoLabel.text = moreUserInfo[@"auto"][@"valdata"];
         } else{
-            self.houseLabel.text = @"未填写";
+            self.autoLabel.text = @"未填写";
         }
         
         if (moreUserInfo[@"house"]) {
