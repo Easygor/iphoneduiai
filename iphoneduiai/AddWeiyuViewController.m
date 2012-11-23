@@ -42,7 +42,7 @@
     iconImgView.frame = CGRectMake(10, 20, 36, 37);
     [self.view addSubview:iconImgView];
     
-    contentView = [[[UIView alloc]initWithFrame:CGRectMake(55, 20, 255, 140)]autorelease];
+    contentView = [[[UIView alloc]initWithFrame:CGRectMake(55, 20, 255, 174)]autorelease];
     contentView.backgroundColor = [UIColor whiteColor];
     
     // 圆角
@@ -52,12 +52,14 @@
     contentView.layer.borderColor = [RGBCOLOR(217, 217, 217) CGColor];
 
     contentTextView = [[[UITextView alloc]initWithFrame:CGRectMake(2, 0, 255, 100)]autorelease];
+    contentTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     contentTextView.backgroundColor = [UIColor clearColor];
     contentTextView.font = [UIFont systemFontOfSize:14];
     contentTextView.delegate = self;
     [contentTextView becomeFirstResponder];
 
-    toolView = [[[UIView alloc]initWithFrame:CGRectMake(0, 100, 255, 40)]autorelease];
+    toolView = [[[UIView alloc]initWithFrame:CGRectMake(0, 134, 255, 40)]autorelease];
+    toolView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     toolView.backgroundColor = RGBCOLOR(246, 246, 246);
     
     UILabel *lable1 = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 255, 1)] autorelease];
@@ -181,8 +183,9 @@
 {
     [super viewDidAppear:animated];
     
-    PageSmileView *pageSmileView = [[PageSmileView alloc] initWithFrame: CGRectMake(0, 200, 320, 216)
+    PageSmileView *pageSmileView = [[PageSmileView alloc] initWithFrame: CGRectMake(0, self.view.frame.size.height - 216, 320, 216)
                                                          withDataSource: self];
+    pageSmileView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     //    pageSmileView.backgroundColor = [UIColor redColor];
     [self.view addSubview:pageSmileView];
@@ -328,15 +331,10 @@
      {
          CGRect r = CGRectZero;
          [[note.userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"] getValue:&r];
+
          CGRect rect = contentView.frame;
-         rect.size.height = 460 -70-r.size.height;
-         CGRect rect2 = toolView.frame;
-         rect2.origin.y = rect.size.height-40;
-         CGRect rect3 = contentTextView.frame;
-         rect3.size.height = 460 -114-r.size.height;
+         rect.size.height += MIN(self.view.frame.size.height - r.size.height - (contentView.frame.origin.y + contentView.frame.size.height) - 5, 0);
          contentView.frame = rect;
-         toolView.frame = rect2;
-         contentTextView.frame = rect3;
 
         }];
     
@@ -350,13 +348,8 @@
 //         [[note.userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"] getValue:&r];
          CGRect rect = contentView.frame;
          rect.size.height = 174;
-         CGRect rect2 = toolView.frame;
-         rect2.origin.y = rect.size.height-40;
-         CGRect rect3 = contentTextView.frame;
-         rect3.size.height = 135;
          contentView.frame = rect;
-         toolView.frame = rect2;
-         contentTextView.frame = rect3;
+
          
      }];
     
@@ -426,6 +419,7 @@
 {
     
     UIView *view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)] autorelease];
+    view.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     for (int i=index*28; i < MIN(index*28+28, self.emontions.count); i++) {
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
