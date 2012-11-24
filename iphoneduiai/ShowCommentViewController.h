@@ -10,11 +10,7 @@
 #import "WeiyuWordCell.h"
 
 @interface ShowCommentViewController : UITableViewController<CustomCellDelegate>
-{
 
-    NSMutableDictionary *weiyuDic;
-
-}
-@property(nonatomic,retain)NSMutableDictionary *weiYuDic;
+@property (nonatomic, retain) NSMutableDictionary *weiYuDic;
 
 @end

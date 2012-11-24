@@ -17,7 +17,6 @@
     UIView* toolView;
     
     UIButton *faceButton;
-    BOOL state;
     
     AsyncImageView *avatarImageView;
     

@@ -26,6 +26,7 @@
 @property (nonatomic) CLLocationCoordinate2D curLocaiton;
 @property (strong, nonatomic) NSString *curAddress, *photoId;
 @property (retain, nonatomic) IBOutlet PositionView *positionView;
+@property (assign, nonatomic) BOOL state;
 
 @end
 
@@ -112,7 +113,7 @@
     [contentTextView addSubview:contentLabel];
     
     [self.view addSubview:contentView];
-    state = YES;
+
 }
 
 - (void)dealloc
@@ -199,7 +200,7 @@
 
 - (void)sendAction
 {
-    NSLog(@"sending...");
+
     [self sendWeiyuRequest];
 }
 
@@ -237,17 +238,12 @@
 -(IBAction)faceSelect:(UIButton*)btn
 {
     
-    if (state) {
-        [contentTextView resignFirstResponder];
-//        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_keyboardbutton_background.png"] forState:UIControlStateNormal];
-//        [faceButton setImage:[UIImage imageNamed:@"messages_toolbar_keyboardbutton_background_highlighted.png"] forState:UIControlStateHighlighted ];
-        state = NO;
+    if (self.state) {
+        [contentTextView becomeFirstResponder];
+
     }else
     {
-        [contentTextView becomeFirstResponder];
-//        [faceButton setImage:[UIImage  imageNamed:@"sub_express_icon"] forState:UIControlStateNormal];
-//        [faceButton setImage:[UIImage  imageNamed:@"messages_toolbar_emoticonbutton_background_highlighted.png"] forState:UIControlStateHighlighted];
-        state = YES;
+        [contentTextView resignFirstResponder];
 
     }
 }
@@ -327,13 +323,14 @@
 #pragma mark - key board notice
 -(void)keyboardWillShow:(NSNotification*)note
 {
+    self.state = NO;
     [UIView animateWithDuration:0.3 animations:^(void)
      {
          CGRect r = CGRectZero;
          [[note.userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"] getValue:&r];
 
          CGRect rect = contentView.frame;
-         rect.size.height += MIN(self.view.frame.size.height - r.size.height - (contentView.frame.origin.y + contentView.frame.size.height) - 5, 0);
+         rect.size.height = self.view.frame.size.height - r.size.height - contentView.frame.origin.y -5;
          contentView.frame = rect;
 
         }];
@@ -342,12 +339,13 @@
 
 -(void)keyboardWillHide:(NSNotification*)note
 {
+    self.state = YES;
     [UIView animateWithDuration:0.3 animations:^(void)
      {
 //         CGRect r = CGRectZero;
 //         [[note.userInfo objectForKey:@"UIKeyboardFrameEndUserInfoKey"] getValue:&r];
          CGRect rect = contentView.frame;
-         rect.size.height = 174;
+         rect.size.height = self.view.frame.size.height - 216 - contentView.frame.origin.y -5;
          contentView.frame = rect;
 
          

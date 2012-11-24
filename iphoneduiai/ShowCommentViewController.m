@@ -25,14 +25,13 @@
 @end
 
 @implementation ShowCommentViewController
-@synthesize weiYuDic;
 @synthesize contents=_contents;
 
 -(void)dealloc
 {
-    [_moreCell release];
-    [weiYuDic release];
     [_contents release];
+    [_moreCell release];
+    [_weiYuDic release];
     [super dealloc];
 }
 
@@ -42,12 +41,12 @@
         _contents = [[NSMutableArray alloc] initWithObjects:self.weiYuDic, nil];
     }
     
-    return _contents;
+    return  _contents;
 }
 
 - (void)setContents:(NSMutableArray *)contents
 {
-    if (![_contents isEqualToArray:contents]) {
+//    if (![_contents isEqualToArray:contents]) {
 
         if (self.curPage <= 1 && (_contents == nil || _contents.count > 1)) {
             _contents = [[NSMutableArray alloc] initWithObjects:self.weiYuDic, nil];
@@ -55,7 +54,7 @@
         
         [_contents addObjectsFromArray:contents];
         [self.tableView reloadData];
-    }
+//    }
 }
 
 - (id)initWithStyle:(UITableViewStyle)style 
@@ -175,9 +174,13 @@
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
             cell = [nib objectAtIndex:2];
+            UILabel *bottomLine = [[[UILabel alloc] initWithFrame:CGRectMake(0, cell.frame.size.height-1, 320, 1)] autorelease];
+            bottomLine.backgroundColor = RGBCOLOR(201, 201, 201);
+            bottomLine.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+            [cell addSubview:bottomLine];
             cell.delegate = self;
         }
-        cell.weiyu = self.weiYuDic;
+        cell.weiyu = self.contents[[indexPath row]];
         return cell;
 
     }else {
@@ -214,7 +217,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.contents.count == 1 && indexPath.row == 1) {
-        NSLog(@"in herer");
+//        NSLog(@"in herer");
         return [self createNoDataCell:tableView cellForRowAtIndexPath:indexPath];
     }
     

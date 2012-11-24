@@ -22,8 +22,9 @@
 {
     [_titleLabel release];
     [_headImgView release];
-    [_titleLabel release];
     [_contentLabel release];
+    [_content release];
+    [_timeLabel release];
     [super dealloc];
 }
 
@@ -70,12 +71,17 @@
         self.contentLabel.lineBreakMode = UILineBreakModeCharacterWrap;
         [self.contentView addSubview:self.contentLabel];
         
-        self.timeLabel = [[UILabel alloc]initWithFrame:CGRectMake(240, 10, 60, 20)];
+        self.timeLabel = [[[UILabel alloc]initWithFrame:CGRectMake(200, 10, 100, 20)] autorelease];
         self.timeLabel.backgroundColor = [UIColor clearColor];
+        self.textLabel.textAlignment = UITextAlignmentRight;
         self.timeLabel.font = [UIFont systemFontOfSize:13];
         self.timeLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.timeLabel];
         
+        UILabel *bottomLine = [[[UILabel alloc] initWithFrame:CGRectMake(0, self.contentView.frame.size.height-1, 320, 1)] autorelease];
+        bottomLine.backgroundColor = RGBCOLOR(201, 201, 201);
+        bottomLine.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+        [self.contentView addSubview:bottomLine];
 
     }
     return self;
