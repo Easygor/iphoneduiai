@@ -795,6 +795,13 @@
 		61BB2B6A15F9DB0800AA82CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BB2B6915F9DB0800AA82CC /* AppDelegate.m */; };
 		61BB2B6D15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */; };
 		61BB2B7D15FA158100AA82CC /* HZTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BB2B7C15FA158100AA82CC /* HZTabBar.m */; };
+		61BEB05D1662028A00169B04 /* Defualt-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05C1662028A00169B04 /* Defualt-568h@2x.png */; };
+		61BEB060166202A100169B04 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05E166202A100169B04 /* icon.png */; };
+		61BEB061166202A100169B04 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05F166202A100169B04 /* icon@2x.png */; };
+		61BEB064166203B700169B04 /* weibo_icon_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB062166203B700169B04 /* weibo_icon_s.png */; };
+		61BEB065166203B700169B04 /* weibo_icon_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB063166203B700169B04 /* weibo_icon_s@2x.png */; };
+		61BEB0681662046800169B04 /* t-qq_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB0661662046800169B04 /* t-qq_icon.png */; };
+		61BEB0691662046800169B04 /* t-qq_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB0671662046800169B04 /* t-qq_icon@2x.png */; };
 		61C32D6D16574375009E0BCC /* tab_indicator_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6916574374009E0BCC /* tab_indicator_bg.png */; };
 		61C32D6F16574375009E0BCC /* tabbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6B16574374009E0BCC /* tabbar_bg.png */; };
 		61C32D7016574375009E0BCC /* tabbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6C16574374009E0BCC /* tabbar_bg@2x.png */; };
@@ -1805,6 +1812,13 @@
 		61BB2B6C15F9DB0800AA82CC /* iphoneduiai.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iphoneduiai.xcdatamodel; sourceTree = "<group>"; };
 		61BB2B7B15FA158100AA82CC /* HZTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTabBar.h; sourceTree = "<group>"; };
 		61BB2B7C15FA158100AA82CC /* HZTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTabBar.m; sourceTree = "<group>"; };
+		61BEB05C1662028A00169B04 /* Defualt-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Defualt-568h@2x.png"; sourceTree = "<group>"; };
+		61BEB05E166202A100169B04 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		61BEB05F166202A100169B04 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		61BEB062166203B700169B04 /* weibo_icon_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weibo_icon_s.png; sourceTree = "<group>"; };
+		61BEB063166203B700169B04 /* weibo_icon_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_icon_s@2x.png"; sourceTree = "<group>"; };
+		61BEB0661662046800169B04 /* t-qq_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t-qq_icon.png"; sourceTree = "<group>"; };
+		61BEB0671662046800169B04 /* t-qq_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t-qq_icon@2x.png"; sourceTree = "<group>"; };
 		61C32D6916574374009E0BCC /* tab_indicator_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_indicator_bg.png; sourceTree = "<group>"; };
 		61C32D6B16574374009E0BCC /* tabbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_bg.png; sourceTree = "<group>"; };
 		61C32D6C16574374009E0BCC /* tabbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_bg@2x.png"; sourceTree = "<group>"; };
@@ -2520,6 +2534,10 @@
 		6159B17B16180F5200705835 /* Profile images */ = {
 			isa = PBXGroup;
 			children = (
+				61BEB0661662046800169B04 /* t-qq_icon.png */,
+				61BEB0671662046800169B04 /* t-qq_icon@2x.png */,
+				61BEB062166203B700169B04 /* weibo_icon_s.png */,
+				61BEB063166203B700169B04 /* weibo_icon_s@2x.png */,
 				615F8C56165783FB00B93CD2 /* set_icon.png */,
 				615F8C57165783FB00B93CD2 /* set_icon@2x.png */,
 				615F8C521657802B00B93CD2 /* set_addpic_icon.png */,
@@ -2764,6 +2782,9 @@
 				61265A84165BCDDA00BAF8E0 /* notice_unread_bg@2x.png */,
 				61265A87165BD08100BAF8E0 /* Default.png */,
 				61265A88165BD08100BAF8E0 /* Default@2x.png */,
+				61BEB05E166202A100169B04 /* icon.png */,
+				61BEB05F166202A100169B04 /* icon@2x.png */,
+				61BEB05C1662028A00169B04 /* Defualt-568h@2x.png */,
 				6143858B1659148F00938883 /* duiai_about.png */,
 				6143858C1659148F00938883 /* duiai_about@2x.png */,
 				6143858F1659159000938883 /* list_cover_pic.png */,
@@ -4050,6 +4071,13 @@
 				61265A86165BCDDA00BAF8E0 /* notice_unread_bg@2x.png in Resources */,
 				61265A89165BD08200BAF8E0 /* Default.png in Resources */,
 				61265A8A165BD08200BAF8E0 /* Default@2x.png in Resources */,
+				61BEB05D1662028A00169B04 /* Defualt-568h@2x.png in Resources */,
+				61BEB060166202A100169B04 /* icon.png in Resources */,
+				61BEB061166202A100169B04 /* icon@2x.png in Resources */,
+				61BEB064166203B700169B04 /* weibo_icon_s.png in Resources */,
+				61BEB065166203B700169B04 /* weibo_icon_s@2x.png in Resources */,
+				61BEB0681662046800169B04 /* t-qq_icon.png in Resources */,
+				61BEB0691662046800169B04 /* t-qq_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
