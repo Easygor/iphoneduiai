@@ -11,56 +11,43 @@
 #import "CustomBarButtonItem.h"
 #import "SinaWeibo.h"
 #import "TCWBEngine.h"
+#import "SinaWeiboRequest.h"
+#import <RestKit/RestKit.h>
+#import <RestKit/JSONKit.h>
+#import "SVProgressHUD.h"
 
 
-@interface WeiboBindingViewController () <SinaWeiboDelegate, WBRequestDelegate>
+@interface WeiboBindingViewController () <SinaWeiboDelegate, WBRequestDelegate, SinaWeiboRequestDelegate>
 @property(retain,nonatomic)IBOutlet UIButton *sinaWeiboButton;
 @property(retain,nonatomic)IBOutlet UIButton *tengxunWeiboButton;
-@property(retain,nonatomic)IBOutlet UIButton *qqzoneButton;
-@property(retain,nonatomic)IBOutlet UIButton *weixinButton;
 @property(retain,nonatomic)IBOutlet UIButton *mailButton;
 
 @property(retain,nonatomic)IBOutlet UILabel *mailLabel;
 @property(retain,nonatomic)IBOutlet UILabel *sinaWeiboLabel;
 @property(retain,nonatomic)IBOutlet UILabel *tengxunWeiboLabel;
-@property(retain,nonatomic)IBOutlet UILabel *qqzoneLabel;
-@property(retain,nonatomic)IBOutlet UILabel *weixinLabel;
 
 
--(IBAction)sinaWeiboButtonPress;
--(IBAction)tengxunWeiboButtonPress;
--(IBAction)qqzoneButtonPress;
--(IBAction)weinxinButonnPress;
--(IBAction)mailButtonPress;
+@property (strong, nonatomic) NSDictionary *txUserInfo;
 
-@property (nonatomic, retain) TCWBEngine   *weiboEngine;
+
+@property (nonatomic, retain) TCWBEngine *weiboEngine;
 @property (strong, nonatomic) SinaWeibo *sinaWeibo;
+
 @end
 
 @implementation WeiboBindingViewController
 
 - (void)dealloc
 {
+    [_txUserInfo release];
     [_sinaWeiboButton release];
     [_tengxunWeiboButton release];
-    [_qqzoneButton release];
-    [_weixinButton release];
     [_mailButton release];
      [_weiboEngine release], _weiboEngine = nil;
     [_sinaWeibo release];
     [super dealloc];
 }
 
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -76,6 +63,16 @@
 
 
     
+    // init weibos
+    NSDictionary *sinaInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"sinaweibo"];
+    if (sinaInfo) {
+        self.sinaWeiboLabel.text = sinaInfo[@"name"];
+    }
+    
+    NSDictionary *txInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"txweibo"];
+    if (txInfo) {
+        self.tengxunWeiboLabel.text = txInfo[@"name"];
+    }
     
 }
 
@@ -100,11 +97,12 @@
 //    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
 //    NSLog(@"%@", [keyWindow subviews]);
    
-    
-     self.sinaWeibo = [[[SinaWeibo alloc]initWithAppKey:@"495574251"
-                                              appSecret:@"d5f062ce2c9898709159c459eb71c8cc"
+//    
+     self.sinaWeibo = [[[SinaWeibo alloc]initWithAppKey:@"2333922239"
+                                              appSecret:@"9b6ae0efc4ff7264c979ccda7c4d88eb"
                                          appRedirectURI:@"http://duiai.com"
                                             andDelegate:self] autorelease];
+//    self.sinaWeibo = [[SinaWeibo alloc]initWithAppKey:@"1118660852" appSecret:@"1e650633c6c72cc28583bc1bdef21a38" appRedirectURI:@"http://www.cnblogs.com/smallyin00/" andDelegate:self];
 
     [self.sinaWeibo logIn];
 
@@ -115,7 +113,7 @@
 
     TCWBEngine *engine = [[TCWBEngine alloc] initWithAppKey:@"801242204"
                                                   andSecret:@"90730f2b629d0ab0b07cb5feb3ee3c9b"
-                                             andRedirectUrl:@"http://duiai.com"];
+                                             andRedirectUrl:@"http://duiai.com/bindsuccess"];
     [engine setRootViewController:self];
     self.weiboEngine = engine;
     [engine release];
@@ -124,17 +122,6 @@
                               onSuccess:@selector(onSuccessLogin)
                               onFailure:@selector(onFailureLogin:)];
 
-
-}
-
-
--(IBAction)qqzoneButtonPress
-{
-
-}
-
--(IBAction)weinxinButonnPress
-{
 
 }
 
@@ -149,8 +136,12 @@
 - (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
 {
     NSLog(@"sinaweiboDidLogIn userID = %@ accesstoken = %@ expirationDate = %@ refresh_token = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate,sinaweibo.refreshToken);
-    // upload info
-    // update locale info
+
+
+    [sinaweibo requestWithURL:@"users/show.json"
+                       params:[NSMutableDictionary dictionaryWithObject:sinaweibo.userID forKey:@"uid"]
+                   httpMethod:@"GET"
+                     delegate:self];
 }
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
@@ -158,17 +149,87 @@
     NSLog(@"sinaweiboDidLogOut");
 }
 
+#pragma mark - SinaWeiboRequest Delegate
+
+- (void)request:(SinaWeiboRequest *)request didFailWithError:(NSError *)error
+{
+    if ([request.url hasSuffix:@"users/show.json"])
+    {
+//        [userInfo release], userInfo = nil;
+        NSLog(@"sina weibo error");
+    }
+
+}
+
+- (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result
+{
+    if ([request.url hasSuffix:@"users/show.json"])
+    {
+//        [userInfo release];
+//        NSLog(@"sina result: %@", result);
+        NSString *url = [@"http://weibo.com/" stringByAppendingString:request.sinaweibo.userID];
+        [[NSUserDefaults standardUserDefaults] setObject:@{@"name": result[@"name"], @"gender": result[@"gender"],
+         @"link": url, @"accesstoken": request.sinaweibo.accessToken}
+                                                  forKey:@"sinaweibo"];
+        self.sinaWeiboLabel.text = result[@"name"];
+        [self updateBindInfo:@"opensinaweibo" url:url];
+    }
+
+}
+
 #pragma mark - method
 - (void)onSuccessLogin
 {
-    NSLog(@"Login successs");
-    // upload info
-    // update locale info
+
+    NSString *url = [@"http://t.qq.com/" stringByAppendingString:self.weiboEngine.name];
+    [[NSUserDefaults standardUserDefaults] setObject:@{@"name": self.weiboEngine.name,
+     @"link": url, @"accesstoken": self.weiboEngine.accessToken}
+                                              forKey:@"txweibo"];
+    self.tengxunWeiboLabel.text = self.weiboEngine.name;
+    [self updateBindInfo:@"opentweibo" url:url];
 }
 
 - (void)onFailureLogin:(NSError *)error
 {
-    NSLog(@"Login error:%@", [error description]);
+    NSLog(@"tx Login error:%@", [error description]);
+}
+
+#pragma mark - update bind info
+- (void)updateBindInfo:(NSString*)bindType url:(NSString*)url
+{
+    // update the user info
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/uc/updatebind.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        
+        
+        request.params = [RKParams paramsWithDictionary:@{@"submitupdate": @"true", @"url": url, @"bindtype": bindType}];
+        
+        // 请求失败时
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        // 请求成功时
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            
+            if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
+                NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
+                NSInteger code = [data[@"error"] integerValue];  // 返回的状态
+                if (code == 0) {
+                    // 成功提交的情况
+                    [SVProgressHUD showSuccessWithStatus:data[@"message"]];
+                } else{
+                    // 失败的情况
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            } else{
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
+    }];
 }
 
 @end

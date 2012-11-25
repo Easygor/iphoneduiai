@@ -499,7 +499,7 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage" id="474070662">
+								<object class="NSCustomResource" key="IBUIImage" id="576214925">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">arrow_more.png</string>
 								</object>
@@ -514,7 +514,7 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIImage" ref="474070662"/>
+								<reference key="IBUIImage" ref="576214925"/>
 							</object>
 							<object class="IBUIImageView" id="722459204">
 								<reference key="NSNextResponder" ref="378814265"/>
@@ -526,7 +526,7 @@
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<reference key="IBUIImage" ref="474070662"/>
+								<reference key="IBUIImage" ref="576214925"/>
 							</object>
 							<object class="IBUIImageView" id="974501721">
 								<reference key="NSNextResponder" ref="378814265"/>
@@ -576,7 +576,7 @@
 							<object class="IBUILabel" id="419419943">
 								<reference key="NSNextResponder" ref="378814265"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{111, 119}, {51, 21}}</string>
+								<string key="NSFrame">{{111, 122}, {161, 14}}</string>
 								<reference key="NSSuperview" ref="378814265"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="722459204"/>
@@ -593,21 +593,14 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="724885712">
-									<int key="type">1</int>
-									<double key="pointSize">15</double>
-								</object>
-								<object class="NSFont" key="IBUIFont" id="75536858">
-									<string key="NSName">Helvetica</string>
-									<double key="NSSize">15</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="IBUIFontDescription" ref="213464171"/>
+								<reference key="IBUIFont" ref="1013635642"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUILabel" id="954191704">
 								<reference key="NSNextResponder" ref="378814265"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{111, 83}, {51, 21}}</string>
+								<string key="NSFrame">{{111, 87}, {161, 14}}</string>
 								<reference key="NSSuperview" ref="378814265"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="58308361"/>
@@ -624,14 +617,14 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<reference key="IBUIFontDescription" ref="724885712"/>
-								<reference key="IBUIFont" ref="75536858"/>
+								<reference key="IBUIFontDescription" ref="213464171"/>
+								<reference key="IBUIFont" ref="1013635642"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUILabel" id="416773108">
 								<reference key="NSNextResponder" ref="378814265"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{111, 45}, {51, 21}}</string>
+								<string key="NSFrame">{{111, 50}, {161, 14}}</string>
 								<reference key="NSSuperview" ref="378814265"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="74320060"/>
@@ -648,8 +641,8 @@
 								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">0</int>
-								<reference key="IBUIFontDescription" ref="724885712"/>
-								<reference key="IBUIFont" ref="75536858"/>
+								<reference key="IBUIFontDescription" ref="213464171"/>
+								<reference key="IBUIFont" ref="1013635642"/>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 						</array>
@@ -1028,46 +1021,13 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">WeiboBindingViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="mailButtonPress">id</string>
-						<string key="qqzoneButtonPress">id</string>
-						<string key="sinaWeiboButtonPress">id</string>
-						<string key="tengxunWeiboButtonPress">id</string>
-						<string key="weinxinButonnPress">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="mailButtonPress">
-							<string key="name">mailButtonPress</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="qqzoneButtonPress">
-							<string key="name">qqzoneButtonPress</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sinaWeiboButtonPress">
-							<string key="name">sinaWeiboButtonPress</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="tengxunWeiboButtonPress">
-							<string key="name">tengxunWeiboButtonPress</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="weinxinButonnPress">
-							<string key="name">weinxinButonnPress</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="mailButton">UIButton</string>
 						<string key="mailLabel">UILabel</string>
-						<string key="qqzoneButton">UIButton</string>
-						<string key="qqzoneLabel">UILabel</string>
 						<string key="sinaWeiboButton">UIButton</string>
 						<string key="sinaWeiboLabel">UILabel</string>
 						<string key="tengxunWeiboButton">UIButton</string>
 						<string key="tengxunWeiboLabel">UILabel</string>
-						<string key="weixinButton">UIButton</string>
-						<string key="weixinLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="mailButton">
@@ -1076,14 +1036,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="mailLabel">
 							<string key="name">mailLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="qqzoneButton">
-							<string key="name">qqzoneButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="qqzoneLabel">
-							<string key="name">qqzoneLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="sinaWeiboButton">
@@ -1100,14 +1052,6 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="tengxunWeiboLabel">
 							<string key="name">tengxunWeiboLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="weixinButton">
-							<string key="name">weixinButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="weixinLabel">
-							<string key="name">weixinLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>

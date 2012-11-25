@@ -49,10 +49,8 @@
 
     // 授权  
 //    NSString *strAuth = [main localizedStringForKey:KLanguageAuth value:nil table:kTCWBTable];
-    NSString *strAuth = [CustomBarButtonItem titleForNavigationItem:@"腾讯微博绑定"];
-    [self.navigationItem setTitle:strAuth];
-    
-    
+//    [self.navigationItem setTitle:strAuth];
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"腾讯微博绑定"];
 
 //    NSString *strCancel = [main localizedStringForKey:KLanguageCancel value:nil table:kTCWBTable];
 //    UIBarButtonItem *baritemCancel = [[UIBarButtonItem alloc] initWithTitle:strCancel style:UIBarButtonItemStyleBordered target:self action:@selector(onButtonCancel)];
@@ -144,13 +142,14 @@
         NSRange scope = [urlString rangeOfString:@"#"];
         NSString *code = [urlString substringFromIndex:scope.location + scope.length];
         self.returnCode = code;
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
-                                                            message:@"授权成功"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"确定"
-                                                  otherButtonTitles:nil];
-        [alertView show];
-        [alertView release];
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+//                                                            message:@"授权成功"
+//                                                           delegate:self
+//                                                  cancelButtonTitle:@"确定"
+//                                                  otherButtonTitles:nil];
+//        [alertView show];
+//        [alertView release];
+        [self dismissModalViewControllerAnimated:YES];
 
     }
     
