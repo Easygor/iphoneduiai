@@ -933,7 +933,7 @@
 												<string key="NSFrame">{{64, 40}, {42, 42}}</string>
 												<reference key="NSSuperview" ref="749588875"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="554027275"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<int key="IBUITag">1</int>
@@ -949,32 +949,6 @@
 												<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 													<string key="NSClassName">NSImage</string>
 													<string key="NSResourceName">tweibo_icon.png</string>
-												</object>
-												<reference key="IBUIFontDescription" ref="1057614807"/>
-												<reference key="IBUIFont" ref="919508164"/>
-											</object>
-											<object class="IBUIButton" id="554027275">
-												<reference key="NSNextResponder" ref="749588875"/>
-												<int key="NSvFlags">292</int>
-												<string key="NSFrame">{{119, 40}, {42, 42}}</string>
-												<reference key="NSSuperview" ref="749588875"/>
-												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="601300967"/>
-												<string key="NSReuseIdentifierKey">_NS:9</string>
-												<bool key="IBUIOpaque">NO</bool>
-												<int key="IBUITag">2</int>
-												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-												<int key="IBUIContentHorizontalAlignment">0</int>
-												<int key="IBUIContentVerticalAlignment">0</int>
-												<reference key="IBUIHighlightedTitleColor" ref="274530109"/>
-												<object class="NSColor" key="IBUINormalTitleColor">
-													<int key="NSColorSpace">1</int>
-													<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
-												</object>
-												<reference key="IBUINormalTitleShadowColor" ref="796965655"/>
-												<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">weixin_icon.png</string>
 												</object>
 												<reference key="IBUIFontDescription" ref="1057614807"/>
 												<reference key="IBUIFont" ref="919508164"/>
@@ -1539,7 +1513,6 @@
 								<string key="NSFrame">{{161, 2}, {159, 50}}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -2044,7 +2017,6 @@
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="439359407"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -3383,7 +3355,6 @@
 								<string key="NSFrame">{{100, 10}, {178, 18}}</string>
 								<reference key="NSSuperview" ref="629245040"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -3538,14 +3509,6 @@
 						<reference key="destination" ref="902357759"/>
 					</object>
 					<int key="connectionID">106</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">snsbtn2</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="554027275"/>
-					</object>
-					<int key="connectionID">116</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -4312,7 +4275,6 @@
 						<reference key="object" ref="749588875"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="327398566"/>
-							<reference ref="554027275"/>
 							<reference ref="210204732"/>
 							<reference ref="201935751"/>
 							<reference ref="683156903"/>
@@ -4372,11 +4334,6 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">112</int>
 						<reference key="object" ref="327398566"/>
-						<reference key="parent" ref="749588875"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">113</int>
-						<reference key="object" ref="554027275"/>
 						<reference key="parent" ref="749588875"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -5069,8 +5026,6 @@
 				<real value="0.0" key="111.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="112.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="112.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="113.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="113.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="117.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="118.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="119.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -5646,7 +5601,6 @@
 			<string key="qq_icon.png">{30, 30}</string>
 			<string key="tweibo_icon.png">{42, 42}</string>
 			<string key="weibo_icon.png">{42, 42}</string>
-			<string key="weixin_icon.png">{42, 42}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
