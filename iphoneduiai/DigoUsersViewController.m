@@ -252,7 +252,7 @@
     NSDictionary *user = [self.users objectAtIndex:index];
     
     UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
-    udvc.user = user;
+    udvc.user = @{@"_id": user[@"uid"], @"niname": user[@"uinfo"][@"niname"], @"photo": user[@"uinfo"][@"photo"]};
     [self.navigationController pushViewController:udvc animated:YES];
     [udvc release];
 }

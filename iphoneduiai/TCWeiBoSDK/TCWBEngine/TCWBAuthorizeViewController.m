@@ -8,6 +8,7 @@
 
 #import "TCWBAuthorizeViewController.h"
 #import "key.h"
+#import "CustomBarButtonItem.h"
 
 
 @implementation TCWBAuthorizeViewController
@@ -44,16 +45,18 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    NSBundle *main = [NSBundle mainBundle];
+//    NSBundle *main = [NSBundle mainBundle];
 
     // 授权  
-    NSString *strAuth = [main localizedStringForKey:KLanguageAuth value:nil table:kTCWBTable];
+//    NSString *strAuth = [main localizedStringForKey:KLanguageAuth value:nil table:kTCWBTable];
+    NSString *strAuth = [CustomBarButtonItem titleForNavigationItem:@"腾讯微博绑定"];
     [self.navigationItem setTitle:strAuth];
     
     
 
-    NSString *strCancel = [main localizedStringForKey:KLanguageCancel value:nil table:kTCWBTable];
-    UIBarButtonItem *baritemCancel = [[UIBarButtonItem alloc] initWithTitle:strCancel style:UIBarButtonItemStyleBordered target:self action:@selector(onButtonCancel)];
+//    NSString *strCancel = [main localizedStringForKey:KLanguageCancel value:nil table:kTCWBTable];
+//    UIBarButtonItem *baritemCancel = [[UIBarButtonItem alloc] initWithTitle:strCancel style:UIBarButtonItemStyleBordered target:self action:@selector(onButtonCancel)];
+    UIBarButtonItem *baritemCancel = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"target:self action:@selector(onButtonCancel)];
     [self.navigationItem setLeftBarButtonItem:baritemCancel];
     [baritemCancel release];
 

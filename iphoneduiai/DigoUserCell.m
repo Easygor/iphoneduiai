@@ -62,10 +62,10 @@
             NSDictionary *user = [users objectAtIndex:i];
             view.hidden = NO;
             
-            if ([user[@"photo"] isEqualToString:@""]) {
+            if ([user[@"uinfo"][@"photo"] isEqualToString:@""]) {
                 [view.imageView loadImage:DEFAULTAVATAR];
             } else{
-                [view.imageView loadImage:user[@"photo"]];
+                [view.imageView loadImage:user[@"uinfo"][@"photo"]];
             }
             
             view.picNumLabel.hidden = YES;

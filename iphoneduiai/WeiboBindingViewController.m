@@ -10,7 +10,10 @@
 #import "SetEmailViewController.h"
 #import "CustomBarButtonItem.h"
 #import "SinaWeibo.h"
-@interface WeiboBindingViewController ()
+#import "TCWBEngine.h"
+
+
+@interface WeiboBindingViewController () <SinaWeiboDelegate, WBRequestDelegate>
 @property(retain,nonatomic)IBOutlet UIButton *sinaWeiboButton;
 @property(retain,nonatomic)IBOutlet UIButton *tengxunWeiboButton;
 @property(retain,nonatomic)IBOutlet UIButton *qqzoneButton;
@@ -29,10 +32,13 @@
 -(IBAction)qqzoneButtonPress;
 -(IBAction)weinxinButonnPress;
 -(IBAction)mailButtonPress;
+
+@property (nonatomic, retain) TCWBEngine   *weiboEngine;
+@property (strong, nonatomic) SinaWeibo *sinaWeibo;
 @end
 
 @implementation WeiboBindingViewController
-@synthesize weiboEngine;
+
 - (void)dealloc
 {
     [_sinaWeiboButton release];
@@ -40,7 +46,8 @@
     [_qqzoneButton release];
     [_weixinButton release];
     [_mailButton release];
-     [weiboEngine release],weiboEngine = nil;
+     [_weiboEngine release], _weiboEngine = nil;
+    [_sinaWeibo release];
     [super dealloc];
 }
 
@@ -90,32 +97,36 @@
 
 -(IBAction)sinaWeiboButtonPress
 {
-    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
-    NSLog(@"%@", [keyWindow subviews]);
+//    UIWindow *keyWindow = [UIApplication sharedApplication].keyWindow;
+//    NSLog(@"%@", [keyWindow subviews]);
    
     
-    SinaWeibo *sinaweibo = [[SinaWeibo alloc]initWithAppKey:@"1118660852" appSecret:@"1e650633c6c72cc28583bc1bdef21a38" appRedirectURI:@"http://www.cnblogs.com/smallyin00/" andDelegate:self];
-    [sinaweibo logIn];
-    [sinaweibo release];
+     self.sinaWeibo = [[[SinaWeibo alloc]initWithAppKey:@"495574251"
+                                              appSecret:@"d5f062ce2c9898709159c459eb71c8cc"
+                                         appRedirectURI:@"http://duiai.com"
+                                            andDelegate:self] autorelease];
+
+    [self.sinaWeibo logIn];
+
 }
 
 -(IBAction)tengxunWeiboButtonPress
 {
-//    TCWBEngine  *weiboEngine = [[TCWBEngine alloc]initWithAppKey:@"801259343" andSecret:@"992e606800d7b7afdc4911bc896ba371" andRedirectUrl:@"http://"];
-//    
-//    [weiboEngine logInWithDelegate:self
-//                         onSuccess:@selector(onSuccessLogin)
-//                         onFailure:@selector(onFailureLogin:)];
-    TCWBEngine *engine = [[TCWBEngine alloc] initWithAppKey:@"801259343" andSecret:@"992e606800d7b7afdc4911bc896ba371" andRedirectUrl:@"http://www.cnblogs.com/smallyin00/"];
+
+    TCWBEngine *engine = [[TCWBEngine alloc] initWithAppKey:@"801242204"
+                                                  andSecret:@"90730f2b629d0ab0b07cb5feb3ee3c9b"
+                                             andRedirectUrl:@"http://duiai.com"];
     [engine setRootViewController:self];
-    //[engine setRedirectURI:@"http://www.ying7wang7.com"];
-   self.weiboEngine = engine;
+    self.weiboEngine = engine;
     [engine release];
     
-    [self onLogin];
+    [self.weiboEngine logInWithDelegate:self
+                              onSuccess:@selector(onSuccessLogin)
+                              onFailure:@selector(onFailureLogin:)];
 
 
 }
+
 
 -(IBAction)qqzoneButtonPress
 {
@@ -138,7 +149,8 @@
 - (void)sinaweiboDidLogIn:(SinaWeibo *)sinaweibo
 {
     NSLog(@"sinaweiboDidLogIn userID = %@ accesstoken = %@ expirationDate = %@ refresh_token = %@", sinaweibo.userID, sinaweibo.accessToken, sinaweibo.expirationDate,sinaweibo.refreshToken);
-
+    // upload info
+    // update locale info
 }
 
 - (void)sinaweiboDidLogOut:(SinaWeibo *)sinaweibo
@@ -147,16 +159,16 @@
 }
 
 #pragma mark - method
-
-//点击登录按钮
-- (void)onLogin {
-    [weiboEngine logInWithDelegate:self
-                         onSuccess:@selector(onSuccessLogin)
-                         onFailure:@selector(onFailureLogin:)];
+- (void)onSuccessLogin
+{
+    NSLog(@"Login successs");
+    // upload info
+    // update locale info
 }
 
-
-
-
+- (void)onFailureLogin:(NSError *)error
+{
+    NSLog(@"Login error:%@", [error description]);
+}
 
 @end
