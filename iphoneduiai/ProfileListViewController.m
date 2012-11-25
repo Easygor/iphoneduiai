@@ -92,6 +92,7 @@ static NSInteger kDelWeiyuTag = 204;
 @property (strong, nonatomic) NSDictionary *existedData;
 
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
+@property (strong, nonatomic) NSArray *weiboList;
 
 @end
 
@@ -161,6 +162,43 @@ static NSInteger kDelWeiyuTag = 204;
     [_heightPicker release];
     [_weightPicker release];
     [super dealloc];
+}
+
+- (void)setWeiboList:(NSArray *)weiboList
+{
+    if (![_weiboList isEqualToArray:weiboList]) {
+        _weiboList = [weiboList retain];
+        
+        if (weiboList.count == 1) {
+            if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn0.enabled = YES;
+                
+            } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn0.enabled = YES;
+                
+            }
+            
+        } else if(weiboList.count == 2){
+            if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn0.enabled = YES;
+            } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn0.enabled = YES;
+            }
+            
+            if ([weiboList[1][@"bindtype"] isEqualToString:@"sinaweibo"]) {
+                [self.snsbtn1 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn1.enabled = YES;
+            } else if([weiboList[1][@"bindtype"] isEqualToString:@"tweibo"]){
+                [self.snsbtn1 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn1.enabled = YES;
+            }
+        }
+        
+    }
 }
 
 - (void)setExistedData:(NSDictionary *)existedData
@@ -312,7 +350,12 @@ static NSInteger kDelWeiyuTag = 204;
     if (![_userBody isEqualToDictionary:userBody]) {
         _userBody = [userBody retain];
         
-        self.weightField.text = [NSString stringWithFormat:@"%@kg", [userBody objectForKey:@"weight"]];
+        if ([[userBody objectForKey:@"weight"] isEqualToString:@"未填写"]) {
+            self.weightField.text = [userBody objectForKey:@"weight"];
+        } else{
+            self.weightField.text = [NSString stringWithFormat:@"%@kg", [userBody objectForKey:@"weight"]];
+        }
+        
     }
 }
 
@@ -939,6 +982,7 @@ static NSInteger kDelWeiyuTag = 204;
                     self.userWork = [dataData objectForKey:@"user_work"];
                     self.marrayReq = [dataData objectForKey:@"marray_req"];
                     self.searchIndex = [dataData objectForKey:@"searchindex"];
+                    self.weiboList = dataData[@"bindlist"];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
@@ -1497,5 +1541,24 @@ static NSInteger kDelWeiyuTag = 204;
     }];
     
 }
+
+- (IBAction)snsBtn0Action
+{
+    
+    NSURL *url = [NSURL URLWithString:self.weiboList[0][@"url"]];
+    if (url) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    
+}
+
+- (IBAction)snsBtn1Action
+{
+    NSURL *url = [NSURL URLWithString:self.weiboList[1][@"url"]];
+    if (url) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+}
+
 
 @end

@@ -223,9 +223,11 @@
 {
 //    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
 //    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+//    RKLogConfigureByName("RestKit/*", RKLogLevelOff);
     
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://api.duiai.com"];
     [objectManager.client setValue:@"Application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [[RKClient sharedClient] setCachePolicy:RKRequestBackgroundPolicyNone];
     
     // Enable automatic network activity indicator management
     objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;

@@ -24,7 +24,7 @@
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 
-@interface UserDetailViewController () <CustomCellDelegate>
+@interface UserDetailViewController () <CustomCellDelegate, UIActionSheetDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
@@ -60,6 +60,8 @@ static CGFloat dHeight2 = 0.0f;
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
 @property (strong, nonatomic) NSDictionary *existedData;
 @property (strong, nonatomic) NSArray *weiboList;
+@property (strong, nonatomic) UIActionSheet *moreSheet, *descSheet;
+@property (strong, nonatomic) NSArray *blockDescs;
 
 @end
 
@@ -67,6 +69,9 @@ static CGFloat dHeight2 = 0.0f;
 
 - (void)dealloc
 {
+    [_blockDescs release];
+    [_moreSheet release];
+    [_descSheet release];
     [_existedData release];
     [_digoList release];
     [_shitList release];
@@ -104,7 +109,18 @@ static CGFloat dHeight2 = 0.0f;
     [_moreCell release];
     [_countView release];
     [_searchIndex release];
+    
     [super dealloc];
+}
+
+- (NSArray *)blockDescs
+{
+    if (_blockDescs == nil) {
+        _blockDescs = [[NSArray alloc] initWithArray:@[@"骚扰信息", @"色情信息", @"个人资料不当", @"盗用他人资料"]];
+
+    }
+    
+    return _blockDescs;
 }
 
 - (void)setExistedData:(NSDictionary *)existedData
@@ -179,27 +195,29 @@ static CGFloat dHeight2 = 0.0f;
         if (weiboList.count == 1) {
             if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
                 [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn0.enabled = YES;
 
             } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
                 [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+                self.snsbtn0.enabled = YES;
 
             }
             
         } else if(weiboList.count == 2){
             if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
                 [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
-
+                self.snsbtn0.enabled = YES;
             } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
                 [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
-
+                self.snsbtn0.enabled = YES;
             }
             
             if ([weiboList[1][@"bindtype"] isEqualToString:@"sinaweibo"]) {
                 [self.snsbtn1 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
-                
+                 self.snsbtn1.enabled = YES;
             } else if([weiboList[1][@"bindtype"] isEqualToString:@"tweibo"]){
                 [self.snsbtn1 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
-                
+                 self.snsbtn1.enabled = YES;                
             }
         }
         
@@ -246,7 +264,11 @@ static CGFloat dHeight2 = 0.0f;
     if (![_userBody isEqualToDictionary:userBody]) {
         _userBody = [userBody retain];
         
-        self.weightLabel.text = [userBody objectForKey:@"weight"];
+        if ([[userBody objectForKey:@"weight"] isEqualToString:@"未填写"]) {
+            self.weightLabel.text = [userBody objectForKey:@"weight"];
+        } else{
+            self.weightLabel.text = [NSString stringWithFormat:@"%@kg", [userBody objectForKey:@"weight"]];
+        }
     }
 }
 
@@ -290,6 +312,9 @@ static CGFloat dHeight2 = 0.0f;
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"etc"]
+                                                                                          target:self
+                                                                                          action:@selector(moreAction)];
     [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
 
     [self infoRequestFromRemote];
@@ -310,6 +335,99 @@ static CGFloat dHeight2 = 0.0f;
 - (void)backAction
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)moreAction
+{
+    self.moreSheet = [[[UIActionSheet alloc] initWithTitle:nil
+                                                  delegate:self
+                                         cancelButtonTitle:@"取消"
+                                    destructiveButtonTitle:nil
+                                         otherButtonTitles:@"拉黑", @"拉黑并举报", nil] autorelease];
+    [self.moreSheet showInView:self.view.window];
+
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.cancelButtonIndex == buttonIndex) {
+        return;
+    }
+    
+    if ([actionSheet isEqual:self.moreSheet]) {
+        // eeqq
+        if (0 == buttonIndex) {
+            NSMutableDictionary *params = [Utils queryParams];
+            params[@"uid"] = self.user[@"_id"];
+
+            [SVProgressHUD show];
+            [[RKClient sharedClient] get:[@"/common/addblack.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+                NSLog(@"url: %@", request.URL);
+                [request setOnDidLoadResponse:^(RKResponse *response){
+                    if (response.isOK && response.isJSON) {
+                        NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+                        NSInteger code = [data[@"error"] integerValue];
+                        if (code == 0) {
+
+                            // 此行须在前两行后面
+                            [SVProgressHUD showSuccessWithStatus:data[@"message"]];
+                        } else{
+                            [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                        }
+                    } else{
+                        [SVProgressHUD showErrorWithStatus:@"拉黑失败"];
+                    }
+                }];
+                [request setOnDidFailLoadWithError:^(NSError *error){
+                    [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+                    NSLog(@"lahei Error: %@", [error description]);
+                }];
+            }];
+
+        } else if (1 == buttonIndex){
+            self.descSheet = [[[UIActionSheet alloc] initWithTitle:@"举报"
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                            destructiveButtonTitle:nil
+                                                 otherButtonTitles:@"骚扰信息", @"色情信息", @"个人资料不当", @"盗用他人资料", nil] autorelease];
+            [self.descSheet showInView:self.view.window];
+        }
+    } else if ([actionSheet isEqual:self.descSheet]){
+        NSString *desc = self.blockDescs[buttonIndex];
+        NSMutableDictionary *params = [Utils queryParams];
+
+        //        [params setObject:n[@"tid"] forKey:@"tid[]"];
+        [SVProgressHUD show];
+
+        [[RKClient sharedClient] post:[@"/uc/complaints.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
+            NSLog(@"url: %@", request.URL);
+            
+            request.params = [RKParams paramsWithDictionary:@{@"type" : @"1", @"comuid": self.user[@"_id"], @"content": desc, @"submitupdate": @"true"}];
+            
+            [request setOnDidLoadResponse:^(RKResponse *response){
+                if (response.isOK && response.isJSON) {
+                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                    NSInteger code = [data[@"error"] integerValue];
+                    if (code == 0) {
+
+                        [SVProgressHUD showSuccessWithStatus:data[@"message"]];
+                    } else{
+                        [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                    }
+                    
+                } else{
+                    [SVProgressHUD showErrorWithStatus:@"获取失败"];
+                }
+            }];
+            [request setOnDidFailLoadWithError:^(NSError *error){
+                [SVProgressHUD showErrorWithStatus:@"网络连接错误"];
+                NSLog(@"Error: %@", [error description]);
+            }];
+        }];
+
+        
+    }
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated

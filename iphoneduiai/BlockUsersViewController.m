@@ -233,7 +233,7 @@
 {
     [SVProgressHUD show];
     NSMutableDictionary *dParams = [Utils queryParams];
-    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+//    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [self blockReqeustWithParams:dParams];
     
 }
@@ -266,7 +266,7 @@
                 
                 
             } else{
-                //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
             }
         }];
         [request setOnDidFailLoadWithError:^(NSError *error){

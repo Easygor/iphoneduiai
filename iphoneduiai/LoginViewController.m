@@ -244,7 +244,7 @@
                            [request setOnDidLoadResponse:^(RKResponse *response){
                                if (response.isOK && response.isJSON) {
                                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                                   NSLog(@"res: %@", data);
+//                                   NSLog(@"res: %@", data);
                                    if ([[data objectForKey:@"error"] intValue] == 0) {
                                        NSDictionary *userinfo = @{
                                        @"accesskey": data[@"accesskey"],
@@ -262,6 +262,8 @@
 //                                       [Utils warningNotification:[data objectForKey:@"message"]];
                                    }
 
+                               } else{
+                                   [SVProgressHUD showSuccessWithStatus:@"网络错误"];
                                }
                            }];
                            

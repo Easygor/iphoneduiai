@@ -804,6 +804,8 @@
 		61BEB0691662046800169B04 /* t-qq_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB0671662046800169B04 /* t-qq_icon@2x.png */; };
 		61BEB06D1662428300169B04 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BEB06B1662428300169B04 /* ForgetPasswordViewController.m */; };
 		61BEB06E1662428300169B04 /* ForgetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB06C1662428300169B04 /* ForgetPasswordViewController.xib */; };
+		61BEB071166250C900169B04 /* etc.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB06F166250C900169B04 /* etc.png */; };
+		61BEB072166250C900169B04 /* etc@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB070166250C900169B04 /* etc@2x.png */; };
 		61C32D6D16574375009E0BCC /* tab_indicator_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6916574374009E0BCC /* tab_indicator_bg.png */; };
 		61C32D6F16574375009E0BCC /* tabbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6B16574374009E0BCC /* tabbar_bg.png */; };
 		61C32D7016574375009E0BCC /* tabbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6C16574374009E0BCC /* tabbar_bg@2x.png */; };
@@ -1824,6 +1826,8 @@
 		61BEB06A1662428300169B04 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
 		61BEB06B1662428300169B04 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
 		61BEB06C1662428300169B04 /* ForgetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPasswordViewController.xib; sourceTree = "<group>"; };
+		61BEB06F166250C900169B04 /* etc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = etc.png; sourceTree = "<group>"; };
+		61BEB070166250C900169B04 /* etc@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "etc@2x.png"; sourceTree = "<group>"; };
 		61C32D6916574374009E0BCC /* tab_indicator_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_indicator_bg.png; sourceTree = "<group>"; };
 		61C32D6B16574374009E0BCC /* tabbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_bg.png; sourceTree = "<group>"; };
 		61C32D6C16574374009E0BCC /* tabbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_bg@2x.png"; sourceTree = "<group>"; };
@@ -2128,6 +2132,8 @@
 		5AE46A9A161C86D000F3007C /* Wei talk images */ = {
 			isa = PBXGroup;
 			children = (
+				61BEB06F166250C900169B04 /* etc.png */,
+				61BEB070166250C900169B04 /* etc@2x.png */,
 				61265A75165BC44B00BAF8E0 /* weiyu_item_bottom_bg.png */,
 				61265A81165BCBF300BAF8E0 /* weiyu_item_bottom_bg@2x.png */,
 				61265A77165BC44B00BAF8E0 /* weiyu_item_top_bg.png */,
@@ -4087,6 +4093,8 @@
 				61BEB0681662046800169B04 /* t-qq_icon.png in Resources */,
 				61BEB0691662046800169B04 /* t-qq_icon@2x.png in Resources */,
 				61BEB06E1662428300169B04 /* ForgetPasswordViewController.xib in Resources */,
+				61BEB071166250C900169B04 /* etc.png in Resources */,
+				61BEB072166250C900169B04 /* etc@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
