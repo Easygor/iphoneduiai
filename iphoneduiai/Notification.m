@@ -111,7 +111,7 @@ static NSString *fileName = @"notifications.plist";
     if (message[@"list"]) {
         for (NSMutableDictionary *d in message[@"list"]) {
             NSString *uid = d[@"senduid"];
-            _message[@"data"][uid] =[NSMutableDictionary dictionaryWithDictionary:@{@"title": d[@"uinfo"][@"niname"], @"subTitle": d[@"content"],
+            _message[@"data"][uid] = [NSMutableDictionary dictionaryWithDictionary:@{@"title": d[@"uinfo"][@"niname"], @"subTitle": d[@"content"],
                                      @"bageNum": d[@"newcount"], @"logo": d[@"uinfo"][@"photo"], @"type": @"message",
                                      @"updated": [NSDate dateWithTimeIntervalSince1970:[d[@"addtime"] integerValue]],
                                      @"data": d}];
@@ -123,6 +123,22 @@ static NSString *fileName = @"notifications.plist";
         }
     }
 
+}
+
+- (void)updateMessage:(NSDictionary*)d
+{
+
+    if (d) {
+        NSString *uid = d[@"senduid"];
+        _message[@"data"][uid] = [NSMutableDictionary dictionaryWithDictionary:@{
+                                  @"title": d[@"uinfo"][@"niname"],
+                                  @"subTitle": d[@"content"],
+                                  @"bageNum": @0,
+                                  @"logo": d[@"uinfo"][@"photo"],
+                                  @"type": @"message",
+                                  @"updated": [NSDate dateWithTimeIntervalSince1970:[d[@"addtime"] integerValue]],
+                                  @"data": d}];
+    }
 }
 
 - (void)setFeed:(NSMutableDictionary *)feed

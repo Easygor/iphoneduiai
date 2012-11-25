@@ -59,6 +59,7 @@ static CGFloat dHeight2 = 0.0f;
 @property (nonatomic) BOOL loading;
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
 @property (strong, nonatomic) NSDictionary *existedData;
+@property (strong, nonatomic) NSArray *weiboList;
 
 @end
 
@@ -170,13 +171,50 @@ static CGFloat dHeight2 = 0.0f;
     }
 }
 
+- (void)setWeiboList:(NSArray *)weiboList
+{
+    if (![_weiboList isEqualToArray:weiboList]) {
+        _weiboList = [weiboList retain];
+        
+        if (weiboList.count == 1) {
+            if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+
+            } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+
+            }
+            
+        } else if(weiboList.count == 2){
+            if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+
+            } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
+                [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+
+            }
+            
+            if ([weiboList[1][@"bindtype"] isEqualToString:@"sinaweibo"]) {
+                [self.snsbtn1 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+                
+            } else if([weiboList[1][@"bindtype"] isEqualToString:@"tweibo"]){
+                [self.snsbtn1 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
+                
+            }
+        }
+        
+    }
+}
+
 - (void)setSearchIndex:(NSDictionary *)searchIndex
 {
     if (![_searchIndex isEqualToDictionary:searchIndex]) {
         _searchIndex = [searchIndex retain];
-        
+     
+#warning here is static value
         self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@/900m", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
         self.countView.count = [[searchIndex objectForKey:@"digocount"] description];
+
     }
 }
 
@@ -411,6 +449,7 @@ static CGFloat dHeight2 = 0.0f;
                     if (dataData[@"searchindex"] != [NSNull null]) {
                         self.searchIndex = [dataData objectForKey:@"searchindex"];
                     }
+                    self.weiboList = dataData[@"bindlist"];
                     
                 }
             }
@@ -512,8 +551,8 @@ static CGFloat dHeight2 = 0.0f;
                     CopyQQViewController *copyQQViewController = [[[CopyQQViewController alloc]init]autorelease];
                     copyQQViewController.QQdata = data;
                     [self.navigationController pushViewController:copyQQViewController animated:YES];
-                
-                   // [SVProgressHUD showSuccessWithStatus:@"保存成功"];
+                    [SVProgressHUD dismiss];
+
                 } else{
                     // 失败的情况
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
@@ -746,6 +785,24 @@ static CGFloat dHeight2 = 0.0f;
         }];
     }];
     
+}
+
+- (IBAction)snsBtn0Action
+{
+
+    NSURL *url = [NSURL URLWithString:self.weiboList[0][@"url"]];
+    if (url) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
+
+}
+
+- (IBAction)snsBtn1Action
+{
+    NSURL *url = [NSURL URLWithString:self.weiboList[1][@"url"]];
+    if (url) {
+        [[UIApplication sharedApplication] openURL:url];
+    }
 }
 
 @end

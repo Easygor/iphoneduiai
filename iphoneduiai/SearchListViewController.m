@@ -328,6 +328,7 @@
             cell.pictureNum.text = nil;
         }
         cell.graphText = [[user objectForKey:@"last_weiyu"] description];
+        cell.weibolist = [user[@"weibolist"] description];
         
         return cell;
         

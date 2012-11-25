@@ -36,6 +36,36 @@
     [super dealloc];
 }
 
+- (void)setWeibolist:(NSString *)weibolist
+{
+    if (![_weibolist isEqualToString:weibolist]) {
+        _weibolist = [weibolist retain];
+        NSArray *tmp = [weibolist componentsSeparatedByString:@"|"];
+        self.iconL.image = nil;
+        self.iconM.image = nil;
+        self.iconR.image = nil;
+        if (tmp.count == 1) {
+            if ([tmp[0] isEqualToString:@"sinaweibo"]) {
+                self.iconR.image = [UIImage imageNamed:@"weibo_icon"];
+            } else if([tmp[0] isEqualToString:@"tweibo"]){
+                self.iconR.image = [UIImage imageNamed:@"tweibo_icon"];
+            }
+
+        } else if(tmp.count == 2){
+            if ([tmp[0] isEqualToString:@"sinaweibo"]) {
+                self.iconM.image = [UIImage imageNamed:@"weibo_icon"];
+            } else if([tmp[0] isEqualToString:@"tweibo"]){
+                self.iconM.image = [UIImage imageNamed:@"tweibo_icon"];
+            }
+            if ([tmp[1] isEqualToString:@"sinaweibo"]) {
+                self.iconM.image = [UIImage imageNamed:@"weibo_icon"];
+            } else if([tmp[1] isEqualToString:@"tweibo"]){
+                self.iconM.image = [UIImage imageNamed:@"tweibo_icon"];
+            }
+        }
+    }
+}
+
 - (void)doUserInfoInitWork
 {
     CGFloat scale = [[UIScreen mainScreen] scale];

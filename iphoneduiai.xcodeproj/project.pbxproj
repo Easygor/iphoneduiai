@@ -802,6 +802,8 @@
 		61BEB065166203B700169B04 /* weibo_icon_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB063166203B700169B04 /* weibo_icon_s@2x.png */; };
 		61BEB0681662046800169B04 /* t-qq_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB0661662046800169B04 /* t-qq_icon.png */; };
 		61BEB0691662046800169B04 /* t-qq_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB0671662046800169B04 /* t-qq_icon@2x.png */; };
+		61BEB06D1662428300169B04 /* ForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BEB06B1662428300169B04 /* ForgetPasswordViewController.m */; };
+		61BEB06E1662428300169B04 /* ForgetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB06C1662428300169B04 /* ForgetPasswordViewController.xib */; };
 		61C32D6D16574375009E0BCC /* tab_indicator_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6916574374009E0BCC /* tab_indicator_bg.png */; };
 		61C32D6F16574375009E0BCC /* tabbar_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6B16574374009E0BCC /* tabbar_bg.png */; };
 		61C32D7016574375009E0BCC /* tabbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C32D6C16574374009E0BCC /* tabbar_bg@2x.png */; };
@@ -1819,6 +1821,9 @@
 		61BEB063166203B700169B04 /* weibo_icon_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "weibo_icon_s@2x.png"; sourceTree = "<group>"; };
 		61BEB0661662046800169B04 /* t-qq_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t-qq_icon.png"; sourceTree = "<group>"; };
 		61BEB0671662046800169B04 /* t-qq_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "t-qq_icon@2x.png"; sourceTree = "<group>"; };
+		61BEB06A1662428300169B04 /* ForgetPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgetPasswordViewController.h; sourceTree = "<group>"; };
+		61BEB06B1662428300169B04 /* ForgetPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgetPasswordViewController.m; sourceTree = "<group>"; };
+		61BEB06C1662428300169B04 /* ForgetPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgetPasswordViewController.xib; sourceTree = "<group>"; };
 		61C32D6916574374009E0BCC /* tab_indicator_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_indicator_bg.png; sourceTree = "<group>"; };
 		61C32D6B16574374009E0BCC /* tabbar_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_bg.png; sourceTree = "<group>"; };
 		61C32D6C16574374009E0BCC /* tabbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_bg@2x.png"; sourceTree = "<group>"; };
@@ -2680,6 +2685,9 @@
 				61AA9C1E15FC15CB009D67AD /* Step3ViewController.h */,
 				61AA9C1F15FC15CB009D67AD /* Step3ViewController.m */,
 				61AA9C2015FC15CB009D67AD /* Step3ViewController.xib */,
+				61BEB06A1662428300169B04 /* ForgetPasswordViewController.h */,
+				61BEB06B1662428300169B04 /* ForgetPasswordViewController.m */,
+				61BEB06C1662428300169B04 /* ForgetPasswordViewController.xib */,
 			);
 			name = "login & register";
 			sourceTree = "<group>";
@@ -4078,6 +4086,7 @@
 				61BEB065166203B700169B04 /* weibo_icon_s@2x.png in Resources */,
 				61BEB0681662046800169B04 /* t-qq_icon.png in Resources */,
 				61BEB0691662046800169B04 /* t-qq_icon@2x.png in Resources */,
+				61BEB06E1662428300169B04 /* ForgetPasswordViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4218,6 +4227,7 @@
 				61D509781657C15200F7191B /* FaqInnerView.m in Sources */,
 				61DD8F45165D17C000FF6A4B /* AsyncImageView.m in Sources */,
 				61DD8F46165D17C000FF6A4B /* FullyLoaded.m in Sources */,
+				61BEB06D1662428300169B04 /* ForgetPasswordViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

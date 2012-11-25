@@ -17,6 +17,7 @@
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
 #import "LocationController.h"
+#import "ForgetPasswordViewController.h"
 
 @interface LoginViewController ()
 @property (retain, nonatomic) IBOutlet UIButton *forgotPasswordBtn;
@@ -96,6 +97,22 @@
 - (IBAction)forgotPasswordAction
 {
     NSLog(@"Forgot password");
+    ForgetPasswordViewController *fpvc = [[ForgetPasswordViewController alloc] initWithNibName:@"ForgetPasswordViewController" bundle:nil];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fpvc];
+    nvc.navigationBar.layer.shadowColor = [[UIColor blackColor] CGColor];
+    nvc.navigationBar.layer.shadowOffset = CGSizeMake(0, 1.2);
+    nvc.navigationBar.layer.shadowRadius = 1.5;
+    nvc.navigationBar.layer.shadowOpacity = 0.25;
+    nvc.navigationBar.layer.masksToBounds = NO;
+    nvc.navigationBar.layer.shouldRasterize = YES;
+    if ([nvc.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
+        [nvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav-top.png"] forBarMetrics:UIBarMetricsDefault];
+    } else {
+        [nvc.navigationBar insertSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"nav-top.png"]] autorelease] atIndex:1];
+    }
+    [self presentModalViewController:nvc animated:YES];
+    [fpvc release];
+    [nvc release];
 }
 
 - (IBAction)loginAction

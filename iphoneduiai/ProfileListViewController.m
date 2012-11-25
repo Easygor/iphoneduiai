@@ -927,7 +927,7 @@ static NSInteger kDelWeiyuTag = 204;
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"user data: %@", data);
+//                NSLog(@"user data: %@", data);
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
                 if (code == 0) {
                     NSDictionary *dataData = [data objectForKey:@"data"];

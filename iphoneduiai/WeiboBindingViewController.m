@@ -20,9 +20,7 @@
 @interface WeiboBindingViewController () <SinaWeiboDelegate, WBRequestDelegate, SinaWeiboRequestDelegate>
 @property(retain,nonatomic)IBOutlet UIButton *sinaWeiboButton;
 @property(retain,nonatomic)IBOutlet UIButton *tengxunWeiboButton;
-@property(retain,nonatomic)IBOutlet UIButton *mailButton;
 
-@property(retain,nonatomic)IBOutlet UILabel *mailLabel;
 @property(retain,nonatomic)IBOutlet UILabel *sinaWeiboLabel;
 @property(retain,nonatomic)IBOutlet UILabel *tengxunWeiboLabel;
 
@@ -42,8 +40,7 @@
     [_txUserInfo release];
     [_sinaWeiboButton release];
     [_tengxunWeiboButton release];
-    [_mailButton release];
-     [_weiboEngine release], _weiboEngine = nil;
+    [_weiboEngine release], _weiboEngine = nil;
     [_sinaWeibo release];
     [super dealloc];
 }

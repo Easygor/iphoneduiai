@@ -17,5 +17,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *pictureNum;
 @property (strong, nonatomic) NSString *graphText;
 @property (retain, nonatomic) IBOutlet UILabel *xLabel;
+@property (strong, nonatomic) NSString *weibolist;
 
 @end

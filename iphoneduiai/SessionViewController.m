@@ -431,6 +431,7 @@
 
 }
 
+/*
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // read all message 
@@ -463,7 +464,7 @@
         }];
     }
     
-}
+}*/
 
 #pragma mark - Table view delegate
 - (void)resizeUIWithDuration:(NSTimeInterval)duration andCurve:(UIViewAnimationCurve)curve delta:(CGFloat)height
@@ -725,6 +726,7 @@
     self.textView.selectedRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
     self.lastRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
 //    [self growingTextViewDidChange:self.textView];
+    [self.textView becomeFirstResponder];
 }
 
 #pragma mark - request for Feeds

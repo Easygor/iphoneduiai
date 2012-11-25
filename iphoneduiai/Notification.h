@@ -11,10 +11,12 @@
 @interface Notification : NSObject
 
 @property (nonatomic) NSInteger messageCount, feedCount, noticeCount;
+
 + (Notification*)sharedInstance;
 - (void)updateFromRemote:(void(^)())block;
 - (NSMutableArray*)mergeAndOrderNotices;
 - (void)removeNoticeObject:(NSDictionary*)d;
 - (void)saveDataToPlist;
+- (void)updateMessage:(NSDictionary*)d;
 
 @end
