@@ -20,6 +20,7 @@
 #import "LeftBubbleCell.h"
 #import "RightBubbleCell.h"
 #import "CustomCellDelegate.h"
+#import "Notification.h"
 
 @interface SessionViewController () <HPGrowingTextViewDelegate, PageSmileDataSource, CustomCellDelegate>
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
@@ -760,7 +761,7 @@
                     
                     self.messages = data[@"data"];
                     self.partner = data[@"uinfo"];
-                    
+                    [[Notification sharedInstance] updateMessage:data[@"fristinfo"]];
                     [SVProgressHUD dismiss];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];

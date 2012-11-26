@@ -94,13 +94,16 @@ static NSInteger kDelWeiyuTag = 204;
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
 @property (strong, nonatomic) NSArray *weiboList;
 
+@property (strong, nonatomic) NSDate *lastWeiyuUpdateTime, *lastUserInfoUpdateTime;
+
 @end
 
 @implementation ProfileListViewController
 
 - (void)dealloc
 {
-
+    [_lastUserInfoUpdateTime release];
+    [_lastWeiyuUpdateTime release];
     [_digoList release];
     [_shitList release];
     [_existedData release];
@@ -435,8 +438,8 @@ static NSInteger kDelWeiyuTag = 204;
     
     self.showPhotoView.delegate = self;
     
-    [self grabUserInfoDetailRequest];
-    [self grabMyWeiyuListReqeustWithPage:1];
+//    [self grabUserInfoDetailRequest];
+//    [self grabMyWeiyuListReqeustWithPage:1];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -446,12 +449,21 @@ static NSInteger kDelWeiyuTag = 204;
         self.marrayReqView.marrayReq = self.marrayReq;
     }
     
-
+    if (abs([self.lastWeiyuUpdateTime timeIntervalSinceNow]) > 300 ||
+        self.weiyus == nil) {
+        [self grabMyWeiyuListReqeustWithPage:1];
+    }
+    
+    if (abs([self.lastUserInfoUpdateTime timeIntervalSinceNow]) > 300 ||
+        self.userInfo == nil) {
+        [self grabUserInfoDetailRequest];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+#warning need every time?			
     [self infoRequestFromRemote];
 }
 
@@ -966,7 +978,7 @@ static NSInteger kDelWeiyuTag = 204;
 
     [dParams setObject:[info objectForKey:@"uid"] forKey:@"uid"];
     
-    [[RKClient sharedClient] get:[@"user" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+    [[RKClient sharedClient] get:[@"/user" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
@@ -983,6 +995,7 @@ static NSInteger kDelWeiyuTag = 204;
                     self.marrayReq = [dataData objectForKey:@"marray_req"];
                     self.searchIndex = [dataData objectForKey:@"searchindex"];
                     self.weiboList = dataData[@"bindlist"];
+                    self.lastUserInfoUpdateTime = [NSDate date];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
@@ -1018,6 +1031,7 @@ static NSInteger kDelWeiyuTag = 204;
                         self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
                         // 此行须在前两行后面
                         self.weiyus = [data objectForKey:@"data"];
+                        self.lastWeiyuUpdateTime = [NSDate date];
                     }
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
@@ -1523,7 +1537,7 @@ static NSInteger kDelWeiyuTag = 204;
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     // 此行须在前两行后面
-                    NSLog(@"all user info: %@", data);
+//                    NSLog(@"all user info: %@", data);
                     self.existedData = data[@"data"][@"issetlist"];
 
                 } else{

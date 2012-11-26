@@ -217,29 +217,19 @@
 }
 
 #pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    
-    UserDetailViewController *detailViewController = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
-    detailViewController.user = self.users[indexPath.row];
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];
-    
-}
 #pragma mark - request
 - (void)blockReqeustWithPage:(NSInteger)page
 {
     [SVProgressHUD show];
     NSMutableDictionary *dParams = [Utils queryParams];
-//    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
+    [dParams setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     [self blockReqeustWithParams:dParams];
     
 }
 
 -(void)blockReqeustWithParams:(NSMutableDictionary*)params
 {
+
     [[RKClient sharedClient] get:[@"/uc/black.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
         NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
@@ -247,7 +237,7 @@
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
 //                NSLog(@"block data %@", data);
                 NSInteger code = [data[@"error"] integerValue];
-                if (code == 0 && [data[@"data"] isKindOfClass:[NSDictionary class]]) {
+                if (code == 0 && [data[@"data"] isKindOfClass:[NSArray class]]) {
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
                     self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
@@ -291,12 +281,13 @@
                                                   destructiveButtonTitle:@"移出黑名单"
                                                        otherButtonTitles:nil];
         [actionsheet showInView:self.view.window];
-    } else{
-        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
-        udvc.user = user;
-        [self.navigationController pushViewController:udvc animated:YES];
-        [udvc release];
     }
+//    else{
+//        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
+//        udvc.user = user;
+//        [self.navigationController pushViewController:udvc animated:YES];
+//        [udvc release];
+//    }
 
 }
 
@@ -305,7 +296,7 @@
 {
     if (buttonIndex == actionSheet.destructiveButtonIndex) {
         NSMutableDictionary *dParams = [Utils queryParams];
-        [dParams setObject:self.curUser[@"_id"] forKey:@"uid"];
+        [dParams setObject:self.curUser[@"uid"] forKey:@"uid"];
         
         [SVProgressHUD show];
         // cancel the block user
@@ -325,7 +316,7 @@
                     }
                     
                 } else{
-                    //[SVProgressHUD showErrorWithStatus:@"获取失败"];
+                    [SVProgressHUD showErrorWithStatus:@"服务器错误"];
                 }
             }];
             [request setOnDidFailLoadWithError:^(NSError *error){

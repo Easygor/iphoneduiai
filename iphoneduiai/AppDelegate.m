@@ -271,6 +271,7 @@
     
 }
 
+
 -(void)updateRequestWithLocation:(CLLocationCoordinate2D)curLocation
 {
     // per
@@ -291,11 +292,14 @@
                   
                                        NSMutableDictionary *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] mutableCopy];
                                        
-                                       user[@"username"] = data[@"data"][@"searchindex"][@"username"];
-                                       user[@"info"] = data[@"data"][@"userinfo"];
-                                       [[NSUserDefaults standardUserDefaults] setObject:[data objectForKey:@"accesskey"] forKey:@"accesskey"];
-                                       [[NSUserDefaults standardUserDefaults] setObject:user  forKey:@"user"];
+                                       NSDictionary *userinfo = @{
+                                       @"accesskey": user[@"accesskey"],
+                                       @"username":data[@"data"][@"searchindex"][@"username"],
+                                       @"info": data[@"data"][@"userinfo"]};
+                                       
+                                       [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
                                        [[NSUserDefaults standardUserDefaults] synchronize];
+
 
                                    } else{
 
