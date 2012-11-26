@@ -154,15 +154,15 @@
     
     // init the updae
     if ([self.conditions[@"sex"] isEqualToString:@"w"]) {
-        [self.sexSementedControl selectSegmentAtIndex:1];
+        [self.sexSementedControl selectSegment2AtIndex:1];
     } else{
-        [self.sexSementedControl selectSegmentAtIndex:0];
+        [self.sexSementedControl selectSegment2AtIndex:0];
     }
     
     if ([self.conditions[@"searchtype"] isEqualToString:@"id"]) {
-        [self.sementedControl selectSegmentAtIndex:1];
+        [self.sementedControl selectSegment2AtIndex:1];
     } else{
-        [self.sementedControl selectSegmentAtIndex:0];
+        [self.sementedControl selectSegment2AtIndex:0];
     }
     
     if (self.conditions[@"minage"] && self.conditions[@"maxage"]) {
@@ -189,8 +189,6 @@
         self.areaField.text = [NSString stringWithFormat:@"%@ %@", self.conditions[@"provincedesc"], self.conditions[@"citydesc"]];
     }
     
-    [self.conditionView setHidden:NO];
-    [self.idView setHidden:YES];
 }
 
 - (void)backAction
@@ -211,28 +209,23 @@
 {
     return  YES;
 }
--(IBAction)conditionChange:(id)sender
-{
-    UIButton * curButton = (UIButton*)sender;
-    if (curButton.tag==101) {
-        [self.idView setHidden:YES];
-        [self.conditionView setHidden:NO];
-    }else if( curButton.tag ==102)
-    {
-        [self.conditionView setHidden:YES];
-         [self.idView setHidden:NO];
-    }
-}
+
 #pragma mark - delegate sememnted
 - (void)didChange:(HZSementedControl *)segment atIndex:(NSInteger)index forValue:(NSString *)text
 {
     if ([segment isEqual:self.sementedControl]) {
-        if (index == 1) {
-         
-            self.conditions[@"searchtype"] = @"id"; 
-        } else{
+        if (index == 1)
+        {
+            self.conditions[@"searchtype"] = @"id";
+
+        }
+        else
+        {
             self.conditions[@"searchtype"] = @"detail";
         }
+        
+        self.idView.hidden = ![self.conditions[@"searchtype"] isEqualToString:@"id"];
+        self.conditionView.hidden = ![self.conditions[@"searchtype"] isEqualToString:@"detail"];;
 
     } else if([segment isEqual:self.sexSementedControl]){
         NSString *sexString = nil;
