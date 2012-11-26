@@ -58,6 +58,10 @@
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIUserInteractionEnabled">NO</bool>
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">nopic.png</string>
+										</object>
 									</object>
 									<object class="IBUIView" id="208162909">
 										<reference key="NSNextResponder" ref="800574629"/>
@@ -1147,7 +1151,7 @@
 										<string key="NSFrame">{{64, 40}, {42, 42}}</string>
 										<reference key="NSSuperview" ref="759271484"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
+										<reference key="NSNextKeyView" ref="363960599"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<int key="IBUITag">1</int>
@@ -3983,21 +3987,21 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">snsBtn0Action</string>
+						<string key="label">snsBtnAction:</string>
 						<reference key="source" ref="995868263"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">318</int>
+					<int key="connectionID">320</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">snsBtn1Action</string>
+						<string key="label">snsBtnAction:</string>
 						<reference key="source" ref="634628789"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">319</int>
+					<int key="connectionID">321</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -5682,7 +5686,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">319</int>
+			<int key="maxID">321</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -6149,6 +6153,7 @@
 			<string key="info_bg.png">{300, 42}</string>
 			<string key="intro_icon.png">{18, 18}</string>
 			<string key="more.png">{12, 13}</string>
+			<string key="nopic.png">{320, 300}</string>
 			<string key="statusdetail_header_arrow.png">{16, 16}</string>
 			<string key="take_pic_icon.png">{16, 16}</string>
 			<string key="tweibo_icon.png">{42, 42}</string>

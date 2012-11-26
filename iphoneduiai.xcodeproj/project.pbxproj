@@ -454,6 +454,8 @@
 		617ADE23166314C000751D89 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 617ADE21166314C000751D89 /* iVersion.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		617ADE24166314C000751D89 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE22166314C000751D89 /* iVersion.bundle */; };
 		617ADE26166316C900751D89 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617ADE25166316C900751D89 /* StoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		617ADE3516634F9900751D89 /* nopic.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE3316634F9900751D89 /* nopic.png */; };
+		617ADE3616634F9900751D89 /* nopic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE3416634F9900751D89 /* nopic@2x.png */; };
 		6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */; };
 		6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67D15FEA70A00BEBD00 /* Security.framework */; };
 		6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67F15FEA71A00BEBD00 /* MobileCoreServices.framework */; };
@@ -1461,6 +1463,8 @@
 		617ADE21166314C000751D89 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
 		617ADE22166314C000751D89 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
 		617ADE25166316C900751D89 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		617ADE3316634F9900751D89 /* nopic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nopic.png; sourceTree = "<group>"; };
+		617ADE3416634F9900751D89 /* nopic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nopic@2x.png"; sourceTree = "<group>"; };
 		6199D66615FEA6BB00BEBD00 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Externals/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6199D67D15FEA70A00BEBD00 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -2548,6 +2552,8 @@
 		6159B17B16180F5200705835 /* Profile images */ = {
 			isa = PBXGroup;
 			children = (
+				617ADE3316634F9900751D89 /* nopic.png */,
+				617ADE3416634F9900751D89 /* nopic@2x.png */,
 				61BEB0661662046800169B04 /* t-qq_icon.png */,
 				61BEB0671662046800169B04 /* t-qq_icon@2x.png */,
 				61BEB062166203B700169B04 /* weibo_icon_s.png */,
@@ -4099,6 +4105,8 @@
 				61BEB072166250C900169B04 /* etc@2x.png in Resources */,
 				617ADE1F166314AF00751D89 /* iRate.bundle in Resources */,
 				617ADE24166314C000751D89 /* iVersion.bundle in Resources */,
+				617ADE3516634F9900751D89 /* nopic.png in Resources */,
+				617ADE3616634F9900751D89 /* nopic@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

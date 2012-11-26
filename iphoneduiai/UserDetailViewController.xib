@@ -61,6 +61,10 @@
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIUserInteractionEnabled">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+												<object class="NSCustomResource" key="IBUIImage">
+													<string key="NSClassName">NSImage</string>
+													<string key="NSResourceName">nopic.png</string>
+												</object>
 											</object>
 											<object class="IBUIView" id="246226686">
 												<reference key="NSNextResponder" ref="709121992"/>
@@ -934,7 +938,7 @@
 												<string key="NSFrame">{{64, 40}, {42, 42}}</string>
 												<reference key="NSSuperview" ref="749588875"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView"/>
+												<reference key="NSNextKeyView" ref="601300967"/>
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIOpaque">NO</bool>
 												<int key="IBUITag">1</int>
@@ -1475,6 +1479,7 @@
 								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<bool key="IBUIEnabled">NO</bool>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<double key="IBUITitleEdgeInsets.top">0.0</double>
@@ -1522,6 +1527,7 @@
 								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<bool key="IBUIEnabled">NO</bool>
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<double key="IBUITitleEdgeInsets.top">0.0</double>
@@ -3610,6 +3616,22 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">sendQQMsgBtn</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="590158960"/>
+					</object>
+					<int key="connectionID">308</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">sendMsgBtn</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="199574038"/>
+					</object>
+					<int key="connectionID">309</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">dataSource</string>
 						<reference key="source" ref="873029372"/>
 						<reference key="destination" ref="372490531"/>
@@ -3718,21 +3740,21 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">snsBtn0Action</string>
+						<string key="label">snsBtnAction:</string>
 						<reference key="source" ref="210204732"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">305</int>
+					<int key="connectionID">310</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">snsBtn1Action</string>
+						<string key="label">snsBtnAction:</string>
 						<reference key="source" ref="327398566"/>
 						<reference key="destination" ref="372490531"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">306</int>
+					<int key="connectionID">311</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -5221,7 +5243,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">306</int>
+			<int key="maxID">311</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5476,6 +5498,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">UserDetailViewController</string>
 					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">moreDetailAction:</string>
+						<string key="NS.object.0">UIButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">moreDetailAction:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">moreDetailAction:</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addressLabel">UILabel</string>
 						<string key="areaLabel">UILabel</string>
@@ -5493,6 +5526,8 @@
 						<string key="nameAgeLabel">UILabel</string>
 						<string key="phoneImageView">UIImageView</string>
 						<string key="phoneLabel">UILabel</string>
+						<string key="sendMsgBtn">UIButton</string>
+						<string key="sendQQMsgBtn">UIButton</string>
 						<string key="showPhotoView">ShowPhotoView</string>
 						<string key="snsbtn0">UIButton</string>
 						<string key="snsbtn1">UIButton</string>
@@ -5566,6 +5601,14 @@
 							<string key="name">phoneLabel</string>
 							<string key="candidateClassName">UILabel</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="sendMsgBtn">
+							<string key="name">sendMsgBtn</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="sendQQMsgBtn">
+							<string key="name">sendQQMsgBtn</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="showPhotoView">
 							<string key="name">showPhotoView</string>
 							<string key="candidateClassName">ShowPhotoView</string>
@@ -5618,6 +5661,7 @@
 			<string key="intro_icon.png">{18, 18}</string>
 			<string key="more.png">{12, 13}</string>
 			<string key="msg_icon.png">{30, 30}</string>
+			<string key="nopic.png">{320, 300}</string>
 			<string key="qq_icon.png">{30, 30}</string>
 			<string key="tweibo_icon.png">{42, 42}</string>
 			<string key="weibo_icon.png">{42, 42}</string>

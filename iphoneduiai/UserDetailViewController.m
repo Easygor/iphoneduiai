@@ -24,7 +24,7 @@
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 
-@interface UserDetailViewController () <CustomCellDelegate, UIActionSheetDelegate>
+@interface UserDetailViewController () <CustomCellDelegate, UIActionSheetDelegate, UIAlertViewDelegate>
 
 @property (retain, nonatomic) IBOutlet UITableView *tableView;
 @property (retain, nonatomic) IBOutlet ShowPhotoView *showPhotoView;
@@ -62,6 +62,8 @@ static CGFloat dHeight2 = 0.0f;
 @property (strong, nonatomic) NSArray *weiboList;
 @property (strong, nonatomic) UIActionSheet *moreSheet, *descSheet;
 @property (strong, nonatomic) NSArray *blockDescs;
+@property (retain, nonatomic) IBOutlet UIButton *sendQQMsgBtn;
+@property (retain, nonatomic) IBOutlet UIButton *sendMsgBtn;
 
 @end
 
@@ -110,6 +112,8 @@ static CGFloat dHeight2 = 0.0f;
     [_countView release];
     [_searchIndex release];
     
+    [_sendQQMsgBtn release];
+    [_sendMsgBtn release];
     [super dealloc];
 }
 
@@ -192,32 +196,17 @@ static CGFloat dHeight2 = 0.0f;
     if (![_weiboList isEqualToArray:weiboList]) {
         _weiboList = [weiboList retain];
         
-        if (weiboList.count == 1) {
-            if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
-                [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
+        for (NSDictionary *sns in weiboList)
+        {
+            if ([sns[@"bindtype"] isEqualToString:@"opensinaweibo"])
+            {
                 self.snsbtn0.enabled = YES;
-
-            } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
-                [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
-                self.snsbtn0.enabled = YES;
-
+                self.snsbtn0.tag = [weiboList indexOfObject:sns];
             }
-            
-        } else if(weiboList.count == 2){
-            if ([weiboList[0][@"bindtype"] isEqualToString:@"sinaweibo"]) {
-                [self.snsbtn0 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
-                self.snsbtn0.enabled = YES;
-            } else if([weiboList[0][@"bindtype"] isEqualToString:@"tweibo"]){
-                [self.snsbtn0 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
-                self.snsbtn0.enabled = YES;
-            }
-            
-            if ([weiboList[1][@"bindtype"] isEqualToString:@"sinaweibo"]) {
-                [self.snsbtn1 setImage:[UIImage imageNamed:@"weibo_icon"] forState:UIControlStateNormal];
-                 self.snsbtn1.enabled = YES;
-            } else if([weiboList[1][@"bindtype"] isEqualToString:@"tweibo"]){
-                [self.snsbtn1 setImage:[UIImage imageNamed:@"tweibo_icon"] forState:UIControlStateNormal];
-                 self.snsbtn1.enabled = YES;                
+            else if([sns[@"bindtype"] isEqualToString:@"opentweibo"])
+            {
+                self.snsbtn1.enabled = YES;
+                self.snsbtn1.tag = [weiboList indexOfObject:sns];
             }
         }
         
@@ -264,7 +253,7 @@ static CGFloat dHeight2 = 0.0f;
     if (![_userBody isEqualToDictionary:userBody]) {
         _userBody = [userBody retain];
         
-        if ([[userBody objectForKey:@"weight"] isEqualToString:@"未填写"]) {
+        if ([[userBody objectForKey:@"weight"] isEqualToString:@"未填"]) {
             self.weightLabel.text = [userBody objectForKey:@"weight"];
         } else{
             self.weightLabel.text = [NSString stringWithFormat:@"%@kg", [userBody objectForKey:@"weight"]];
@@ -298,6 +287,8 @@ static CGFloat dHeight2 = 0.0f;
     [self setMoreUserInfoView:nil];
     [self setCountView:nil];
 
+    [self setSendQQMsgBtn:nil];
+    [self setSendMsgBtn:nil];
     [super viewDidUnload];
 }
 
@@ -555,7 +546,8 @@ static CGFloat dHeight2 = 0.0f;
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
 //                NSLog(@"user data: %@", data);
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
-                if (code == 0) {
+                if (code == 0)
+                {
                     NSDictionary *dataData = [data objectForKey:@"data"];
                     self.photos = [dataData objectForKey:@"photo"];
                     self.userInfo = [dataData objectForKey:@"user_info"];
@@ -568,17 +560,45 @@ static CGFloat dHeight2 = 0.0f;
                         self.searchIndex = [dataData objectForKey:@"searchindex"];
                     }
                     self.weiboList = dataData[@"bindlist"];
-                    
+                    self.sendMsgBtn.enabled = YES;
+                    self.sendQQMsgBtn.enabled = YES;
                 }
+                else
+                {
+                    // alertview
+                    UIAlertView *noInfoAlertView = [[UIAlertView alloc]
+                                                    initWithTitle:nil
+                                                    message:data[@"message"]
+                                                    delegate:self
+                                                    cancelButtonTitle:nil
+                                                    otherButtonTitles:@"确定", nil];
+                    [noInfoAlertView show];
+                    [noInfoAlertView release];
+                }
+            }
+            else
+            {
+                [SVProgressHUD showErrorWithStatus:@"获取信息出错"];
             }
         }];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
-            NSLog(@"error: %@", [error description]);
+            NSLog(@"Get user info detail error: %@, url: %@", [error description], request.URL);
         }];
         
     }];
 }
+
+#pragma mark - alertview delegate 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex == buttonIndex) {
+        return;
+    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)grabMyWeiyuListReqeustWithPage:(NSInteger)page
 {
@@ -677,7 +697,7 @@ static CGFloat dHeight2 = 0.0f;
                 }
                 
             } else{
-                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+                [SVProgressHUD showErrorWithStatus:@"获取失败"];
             }
         }];
         
@@ -905,22 +925,14 @@ static CGFloat dHeight2 = 0.0f;
     
 }
 
-- (IBAction)snsBtn0Action
+- (IBAction)snsBtnAction:(UIButton*)btn
 {
-
-    NSURL *url = [NSURL URLWithString:self.weiboList[0][@"url"]];
+    
+    NSURL *url = [NSURL URLWithString:self.weiboList[btn.tag][@"url"]];
     if (url) {
         [[UIApplication sharedApplication] openURL:url];
     }
-
-}
-
-- (IBAction)snsBtn1Action
-{
-    NSURL *url = [NSURL URLWithString:self.weiboList[1][@"url"]];
-    if (url) {
-        [[UIApplication sharedApplication] openURL:url];
-    }
+    
 }
 
 @end
