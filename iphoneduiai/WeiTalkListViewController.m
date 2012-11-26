@@ -21,6 +21,9 @@
 #import "UserDetailViewController.h"
 #import "DetailWeiyuViewController.h"
 
+#import "WeiyuContentCell.h"
+#import "WeiyuFaqCell.h"
+
 @interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
     BOOL reloading;
@@ -276,6 +279,44 @@
 
 - (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+    NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
+    if ([weiyu[@"vtype"] isEqualToString:@"photo"])
+    {
+        
+    }
+    else if ([weiyu[@"vtype"] isEqualToString:@"textpic"])
+    {
+    }
+    else if ([weiyu[@"vtype"] isEqualToString:@"faq"])
+    {
+        static NSString *CellIdentifier = @"WeiyuFaqCell";
+        WeiyuContentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"WeiyuCustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:1];
+            cell.delegate = self;
+        }
+        
+        cell.weiyu = weiyu;
+        
+        return cell;
+    }
+    else
+    {
+        static NSString *CellIdentifier = @"WeiyuContetnCell";
+        WeiyuContentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"WeiyuCustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:0];
+            cell.delegate = self;
+        }
+        
+        cell.weiyu = weiyu;
+        
+        return cell;
+    }
+    
     static NSString *CellIdentifier = @"weiyuWordCell";
     WeiyuWordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -285,7 +326,7 @@
     }
     
     // Configure the cell...
-    cell.weiyu = [self.weiyus objectAtIndex:indexPath.row];
+    cell.weiyu = weiyu;
     
     return cell;
 }

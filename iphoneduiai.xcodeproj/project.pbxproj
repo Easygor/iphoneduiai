@@ -244,6 +244,7 @@
 		61240BDD1619C4A7005C4E6C /* MarrayReqView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BDC1619C4A7005C4E6C /* MarrayReqView.m */; };
 		61240BE41619D8D6005C4E6C /* MoreUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BE31619D8D6005C4E6C /* MoreUserInfoView.m */; };
 		61240BF41619F1E8005C4E6C /* WeiyuWordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */; };
+		61252AD91663E8D20062BFA0 /* FaqInnerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61252AD81663E8D20062BFA0 /* FaqInnerLabel.m */; };
 		61265A5D165BAC7F00BAF8E0 /* nav_back_btn_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A55165BAC7E00BAF8E0 /* nav_back_btn_highlight@2x.png */; };
 		61265A5E165BAC7F00BAF8E0 /* nav_back_btn_highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A56165BAC7F00BAF8E0 /* nav_back_btn_highlights.png */; };
 		61265A5F165BAC7F00BAF8E0 /* nav_back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A57165BAC7F00BAF8E0 /* nav_back_btn.png */; };
@@ -291,6 +292,14 @@
 		6134D44D1663B26F00745108 /* iPhone_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6134D4491663B26F00745108 /* iPhone_icon@2x.png */; };
 		6134D4521663C26400745108 /* pc_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6134D4501663C26400745108 /* pc_icon.png */; };
 		6134D4531663C26400745108 /* pc_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6134D4511663C26400745108 /* pc_icon@2x.png */; };
+		6134D4561663CC2800745108 /* WeiyuTextPicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D4551663CC2800745108 /* WeiyuTextPicCell.m */; };
+		6134D45A1663CC6200745108 /* WeiyuContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D4591663CC6200745108 /* WeiyuContentCell.m */; };
+		6134D45D1663CCD500745108 /* WeiyuFaqCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D45C1663CCD500745108 /* WeiyuFaqCell.m */; };
+		6134D4601663CCF300745108 /* WeiyuOnePicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D45F1663CCF300745108 /* WeiyuOnePicCell.m */; };
+		6134D4631663CD1400745108 /* WeiyuOneLinePicsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D4621663CD1400745108 /* WeiyuOneLinePicsCell.m */; };
+		6134D4661663CD3F00745108 /* WeiyuTwoLinePicsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D4651663CD3F00745108 /* WeiyuTwoLinePicsCell.m */; };
+		6134D4691663CD5800745108 /* WeiyuThreeLinePicsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6134D4681663CD5800745108 /* WeiyuThreeLinePicsCell.m */; };
+		6134D46B1663CD9E00745108 /* WeiyuCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6134D46A1663CD9D00745108 /* WeiyuCustomCell.xib */; };
 		61397A921607FC2A009FDAF9 /* degree.plist in Resources */ = {isa = PBXBuildFile; fileRef = 61397A911607FC2A009FDAF9 /* degree.plist */; };
 		613AB4B2163255FC0045ED4E /* SSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613AB4B0163255FC0045ED4E /* SSViewController.m */; };
 		613AB4B3163255FC0045ED4E /* SSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613AB4B1163255FC0045ED4E /* SSViewController.xib */; };
@@ -1221,6 +1230,8 @@
 		61240BF21619F1E8005C4E6C /* WeiyuWordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuWordCell.h; sourceTree = "<group>"; };
 		61240BF31619F1E8005C4E6C /* WeiyuWordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuWordCell.m; sourceTree = "<group>"; };
 		61240BF51619F7A5005C4E6C /* CustomCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCellDelegate.h; sourceTree = "<group>"; };
+		61252AD71663E8D20062BFA0 /* FaqInnerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FaqInnerLabel.h; sourceTree = "<group>"; };
+		61252AD81663E8D20062BFA0 /* FaqInnerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FaqInnerLabel.m; sourceTree = "<group>"; };
 		61265A55165BAC7E00BAF8E0 /* nav_back_btn_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_btn_highlight@2x.png"; sourceTree = "<group>"; };
 		61265A56165BAC7F00BAF8E0 /* nav_back_btn_highlights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back_btn_highlights.png; sourceTree = "<group>"; };
 		61265A57165BAC7F00BAF8E0 /* nav_back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back_btn.png; sourceTree = "<group>"; };
@@ -1273,6 +1284,21 @@
 		6134D4491663B26F00745108 /* iPhone_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iPhone_icon@2x.png"; sourceTree = "<group>"; };
 		6134D4501663C26400745108 /* pc_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pc_icon.png; sourceTree = "<group>"; };
 		6134D4511663C26400745108 /* pc_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pc_icon@2x.png"; sourceTree = "<group>"; };
+		6134D4541663CC2800745108 /* WeiyuTextPicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuTextPicCell.h; sourceTree = "<group>"; };
+		6134D4551663CC2800745108 /* WeiyuTextPicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuTextPicCell.m; sourceTree = "<group>"; };
+		6134D4581663CC6200745108 /* WeiyuContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuContentCell.h; sourceTree = "<group>"; };
+		6134D4591663CC6200745108 /* WeiyuContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuContentCell.m; sourceTree = "<group>"; };
+		6134D45B1663CCD500745108 /* WeiyuFaqCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuFaqCell.h; sourceTree = "<group>"; };
+		6134D45C1663CCD500745108 /* WeiyuFaqCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuFaqCell.m; sourceTree = "<group>"; };
+		6134D45E1663CCF300745108 /* WeiyuOnePicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuOnePicCell.h; sourceTree = "<group>"; };
+		6134D45F1663CCF300745108 /* WeiyuOnePicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuOnePicCell.m; sourceTree = "<group>"; };
+		6134D4611663CD1400745108 /* WeiyuOneLinePicsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuOneLinePicsCell.h; sourceTree = "<group>"; };
+		6134D4621663CD1400745108 /* WeiyuOneLinePicsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuOneLinePicsCell.m; sourceTree = "<group>"; };
+		6134D4641663CD3F00745108 /* WeiyuTwoLinePicsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuTwoLinePicsCell.h; sourceTree = "<group>"; };
+		6134D4651663CD3F00745108 /* WeiyuTwoLinePicsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuTwoLinePicsCell.m; sourceTree = "<group>"; };
+		6134D4671663CD5800745108 /* WeiyuThreeLinePicsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiyuThreeLinePicsCell.h; sourceTree = "<group>"; };
+		6134D4681663CD5800745108 /* WeiyuThreeLinePicsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeiyuThreeLinePicsCell.m; sourceTree = "<group>"; };
+		6134D46A1663CD9D00745108 /* WeiyuCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeiyuCustomCell.xib; sourceTree = "<group>"; };
 		61397A911607FC2A009FDAF9 /* degree.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = degree.plist; sourceTree = "<group>"; };
 		613AB4AF163255FC0045ED4E /* SSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSViewController.h; sourceTree = "<group>"; };
 		613AB4B0163255FC0045ED4E /* SSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSViewController.m; sourceTree = "<group>"; };
@@ -2377,6 +2403,30 @@
 			name = "message images";
 			sourceTree = "<group>";
 		};
+		6134D4571663CC3800745108 /* Weiyu Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6134D4541663CC2800745108 /* WeiyuTextPicCell.h */,
+				6134D4551663CC2800745108 /* WeiyuTextPicCell.m */,
+				6134D4581663CC6200745108 /* WeiyuContentCell.h */,
+				6134D4591663CC6200745108 /* WeiyuContentCell.m */,
+				6134D45B1663CCD500745108 /* WeiyuFaqCell.h */,
+				6134D45C1663CCD500745108 /* WeiyuFaqCell.m */,
+				6134D45E1663CCF300745108 /* WeiyuOnePicCell.h */,
+				6134D45F1663CCF300745108 /* WeiyuOnePicCell.m */,
+				6134D4611663CD1400745108 /* WeiyuOneLinePicsCell.h */,
+				6134D4621663CD1400745108 /* WeiyuOneLinePicsCell.m */,
+				6134D4641663CD3F00745108 /* WeiyuTwoLinePicsCell.h */,
+				6134D4651663CD3F00745108 /* WeiyuTwoLinePicsCell.m */,
+				6134D4671663CD5800745108 /* WeiyuThreeLinePicsCell.h */,
+				6134D4681663CD5800745108 /* WeiyuThreeLinePicsCell.m */,
+				61252AD71663E8D20062BFA0 /* FaqInnerLabel.h */,
+				61252AD81663E8D20062BFA0 /* FaqInnerLabel.m */,
+				6134D46A1663CD9D00745108 /* WeiyuCustomCell.xib */,
+			);
+			name = "Weiyu Cells";
+			sourceTree = "<group>";
+		};
 		61397A901607F95D009FDAF9 /* picker views */ = {
 			isa = PBXGroup;
 			children = (
@@ -2491,7 +2541,12 @@
 		6153D9BC161093F200AC4A2D /* Custom Cell */ = {
 			isa = PBXGroup;
 			children = (
+				6134D4571663CC3800745108 /* Weiyu Cells */,
 				6153D9BD1610941900AC4A2D /* CustomCell.xib */,
+				61D509731657C0EB00F7191B /* EngzoContainerView.h */,
+				61D509741657C0EB00F7191B /* EngzoContainerView.m */,
+				61D509761657C15200F7191B /* FaqInnerView.h */,
+				61D509771657C15200F7191B /* FaqInnerView.m */,
 				6153D9BF161099BC00AC4A2D /* UserInfoTableCell.h */,
 				6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */,
 				6153D9D71610B49200AC4A2D /* UserCardView.h */,
@@ -2519,10 +2574,6 @@
 				616AC148164F6F5500EF660C /* DigoUserCell.m */,
 				616AC178164F824200EF660C /* BlockUserCell.h */,
 				616AC179164F824200EF660C /* BlockUserCell.m */,
-				61D509731657C0EB00F7191B /* EngzoContainerView.h */,
-				61D509741657C0EB00F7191B /* EngzoContainerView.m */,
-				61D509761657C15200F7191B /* FaqInnerView.h */,
-				61D509771657C15200F7191B /* FaqInnerView.m */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -4123,6 +4174,7 @@
 				6134D44D1663B26F00745108 /* iPhone_icon@2x.png in Resources */,
 				6134D4521663C26400745108 /* pc_icon.png in Resources */,
 				6134D4531663C26400745108 /* pc_icon@2x.png in Resources */,
+				6134D46B1663CD9E00745108 /* WeiyuCustomCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4264,6 +4316,14 @@
 				61BEB06D1662428300169B04 /* ForgetPasswordViewController.m in Sources */,
 				617ADE1E166314AF00751D89 /* iRate.m in Sources */,
 				617ADE23166314C000751D89 /* iVersion.m in Sources */,
+				6134D4561663CC2800745108 /* WeiyuTextPicCell.m in Sources */,
+				6134D45A1663CC6200745108 /* WeiyuContentCell.m in Sources */,
+				6134D45D1663CCD500745108 /* WeiyuFaqCell.m in Sources */,
+				6134D4601663CCF300745108 /* WeiyuOnePicCell.m in Sources */,
+				6134D4631663CD1400745108 /* WeiyuOneLinePicsCell.m in Sources */,
+				6134D4661663CD3F00745108 /* WeiyuTwoLinePicsCell.m in Sources */,
+				6134D4691663CD5800745108 /* WeiyuThreeLinePicsCell.m in Sources */,
+				61252AD91663E8D20062BFA0 /* FaqInnerLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
