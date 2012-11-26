@@ -21,6 +21,7 @@
 #import "SessionViewController.h"
 #import "ShowCommentViewController.h"
 #import "Notification.h"
+#import "ForgetPasswordViewController.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -221,6 +222,23 @@ static CGFloat dHeight2 = 0.0f;
      
 #warning here is static value
         self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@/900m", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
+        NSString *dname = [searchIndex[@"devicename"] description];
+        if ([dname hasPrefix:@"iP"])
+        {
+            self.phoneImageView.image = [UIImage imageNamed:@"iPhone_icon"];
+            self.phoneLabel.text = dname;
+        }
+        else if([dname isEqualToString:@"0"])
+        {
+            self.phoneImageView.image = [UIImage imageNamed:@"pc_icon"];
+            self.phoneLabel.text = @"PC";
+        }
+        else
+        {
+            self.phoneImageView.image = [UIImage imageNamed:@"andriod_icon"];
+            self.phoneLabel.text = dname;
+        }
+        
         self.countView.count = [[searchIndex objectForKey:@"digocount"] description];
 
     }
@@ -932,12 +950,26 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)snsBtnAction:(UIButton*)btn
 {
-    
-    NSURL *url = [NSURL URLWithString:self.weiboList[btn.tag][@"url"]];
-    if (url) {
-        [[UIApplication sharedApplication] openURL:url];
+    NSDictionary *t = self.weiboList[btn.tag];
+    NSString *urlString;
+    if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
+        urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
+    }
+    else if ([t[@"bindtype"] isEqualToString:@"opentweibo"])
+    {
+        urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"t.qq.com/" withString:@"ti.3g.qq.com/touch/iphone/#guest_home/u="];
     }
     
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    if (url) {
+//        [[UIApplication sharedApplication] openURL:url];
+//    }
+    
+    ForgetPasswordViewController *fpvc = [[ForgetPasswordViewController alloc] initWithNibName:@"ForgetPasswordViewController" bundle:nil];
+    fpvc.urlString = urlString;
+    [self.navigationController pushViewController:fpvc animated:YES];
+    [fpvc release];
+
 }
 
 @end

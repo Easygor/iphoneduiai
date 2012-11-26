@@ -10,4 +10,6 @@
 
 @interface ForgetPasswordViewController : UIViewController
 
+@property (strong, nonatomic) NSString *urlString;
+
 @end

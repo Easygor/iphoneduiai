@@ -19,6 +19,7 @@
 
 - (void)dealloc {
     [_webView release];
+    [_urlString release];
     [super dealloc];
 }
 
@@ -26,18 +27,41 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"创建帐号"];
+
+    
 
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
+    NSString *titleString = nil;
+    if (self.urlString)
+    {
+        titleString = @"微博";
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]]];
+    }
+    else
+    {
+        titleString = @"找回密码";
+        [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://duiai.com/login/getpassword.html"]]];
+    }
+    
+    self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:titleString];
 
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://duiai.com/login/getpassword.html"]]];
 }
 
 - (void)backAction
 {
-    [self dismissModalViewControllerAnimated:YES];
+    if (self.urlString) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else{
+        [self dismissModalViewControllerAnimated:YES];
+    }
+
+}
+
+- (BOOL)hidesBottomBarWhenPushed
+{
+    return YES;
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
