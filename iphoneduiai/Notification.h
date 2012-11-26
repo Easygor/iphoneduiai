@@ -19,5 +19,6 @@
 - (void)saveDataToPlist;
 - (void)updateMessage:(NSDictionary*)d;
 - (NSMutableDictionary*)getMessageWithUid:(NSString*)uid;
+- (void)clearAllBages;
 
 @end

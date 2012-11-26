@@ -11,6 +11,7 @@
 #import "LocationController.h"
 #import "Notification.h"
 #import <RestKit/JSONKit.h>
+#import "Notification.h"
 //#import "RaisedCenterButton.h"
 
 @interface AppDelegate ()
@@ -19,7 +20,7 @@
 @property (retain, nonatomic) IBOutlet UITabBarItem *messageItem;
 @property (retain, nonatomic) IBOutlet UITabBarItem *weiyuItem;
 @property (retain, nonatomic) IBOutlet UITabBarItem *meItem;
-
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -27,6 +28,8 @@
 
 - (void)dealloc
 {
+    [_timer invalidate];
+    [_timer release];
     [_window release];
     [_managedObjectContext release];
     [_managedObjectModel release];
@@ -79,9 +82,31 @@
     }
     
     [self configRestKit];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:30
+                                                  target:self
+                                                selector:@selector(updateNotificationList)
+                                                userInfo:nil
+                                                 repeats:YES];
+
+//    [self.timer fire];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)updateNotificationList
+{
+    [[Notification sharedInstance] updateFromRemote:^{
+        NSLog(@"update notificaiton");
+        Notification *n = [Notification sharedInstance];
+        NSInteger total = n.messageCount + n.feedCount + n.noticeCount;
+        if (total > 0) {
+            self.messageItem.badgeValue = [@(total) description];
+        } else{
+            self.messageItem.badgeValue = nil;
+        }
+        
+    }];
 }
 
 
