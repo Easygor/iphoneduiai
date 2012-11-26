@@ -99,8 +99,15 @@ static NSString *const emailRegex = @"\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-
     }
     [[NSUserDefaults standardUserDefaults] setObject:d forKey:@"step1"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:NSStringFromClass([self class])];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:NSStringFromClass([self class])];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
