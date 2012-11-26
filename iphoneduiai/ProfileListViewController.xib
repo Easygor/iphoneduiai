@@ -877,6 +877,10 @@
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<bool key="IBUIUserInteractionEnabled">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+												<object class="NSCustomResource" key="IBUIImage">
+													<string key="NSClassName">NSImage</string>
+													<string key="NSResourceName">pc_icon.png</string>
+												</object>
 											</object>
 											<object class="IBUILabel" id="657549670">
 												<reference key="NSNextResponder" ref="795462182"/>
@@ -891,7 +895,7 @@
 												<int key="IBUIContentMode">7</int>
 												<bool key="IBUIUserInteractionEnabled">NO</bool>
 												<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-												<string key="IBUIText">小米手机M1</string>
+												<string key="IBUIText">PC</string>
 												<nil key="IBUITextColor"/>
 												<nil key="IBUIHighlightedColor"/>
 												<int key="IBUIBaselineAdjustment">0</int>
@@ -5914,25 +5918,6 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ProfileListViewController</string>
 					<string key="superclassName">UITableViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="friendConditionAction:">UIButton</string>
-						<string key="moreDetailAction:">UIButton</string>
-						<string key="snsBtnAction:">UIButton</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="friendConditionAction:">
-							<string key="name">friendConditionAction:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBActionInfo" key="moreDetailAction:">
-							<string key="name">moreDetailAction:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBActionInfo" key="snsBtnAction:">
-							<string key="name">snsBtnAction:</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addressLabel">UILabel</string>
 						<string key="areaField">UITextField</string>
@@ -6172,6 +6157,7 @@
 			<string key="intro_icon.png">{18, 18}</string>
 			<string key="more.png">{12, 13}</string>
 			<string key="nopic.png">{320, 300}</string>
+			<string key="pc_icon.png">{21, 25}</string>
 			<string key="statusdetail_header_arrow.png">{16, 16}</string>
 			<string key="take_pic_icon.png">{16, 16}</string>
 			<string key="tweibo_icon.png">{42, 42}</string>

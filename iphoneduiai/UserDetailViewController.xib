@@ -669,6 +669,10 @@
 														<string key="NSReuseIdentifierKey">_NS:9</string>
 														<bool key="IBUIUserInteractionEnabled">NO</bool>
 														<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+														<object class="NSCustomResource" key="IBUIImage">
+															<string key="NSClassName">NSImage</string>
+															<string key="NSResourceName">pc_icon.png</string>
+														</object>
 													</object>
 													<object class="IBUILabel" id="902357759">
 														<reference key="NSNextResponder" ref="440069271"/>
@@ -683,7 +687,7 @@
 														<int key="IBUIContentMode">7</int>
 														<bool key="IBUIUserInteractionEnabled">NO</bool>
 														<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-														<string key="IBUIText">小米手机M1</string>
+														<string key="IBUIText">PC</string>
 														<nil key="IBUITextColor"/>
 														<nil key="IBUIHighlightedColor"/>
 														<int key="IBUIBaselineAdjustment">0</int>
@@ -5649,6 +5653,7 @@
 			<string key="more.png">{12, 13}</string>
 			<string key="msg_icon.png">{30, 30}</string>
 			<string key="nopic.png">{320, 300}</string>
+			<string key="pc_icon.png">{21, 25}</string>
 			<string key="qq_icon.png">{30, 30}</string>
 			<string key="tweibo_icon.png">{42, 42}</string>
 			<string key="weibo_icon.png">{42, 42}</string>

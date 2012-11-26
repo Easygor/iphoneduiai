@@ -1,18 +1,18 @@
 //
-//  WeiyuOnePicCell.m
+//  WeiyuTwoAndMorePicCell.m
 //  iphoneduiai
 //
 //  Created by Cloud Dai on 12-11-27.
 //  Copyright (c) 2012年 duiai.com. All rights reserved.
 //
 
-#import "WeiyuOnePicCell.h"
+#import "WeiyuTwoAndMorePicCell.h"
 #import "AsyncImageView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "SliderView.h"
 #import "SVProgressHUD.h"
 
-@interface WeiyuOnePicCell () <UIScrollViewDelegate, SliderDataSource, UIActionSheetDelegate>
+@interface WeiyuTwoAndMorePicCell () <UIScrollViewDelegate, SliderDataSource, UIActionSheetDelegate>
 
 @property (retain, nonatomic) IBOutlet AsyncImageView *avatarImageView;
 @property (retain, nonatomic) IBOutlet UIView *shadowView;
@@ -23,7 +23,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *timeIconView;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 
-@property (retain, nonatomic) IBOutlet AsyncImageView *showPicView;
 @property (strong, nonatomic) NSMutableArray *photos;
 
 @property (strong, nonatomic) NSString *addTimeDesc;
@@ -33,11 +32,12 @@
 
 @end
 
-@implementation WeiyuOnePicCell
+@implementation WeiyuTwoAndMorePicCell 
+
 
 - (void)dealloc {
     self.delegate = nil;
-
+    
     [_slider release];
     [_curImageView release];
     [_avatarImageView release];
@@ -54,8 +54,7 @@
     [_addTimeDesc release];
     [_weiyu release];
     [_photos release];
-    [_showPicView release];
-
+    
     [super dealloc];
 }
 
@@ -110,6 +109,8 @@
     }
 }
 
+
+
 - (void)doInitWork
 {
     self.shadowView.layer.shadowColor = [RGBCOLOR(153, 153, 153) CGColor];
@@ -127,9 +128,10 @@
     self.avatarImageView.userInteractionEnabled = YES;
     [self.avatarImageView addGestureRecognizer:singleTap];
     
-    [self.showPicView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
-    //                imView.tag = 0;
-    self.showPicView.userInteractionEnabled = YES;
+    for (AsyncImageView *v in self.mainView.subviews) {
+        v.userInteractionEnabled = YES;
+        [v addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
+    }
     
 }
 
@@ -161,19 +163,25 @@
     if (![_photos isEqualToArray:photos]) {
         _photos = [photos retain];
         
-        if (photos.count > 0)
+        for (int i=0; i<self.mainView.subviews.count; i++)
         {
-            NSDictionary *d = [photos objectAtIndex:0];
-            [self.showPicView loadImage:d[@"icon"]];
-            self.showPicView.userInteractionEnabled = YES;
-        }
-        else
-        {
-            self.showPicView.image = nil;
-            self.showPicView.userInteractionEnabled= NO;
-        }
+            AsyncImageView *v = [self.mainView.subviews objectAtIndex:i];
+            if (i < self.photos.count)
+            {
+                
+                NSDictionary *d = self.photos[i];
+                v.userInteractionEnabled = YES;
+                [v loadImage:d[@"icon"]];
+            }
+            else
+            {
+                v.image = nil;
+                v.userInteractionEnabled = NO;
+                
+            }
 
- 
+        }
+        
     }
 }
 
