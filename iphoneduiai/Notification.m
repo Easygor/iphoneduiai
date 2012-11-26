@@ -141,6 +141,11 @@ static NSString *fileName = @"notifications.plist";
     }
 }
 
+- (NSMutableDictionary*)getMessageWithUid:(NSString*)uid
+{
+    return self.message[@"data"][[uid description]][@"data"];
+}
+
 - (void)setFeed:(NSMutableDictionary *)feed
 {
 //    if (feed == nil) {

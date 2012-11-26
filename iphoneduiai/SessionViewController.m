@@ -753,7 +753,7 @@
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
-                    NSLog(@"message: %@", data);
+//                    NSLog(@"message: %@", data);
                     self.loading = NO;
                     self.totalPage = [[[data objectForKey:@"pager"] objectForKey:@"pagecount"] integerValue];
                     self.curPage = [[[data objectForKey:@"pager"] objectForKey:@"thispage"] integerValue];
@@ -761,7 +761,27 @@
                     
                     self.messages = data[@"data"];
                     self.partner = data[@"uinfo"];
-                    [[Notification sharedInstance] updateMessage:data[@"fristinfo"]];
+                    
+                    // update the notification
+                    if ([data[@"fristinfo"] isKindOfClass:[NSDictionary class]] && data[@"fristinfo"][@"msgtoken"])
+                    {
+                        [[Notification sharedInstance] updateMessage:data[@"fristinfo"]];
+                    }
+                    else
+                    {
+                        if (self.messages.count > 0)
+                        {
+                            NSMutableDictionary *tmp = [self.messages[0] mutableCopy];
+                            tmp[@"content"] = @"";
+                            tmp[@"senduid"] = [self.senduid copy];
+                            tmp[@"tid"] = @"";
+                            tmp[@"uinfo"] = [self.messageData[@"uinfo"] mutableCopy];
+                            tmp[@"uid"] = [self.messages[0][@"senduid"] copy];
+                            
+                            [[Notification sharedInstance] updateMessage:tmp];
+                        }
+                    }
+                    
                     [SVProgressHUD dismiss];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];

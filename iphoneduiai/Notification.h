@@ -18,5 +18,6 @@
 - (void)removeNoticeObject:(NSDictionary*)d;
 - (void)saveDataToPlist;
 - (void)updateMessage:(NSDictionary*)d;
+- (NSMutableDictionary*)getMessageWithUid:(NSString*)uid;
 
 @end

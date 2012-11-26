@@ -20,6 +20,7 @@
 #import "CopyQQViewController.h"
 #import "SessionViewController.h"
 #import "ShowCommentViewController.h"
+#import "Notification.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -643,13 +644,17 @@ static CGFloat dHeight2 = 0.0f;
 {
     NSLog(@"send message...");
     SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
-    NSMutableDictionary *info = [[[NSMutableDictionary alloc] init] autorelease];
-    NSMutableDictionary *tmp = [[[NSMutableDictionary alloc] init] autorelease];
-    info[@"niname"] = self.user[@"niname"];
-    tmp[@"senduid"] = self.user[@"_id"];
-    tmp[@"uinfo"] = info;
+    NSMutableDictionary *msgTmp = [[Notification sharedInstance] getMessageWithUid:self.user[@"_id"]];
+    if (msgTmp == nil) {
+        NSMutableDictionary *info = [[[NSMutableDictionary alloc] init] autorelease];
+        msgTmp = [[[NSMutableDictionary alloc] init] autorelease];
+        info[@"niname"] = self.user[@"niname"];
+        info[@"photo"] = self.user[@"photo"];
+        msgTmp[@"senduid"] = self.user[@"_id"];
+        msgTmp[@"uinfo"] = info;
+    }
     
-    svc.messageData = tmp;
+    svc.messageData = msgTmp;
     svc.senduid = self.user[@"_id"];
     [self.navigationController pushViewController:svc animated:YES];
     [svc release];
