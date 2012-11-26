@@ -94,7 +94,7 @@ static NSInteger kDelWeiyuTag = 204;
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
 @property (strong, nonatomic) NSArray *weiboList;
 
-@property (strong, nonatomic) NSDate *lastWeiyuUpdateTime, *lastUserInfoUpdateTime;
+@property (strong, nonatomic) NSDate *lastWeiyuUpdateTime, *lastUserInfoUpdateTime, *lastBasicInfoUpdateTime;
 
 @end
 
@@ -102,6 +102,7 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (void)dealloc
 {
+    [_lastBasicInfoUpdateTime release];
     [_lastUserInfoUpdateTime release];
     [_lastWeiyuUpdateTime release];
     [_digoList release];
@@ -449,22 +450,29 @@ static NSInteger kDelWeiyuTag = 204;
         self.marrayReqView.marrayReq = self.marrayReq;
     }
     
-    if (abs([self.lastWeiyuUpdateTime timeIntervalSinceNow]) > 300 ||
-        self.weiyus == nil) {
+    if (self.weiyus == nil ||
+        abs([self.lastWeiyuUpdateTime timeIntervalSinceNow]) > 300)
+    {
         [self grabMyWeiyuListReqeustWithPage:1];
     }
     
-    if (abs([self.lastUserInfoUpdateTime timeIntervalSinceNow]) > 300 ||
-        self.userInfo == nil) {
+    if (self.userInfo == nil ||
+        abs([self.lastUserInfoUpdateTime timeIntervalSinceNow]) > 300)
+    {
         [self grabUserInfoDetailRequest];
+    }
+    
+    if (self.existedData == nil ||
+        abs([self.lastBasicInfoUpdateTime timeIntervalSinceNow]) > 300)
+    {
+        [self infoRequestFromRemote];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-#warning need every time?			
-    [self infoRequestFromRemote];
+
 }
 
 - (void)saveAction
@@ -1539,6 +1547,7 @@ static NSInteger kDelWeiyuTag = 204;
                     // 此行须在前两行后面
 //                    NSLog(@"all user info: %@", data);
                     self.existedData = data[@"data"][@"issetlist"];
+                    self.lastBasicInfoUpdateTime = [NSDate date];
 
                 } else{
 //                    [SVProgressHUD showErrorWithStatus:data[@"message"]];

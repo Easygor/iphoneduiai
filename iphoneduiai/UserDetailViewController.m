@@ -317,7 +317,9 @@ static CGFloat dHeight2 = 0.0f;
                                                                                           action:@selector(moreAction)];
     [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
 
+    [self grabUserInfoDetailRequest];
     [self infoRequestFromRemote];
+    [self grabMyWeiyuListReqeustWithPage:1];
 }
 
 - (void)scoreGestureAction:(UITapGestureRecognizer*)gesture
@@ -433,8 +435,6 @@ static CGFloat dHeight2 = 0.0f;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self grabUserInfoDetailRequest];
-    [self grabMyWeiyuListReqeustWithPage:1];
  
 }
 
