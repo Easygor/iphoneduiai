@@ -120,14 +120,16 @@
     [self keepTableviewOnBottom];
     
     // config the sms send textview
-    CGFloat leftPad = 83.0f;
-    CGFloat width = 230.0f;
+//    CGFloat leftPad = 83.0f;
+//    CGFloat width = 230.0f;
+    CGFloat leftPad = 50.0f;
+    CGFloat width = 260.0f;
     self.messageView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 45)] autorelease];
     self.messageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     
     self.textView = [[[HPGrowingTextView alloc] initWithFrame:CGRectMake(leftPad, 2, width, 40)] autorelease];
     self.textView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.textView.backgroundColor = [UIColor redColor];
+    self.textView.backgroundColor = [UIColor clearColor];
     
 	self.textView.minNumberOfLines = 1;
 	self.textView.maxNumberOfLines = 6;
@@ -163,17 +165,20 @@
     [self.messageView addSubview:self.textView];
     [self.messageView addSubview:entryImageView];
     
+    /*
     UIButton *plusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [plusBtn setImage:[UIImage imageNamed:@"chat_add_icon"] forState:UIControlStateNormal];
     [plusBtn setImage:[UIImage imageNamed:@"chat_add_icon_linked"] forState:UIControlStateHighlighted ];
     plusBtn.frame = CGRectMake(6, 5, 33, 34);
     [plusBtn addTarget:self action:@selector(plusAction:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:plusBtn];
+     */
     
     self.faceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.faceBtn setImage:[UIImage imageNamed:@"chat_express_icon"] forState:UIControlStateNormal];
     [self.faceBtn setImage:[UIImage imageNamed:@"chat_express_icon_linked"] forState:UIControlStateHighlighted ];
-    self.faceBtn.frame = CGRectMake(44, 5, 33, 34);
+//    self.faceBtn.frame = CGRectMake(44, 5, 33, 34);
+    self.faceBtn.frame = CGRectMake(6, 5, 33, 34);
     [self.faceBtn addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [self.messageView addSubview:self.faceBtn];
 
@@ -245,7 +250,7 @@
     self.pageSmileView = [[[PageSmileView alloc] initWithFrame: CGRectMake(0, 45, 320, 216)
                                                          withDataSource: self] autorelease];
     
-    //    pageSmileView.backgroundColor = [UIColor redColor];
+    self.pageSmileView.backgroundColor = [UIColor clearColor];
     [self.containerView addSubview:self.pageSmileView];
     
     self.timer = [NSTimer scheduledTimerWithTimeInterval:30
