@@ -13,6 +13,7 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import "Utils.h"
+    #import "MobClick.h"
 #endif
 
 #ifndef Duiai_Config_h

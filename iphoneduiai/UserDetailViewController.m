@@ -23,6 +23,12 @@
 #import "Notification.h"
 #import "ForgetPasswordViewController.h"
 
+#import "WeiyuContentCell.h"
+#import "WeiyuFaqCell.h"
+#import "WeiyuTextPicCell.h"
+#import "WeiyuOnePicCell.h"
+#import "WeiyuTwoAndMorePicCell.h"
+
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
 
@@ -489,18 +495,99 @@ static CGFloat dHeight2 = 0.0f;
 
 - (UITableViewCell *)creatNormalCell:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"weiyuWordCell";
-    WeiyuWordCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
-        cell = [nib objectAtIndex:2];
-        cell.delegate = self;
+    NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
+    if ([weiyu[@"vtype"] isEqualToString:@"photo"])
+    {
+        NSArray *photolist = weiyu[@"photolist"];
+        
+        if(1 < photolist.count && 4 > photolist.count)
+        {
+            static NSString *CellIdentifier = @"WeiyuThreeCell";
+            [tableView registerNib:[UINib nibWithNibName:@"WeiyuThreeCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+            WeiyuTwoAndMorePicCell  *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            cell.delegate = self;
+            cell.weiyu = weiyu;
+            
+            return cell;
+        }
+        else if(4 == photolist.count)
+        {
+            static NSString *CellIdentifier = @"WeiyuFourCell";
+            [tableView registerNib:[UINib nibWithNibName:@"WeiyuFourCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+            WeiyuTwoAndMorePicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            cell.delegate = self;
+            
+            cell.weiyu = weiyu;
+            
+            return cell;
+        }
+        else if(4 < photolist.count && 7 > photolist.count)
+        {
+            static NSString *CellIdentifier = @"WeiyuSixCell";
+            [tableView registerNib:[UINib nibWithNibName:@"WeiyuSixCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+            WeiyuTwoAndMorePicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            cell.delegate= self;
+            
+            cell.weiyu = weiyu;
+            
+            return cell;
+        }
+        else if(6 < photolist.count && 10 > photolist.count)
+        {
+            static NSString *CellIdentifier = @"WeiyuNineCell";
+            [tableView registerNib:[UINib nibWithNibName:@"WeiyuNineCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+            WeiyuTwoAndMorePicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            cell.delegate = self;
+            
+            cell.weiyu = weiyu;
+            
+            return cell;
+        } else {
+            static NSString *CellIdentifier = @"WeiyuOnePicCell";
+            [tableView registerNib:[UINib nibWithNibName:@"WeiyuOnePicCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+            WeiyuOnePicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            cell.delegate = self;
+            
+            cell.weiyu = weiyu;
+            
+            return cell;
+        }
+        
     }
-    
-    // Configure the cell...
-    cell.weiyu = [self.weiyus objectAtIndex:indexPath.row];
-    
-    return cell;
+    else if ([weiyu[@"vtype"] isEqualToString:@"textpic"])
+    {
+        static NSString *CellIdentifier = @"WeiyuTextPicCell";
+        [tableView registerNib:[UINib nibWithNibName:@"WeiyuTextPicCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+        WeiyuTextPicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell.delegate = self;
+        
+        cell.weiyu = weiyu;
+        
+        return cell;
+    }
+    else if ([weiyu[@"vtype"] isEqualToString:@"faq"])
+    {
+        static NSString *CellIdentifier = @"WeiyuFaqCell";
+        [tableView registerNib:[UINib nibWithNibName:@"WeiyuFaqCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+        WeiyuFaqCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell.delegate = self;
+        
+        cell.weiyu = weiyu;
+        
+        return cell;
+    }
+    else
+    {
+        static NSString *CellIdentifier = @"WeiyuContentCell";
+        [tableView registerNib:[UINib nibWithNibName:@"WeiyuContentCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
+        WeiyuContentCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        cell.delegate = self;
+        
+        cell.weiyu = weiyu;
+        
+        return cell;
+    }
+
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

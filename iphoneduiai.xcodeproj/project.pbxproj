@@ -254,6 +254,7 @@
 		61252AEB166429FA0062BFA0 /* WeiyuSixCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61252AEA166429F90062BFA0 /* WeiyuSixCell.xib */; };
 		61252AED16642A4D0062BFA0 /* WeiyuFourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61252AEC16642A4B0062BFA0 /* WeiyuFourCell.xib */; };
 		61252AEF16642A990062BFA0 /* WeiyuThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61252AEE16642A980062BFA0 /* WeiyuThreeCell.xib */; };
+		61252AF21664307C0062BFA0 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61252AF01664307C0062BFA0 /* libMobClickLibrary.a */; };
 		61265A5D165BAC7F00BAF8E0 /* nav_back_btn_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A55165BAC7E00BAF8E0 /* nav_back_btn_highlight@2x.png */; };
 		61265A5E165BAC7F00BAF8E0 /* nav_back_btn_highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A56165BAC7F00BAF8E0 /* nav_back_btn_highlights.png */; };
 		61265A5F165BAC7F00BAF8E0 /* nav_back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A57165BAC7F00BAF8E0 /* nav_back_btn.png */; };
@@ -1247,6 +1248,8 @@
 		61252AEA166429F90062BFA0 /* WeiyuSixCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeiyuSixCell.xib; sourceTree = "<group>"; };
 		61252AEC16642A4B0062BFA0 /* WeiyuFourCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeiyuFourCell.xib; sourceTree = "<group>"; };
 		61252AEE16642A980062BFA0 /* WeiyuThreeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeiyuThreeCell.xib; sourceTree = "<group>"; };
+		61252AF01664307C0062BFA0 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		61252AF11664307C0062BFA0 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		61265A55165BAC7E00BAF8E0 /* nav_back_btn_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_btn_highlight@2x.png"; sourceTree = "<group>"; };
 		61265A56165BAC7F00BAF8E0 /* nav_back_btn_highlights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back_btn_highlights.png; sourceTree = "<group>"; };
 		61265A57165BAC7F00BAF8E0 /* nav_back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back_btn.png; sourceTree = "<group>"; };
@@ -1990,6 +1993,7 @@
 				61BB2B5A15F9DB0800AA82CC /* Foundation.framework in Frameworks */,
 				61BB2B5C15F9DB0800AA82CC /* CoreGraphics.framework in Frameworks */,
 				61BB2B5E15F9DB0800AA82CC /* CoreData.framework in Frameworks */,
+				61252AF21664307C0062BFA0 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2288,6 +2292,15 @@
 				6159B1E81618428900705835 /* CountView.m */,
 			);
 			name = "Profile views";
+			sourceTree = "<group>";
+		};
+		61252AF3166430810062BFA0 /* UM */ = {
+			isa = PBXGroup;
+			children = (
+				61252AF01664307C0062BFA0 /* libMobClickLibrary.a */,
+				61252AF11664307C0062BFA0 /* MobClick.h */,
+			);
+			name = UM;
 			sourceTree = "<group>";
 		};
 		613026801622AF8F000E1CBD /* notifications */ = {
@@ -3338,6 +3351,7 @@
 		61EAE20B1606A09900552C2E /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				61252AF3166430810062BFA0 /* UM */,
 				614786AC163BB6E400935E1E /* iRate */,
 				614786A6163BB6D800935E1E /* iVersion */,
 				5A2500B616393201004113B8 /* TCWeiBoSDK */,
@@ -4436,6 +4450,10 @@
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "iphoneduiai/iphoneduiai-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/iphoneduiai\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -4453,6 +4471,10 @@
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "iphoneduiai/iphoneduiai-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/iphoneduiai\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
