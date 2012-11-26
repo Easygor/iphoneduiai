@@ -14,6 +14,7 @@
 #import "HZLocation.h"
 #import "HZSectionPickerView.h"
 #import "HZPopPickerView.h"
+#import "SVProgressHUD.h"
 
 @interface ConditionViewController () <HZSementdControlDelegate, UITextFieldDelegate, HZPopPickerDatasource, HZPopPickerDelegate, HZSectionPickerDelegate, HZAreaPickerDatasource, HZAreaPickerDelegate>
 @property (retain, nonatomic) IBOutlet HZSementedControl *sementedControl;
@@ -154,9 +155,9 @@
     
     // init the updae
     if ([self.conditions[@"sex"] isEqualToString:@"w"]) {
-        [self.sexSementedControl selectSegment2AtIndex:1];
+        [self.sexSementedControl selectSegmentAtIndex:1];
     } else{
-        [self.sexSementedControl selectSegment2AtIndex:0];
+        [self.sexSementedControl selectSegmentAtIndex:0];
     }
     
     if ([self.conditions[@"searchtype"] isEqualToString:@"id"]) {
@@ -200,11 +201,20 @@
 
 - (void)searchAction
 {
+    if ([self.conditions[@"searchtype"] isEqualToString:@"id"] &&
+        ![self.idField hasText]
+        )
+    {
+        [SVProgressHUD showSuccessWithStatus:@"ID不能为空"];
+        return;
+    }
+    
     self.conditions[@"id"] = self.idField.text;
     self.conditions[@"search"] = @YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
 
 }
+
 - (BOOL)hidesBottomBarWhenPushed
 {
     return  YES;

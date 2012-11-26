@@ -225,12 +225,36 @@
 
 - (void)doInitWork
 {
+    
     // do something here
     if ((self.users.count <= 0 || [self.conditions[@"search"] boolValue]) &&
         [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         // todo
         self.conditions[@"search"] = @NO;
-        [self.sementdView selectSegment2AtIndex:0];
+        if ([self.conditions[@"searchtype"] isEqualToString:@"detail"])
+        {
+            self.sementdView.hidden = NO;
+//            if (self.view.frame.origin.y < 0)
+//            {
+//                self.sementdView.hidden = NO;
+//                self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-30);
+//            }
+            [self.sementdView selectSegment2AtIndex:0];
+        }
+        else if ([self.conditions[@"searchtype"] isEqualToString:@"id"])
+        {
+            self.totalPage = self.curPage = 0;
+            self.users = nil;
+
+            if (self.view.frame.origin.y == 0) {
+                self.sementdView.hidden = YES;
+                self.view.frame = CGRectMake(0, -30, self.view.frame.size.width, self.view.frame.size.height+30);
+            }
+            
+            [self searchReqeustWithPage:1];
+
+        }
+    
     }
 
     [LocationController sharedInstance].delegate = self;
@@ -528,17 +552,29 @@
 
 - (void)updateTitle
 {
-    NSLog(@"conditions: %@", self.conditions);
+//    NSLog(@"conditions: %@", self.conditions);
+    if ([self.conditions[@"searchtype"] isEqualToString:@"id"])
+    {
+        self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"ID搜索"];
+        return;
+    }
+    
     NSString *sex, *city = nil;
-    if (self.conditions[@"citydesc"]) {
+    if (self.conditions[@"citydesc"])
+    {
         city = self.conditions[@"citydesc"];
-    } else{
+    }
+    else
+    {
         city = @"同城";
     }
     
-    if ([self.conditions[@"sex"] isEqualToString:@"m"]) {
+    if ([self.conditions[@"sex"] isEqualToString:@"m"])
+    {
         sex = @"男生";
-    } else{
+    }
+    else
+    {
         sex = @"女生";
     }
     

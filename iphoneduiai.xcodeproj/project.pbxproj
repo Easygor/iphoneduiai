@@ -346,7 +346,6 @@
 		6159B1B116180F9700705835 /* andriod_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B17D16180F9700705835 /* andriod_icon@2x.png */; };
 		6159B1B216180F9700705835 /* apple_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B17E16180F9700705835 /* apple_icon.png */; };
 		6159B1B316180F9700705835 /* apple_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B17F16180F9700705835 /* apple_icon@2x.png */; };
-		6159B1B416180F9700705835 /* bolg_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B18016180F9700705835 /* bolg_icon.png */; };
 		6159B1B516180F9700705835 /* bolg_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B18116180F9700705835 /* bolg_icon@2x.png */; };
 		6159B1B616180F9700705835 /* choice_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B18216180F9700705835 /* choice_icon.png */; };
 		6159B1B716180F9700705835 /* choice_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6159B18316180F9700705835 /* choice_icon@2x.png */; };
@@ -456,6 +455,7 @@
 		617ADE26166316C900751D89 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617ADE25166316C900751D89 /* StoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		617ADE3516634F9900751D89 /* nopic.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE3316634F9900751D89 /* nopic.png */; };
 		617ADE3616634F9900751D89 /* nopic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE3416634F9900751D89 /* nopic@2x.png */; };
+		617ADE381663619C00751D89 /* bolg_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE371663619C00751D89 /* bolg_icon.png */; };
 		6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */; };
 		6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67D15FEA70A00BEBD00 /* Security.framework */; };
 		6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67F15FEA71A00BEBD00 /* MobileCoreServices.framework */; };
@@ -1345,7 +1345,6 @@
 		6159B17D16180F9700705835 /* andriod_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "andriod_icon@2x.png"; sourceTree = "<group>"; };
 		6159B17E16180F9700705835 /* apple_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple_icon.png; sourceTree = "<group>"; };
 		6159B17F16180F9700705835 /* apple_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple_icon@2x.png"; sourceTree = "<group>"; };
-		6159B18016180F9700705835 /* bolg_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bolg_icon.png; sourceTree = "<group>"; };
 		6159B18116180F9700705835 /* bolg_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bolg_icon@2x.png"; sourceTree = "<group>"; };
 		6159B18216180F9700705835 /* choice_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choice_icon.png; sourceTree = "<group>"; };
 		6159B18316180F9700705835 /* choice_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choice_icon@2x.png"; sourceTree = "<group>"; };
@@ -1465,6 +1464,7 @@
 		617ADE25166316C900751D89 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		617ADE3316634F9900751D89 /* nopic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nopic.png; sourceTree = "<group>"; };
 		617ADE3416634F9900751D89 /* nopic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nopic@2x.png"; sourceTree = "<group>"; };
+		617ADE371663619C00751D89 /* bolg_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bolg_icon.png; sourceTree = "<group>"; };
 		6199D66615FEA6BB00BEBD00 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Externals/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6199D67D15FEA70A00BEBD00 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -2580,7 +2580,7 @@
 				6159B17D16180F9700705835 /* andriod_icon@2x.png */,
 				6159B17E16180F9700705835 /* apple_icon.png */,
 				6159B17F16180F9700705835 /* apple_icon@2x.png */,
-				6159B18016180F9700705835 /* bolg_icon.png */,
+				617ADE371663619C00751D89 /* bolg_icon.png */,
 				6159B18116180F9700705835 /* bolg_icon@2x.png */,
 				6159B18216180F9700705835 /* choice_icon.png */,
 				6159B18316180F9700705835 /* choice_icon@2x.png */,
@@ -3434,7 +3434,6 @@
 				6159B1B116180F9700705835 /* andriod_icon@2x.png in Resources */,
 				6159B1B216180F9700705835 /* apple_icon.png in Resources */,
 				6159B1B316180F9700705835 /* apple_icon@2x.png in Resources */,
-				6159B1B416180F9700705835 /* bolg_icon.png in Resources */,
 				6159B1B516180F9700705835 /* bolg_icon@2x.png in Resources */,
 				6159B1B616180F9700705835 /* choice_icon.png in Resources */,
 				6159B1B716180F9700705835 /* choice_icon@2x.png in Resources */,
@@ -4107,6 +4106,7 @@
 				617ADE24166314C000751D89 /* iVersion.bundle in Resources */,
 				617ADE3516634F9900751D89 /* nopic.png in Resources */,
 				617ADE3616634F9900751D89 /* nopic@2x.png in Resources */,
+				617ADE381663619C00751D89 /* bolg_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

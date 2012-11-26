@@ -371,6 +371,7 @@
 													<string key="NSClassName">NSImage</string>
 													<string key="NSResourceName">malebg-linked.png</string>
 												</object>
+												<reference key="IBUIDisabledBackgroundImage" ref="238445380"/>
 												<reference key="IBUISelectedBackgroundImage" ref="238445380"/>
 												<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 													<string key="NSClassName">NSImage</string>
@@ -406,6 +407,7 @@
 													<string key="NSClassName">NSImage</string>
 													<string key="NSResourceName">femalebg-linked.png</string>
 												</object>
+												<reference key="IBUIDisabledBackgroundImage" ref="460033577"/>
 												<reference key="IBUISelectedBackgroundImage" ref="460033577"/>
 												<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 													<string key="NSClassName">NSImage</string>
@@ -1159,21 +1161,21 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">btn2Action:</string>
+						<string key="label">btnAction:</string>
 						<reference key="source" ref="890069455"/>
 						<reference key="destination" ref="508366402"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">187</int>
+					<int key="connectionID">189</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">btn2Action:</string>
+						<string key="label">btnAction:</string>
 						<reference key="source" ref="115954157"/>
 						<reference key="destination" ref="508366402"/>
 						<int key="IBEventType">7</int>
 					</object>
-					<int key="connectionID">186</int>
+					<int key="connectionID">188</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1438,9 +1440,9 @@
 				<string key="141.CustomClassName">HZSementedControl</string>
 				<string key="141.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="142.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="142.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="3" key="142.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="143.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="143.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="3" key="143.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="146.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="154.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -1476,7 +1478,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">187</int>
+			<int key="maxID">189</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
