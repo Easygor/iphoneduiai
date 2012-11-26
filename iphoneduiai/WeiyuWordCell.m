@@ -7,7 +7,6 @@
 //
 
 #import "WeiyuWordCell.h"
-#import "FullyLoaded.h"
 #import "SliderView.h"
 #import "SVProgressHUD.h"
 #import <QuartzCore/QuartzCore.h>

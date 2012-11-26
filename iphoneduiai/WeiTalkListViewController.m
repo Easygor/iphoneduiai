@@ -23,6 +23,7 @@
 
 #import "WeiyuContentCell.h"
 #import "WeiyuFaqCell.h"
+#import "WeiyuTextPicCell.h"
 
 @interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
@@ -287,6 +288,17 @@
     }
     else if ([weiyu[@"vtype"] isEqualToString:@"textpic"])
     {
+        static NSString *CellIdentifier = @"WeiyuTextPicCell";
+        WeiyuTextPicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"WeiyuCustomCell" owner:self options:nil];
+            cell = [nib objectAtIndex:2];
+            cell.delegate = self;
+        }
+        
+        cell.weiyu = weiyu;
+        
+        return cell;
     }
     else if ([weiyu[@"vtype"] isEqualToString:@"faq"])
     {
