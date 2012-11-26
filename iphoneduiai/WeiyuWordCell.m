@@ -140,12 +140,14 @@
         contentLabel.text = content;
 
         AsyncImageView *imView = nil;
-        if (![[self.weiyu objectForKey:@"pic"] isEqualToString:@""]) {
+        if ([self.weiyu[@"vtype"] isEqualToString:@"textpic"] &&
+            [self.weiyu[@"pic"] hasPrefix:@"http://"])
+        {
             imView = [[[AsyncImageView alloc] initWithFrame:CGRectMake(6, contentLabel.frame.size.height + 15+5, DW, DH)] autorelease];
             [imView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImageGesture:)] autorelease]];
             //                imView.tag = 0;
             imView.userInteractionEnabled = YES;
-            NSString *imgUrl = [self.weiyu objectForKey:@"pic"];
+            NSString *imgUrl = self.weiyu[@"pic"];
             [imView loadImage: imgUrl];
             _photos = [[NSMutableArray alloc] initWithObjects:@{@"icon": imgUrl, @"url": imgUrl}, nil];
             [self.mainView addSubview:imView];
@@ -532,13 +534,22 @@
         self.fromLabel.text = [NSString stringWithFormat:@"来自%@", [[weiyu objectForKey:@"vfrom"] objectForKey:@"name"]];
         
         // content
-        if ([[weiyu objectForKey:@"photolist"] count] > 0) {
+        if ([weiyu[@"vtype"] isEqualToString:@"photo"])
+        {
             self.photos = [weiyu objectForKey:@"photolist"];
-        } else if([weiyu[@"vtype"] isEqualToString:@"faq"]) {
+            
+        }
+        else if([weiyu[@"vtype"] isEqualToString:@"faq"])
+        {
 
-            self.faqInfo = weiyu[@"faqinfo"];   
-        } else{
+            self.faqInfo = weiyu[@"faqinfo"];
+            
+        }
+        else
+        {
+            
             self.content = [weiyu objectForKey:@"content"];
+            
         } 
         
     }

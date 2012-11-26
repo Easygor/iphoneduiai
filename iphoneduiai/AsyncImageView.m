@@ -126,7 +126,8 @@
     self.request = request;
     [request setAdditionalHTTPHeaders:@{@"Accept": @"image/*"}];
     [request setOnDidFailLoadWithError:^(NSError *error){
-        NSLog(@"Download Image Error: %@", [error localizedDescription]);
+
+        NSLog(@"Download Image Error: %@, url:%@", [error localizedDescription], newImageURL);
     }];
     
     [request setOnDidLoadResponse:^(RKResponse *response){
