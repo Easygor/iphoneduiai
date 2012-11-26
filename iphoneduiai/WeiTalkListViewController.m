@@ -24,6 +24,7 @@
 #import "WeiyuContentCell.h"
 #import "WeiyuFaqCell.h"
 #import "WeiyuTextPicCell.h"
+#import "WeiyuOnePicCell.h"
 
 @interface WeiTalkListViewController () <CustomCellDelegate, EGORefreshTableHeaderDelegate, DropMenuViewDataSource, DropMenuViewDelegate>
 {
@@ -284,6 +285,19 @@
     NSMutableDictionary *weiyu = self.weiyus[indexPath.row];
     if ([weiyu[@"vtype"] isEqualToString:@"photo"])
     {
+        if ([weiyu[@"photolist"] count] == 1) {
+            static NSString *CellIdentifier = @"WeiyuOnePicCell";
+            WeiyuOnePicCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (cell == nil) {
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"WeiyuCustomCell" owner:self options:nil];
+                cell = [nib objectAtIndex:3];
+                cell.delegate = self;
+            }
+            
+            cell.weiyu = weiyu;
+            
+            return cell;
+        }
         
     }
     else if ([weiyu[@"vtype"] isEqualToString:@"textpic"])

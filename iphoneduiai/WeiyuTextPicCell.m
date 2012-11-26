@@ -58,7 +58,11 @@
 
 - (void)dealloc {
     self.delegate = nil;
-
+    
+    [_photos release];
+    [_curImageView release];
+    [_slider release];
+    [_showPicView release];
     [_avatarImageView release];
     [_shadowView release];
     [_containerView release];
@@ -75,7 +79,6 @@
     [_weiyu release];
     [_contentLabel release];
 
-    [_showPicView release];
     [_addressView release];
     [super dealloc];
 }

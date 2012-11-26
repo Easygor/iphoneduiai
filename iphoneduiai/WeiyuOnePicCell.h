@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CustomCellDelegate.h"
 
 @interface WeiyuOnePicCell : UITableViewCell
+
+@property (assign, nonatomic) id <CustomCellDelegate> delegate;
+@property (strong, nonatomic) NSMutableDictionary *weiyu;
+@property (nonatomic) NSInteger digoNum, shitNum, commentNum;
 
 @end
