@@ -202,7 +202,8 @@
 - (void)searchAction
 {
     if ([self.conditions[@"searchtype"] isEqualToString:@"id"] &&
-        ![self.idField hasText]
+        ([self.idField.text isEqualToString:@""] ||
+        [self.idField.text rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location != NSNotFound)
         )
     {
         [SVProgressHUD showSuccessWithStatus:@"ID不能为空"];

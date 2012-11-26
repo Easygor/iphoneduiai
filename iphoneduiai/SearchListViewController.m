@@ -227,28 +227,32 @@
 {
     
     // do something here
-    if ((self.users.count <= 0 || [self.conditions[@"search"] boolValue]) &&
+    if (((self.users.count <= 0 && [self.conditions[@"searchtype"] isEqualToString:@"detail"]) || [self.conditions[@"search"] boolValue]) &&
         [CLLocationManager authorizationStatus] != kCLAuthorizationStatusNotDetermined) {
         // todo
         self.conditions[@"search"] = @NO;
         if ([self.conditions[@"searchtype"] isEqualToString:@"detail"])
         {
-            self.sementdView.hidden = NO;
-//            if (self.view.frame.origin.y < 0)
-//            {
-//                self.sementdView.hidden = NO;
-//                self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-30);
-//            }
+               
+            if (self.waterTableView.frame.origin.y == 0) {
+                self.sementdView.hidden = NO;
+                self.waterTableView.frame = CGRectMake(0, 30, self.waterTableView.frame.size.width, self.waterTableView.frame.size.height-30);
+                self.infoTableView.frame = CGRectMake(0, 30, self.infoTableView.frame.size.width, self.infoTableView.frame.size.height-30);
+            }
+            
             [self.sementdView selectSegment2AtIndex:0];
         }
         else if ([self.conditions[@"searchtype"] isEqualToString:@"id"])
         {
             self.totalPage = self.curPage = 0;
-            self.users = nil;
+            self.users = [NSMutableArray array];
+            [self updateTitle];
 
-            if (self.view.frame.origin.y == 0) {
+            if (self.waterTableView.frame.origin.y > 0) {
                 self.sementdView.hidden = YES;
-                self.view.frame = CGRectMake(0, -30, self.view.frame.size.width, self.view.frame.size.height+30);
+
+                self.waterTableView.frame = CGRectMake(0, 0, self.waterTableView.frame.size.width, self.waterTableView.frame.size.height+30);
+                self.infoTableView.frame = CGRectMake(0, 0, self.infoTableView.frame.size.width, self.infoTableView.frame.size.height+30);
             }
             
             [self searchReqeustWithPage:1];
