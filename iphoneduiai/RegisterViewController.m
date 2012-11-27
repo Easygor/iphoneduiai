@@ -75,7 +75,7 @@ static NSString *const emailRegex = @"\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-
     NSDictionary *d = [[NSUserDefaults standardUserDefaults] objectForKey:@"step1"];
     if (d) {
         self.emailText.text = [d objectForKey:@"username"];
-        self.passwordText.text = [d objectForKey:@"password"];
+        self.passwordText.text = [[d objectForKey:@"password"] description];
 //        [self checkInputs];
     }
 }

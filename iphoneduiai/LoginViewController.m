@@ -370,7 +370,7 @@
     CGRect containerFrame = self.contentView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - (frame.size.height + containerFrame.size.height);
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.35 animations:^{
         self.contentView.frame = containerFrame;
     }];
     

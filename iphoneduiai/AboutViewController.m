@@ -28,6 +28,7 @@
     [self.view addSubview:duiAiImgView];
     
     UILabel *versionLabel = [[[UILabel alloc]initWithFrame:CGRectMake(110, 200, 80, 30)]autorelease];
+    versionLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     versionLabel.text = @"iPhone版v1.0\n已是最新版本";
     versionLabel.lineBreakMode = UILineBreakModeWordWrap;
     versionLabel.numberOfLines = 0;
@@ -38,6 +39,7 @@
     
     
     UILabel *URLLabel = [[[UILabel alloc]initWithFrame:CGRectMake(80, 280, 180, 18)]autorelease];
+    URLLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     URLLabel.text = @"官方网站:www.duiai.com";
     URLLabel.font = [UIFont systemFontOfSize:15];
     URLLabel.textColor = RGBCOLOR(197, 197, 197);
@@ -45,6 +47,7 @@
     [self.view addSubview:URLLabel];
     
     UILabel *moreLabel = [[[UILabel alloc]initWithFrame:CGRectMake(100, 305, 130, 18)]autorelease];
+    moreLabel.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     moreLabel.text = @"更多功能,请登陆官网";
     moreLabel.font = [UIFont systemFontOfSize:13];
     moreLabel.textColor = RGBCOLOR(197, 197, 197);
