@@ -14,7 +14,7 @@
 #import "SVProgressHUD.h"
 #import "LoginViewController.h"
 
-@interface SendSuggestViewController ()
+@interface SendSuggestViewController () <UIAlertViewDelegate>
 
 @end
 
@@ -83,6 +83,7 @@
     [[RKClient sharedClient] post:[@"/success/stop.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
         NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
         updateArgs[@"sendtext"] = self.contentTextView.text;
+        updateArgs[@"submitupdate"] = @"true";
         request.params = [RKParams paramsWithDictionary:updateArgs];
         
         // 请求失败时
@@ -92,23 +93,32 @@
         
         // 请求成功时
         [request setOnDidLoadResponse:^(RKResponse *response){
-            NSLog(@"kkk: %@", response.bodyAsString);
-            if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
-                NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
-                NSInteger code = [data[@"error"] integerValue];  // 返回的状态
-                if (code == 0) {
-                    // 成功提交的情况
-                    // ....
-//                    [SVProgressHUD showSuccessWithStatus:@"保存成功"];
-//                    LoginViewController *lvc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
-//                    [self presentModalViewController:lvc animated:YES];
-//                    [lvc release];
-                } else{
+
+            if (response.isOK && response.isJSON)
+            {
+                NSDictionary *data = [response.bodyAsString objectFromJSONString];
+                NSInteger code = [data[@"error"] integerValue];
+                if (code == 0)
+                {
+                    [SVProgressHUD dismiss];
+                    UIAlertView *note = [[UIAlertView alloc] initWithTitle:nil
+                                                                   message:data[@"message"]
+                                                                  delegate:self
+                                                         cancelButtonTitle:nil
+                                                         otherButtonTitles:@"确定", nil];
+
+                    [note show];
+                    [note release];
+                }
+                else
+                {
                     // 失败的情况
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
                 
-            } else{
+            }
+            else
+            {
                 [SVProgressHUD showErrorWithStatus:@"网络故障"];
             }
         }];
@@ -116,6 +126,25 @@
         
         
     }];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex == buttonIndex)
+    {
+        return;
+    }
+    
+    if (buttonIndex == 0)
+    {
+        // remote user info
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        LoginViewController *lvc = [[LoginViewController alloc]initWithNibName:@"LoginViewController" bundle:nil];
+        [self presentModalViewController:lvc animated:YES];
+        [lvc release];
+    }
+
 }
 
 #define UITextFieldDelegate

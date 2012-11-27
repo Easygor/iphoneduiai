@@ -19,7 +19,7 @@
 #import "LocationController.h"
 #import "ForgetPasswordViewController.h"
 
-@interface LoginViewController ()
+@interface LoginViewController () <UIAlertViewDelegate>
 @property (retain, nonatomic) IBOutlet UIButton *forgotPasswordBtn;
 @property (retain, nonatomic) IBOutlet UITextField *emailText;
 @property (retain, nonatomic) IBOutlet UITextField *passwordText;
@@ -242,27 +242,54 @@
                            [SVProgressHUD show];
                            // set successful block
                            [request setOnDidLoadResponse:^(RKResponse *response){
-                               if (response.isOK && response.isJSON) {
+                               if (response.isOK && response.isJSON)
+                               {
                                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
 //                                   NSLog(@"res: %@", data);
-                                   if ([[data objectForKey:@"error"] intValue] == 0) {
+                                   NSInteger code = [[data objectForKey:@"error"] intValue];
+                                   if (0 == code)
+                                   {
                                        NSDictionary *userinfo = @{
                                        @"accesskey": data[@"accesskey"],
                                        @"username":data[@"data"][@"username"],
                                        @"info": data[@"data"][@"userinfo"]};
                                        
-//                                       [[NSUserDefaults standardUserDefaults] setObject:[data objectForKey:@"accesskey"] forKey:@"accesskey"];
                                        [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
                                        [[NSUserDefaults standardUserDefaults] synchronize];
                                        [SVProgressHUD dismiss];
-                                       [self dismissModalViewControllerAnimated:YES];
-                                   } else{
+                                       
+                                        [self dismissModalViewControllerAnimated:YES];
+                                   
+                                   }
+                                   else if (44 == code)
+                                   {
+                                       NSDictionary *usefulData = data[@"data"];
+                                       NSDictionary *userinfo = @{
+                                       @"accesskey": usefulData[@"accesskey"],
+                                       @"username":usefulData[@"data"][@"username"],
+                                       @"info": usefulData[@"data"][@"userinfo"]};
+                                       
+                                       [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
+                                       [[NSUserDefaults standardUserDefaults] synchronize];
+                                       [SVProgressHUD dismiss];
+                                       
+                                       UIAlertView *noteStartZ = [[UIAlertView alloc] initWithTitle:nil
+                                                                                            message:data[@"message"]
+                                                                                           delegate:self
+                                                                                  cancelButtonTitle:@"取消"
+                                                                                  otherButtonTitles:@"确定", nil];
+                                       [noteStartZ show];
+                                       [noteStartZ release];
+                                   }
+                                   else
+                                   {
                                        [SVProgressHUD showErrorWithStatus:[data objectForKey:@"message"]];
-//                                       NSLog(@"fail: %@", [data objectForKey:@"message"]);
-//                                       [Utils warningNotification:[data objectForKey:@"message"]];
+
                                    }
 
-                               } else{
+                               }
+                               else
+                               {
                                    [SVProgressHUD showSuccessWithStatus:@"网络错误"];
                                }
                            }];
@@ -274,6 +301,53 @@
                        }];
         // do somethign here
 }
+
+#pragma mark - UIAlertview
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.cancelButtonIndex == buttonIndex) {
+        return;
+    }
+    
+    NSMutableDictionary *dp = [Utils queryParams];
+    [SVProgressHUD show];
+    [[RKClient sharedClient] post:[@"/success/start.api" stringByAppendingQueryParameters:dp] usingBlock:^(RKRequest *request){
+        NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
+        updateArgs[@"submitupdate"] = @"true";
+        request.params = [RKParams paramsWithDictionary:updateArgs];
+        
+        // 请求失败时
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"Error: %@", [error description]);
+        }];
+        
+        // 请求成功时
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            
+            if (response.isOK && response.isJSON)
+            {
+                NSDictionary *data = [response.bodyAsString objectFromJSONString];
+                NSInteger code = [data[@"error"] integerValue]; 
+                if (code == 0)
+                {
+                    [SVProgressHUD showSuccessWithStatus:data[@"message"]];
+                }
+                else
+                {
+                    // 失败的情况
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            }
+            else
+            {
+                [SVProgressHUD showErrorWithStatus:@"网络故障"];
+            }
+        }];
+        
+    }];
+}
+
 # pragma mark - keyboard show event for resize the UI
 - (void)keyboardWillShow:(NSNotification *)notif
 {
