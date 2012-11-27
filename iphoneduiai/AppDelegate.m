@@ -99,7 +99,7 @@
 - (void)updateNotificationList
 {
     [[Notification sharedInstance] updateFromRemote:^{
-        NSLog(@"update notificaiton");
+//        NSLog(@"update notificaiton");
         Notification *n = [Notification sharedInstance];
         NSInteger total = n.messageCount + n.feedCount + n.noticeCount;
         if (total > 0) {

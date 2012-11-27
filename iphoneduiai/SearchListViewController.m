@@ -20,6 +20,7 @@
 #import "UserDetailViewController.h"
 #import "LocationController.h"
 #import "DropMenuView.h"
+#import "NSDate-Utilities.h"
 
 @interface SearchListViewController () <HZSementdControlDelegate, LocationControllerDelegate, CustomCellDelegate, DropMenuViewDelegate>
 {
@@ -352,13 +353,13 @@
                                    [user objectForKey:@"age"],
                                    [user objectForKey:@"height"]];
         
-        NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
+//        NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
         NSInteger d = [[user objectForKey:@"distance"] integerValue];
         NSString *desc = @"";
         if (d > 0) {
             desc = [[Utils descriptionForDistance:d] stringByAppendingString:@"·"];
         }
-        cell.timeDistanceLabel.text = [desc stringByAppendingString: [Utils descriptionForTime:actime]];
+        cell.timeDistanceLabel.text = user[@"acctime_text"]/*[actime stringForHuman]*/;
         if([user[@"photocount"] integerValue] > 0 && [user[@"photocount"] integerValue] < 10){
             cell.xLabel.hidden = NO;
             cell.iconR.hidden = NO;

@@ -35,6 +35,7 @@
 #import "WeiyuTextPicCell.h"
 #import "WeiyuOnePicCell.h"
 #import "WeiyuTwoAndMorePicCell.h"
+#import "NSDate-Utilities.h"
 
 static CGFloat dHeight = 0.0f;
 static CGFloat dHeight2 = 0.0f;
@@ -285,7 +286,7 @@ static NSInteger kDelWeiyuTag = 204;
     if (![_searchIndex isEqualToDictionary:searchIndex]) {
         _searchIndex = [searchIndex retain];
         
-        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
+        self.timeDistanceLabel.text = [[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]] stringForHuman];
         self.countView.count = [[searchIndex objectForKey:@"digocount"] description];
         
         NSString *dname = [searchIndex[@"devicename"] description];

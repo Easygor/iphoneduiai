@@ -317,7 +317,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     /*添加处理选中图像代码*/
-    NSData *data = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage]);
+    NSData *data = UIImageJPEGRepresentation(([info objectForKey:UIImagePickerControllerEditedImage]), 0.9);
     
     [Utils uploadImage:data type:@"vphoto" block:^(NSDictionary *info){
         if (info) {

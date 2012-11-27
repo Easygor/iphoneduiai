@@ -117,8 +117,11 @@ static NSString *fileName = @"notifications.plist";
                                      @"data": d}];
         }
 
-    } else{
-        for (NSMutableDictionary *d in [self.message[@"data"] allValues]) {
+    }
+    else
+    {
+        for (NSMutableDictionary *d in [self.message[@"data"] allValues])
+        {
             d[@"bageNum"] = @"0";
         }
     }
@@ -295,10 +298,13 @@ static NSString *fileName = @"notifications.plist";
 #pragma mark save data to plist
 - (void)saveDataToPlist
 {
-  
+
     NSDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
-    [d writeToFile:self.filePath atomically:YES];
-}
+    if ([d writeToFile:self.filePath atomically:YES])
+    {
+        NSLog(@"save successfull.");
+    }
+    }
 
 #pragma mark Singleton Object Methods
 
