@@ -289,7 +289,7 @@
 
     self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:@"高级资料"];
     
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                                target:self
                                                                                                action:@selector(cancelAction)] autorelease];
     

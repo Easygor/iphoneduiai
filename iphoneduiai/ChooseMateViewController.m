@@ -159,8 +159,12 @@
         self.areaField.text = [NSString stringWithFormat:@"%@ %@", self.marrayReq[@"province"], self.marrayReq[@"city"]];
     }
     
-    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"取消"target:self action:@selector(cancelAction)] autorelease];
-    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"target:self action:@selector(saveAction)] autorelease];
+    self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
+                                                                                               target:self
+                                                                                               action:@selector(cancelAction)] autorelease];
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
+                                                                                                target:self
+                                                                                                action:@selector(saveAction)] autorelease];
    
 }
 

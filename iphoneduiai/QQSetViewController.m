@@ -17,7 +17,6 @@
 
 @interface QQSetViewController () <UITextFieldDelegate, HZNumberPickerDelegate, HZPopPickerDatasource, HZPopPickerDelegate>
 @property (retain, nonatomic) IBOutlet UITextField *qqField;
-@property (retain, nonatomic) IBOutlet UITextField *qqEableField;
 @property (retain, nonatomic) IBOutlet UITextField *qqNumField;
 
 @property (strong, nonatomic) HZPopPickerView *qqEablePicker;
@@ -36,7 +35,6 @@
     [_qqEablePicker release];
     [_qqEableNum release];
     [_qqField release];
-    [_qqEableField release];
     [_qqNumField release];
     [super dealloc];
 }
@@ -101,9 +99,6 @@
         
         // 设置POST的form表单的参数 
         NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
-        if (self.qqEableNum) {
-            updateArgs[@"settheweek"] = self.qqEableNum;
-        }
         
         if (self.qqNumNum) {
             updateArgs[@"maxview"] = @(self.qqNumNum);
@@ -143,7 +138,6 @@
 
 - (void)viewDidUnload {
     [self setQqField:nil];
-    [self setQqEableField:nil];
     [self setQqNumField:nil];
     [super viewDidUnload];
 }
@@ -153,10 +147,7 @@
     if ([textField isEqual:self.qqField]) {
         return YES;
     } else{
-        if ([textField isEqual:self.qqEableField]) {
-            // here
-            [self.qqEablePicker show];
-        } else if ([textField isEqual:self.qqNumField]){
+        if ([textField isEqual:self.qqNumField]){
             // do here
             [self.qqNumPicker show];
         }
@@ -194,15 +185,6 @@
     return nil;
 }
 
-- (void)popPickerDidChangeStatus:(HZPopPickerView *)picker withLabel:(NSString *)label withDesc:(NSString *)desc
-{
-    if ([picker isEqual:self.qqEablePicker]) {
-        self.qqEableNum = label;
-        self.qqEableField.text = desc;
-        
-    }
-}
-
 #pragma mark - number delegate
 - (void)numberPickerDidChange:(HZNumberPickerView *)picker
 {
@@ -224,18 +206,24 @@
     
     [[RKClient sharedClient] get:[@"/uc/allcontact.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
         [request setOnDidLoadResponse:^(RKResponse *response){
-            if (response.isOK && response.isJSON) {
+            if (response.isOK && response.isJSON)
+            {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
 //                NSLog(@"qq data: %@", data);
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
-                if (code == 0) {
+                if (code == 0)
+                {
                     self.contacts = data[@"data"];
 //                    NSDictionary *dataData = [data objectForKey:@"data"];
-                } else{
+                    
+                }
+                else
+                {
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
                 }
                 
             }
+     
         }];
         
         [request setOnDidFailLoadWithError:^(NSError *error){

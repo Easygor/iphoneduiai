@@ -72,6 +72,7 @@ static CGFloat dHeight2 = 0.0f;
 @property (strong, nonatomic) NSArray *blockDescs;
 @property (retain, nonatomic) IBOutlet UIButton *sendQQMsgBtn;
 @property (retain, nonatomic) IBOutlet UIButton *sendMsgBtn;
+@property (retain, nonatomic) IBOutlet UILabel *duiaiIDLabel;
 
 @end
 
@@ -122,6 +123,7 @@ static CGFloat dHeight2 = 0.0f;
     
     [_sendQQMsgBtn release];
     [_sendMsgBtn release];
+    [_duiaiIDLabel release];
     [super dealloc];
 }
 
@@ -170,7 +172,14 @@ static CGFloat dHeight2 = 0.0f;
         } else{
             _weiyus = [[NSMutableArray alloc] initWithArray:weiyus];
         }
-        
+        if (weiyus.count > 0)
+        {
+            self.move2View.hidden = NO;
+        }
+        else
+        {
+            self.move2View.hidden = YES;
+        }
         [self.tableView reloadData];
     }
 }
@@ -255,6 +264,7 @@ static CGFloat dHeight2 = 0.0f;
     if (![_userInfo isEqualToDictionary:userInfo]) {
         _userInfo = [userInfo retain];
         
+        self.duiaiIDLabel.text = userInfo[@"uid"];
         self.avatarView.sex = [userInfo objectForKey:@"sex"];
         [self.avatarView.imageView loadImage:[userInfo objectForKey:@"photo"]];
         self.nameAgeLabel.text = [NSString stringWithFormat:@"%@, %@岁", [userInfo objectForKey:@"niname"], [userInfo objectForKey:@"age"]];
@@ -314,6 +324,7 @@ static CGFloat dHeight2 = 0.0f;
 
     [self setSendQQMsgBtn:nil];
     [self setSendMsgBtn:nil];
+    [self setDuiaiIDLabel:nil];
     [super viewDidUnload];
 }
 

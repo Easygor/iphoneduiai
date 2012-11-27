@@ -38,6 +38,8 @@
 				<int key="NSvFlags">274</int>
 				<string key="NSFrame">{{0, 64}, {320, 416}}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor" id="1006104037">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -87,8 +89,9 @@
 					<object class="IBUILabel" id="164868283">
 						<reference key="NSNextResponder" ref="911100796"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{60, 162}, {200, 14}}</string>
+						<string key="NSFrame">{{60, 162}, {200, 18}}</string>
 						<reference key="NSSuperview" ref="911100796"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="564390821"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -96,7 +99,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">你的黑名单空空如也</string>
+						<string key="IBUIText">我是你的黑名单</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC42IDAuNiAwLjYAA</bytes>
@@ -119,15 +122,17 @@
 					<object class="IBUILabel" id="564390821">
 						<reference key="NSNextResponder" ref="911100796"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{60, 183}, {200, 12}}</string>
+						<string key="NSFrame">{{60, 183}, {200, 15}}</string>
 						<reference key="NSSuperview" ref="911100796"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<string key="IBUIText">你将收不到黑名单用户发给你的信息</string>
+						<string key="IBUIText">专为你关你讨厌的人</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MC44IDAuOCAwLjgAA</bytes>
@@ -152,6 +157,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{112, 59}, {95, 95}}</string>
 						<reference key="NSSuperview" ref="911100796"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="164868283"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -164,6 +170,7 @@
 				</array>
 				<string key="NSFrameSize">{320, 200}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="817317471"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -280,7 +287,29 @@
 			<nil key="sourceID"/>
 			<int key="maxID">14</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">BlockUsersViewController</string>
+					<string key="superclassName">UITableViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">emptyDataView</string>
+						<string key="NS.object.0">UIView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">emptyDataView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">emptyDataView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/BlockUsersViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
