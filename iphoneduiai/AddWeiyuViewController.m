@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSString *curAddress, *photoId;
 @property (retain, nonatomic) IBOutlet PositionView *positionView;
 @property (assign, nonatomic) BOOL state;
+@property (strong, nonatomic) UIImageView *thumbImageView;
 
 @end
 
@@ -93,6 +94,7 @@
     [faceButton addTarget:self action:@selector(faceSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:faceButton];
     
+    /*
     UIButton *locButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [locButton setImage:[UIImage imageNamed:@"sub_posi_icon"] forState:UIControlStateNormal];
     [locButton setImage:[UIImage imageNamed:@"sub_posi_icon_linkded"] forState:UIControlStateHighlighted ];
@@ -100,6 +102,10 @@
     locButton.frame = CGRectMake(220, 12, 18, 24);
     [locButton addTarget:self action:@selector(locSelect:)forControlEvents:UIControlEventTouchUpInside];
     [toolView addSubview:locButton];
+     */
+    
+    self.thumbImageView = [[[UIImageView alloc] initWithFrame:CGRectMake(210, 12, 24, 24)] autorelease];
+    [toolView addSubview:self.thumbImageView];
     
     contentLabel = [[[UILabel alloc] initWithFrame:CGRectMake(13, 5, 244, 50)]autorelease];
     contentLabel.textColor = RGBCOLOR(172, 172, 172);
@@ -123,6 +129,7 @@
     [_imageData release];
     [_curAddress release];
     [_positionView release];
+    [_thumbImageView release];
     [super dealloc];
 }
 
@@ -303,6 +310,7 @@
     [Utils uploadImage:data type:@"vphoto" block:^(NSDictionary *info){
         if (info) {
             self.photoId = info[@"pid"];
+            self.thumbImageView.image = [UIImage imageWithData:data];
         }
     }];
     [picker dismissModalViewControllerAnimated:YES];
