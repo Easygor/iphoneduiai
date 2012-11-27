@@ -208,6 +208,7 @@ static NSString *const wRegex = @"\\w+";
                                                  name:UIKeyboardWillShowNotification object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:self.view.window];
+    [MobClick beginLogPageView:NSStringFromClass([self class])];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -238,6 +239,7 @@ static NSString *const wRegex = @"\\w+";
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [MobClick endLogPageView:NSStringFromClass([self class])];
     
     [super viewWillDisappear:animated];
 }

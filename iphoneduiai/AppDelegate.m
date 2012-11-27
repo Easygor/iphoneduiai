@@ -90,6 +90,7 @@
 
 //    [self.timer fire];
     [MobClick startWithAppkey:@"5082034452701559980000ab" reportPolicy:REALTIME channelId:nil];
+    [MobClick updateOnlineConfig];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

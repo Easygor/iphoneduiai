@@ -88,6 +88,17 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
     [self setQqText:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:NSStringFromClass([self class])];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:NSStringFromClass([self class])];
+}
 
 -(void)viewDidDisappear:(BOOL)animated
 {
