@@ -93,9 +93,10 @@ static NSString *fileName = @"notifications.plist";
 - (NSString *)filePath
 {
     if (_filePath == nil) {
+        NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *dpath = [paths objectAtIndex:0];
-        NSString *pathForNotiFile = [dpath stringByAppendingPathComponent:fileName];
+        NSString *pathForNotiFile = [dpath stringByAppendingPathComponent:[info[@"uid"] stringByAppendingString:fileName]];
         
         _filePath = [pathForNotiFile retain];
     }

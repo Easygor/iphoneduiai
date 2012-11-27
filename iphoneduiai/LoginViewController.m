@@ -35,7 +35,9 @@
 @synthesize errorLabel;
 @synthesize errors=_errors;
 @synthesize contentView,logoImgView;
+
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [forgotPasswordBtn release];
     [emailText release];
     [passwordText release];
@@ -80,7 +82,13 @@
                                                  name:UIKeyboardWillShowNotification object:self.view.window];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification object:self.view.window];
+
     self.contentView.backgroundColor = [UIColor clearColor];
+}
+
+- (void)dismissMe
+{
+    [self dismissModalViewControllerAnimated:NO];
 }
 
 - (void)viewDidUnload
@@ -221,7 +229,7 @@
     NSString *model = [[UIDevice currentDevice] model];
     NSString *udid = [[UIDevice currentDevice] deviceApplicationIdentifier];
     
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *dParams = [NSDictionary dictionaryWithObjectsAndKeys:
                           model, @"devicename",
                           udid, @"deviceid",
                           [NSNumber numberWithFloat:curLocation.longitude], @"jin",
@@ -230,7 +238,7 @@
                           self.passwordText.text, @"password",
                           nil];
     
-    RKParams *params = [RKParams paramsWithDictionary:data];
+    RKParams *params = [RKParams paramsWithDictionary:dParams];
     
     // per
     [[RKClient sharedClient] post:[@"/login" stringByAppendingQueryParameters:[Utils queryParams]]
@@ -269,6 +277,8 @@
                                        @"username":usefulData[@"data"][@"username"],
                                        @"info": usefulData[@"data"][@"userinfo"]};
                                        
+                                       [[NSUserDefaults standardUserDefaults] setObject:@{@"username": self.emailText.text, @"password": self.passwordText.text}
+                                                                                 forKey:@"up"];
                                        [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
                                        [[NSUserDefaults standardUserDefaults] synchronize];
                                        [SVProgressHUD dismiss];
@@ -380,6 +390,12 @@
 {
     [super viewWillAppear:animated];
     [MobClick beginLogPageView:NSStringFromClass([self class])];
+    NSDictionary *up = [[NSUserDefaults standardUserDefaults] objectForKey:@"up"];
+    if (up) {
+        self.passwordText.text = up[@"password"];
+        self.emailText.text = up[@"username"];
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated

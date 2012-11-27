@@ -241,6 +241,7 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
 
 -(void)clearRegisterData
 {
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"step1"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"step2"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"step3"];
@@ -297,7 +298,7 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
     NSString *udid = [[UIDevice currentDevice] deviceApplicationIdentifier];
     
     NSDictionary *step1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"step1"];
-    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSDictionary *dParams = [NSDictionary dictionaryWithObjectsAndKeys:
                           model, @"devicename",
                           udid, @"deviceid",
                           [NSNumber numberWithFloat:curLocation.longitude], @"jin",
@@ -306,7 +307,7 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
                           step1[@"password"], @"password",
                           nil];
     
-    RKParams *params = [RKParams paramsWithDictionary:data];
+    RKParams *params = [RKParams paramsWithDictionary:dParams];
     
     // per
     [[RKClient sharedClient] post:[@"/login" stringByAppendingQueryParameters:[Utils queryParams]]
@@ -320,7 +321,7 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
                            [request setOnDidLoadResponse:^(RKResponse *response){
                                if (response.isOK && response.isJSON)
                                {
-                                   [self clearRegisterData];
+                           
                                    NSDictionary *data = [[response bodyAsString] objectFromJSONString];
                                    //                                   NSLog(@"res: %@", data);
                                    NSInteger code = [[data objectForKey:@"error"] intValue];
@@ -331,12 +332,16 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
                                        @"username":data[@"data"][@"username"],
                                        @"info": data[@"data"][@"userinfo"]};
                                        
+                                       // save username & password
+                                       NSDictionary *step1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"step1"];
+                                       [[NSUserDefaults standardUserDefaults] setObject:step1
+                                                                                 forKey:@"up"];
                                        [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
                                        [[NSUserDefaults standardUserDefaults] synchronize];
                                        [SVProgressHUD dismiss];
                                        
 
-                                       [self.navigationController.presentedViewController dismissModalViewControllerAnimated:YES];
+                                       [self.navigationController.presentingViewController.presentingViewController dismissModalViewControllerAnimated:YES];
                                        
                                    }
                                    else
@@ -346,6 +351,7 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
 
                                        
                                    }
+                                   [self clearRegisterData];
                                    // clear data on here
 //                                  [self performSelector:@selector(clearRegisterData) withObject:nil afterDelay:0.5];
                                    
