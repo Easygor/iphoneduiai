@@ -103,6 +103,8 @@ static NSInteger kDelWeiyuTag = 204;
 
 @property (strong, nonatomic) NSDate *lastWeiyuUpdateTime, *lastUserInfoUpdateTime, *lastBasicInfoUpdateTime;
 @property (retain, nonatomic) IBOutlet UILabel *duiaiIDLabel;
+@property (retain, nonatomic) IBOutlet UIButton *moreDetailBtn;
+@property (retain, nonatomic) IBOutlet UIButton *chooseMateBtn;
 
 @end
 
@@ -174,6 +176,8 @@ static NSInteger kDelWeiyuTag = 204;
     [_heightPicker release];
     [_weightPicker release];
     [_duiaiIDLabel release];
+    [_moreDetailBtn release];
+    [_chooseMateBtn release];
     [super dealloc];
 }
 
@@ -460,6 +464,8 @@ static NSInteger kDelWeiyuTag = 204;
     [self setImg5:nil];
     [self setImg6:nil];
     [self setDuiaiIDLabel:nil];
+    [self setMoreDetailBtn:nil];
+    [self setChooseMateBtn:nil];
     [super viewDidUnload];
 }
 
@@ -735,6 +741,17 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (void)changeToEditingView
 {
+    // close the two views
+    if (self.moreDetailBtn.tag)
+    {
+        [self moreDetailAction:self.moreDetailBtn];
+    }
+    
+    if (self.chooseMateBtn.tag)
+    {
+        [self friendConditionAction:self.chooseMateBtn];
+    }
+    
     // remove some things
     [self.nameView removeFromSuperview];
     [self.moreView removeFromSuperview];
@@ -1240,7 +1257,8 @@ static NSInteger kDelWeiyuTag = 204;
 - (IBAction)friendConditionAction:(UIButton *)sender
 {
     
-    if (sender.tag == 0) {
+    if (sender.tag == 0)
+    {
         UIView *view = sender.superview;
         [UIView animateWithDuration:0.3 animations:^{
             //            CGRect move1 = self.move1View.frame;
@@ -1263,7 +1281,9 @@ static NSInteger kDelWeiyuTag = 204;
         
         
         sender.tag = 1;
-    } else{
+    }
+    else
+    {
         [self.marrayReqView removeMeWithAnimated:YES];
         
         [UIView animateWithDuration:0.3 animations:^{
