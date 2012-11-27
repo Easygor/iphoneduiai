@@ -102,6 +102,7 @@ static NSInteger kDelWeiyuTag = 204;
 @property (strong, nonatomic) NSArray *weiboList;
 
 @property (strong, nonatomic) NSDate *lastWeiyuUpdateTime, *lastUserInfoUpdateTime, *lastBasicInfoUpdateTime;
+@property (retain, nonatomic) IBOutlet UILabel *duiaiIDLabel;
 
 @end
 
@@ -172,6 +173,7 @@ static NSInteger kDelWeiyuTag = 204;
     [_img6 release];
     [_heightPicker release];
     [_weightPicker release];
+    [_duiaiIDLabel release];
     [super dealloc];
 }
 
@@ -279,7 +281,7 @@ static NSInteger kDelWeiyuTag = 204;
     if (![_searchIndex isEqualToDictionary:searchIndex]) {
         _searchIndex = [searchIndex retain];
         
-        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@/900m", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
+        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
         self.countView.count = [[searchIndex objectForKey:@"digocount"] description];
         
         NSString *dname = [searchIndex[@"devicename"] description];
@@ -288,7 +290,7 @@ static NSInteger kDelWeiyuTag = 204;
             self.phoneImageView.image = [UIImage imageNamed:@"iPhone_icon"];
             self.phoneLabel.text = dname;
         }
-        else if([dname isEqualToString:@"0"])
+        else if([[dname description] isEqualToString:@"0"])
         {
             self.phoneImageView.image = [UIImage imageNamed:@"pc_icon"];
             self.phoneLabel.text = @"PC";
@@ -306,10 +308,21 @@ static NSInteger kDelWeiyuTag = 204;
 - (void)setWeiyus:(NSMutableArray *)weiyus
 {
     if (![_weiyus isEqualToArray:weiyus]) {
-        if (self.curPage > 1) {
+        if (self.curPage > 1)
+        {
             [_weiyus addObjectsFromArray:weiyus];
-        } else{
+        } else
+        {
             _weiyus = [[NSMutableArray alloc] initWithArray:weiyus];
+        }
+        
+        if (weiyus.count > 0)
+        {
+            self.move2View.hidden = NO;
+        }
+        else
+        {
+            self.move2View.hidden = YES;
         }
         
         [self.tableView reloadData];
@@ -326,7 +339,8 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (void)setUserInterest:(NSDictionary *)userInterest
 {
-    if (![_userInterest isEqualToDictionary:userInterest]) {
+    if (![_userInterest isEqualToDictionary:userInterest])
+    {
         _userInterest = [userInterest retain];
         self.moreUserInfoView.moreUserInfo = userInterest;
     }
@@ -334,7 +348,8 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (void)setPhotos:(NSMutableArray *)photos
 {
-    if (![_photos isEqualToArray:photos]) {
+    if (![_photos isEqualToArray:photos])
+    {
         _photos = [photos retain];
         self.showPhotoView.photos = photos;
     }
@@ -345,15 +360,27 @@ static NSInteger kDelWeiyuTag = 204;
     if (![_userInfo isEqualToDictionary:userInfo]) {
         _userInfo = [userInfo retain];
         
+        self.duiaiIDLabel.text = userInfo[@"uid"];
+        
         self.avatarView.sex = [userInfo objectForKey:@"sex"];
         [self.avatarView.imageView loadImage:[userInfo objectForKey:@"photo"]];
         self.nameAgeLabel.text = [NSString stringWithFormat:@"%@, %@岁", [userInfo objectForKey:@"niname"], [userInfo objectForKey:@"age"]];
         
         self.heightField.text = [NSString stringWithFormat:@"%@cm", [userInfo objectForKey:@"height"]];
-        self.areaField.text = [userInfo objectForKey:@"area"];
+
         self.incomeField.text = [userInfo objectForKey:@"income"];
         self.degreeField.text = [userInfo objectForKey:@"degree"];
         self.careerField.text = [userInfo objectForKey:@"industry"];
+        
+        
+        if (![userInfo[@"area"] isEqualToString:@""])
+        {
+            self.areaField.text = [userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:userInfo[@"area"]]];
+        }
+        else
+        {
+            self.areaField.text = userInfo[@"city"];
+        }
         
         self.dySexLabel.text = @"我的动态"/*[NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]]*/;
         
@@ -432,6 +459,7 @@ static NSInteger kDelWeiyuTag = 204;
     [self setImg4:nil];
     [self setImg5:nil];
     [self setImg6:nil];
+    [self setDuiaiIDLabel:nil];
     [super viewDidUnload];
 }
 

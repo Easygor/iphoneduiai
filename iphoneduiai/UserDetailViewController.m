@@ -235,15 +235,14 @@ static CGFloat dHeight2 = 0.0f;
     if (![_searchIndex isEqualToDictionary:searchIndex]) {
         _searchIndex = [searchIndex retain];
      
-#warning here is static value
-        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@/900m", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
+        self.timeDistanceLabel.text = [NSString stringWithFormat:@"%@", [Utils descriptionForTime:[NSDate dateWithTimeIntervalSince1970:[[searchIndex objectForKey:@"acctime"] integerValue]]]];
         NSString *dname = [searchIndex[@"devicename"] description];
         if ([dname hasPrefix:@"iP"])
         {
             self.phoneImageView.image = [UIImage imageNamed:@"iPhone_icon"];
             self.phoneLabel.text = dname;
         }
-        else if([dname isEqualToString:@"0"])
+        else if([[dname description] isEqualToString:@"0"])
         {
             self.phoneImageView.image = [UIImage imageNamed:@"pc_icon"];
             self.phoneLabel.text = @"PC";
@@ -271,10 +270,19 @@ static CGFloat dHeight2 = 0.0f;
 
         
         self.heightLabel.text = [NSString stringWithFormat:@"%@cm", [userInfo objectForKey:@"height"]];
-        self.areaLabel.text = [userInfo objectForKey:@"area"];
+
         self.incomeLabel.text = [userInfo objectForKey:@"income"];
         self.degreeLabel.text = [userInfo objectForKey:@"degree"];
         self.careerLabel.text = [userInfo objectForKey:@"industry"];
+        
+        if (![userInfo[@"area"] isEqualToString:@""])
+        {
+            self.areaLabel.text = [userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:userInfo[@"area"]]];
+        }
+        else
+        {
+            self.areaLabel.text = userInfo[@"city"];
+        }
         
         self.dySexLabel.text = [NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]];
         

@@ -556,7 +556,7 @@
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
-                NSLog(@"weiyu list data: %@", data);
+//                NSLog(@"weiyu list data: %@", data);
                 NSInteger code = [data[@"error"] integerValue];
 //                NSLog(@"%@",data);
                 if (code == 0) {
