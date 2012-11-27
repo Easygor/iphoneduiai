@@ -253,11 +253,15 @@
                 if ([d[@"icon"] hasSuffix:@".thumb.jpg"]) {
                     iconUrl = [iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]];
                 }
-                [self.showImageView loadImage:iconUrl];
+                [AsyncImageView getImage:iconUrl withBlock:^(UIImage *img){
+                    self.showImageView.image = [Utils cutImageFrom:img];
+
+                }];
+//                [self.showImageView loadImage:iconUrl withPlaceholdImage:[UIImage imageNamed:@"nopic"]];
                 self.showImageView.tag = i;
                 
                 if (isDel && self.editing && [self.delegate respondsToSelector:@selector(didTriggerDelPhotoAction:at:)]) {
-                    NSLog(@"im trigger");
+//                    NSLog(@"im trigger");
                     [self.delegate didTriggerDelPhotoAction:self at:view.tag];
                 }
             }

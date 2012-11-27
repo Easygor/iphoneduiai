@@ -328,4 +328,37 @@
     }];
 }
 
++ (UIImage*)cutImageFrom:(UIImage*)scrimg
+{
+    CGFloat w, h, x, y;
+    if (scrimg.size.width/scrimg.size.height < 320/300.0)
+    {
+        w = scrimg.size.width;
+        h = scrimg.size.width*300/320;
+        y = (scrimg.size.height - h)/3;
+        x = 0;
+    }
+    else
+    {
+        h = scrimg.size.height;
+        w = scrimg.size.height*320/300;
+        y = 0;
+        x = (scrimg.size.width - w)/2;
+    }
+    // compute rect
+    return [[self class] getImageFrom:scrimg withRect:CGRectMake(x, y, w, h)];
+
+}
+
+// 剪裁图片
++ (UIImage *)getImageFrom:(UIImage*)srcimg withRect:(CGRect)rect
+{
+
+    CGImageRef cgimg = CGImageCreateWithImageInRect([srcimg CGImage], rect);
+    UIImage *image = [UIImage imageWithCGImage:cgimg];
+    CGImageRelease(cgimg);
+    
+    return image;
+    
+}
 @end

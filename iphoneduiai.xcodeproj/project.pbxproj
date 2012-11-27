@@ -255,6 +255,7 @@
 		61252AED16642A4D0062BFA0 /* WeiyuFourCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61252AEC16642A4B0062BFA0 /* WeiyuFourCell.xib */; };
 		61252AEF16642A990062BFA0 /* WeiyuThreeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 61252AEE16642A980062BFA0 /* WeiyuThreeCell.xib */; };
 		61252AF21664307C0062BFA0 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61252AF01664307C0062BFA0 /* libMobClickLibrary.a */; };
+		61252AF5166433E10062BFA0 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61252AF4166433E00062BFA0 /* libz.1.2.5.dylib */; };
 		61265A5D165BAC7F00BAF8E0 /* nav_back_btn_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A55165BAC7E00BAF8E0 /* nav_back_btn_highlight@2x.png */; };
 		61265A5E165BAC7F00BAF8E0 /* nav_back_btn_highlights.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A56165BAC7F00BAF8E0 /* nav_back_btn_highlights.png */; };
 		61265A5F165BAC7F00BAF8E0 /* nav_back_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A57165BAC7F00BAF8E0 /* nav_back_btn.png */; };
@@ -1250,6 +1251,7 @@
 		61252AEE16642A980062BFA0 /* WeiyuThreeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeiyuThreeCell.xib; sourceTree = "<group>"; };
 		61252AF01664307C0062BFA0 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
 		61252AF11664307C0062BFA0 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		61252AF4166433E00062BFA0 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		61265A55165BAC7E00BAF8E0 /* nav_back_btn_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_back_btn_highlight@2x.png"; sourceTree = "<group>"; };
 		61265A56165BAC7F00BAF8E0 /* nav_back_btn_highlights.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back_btn_highlights.png; sourceTree = "<group>"; };
 		61265A57165BAC7F00BAF8E0 /* nav_back_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_back_btn.png; sourceTree = "<group>"; };
@@ -1979,6 +1981,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61252AF5166433E10062BFA0 /* libz.1.2.5.dylib in Frameworks */,
 				617ADE26166316C900751D89 /* StoreKit.framework in Frameworks */,
 				5A8685821636B743001F9134 /* MessageUI.framework in Frameworks */,
 				6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */,
@@ -2826,6 +2829,7 @@
 		61BB2B5615F9DB0800AA82CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61252AF4166433E00062BFA0 /* libz.1.2.5.dylib */,
 				617ADE25166316C900751D89 /* StoreKit.framework */,
 				5A8685811636B743001F9134 /* MessageUI.framework */,
 				61CB3F76160359EB00888317 /* libicucore.dylib */,
