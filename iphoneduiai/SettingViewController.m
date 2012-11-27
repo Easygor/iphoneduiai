@@ -415,7 +415,7 @@ static int behindImgTag = 103;
 {
     
     UIImage *thumbImage = [Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerEditedImage] size:CGSizeMake(181, 181)];
-    NSData *data = UIImagePNGRepresentation(thumbImage);
+    NSData *data = UIImageJPEGRepresentation(thumbImage, 0.9);
     [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
         
         if (res) {

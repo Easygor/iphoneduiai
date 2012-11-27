@@ -1515,7 +1515,7 @@ static NSInteger kDelWeiyuTag = 204;
 {
     /*添加处理选中图像代码*/
     if (self.isUploadPhoto) {
-         NSData *data = UIImagePNGRepresentation([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]);
+         NSData *data = UIImageJPEGRepresentation(([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]), 0.9);
         [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
             if (res) {
                 [self.showPhotoView insertPhoto:res atIndex:1];
@@ -1526,7 +1526,7 @@ static NSInteger kDelWeiyuTag = 204;
         
     } else{
         UIImage *thumbImage = [Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerEditedImage] size:CGSizeMake(181, 181)];
-        NSData *data = UIImagePNGRepresentation(thumbImage);
+        NSData *data = UIImageJPEGRepresentation(thumbImage, 0.9);
         
         [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
 
