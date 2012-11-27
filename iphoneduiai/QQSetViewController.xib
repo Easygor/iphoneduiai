@@ -240,12 +240,13 @@
 								<string key="NSFrame">{{224, 12}, {49, 20}}</string>
 								<reference key="NSSuperview" ref="1049925460"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUIText">3次</string>
+								<string key="IBUIText"/>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC42IDAuNiAwLjYAA</bytes>
@@ -263,7 +264,7 @@
 						<string key="NSFrame">{{10, 107}, {300, 42}}</string>
 						<reference key="NSSuperview" ref="1020158993"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="863464265"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -468,15 +469,10 @@
 					<string key="className">QQSetViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="qqEableField">UITextField</string>
 						<string key="qqField">UITextField</string>
 						<string key="qqNumField">UITextField</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="qqEableField">
-							<string key="name">qqEableField</string>
-							<string key="candidateClassName">UITextField</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="qqField">
 							<string key="name">qqField</string>
 							<string key="candidateClassName">UITextField</string>

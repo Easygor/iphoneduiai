@@ -239,7 +239,8 @@ static int behindImgTag = 103;
         smallLabel.text = [NSString stringWithFormat:@"共%d张", self.showPhotoView.photos.count];
     }else if([[data objectForKey:@"label"] isEqualToString:@"up_person"])
     {
-        smallLabel.text = @"共13人";
+//        smallLabel.text = @"共13人";
+        smallLabel.text = @"";
     } else{
         smallLabel.text = @"";
         
@@ -368,16 +369,22 @@ static int behindImgTag = 103;
 #pragma mark - ActionSheet Delegate Methods
 - (void) actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    if (actionSheet.cancelButtonIndex == buttonIndex)
+    {
+        return;
+    }
+    
     if (actionSheet.tag==kActionChooseImageTag) {
         UIImagePickerController* imagePickerController = [[[UIImagePickerController alloc] init]autorelease];
         
         if (buttonIndex == 0)
+        {
             imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
         else  if(buttonIndex==1)
+        {
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-        
-        else if(buttonIndex==2)
-            return;
+        }
         
         imagePickerController.delegate=self;
         //        imagePickerController.allowsEditing = YES;
@@ -399,12 +406,10 @@ static int behindImgTag = 103;
     [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
         
         if (res) {
-            //            NSLog(@"hello doyou do: %@", res);
-            //            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
-            //            user[@"info"][@"photo"] =
+
             self.avatarImageView.image = [UIImage imageWithData:data];
             self.avatarView.imageView.image = [UIImage imageWithData:data];
-            NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+            NSMutableDictionary *user = [[[NSUserDefaults standardUserDefaults]  objectForKey:@"user"] mutableCopy];
             user[@"avatar"] = data;
             [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -415,7 +420,7 @@ static int behindImgTag = 103;
     [picker dismissModalViewControllerAnimated:YES];
     
 }
-//点击按钮后，触发这个方法
+
 -(void)sendEMail
 {
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));

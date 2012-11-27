@@ -253,7 +253,7 @@
                 if ([d[@"icon"] hasSuffix:@".thumb.jpg"]) {
                     iconUrl = [iconUrl substringToIndex:iconUrl.length - [@".thumb.jpg" length]];
                 }
-                [self.showImageView.indicatorView setColor:[UIColor whiteColor]];
+
                 [self.showImageView.indicatorView startAnimating];
                 [AsyncImageView getImage:iconUrl withBlock:^(UIImage *img){
                     self.showImageView.image = [Utils cutImageFrom:img];

@@ -1504,7 +1504,7 @@ static NSInteger kDelWeiyuTag = 204;
 
             if (res) {
                 self.avatarView.imageView.image = [UIImage imageWithData:data];
-                NSMutableDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+                NSMutableDictionary *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] mutableCopy];
                 user[@"avatar"] = data;
                 [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
                 [[NSUserDefaults standardUserDefaults] synchronize];

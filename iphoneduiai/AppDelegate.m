@@ -316,7 +316,7 @@
 //                                   NSLog(@"res: %@", data);
                                    if ([data[@"error"] intValue] == 0) {
                   
-                                       NSMutableDictionary *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] mutableCopy];
+                                       NSDictionary *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
                                        
                                        NSDictionary *userinfo = @{
                                        @"accesskey": user[@"accesskey"],

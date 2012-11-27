@@ -65,6 +65,7 @@
         _contacts = [contacts retain];
         
         self.qqField.text = contacts[@"contact"];
+        self.qqNumNum = [contacts[@"maxview"] integerValue];
         self.qqNumField.text = [NSString stringWithFormat:@"%@次", contacts[@"maxview"]];
         // do here
     }

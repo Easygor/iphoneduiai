@@ -41,7 +41,7 @@
     if (_indicatorView == nil) {
         _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         _indicatorView.hidesWhenStopped = YES;
-        [_indicatorView setColor:RGBCOLOR(141, 201, 242)];
+        [_indicatorView setColor:[UIColor whiteColor]];
         [_indicatorView stopAnimating];
         _indicatorView.frame = CGRectMake((self.frame.size.width-37)/2, (self.frame.size.height-37)/2, 37, 37);
         [self addSubview:_indicatorView];

@@ -101,16 +101,6 @@
 		</dict>
 		<dict>
 			<key>text</key>
-			<string>求评价~</string>
-			<key>logo</key>
-			<string></string>
-			<key>label</key>
-			<string>thread</string>
-			<key>haveNext</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>text</key>
 			<string>关于对爱</string>
 			<key>logo</key>
 			<string></string>
