@@ -387,7 +387,7 @@ static int behindImgTag = 103;
         }
         
         imagePickerController.delegate=self;
-        //        imagePickerController.allowsEditing = YES;
+        imagePickerController.allowsEditing = YES;
         [self presentModalViewController: imagePickerController
                                 animated: YES];
     }
@@ -402,7 +402,8 @@ static int behindImgTag = 103;
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     
-    NSData *data = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage]);
+    UIImage *thumbImage = [Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerEditedImage] size:CGSizeMake(181, 181)];
+    NSData *data = UIImagePNGRepresentation(thumbImage);
     [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
         
         if (res) {

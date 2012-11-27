@@ -479,6 +479,7 @@
 		617ADE3516634F9900751D89 /* nopic.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE3316634F9900751D89 /* nopic.png */; };
 		617ADE3616634F9900751D89 /* nopic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE3416634F9900751D89 /* nopic@2x.png */; };
 		617ADE381663619C00751D89 /* bolg_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 617ADE371663619C00751D89 /* bolg_icon.png */; };
+		6183B9341664EF400029EDE5 /* UserCardTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6183B9331664EF400029EDE5 /* UserCardTableCell.xib */; };
 		6199D67C15FEA6F100BEBD00 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */; };
 		6199D67E15FEA70A00BEBD00 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67D15FEA70A00BEBD00 /* Security.framework */; };
 		6199D68015FEA71A00BEBD00 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6199D67F15FEA71A00BEBD00 /* MobileCoreServices.framework */; };
@@ -1518,6 +1519,7 @@
 		617ADE3316634F9900751D89 /* nopic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nopic.png; sourceTree = "<group>"; };
 		617ADE3416634F9900751D89 /* nopic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nopic@2x.png"; sourceTree = "<group>"; };
 		617ADE371663619C00751D89 /* bolg_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bolg_icon.png; sourceTree = "<group>"; };
+		6183B9331664EF400029EDE5 /* UserCardTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCardTableCell.xib; sourceTree = "<group>"; };
 		6199D66615FEA6BB00BEBD00 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = Externals/RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		6199D67B15FEA6F100BEBD00 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6199D67D15FEA70A00BEBD00 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -2608,6 +2610,7 @@
 				616AC148164F6F5500EF660C /* DigoUserCell.m */,
 				616AC178164F824200EF660C /* BlockUserCell.h */,
 				616AC179164F824200EF660C /* BlockUserCell.m */,
+				6183B9331664EF400029EDE5 /* UserCardTableCell.xib */,
 			);
 			name = "Custom Cell";
 			sourceTree = "<group>";
@@ -4223,6 +4226,7 @@
 				612F3FB7166472350017F8FB /* pic_status.png in Resources */,
 				612F3FB8166472350017F8FB /* pic_status@2x.png in Resources */,
 				612F3FBA166472E40017F8FB /* UserInfoTableCell.xib in Resources */,
+				6183B9341664EF400029EDE5 /* UserCardTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

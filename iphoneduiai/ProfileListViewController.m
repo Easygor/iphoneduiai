@@ -1519,7 +1519,9 @@ static NSInteger kDelWeiyuTag = 204;
         self.isUploadPhoto = NO;
         
     } else{
-         NSData *data = UIImagePNGRepresentation([info objectForKey:UIImagePickerControllerEditedImage]);
+        UIImage *thumbImage = [Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerEditedImage] size:CGSizeMake(181, 181)];
+        NSData *data = UIImagePNGRepresentation(thumbImage);
+        
         [Utils uploadImage:data type:@"userface" block:^(NSDictionary *res){
 
             if (res) {

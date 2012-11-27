@@ -363,14 +363,10 @@
         
     } else {
         NSArray *users = [self.users objectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row*3, MIN(3, self.users.count-indexPath.row*3))]];
-        static NSString *CellIdentifier = @"userCardCell";
+        static NSString *CellIdentifier = @"UserCardTableCell";
+        [tableView registerNib:[UINib nibWithNibName:@"UserCardTableCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
         UserCardTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        // Configure the cell...
-        if (cell == nil) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
-            cell = [nib objectAtIndex:1];
-            cell.delegate = self;
-        }
+        cell.delegate = self;
         
         cell.users = users;
         
