@@ -265,7 +265,7 @@
             [[RKClient sharedClient] get:[@"http://maps.googleapis.com/maps/api/geocode/json" stringByAppendingQueryParameters:p]
                               usingBlock:^(RKRequest *request){
                                   [request setOnDidFailLoadWithError:^(NSError *error){
-                                      NSLog(@"get address %@", [error description]);
+//                                      NSLog(@"get address %@", [error description]);
                                       [SVProgressHUD dismiss];
                                   }];
                                   
@@ -276,12 +276,14 @@
                                           [SVProgressHUD dismiss];
                                           for (NSDictionary *g in geo[@"results"]) {
                                               if ([g[@"types"] containsObject:@"street_address"]) {
-                                                   NSLog(@"name: %@", g[@"formatted_address"]);
+//                                                   NSLog(@"name: %@", g[@"formatted_address"]);
                                                   self.curAddress = g[@"formatted_address"];
                                                   btn.selected = YES;
                                                   break;
                                               }
                                           }
+                                      } else{
+                                          [SVProgressHUD showErrorWithStatus:@"位置获取失败"];
                                       }
                                   }];
                               }];

@@ -179,7 +179,7 @@
     }
     
     if (self.conditions[@"degreedesc"]) {
-        self.incomeField.text = self.conditions[@"degreedesc"];
+        self.degreeField.text = self.conditions[@"degreedesc"];
     }
     
     if (self.conditions[@"id"]) {

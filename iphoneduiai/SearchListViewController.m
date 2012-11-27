@@ -324,15 +324,10 @@
   
     if ([tableView isEqual:self.infoTableView]) {
         NSDictionary *user = [self.users objectAtIndex:indexPath.row];
-        static NSString *CellIdentifier = @"userInfoCell";
+        static NSString *CellIdentifier = @"UserInfoTableCell";
+        [tableView registerNib:[UINib nibWithNibName:@"UserInfoTableCell" bundle:nil] forCellReuseIdentifier:CellIdentifier];
          UserInfoTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         
-        // Configure the cell...
-        if (cell == nil) {
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
-        }
-
         // do on here
         cell.nameLabel.text = [user objectForKey:@"niname"];
         if ([user[@"photo"] isEqualToString:@""]) {
@@ -340,7 +335,11 @@
         } else{
             [cell.avatarImageView loadImage:user[@"photo"]];
         }
-        cell.ageHightLabel.text = [NSString stringWithFormat:@"%@岁·%@cm", [user objectForKey:@"age"], [user objectForKey:@"height"]];
+        
+        cell.ageHightLabel.text = [NSString stringWithFormat:@"%@岁·%@cm",
+                                   [user objectForKey:@"age"],
+                                   [user objectForKey:@"height"]];
+        
         NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
         NSInteger d = [[user objectForKey:@"distance"] integerValue];
         NSString *desc = @"";
@@ -350,9 +349,11 @@
         cell.timeDistanceLabel.text = [desc stringByAppendingString: [Utils descriptionForTime:actime]];
         if([user[@"photocount"] integerValue] > 0 && [user[@"photocount"] integerValue] < 10){
             cell.xLabel.hidden = NO;
+            cell.iconR.hidden = NO;
             cell.pictureNum.text = [NSString stringWithFormat:@"%d", [[user objectForKey:@"photocount"] integerValue]];
         } else{
             cell.xLabel.hidden = YES;
+            cell.iconR.hidden = NO;
             cell.pictureNum.text = nil;
         }
         cell.graphText = [[user objectForKey:@"last_weiyu"] description];

@@ -282,6 +282,9 @@
 		61265A86165BCDDA00BAF8E0 /* notice_unread_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A84165BCDDA00BAF8E0 /* notice_unread_bg@2x.png */; };
 		61265A89165BD08200BAF8E0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A87165BD08100BAF8E0 /* Default.png */; };
 		61265A8A165BD08200BAF8E0 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61265A88165BD08100BAF8E0 /* Default@2x.png */; };
+		612F3FB7166472350017F8FB /* pic_status.png in Resources */ = {isa = PBXBuildFile; fileRef = 612F3FB5166472350017F8FB /* pic_status.png */; };
+		612F3FB8166472350017F8FB /* pic_status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 612F3FB6166472350017F8FB /* pic_status@2x.png */; };
+		612F3FBA166472E40017F8FB /* UserInfoTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 612F3FB9166472E30017F8FB /* UserInfoTableCell.xib */; };
 		6130267616229D3A000E1CBD /* TasksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6130267416229D3A000E1CBD /* TasksViewController.m */; };
 		6130267716229D3A000E1CBD /* TasksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6130267516229D3A000E1CBD /* TasksViewController.xib */; };
 		6130267A1622A06C000E1CBD /* DeleteGroupMemberBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 613026781622A06C000E1CBD /* DeleteGroupMemberBtn.png */; };
@@ -1278,6 +1281,9 @@
 		61265A84165BCDDA00BAF8E0 /* notice_unread_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notice_unread_bg@2x.png"; sourceTree = "<group>"; };
 		61265A87165BD08100BAF8E0 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		61265A88165BD08100BAF8E0 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		612F3FB5166472350017F8FB /* pic_status.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_status.png; sourceTree = "<group>"; };
+		612F3FB6166472350017F8FB /* pic_status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_status@2x.png"; sourceTree = "<group>"; };
+		612F3FB9166472E30017F8FB /* UserInfoTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfoTableCell.xib; sourceTree = "<group>"; };
 		6130267316229D3A000E1CBD /* TasksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksViewController.h; sourceTree = "<group>"; };
 		6130267416229D3A000E1CBD /* TasksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksViewController.m; sourceTree = "<group>"; };
 		6130267516229D3A000E1CBD /* TasksViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TasksViewController.xib; sourceTree = "<group>"; };
@@ -2432,20 +2438,20 @@
 			children = (
 				6134D4541663CC2800745108 /* WeiyuTextPicCell.h */,
 				6134D4551663CC2800745108 /* WeiyuTextPicCell.m */,
+				61252AE2166427F20062BFA0 /* WeiyuTextPicCell.xib */,
 				6134D4581663CC6200745108 /* WeiyuContentCell.h */,
 				6134D4591663CC6200745108 /* WeiyuContentCell.m */,
+				61252AE01664260C0062BFA0 /* WeiyuContentCell.xib */,
 				6134D45B1663CCD500745108 /* WeiyuFaqCell.h */,
 				6134D45C1663CCD500745108 /* WeiyuFaqCell.m */,
+				61252AE4166428A50062BFA0 /* WeiyuFaqCell.xib */,
 				6134D45E1663CCF300745108 /* WeiyuOnePicCell.h */,
 				6134D45F1663CCF300745108 /* WeiyuOnePicCell.m */,
+				61252AE6166429430062BFA0 /* WeiyuOnePicCell.xib */,
 				61252ADD16640DDD0062BFA0 /* WeiyuTwoAndMorePicCell.h */,
 				61252ADE16640DDE0062BFA0 /* WeiyuTwoAndMorePicCell.m */,
 				61252AD71663E8D20062BFA0 /* FaqInnerLabel.h */,
 				61252AD81663E8D20062BFA0 /* FaqInnerLabel.m */,
-				61252AE01664260C0062BFA0 /* WeiyuContentCell.xib */,
-				61252AE2166427F20062BFA0 /* WeiyuTextPicCell.xib */,
-				61252AE4166428A50062BFA0 /* WeiyuFaqCell.xib */,
-				61252AE6166429430062BFA0 /* WeiyuOnePicCell.xib */,
 				61252AE81664299B0062BFA0 /* WeiyuNineCell.xib */,
 				61252AEA166429F90062BFA0 /* WeiyuSixCell.xib */,
 				61252AEC16642A4B0062BFA0 /* WeiyuFourCell.xib */,
@@ -2576,6 +2582,7 @@
 				61D509771657C15200F7191B /* FaqInnerView.m */,
 				6153D9BF161099BC00AC4A2D /* UserInfoTableCell.h */,
 				6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */,
+				612F3FB9166472E30017F8FB /* UserInfoTableCell.xib */,
 				6153D9D71610B49200AC4A2D /* UserCardView.h */,
 				6153D9D81610B49200AC4A2D /* UserCardView.m */,
 				6153D9DA1610B61600AC4A2D /* UserCardTableCell.h */,
@@ -2880,6 +2887,8 @@
 				611CE70415FDE82B0066EEA2 /* login & regigster images */,
 				6141A6F315FB71EE00985257 /* navigation & tabbar  */,
 				6153D9A916104E3100AC4A2D /* Default-568h@2x.png */,
+				612F3FB5166472350017F8FB /* pic_status.png */,
+				612F3FB6166472350017F8FB /* pic_status@2x.png */,
 				61D5097B1658928400F7191B /* part_line.png */,
 				61D5097C1658928400F7191B /* part_line@2x.png */,
 				61CB40DB1604CB6600888317 /* city.plist */,
@@ -4211,6 +4220,9 @@
 				61252AEB166429FA0062BFA0 /* WeiyuSixCell.xib in Resources */,
 				61252AED16642A4D0062BFA0 /* WeiyuFourCell.xib in Resources */,
 				61252AEF16642A990062BFA0 /* WeiyuThreeCell.xib in Resources */,
+				612F3FB7166472350017F8FB /* pic_status.png in Resources */,
+				612F3FB8166472350017F8FB /* pic_status@2x.png in Resources */,
+				612F3FBA166472E40017F8FB /* UserInfoTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
