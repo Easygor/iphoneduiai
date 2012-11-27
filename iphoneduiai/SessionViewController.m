@@ -358,7 +358,7 @@
 
 - (void)plusAction:(UIButton*)btn
 {
-    NSLog(@"plus action");
+
     CGRect rect = [self.containerView convertRect:self.messageView.frame toView:self.view.window];
 
     [self.poperView showMeAtView:self.view atPoint:CGPointMake(rect.origin.x+2, rect.origin.y - 5 - self.poperView.bounds.size.height)];
@@ -644,7 +644,7 @@
                 if (response.isOK && response.isJSON) {
                     NSDictionary *data = [[response bodyAsString] objectFromJSONString];
                     NSInteger code = [[data objectForKey:@"error"] integerValue];
-                    NSLog(@"return data: %@", data);
+//                    NSLog(@"return data: %@", data);
                     if (code != 0) {
                         NSLog(@"Fail to send messsage: %@", data[@"message"]);
                     } else{
@@ -764,7 +764,7 @@
     
     [SVProgressHUD show];
     [[RKClient sharedClient] get:[@"/uc/message.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
@@ -817,12 +817,12 @@
 
 - (IBAction)sendPictureAction:(UIButton *)sender
 {
-    NSLog(@"send pic....");
+
     [self.poperView removeMe];
 }
 - (IBAction)sendPosAction:(UIButton *)sender
 {
-    NSLog(@"send pos...");
+
     [self.poperView removeMe];
 }
 
@@ -836,7 +836,7 @@
     [[(id)cell indicatorView] startAnimating];
     
     [[RKClient sharedClient] post:[@"/common/delmessage.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         
         request.params = [RKParams paramsWithDictionary:@{@"tid[]" : msg[@"tid"], @"submitupdate": @"true"}];
         

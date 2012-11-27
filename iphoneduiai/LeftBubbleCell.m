@@ -137,7 +137,7 @@
 
 - (void)delete:(id)sender
 {
-    NSLog(@"do delete");
+
     [self resignFirstResponder];
     self.bubbleImageView.highlighted = NO;
     

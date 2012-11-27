@@ -623,11 +623,11 @@
     
 
     [[RKClient sharedClient] get:[@"/usersearch" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
-                NSLog(@"search data %@", data);
+//                NSLog(@"search data %@", data);
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     self.loading = NO;

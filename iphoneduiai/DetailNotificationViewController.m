@@ -41,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSLog(@"data: %@", self.notificationData);
+//    NSLog(@"data: %@", self.notificationData);
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg.png"]];
     
@@ -120,7 +120,7 @@
         [params setObject:self.notificationData[@"tid"] forKey:@"tid[]"];
         //            [SVProgressHUD show];
         [[RKClient sharedClient] post:[@"/common/readnotice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-            NSLog(@"url: %@", request.URL);
+//            NSLog(@"url: %@", request.URL);
             
             request.params = [RKParams paramsWithDictionary:@{@"tid" : self.notificationData[@"tid"], @"submitupdate": @"true"}];
             
@@ -160,7 +160,7 @@
     [params setObject:self.notificationData[@"tid"] forKey:@"tid[]"];
     [SVProgressHUD show];
     [[RKClient sharedClient] post:[@"/common/agreeview.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         
         request.params = [RKParams paramsWithDictionary:@{@"msgid" : self.notificationData[@"tid"], @"agree": v, @"submitupdate": @"true"}];
         

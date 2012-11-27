@@ -119,7 +119,6 @@
 //可以发送邮件的话
 - (void)displayComposerSheet
 {
-    NSLog(@"sending verify action...");
    
     
     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];

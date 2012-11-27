@@ -134,7 +134,7 @@
 
 - (void)delete:(id)sender
 {
-    NSLog(@"do delete");
+
     [self resignFirstResponder];
     self.bubbleImageView.highlighted = NO;
     if ([self.delegate respondsToSelector:@selector(didChangeStatus:toStatus:)]) {
@@ -266,7 +266,7 @@
     [self.indicatorView startAnimating];
     NSMutableDictionary *dParams = [Utils queryParams];
     [[RKClient sharedClient] post:[@"/uc/replymessage.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
-        NSLog(@"send message url: %@", request.URL);
+//        NSLog(@"send message url: %@", request.URL);
         NSMutableDictionary *pd = [NSMutableDictionary dictionary];
         [pd setObject:@"true" forKey:@"submitupdate"];
         [pd setObject:self.data[@"content"] forKey:@"replycontent"];
@@ -291,7 +291,7 @@
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
                 NSInteger code = [[data objectForKey:@"error"] integerValue];
-                NSLog(@"return data: %@", data);
+//                NSLog(@"return data: %@", data);
                 if (code != 0) {
                     NSLog(@"Fail to send messsage: %@", data[@"message"]);
                 } else{

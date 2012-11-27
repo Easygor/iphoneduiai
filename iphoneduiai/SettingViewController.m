@@ -357,7 +357,6 @@ static int behindImgTag = 103;
 
 - (IBAction)resginAction
 {
-    NSLog(@"log out");
     
     NSMutableDictionary *dParams = [Utils queryParams];
     
@@ -458,7 +457,6 @@ static int behindImgTag = 103;
 //可以发送邮件的话
 - (void)displayComposerSheet
 {
-    NSLog(@"sending verify action...");
     
     
     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];

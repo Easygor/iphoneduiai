@@ -96,7 +96,7 @@
 
 - (IBAction)forgotPasswordAction
 {
-    NSLog(@"Forgot password");
+//    NSLog(@"Forgot password");
     ForgetPasswordViewController *fpvc = [[ForgetPasswordViewController alloc] initWithNibName:@"ForgetPasswordViewController" bundle:nil];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:fpvc];
     nvc.navigationBar.layer.shadowColor = [[UIColor blackColor] CGColor];

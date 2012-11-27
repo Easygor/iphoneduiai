@@ -667,7 +667,7 @@ static NSInteger kDelWeiyuTag = 204;
         updateArgs[@"zodiac"] = self.searchIndex[@"zodiac"];
         updateArgs[@"submitupdate"] = @"true";
         
-         NSLog(@"args: %@", updateArgs);
+
         request.params = [RKParams paramsWithDictionary:updateArgs];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
@@ -1318,7 +1318,7 @@ static NSInteger kDelWeiyuTag = 204;
     
     [SVProgressHUD show];
     [[RKClient sharedClient] post:[@"/v/digo.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         
         request.params = [RKParams paramsWithDictionary:@{@"id" : weiyu[@"id"], @"shit": @(isShit), @"submitupdate": @"true"}];
         
@@ -1392,7 +1392,7 @@ static NSInteger kDelWeiyuTag = 204;
 
 - (IBAction)contractAction
 {
-    NSLog(@"contract...");
+
     QQSetViewController *qqSetViewController = [[[QQSetViewController alloc]init]autorelease];
     [self.navigationController pushViewController:qqSetViewController animated:YES];
     
@@ -1481,7 +1481,7 @@ static NSInteger kDelWeiyuTag = 204;
             [SVProgressHUD show];
             [[RKClient sharedClient] get:[@"/v/delete.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
                 [request setOnDidFailLoadWithError:^(NSError *error){
-                    NSLog(@"delete weiyu error: %@", [error description]);
+
                     [SVProgressHUD showErrorWithStatus:@"网络链接错误"];
                 }];
                 [request setOnDidLoadResponse:^(RKResponse *response){

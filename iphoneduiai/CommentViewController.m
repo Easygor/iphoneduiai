@@ -157,7 +157,7 @@
         
         // 请求成功时
         [request setOnDidLoadResponse:^(RKResponse *response){
-            NSLog(@"error: %@", response.bodyAsString);
+//            NSLog(@"error: %@", response.bodyAsString);
             if (response.isOK && response.isJSON) { // 200的返回并且是JSON数据
                 NSDictionary *data = [response.bodyAsString objectFromJSONString]; // 提交后返回的状态
                 NSInteger code = [data[@"error"] integerValue];  // 返回的状态

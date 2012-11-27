@@ -261,7 +261,7 @@
 //        [params setObject:n[@"tid"] forKey:@"tid[]"];
         [SVProgressHUD show];
         [[RKClient sharedClient] post:[@"/common/delnotice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-            NSLog(@"url: %@", request.URL);
+//            NSLog(@"url: %@", request.URL);
             
             request.params = [RKParams paramsWithDictionary:@{@"tid[]" : n[@"tid"], @"submitupdate": @"true"}];
             
@@ -321,7 +321,7 @@
     
     [SVProgressHUD show];
     [[RKClient sharedClient] get:[@"/uc/notice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
@@ -385,7 +385,7 @@
         //        [params setObject:n[@"tid"] forKey:@"tid[]"];
         [SVProgressHUD show];
         [[RKClient sharedClient] post:[@"/common/delnotice.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-            NSLog(@"url: %@", request.URL);
+//            NSLog(@"url: %@", request.URL);
             NSMutableDictionary *updateArgs = [NSMutableDictionary dictionary];
             for (NSDictionary *d in self.notifications) {
                 updateArgs[[NSString stringWithFormat:@"tid[%@]", d[@"tid"]]] = d[@"tid"];

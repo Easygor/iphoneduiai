@@ -128,7 +128,7 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     preX = scrollView.contentOffset.x;
     preFrame = self.view.frame;
-    NSLog(@"prex:%f",preX);
+
 }
 
 - (void)addbutton
@@ -175,7 +175,7 @@
     int curpage = (n-1) / itemsPerPage;
     row = row % 3;
     if (n / 9 + 1 > 9) {
-        NSLog(@"不能创建更多页面");
+
     }else{
         frame.origin.x = frame.origin.x + frame.size.width * col + 10 * col + scrollview.frame.size.width * curpage;
         frame.origin.y = frame.origin.y + frame.size.height * row + 10 * row;
@@ -198,7 +198,7 @@
         frame = CGRectMake(0, 10, 100, 100);
         frame.origin.x = frame.origin.x + frame.size.width * col + 10 * col + scrollview.frame.size.width * curpage;
         frame.origin.y = frame.origin.y + frame.size.height * row + 10 * row;
-        NSLog(@"add button col:%d,row:%d,page:%d",col,row,curpage);
+
         [scrollview setContentSize:CGSizeMake(scrollview.frame.size.width * (curpage + 1), scrollview.frame.size.height)];
         [scrollview scrollRectToVisible:CGRectMake(scrollview.frame.size.width * curpage, scrollview.frame.origin.y, scrollview.frame.size.width, scrollview.frame.size.height) animated:NO];
         [UIView animateWithDuration:0.2f animations:^{
@@ -210,13 +210,13 @@
 }
 #pragma mark-- BJGridItemDelegate
 - (void)gridItemDidClicked:(BJGridItem *)gridItem{
-    NSLog(@"grid at index %d did clicked",gridItem.index);
+
     if (gridItem.index == [gridItems count]-1) {
         [self addbutton];
     }
 }
 - (void)gridItemDidDeleted:(BJGridItem *)gridItem atIndex:(NSInteger)index{
-    NSLog(@"grid at index %d did deleted",gridItem.index);
+
     NSDictionary *photo = [self.showPhotoView.photos objectAtIndex:index];
     [Utils deleteImage:photo[@"pid"] block:^{
         BJGridItem * item = [gridItems objectAtIndex:index];
@@ -244,9 +244,9 @@
 
 }
 - (void)gridItemDidEnterEditingMode:(BJGridItem *)gridItem{
-    NSLog(@"gridItems count:%d",[gridItems count]);
+
     for (BJGridItem *item in gridItems) {
-        NSLog(@"%d",item.index);
+
         [item enableEditing];
     }
     isEditing = YES;
@@ -258,12 +258,12 @@
     frame.origin.x = _point.x - point.x;
     frame.origin.y = _point.y - point.y;
     gridItem.frame = frame;
-    NSLog(@"gridItemframe:%f,%f",frame.origin.x,frame.origin.y);
-    NSLog(@"move to point(%f,%f)",point.x,point.y);
+
+
     
     NSInteger toIndex = [self indexOfLocation:_point];
     NSInteger fromIndex = gridItem.index;
-    NSLog(@"fromIndex:%d toIndex:%d",fromIndex,toIndex);
+
     
     if (toIndex != unValidIndex && toIndex != fromIndex) {
         BJGridItem *moveItem = [gridItems objectAtIndex:toIndex];
@@ -297,7 +297,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         gridItem.frame = CGRectMake(origin.x, origin.y, gridItem.frame.size.width, gridItem.frame.size.height);
     }];
-    NSLog(@"gridItem index:%d",gridItem.index);
+
 }
 
 - (void) handleSingleTap:(UITapGestureRecognizer *) gestureRecognizer{

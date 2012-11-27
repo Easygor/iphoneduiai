@@ -306,9 +306,9 @@
 - (void)didChangeStatus:(UITableViewCell *)cell toStatus:(NSString *)status
 {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSLog(@"status: %@", status);
+
     NSMutableDictionary *item = self.contents[indexPath.row];
-    NSLog(@"item : %@", item);
+
     if ([status isEqualToString:@"tap_avatar"]){
         UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];
         udvc.user = @{@"_id": item[@"uid"], @"niname": item[@"uinfo"][@"niname"], @"photo": item[@"uinfo"][@"photo"]};

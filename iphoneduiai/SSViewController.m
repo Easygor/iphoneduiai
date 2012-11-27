@@ -471,7 +471,7 @@
         updateArgs[@"constellation"] = self.existedData[@"constellation"][@"val"];
         updateArgs[@"submitupdate"] = @"true";
         
-        NSLog(@"args: %@", updateArgs);
+
         request.params = [RKParams paramsWithDictionary:updateArgs];
         
         [request setOnDidFailLoadWithError:^(NSError *error){
@@ -962,7 +962,7 @@
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     // 此行须在前两行后面
-                    NSLog(@"all user info: %@", data);
+
                     self.existedData = data[@"data"][@"issetlist"];
                     [SVProgressHUD dismiss];
                 } else{

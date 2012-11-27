@@ -412,7 +412,7 @@ static CGFloat dHeight2 = 0.0f;
 
             [SVProgressHUD show];
             [[RKClient sharedClient] get:[@"/common/addblack.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-                NSLog(@"url: %@", request.URL);
+//                NSLog(@"url: %@", request.URL);
                 [request setOnDidLoadResponse:^(RKResponse *response){
                     if (response.isOK && response.isJSON) {
                         NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
@@ -450,7 +450,7 @@ static CGFloat dHeight2 = 0.0f;
         [SVProgressHUD show];
 
         [[RKClient sharedClient] post:[@"/uc/complaints.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-            NSLog(@"url: %@", request.URL);
+//            NSLog(@"url: %@", request.URL);
             
             request.params = [RKParams paramsWithDictionary:@{@"type" : @"1", @"comuid": self.user[@"_id"], @"content": desc, @"submitupdate": @"true"}];
             
@@ -779,7 +779,7 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)sendMsgAction
 {
-    NSLog(@"send message...");
+
     SessionViewController *svc = [[SessionViewController alloc] initWithNibName:@"SessionViewController" bundle:nil];
     NSMutableDictionary *msgTmp = [[Notification sharedInstance] getMessageWithUid:self.user[@"_id"]];
     if (msgTmp == nil) {
@@ -800,7 +800,6 @@ static CGFloat dHeight2 = 0.0f;
 
 - (IBAction)checkQQAction
 {
-    NSLog(@"check QQ now");
     
     NSMutableDictionary *dp = [Utils queryParams];
     [SVProgressHUD show];
@@ -961,7 +960,7 @@ static CGFloat dHeight2 = 0.0f;
     
     [SVProgressHUD show];
     [[RKClient sharedClient] post:[@"/v/digo.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         
         request.params = [RKParams paramsWithDictionary:@{@"id" : weiyu[@"id"], @"shit": @(isShit), @"submitupdate": @"true"}];
         

@@ -10,9 +10,11 @@
 #import "CustomBarButtonItem.h"
 #import "NSDate-Utilities.h"
 #import "RegexKitLite.h"
-#import <RestKit/RKClient.h>
+#import <RestKit/RestKit.h>
 #import <RestKit/JSONKit.h>
 #import "SVProgressHUD.h"
+#import "LocationController.h"
+#import "UIDevice+UIDeviceAppIndentifier.h"
 
 static NSString *const wRegex = @"\\w+";
 static NSString *const cnRegex = @"^([\u4e00-\u9fa5]|\\w){1,8}$";
@@ -262,7 +264,7 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
 //                                   NSLog(@"data: %@", data);
                                    if ([[data objectForKey:@"error"] integerValue] == 0) {
                                        [SVProgressHUD showSuccessWithStatus:[data objectForKey:@"message"]];
-                                       [self performSelector:@selector(clearRegisterData) withObject:nil afterDelay:0.5];
+                                       [self performSelector:@selector(loginRequest) withObject:nil afterDelay:0.5];
                                    } else{
                                        [SVProgressHUD showErrorWithStatus:[data objectForKey:@"message"]];
                                    }
@@ -276,5 +278,91 @@ static NSString *const qqRegex = @"[1-9][0-9]{4,}";
                            }];
                        }];
 }
+
+#pragma mark - networking request
+-(void)loginRequest
+{
+    if ([LocationController sharedInstance].allow) {
+        CLLocationCoordinate2D curLocation = [[[LocationController sharedInstance] location] coordinate];
+        [self loginRequestWithLocation:curLocation];
+    } else{
+        [self loginRequestWithLocation:CLLocationCoordinate2DMake(0.0, 0.0)];
+    }
+    
+}
+
+-(void)loginRequestWithLocation:(CLLocationCoordinate2D)curLocation
+{
+    NSString *model = [[UIDevice currentDevice] model];
+    NSString *udid = [[UIDevice currentDevice] deviceApplicationIdentifier];
+    
+    NSDictionary *step1 = [[NSUserDefaults standardUserDefaults] objectForKey:@"step1"];
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                          model, @"devicename",
+                          udid, @"deviceid",
+                          [NSNumber numberWithFloat:curLocation.longitude], @"jin",
+                          [NSNumber numberWithFloat:curLocation.latitude], @"wei",
+                          step1[@"username"], @"username",
+                          step1[@"password"], @"password",
+                          nil];
+    
+    RKParams *params = [RKParams paramsWithDictionary:data];
+    
+    // per
+    [[RKClient sharedClient] post:[@"/login" stringByAppendingQueryParameters:[Utils queryParams]]
+                       usingBlock:^(RKRequest *request){
+                           // set params
+                           [request setParams:params];
+                           
+                           // hud
+                           [SVProgressHUD show];
+                           // set successful block
+                           [request setOnDidLoadResponse:^(RKResponse *response){
+                               if (response.isOK && response.isJSON)
+                               {
+                                   [self clearRegisterData];
+                                   NSDictionary *data = [[response bodyAsString] objectFromJSONString];
+                                   //                                   NSLog(@"res: %@", data);
+                                   NSInteger code = [[data objectForKey:@"error"] intValue];
+                                   if (0 == code)
+                                   {
+                                       NSDictionary *userinfo = @{
+                                       @"accesskey": data[@"accesskey"],
+                                       @"username":data[@"data"][@"username"],
+                                       @"info": data[@"data"][@"userinfo"]};
+                                       
+                                       [[NSUserDefaults standardUserDefaults] setObject:userinfo  forKey:@"user"];
+                                       [[NSUserDefaults standardUserDefaults] synchronize];
+                                       [SVProgressHUD dismiss];
+                                       
+
+                                       [self.navigationController.presentedViewController dismissModalViewControllerAnimated:YES];
+                                       
+                                   }
+                                   else
+                                   {
+                                      [SVProgressHUD showErrorWithStatus:[data objectForKey:@"message"]];
+                                       [self.navigationController dismissModalViewControllerAnimated:YES];
+
+                                       
+                                   }
+                                   // clear data on here
+//                                  [self performSelector:@selector(clearRegisterData) withObject:nil afterDelay:0.5];
+                                   
+                               }
+                               else
+                               {
+                                   [SVProgressHUD showSuccessWithStatus:@"网络错误"];
+                               }
+                           }];
+                           
+                           // set error block
+                           [request setOnDidFailLoadWithError:^(NSError *error){
+                               NSLog(@"Network Error: %@", [error localizedDescription]);
+                           }];
+                       }];
+    // do somethign here
+}
+
 
 @end

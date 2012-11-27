@@ -50,7 +50,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // register the apns
-    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+//    [application registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 //    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user"];
     
     
@@ -250,7 +250,7 @@
 {
 //    RKLogConfigureByName("RestKit/Network*", RKLogLevelTrace);
 //    RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
-//    RKLogConfigureByName("RestKit/*", RKLogLevelOff);
+    RKLogConfigureByName("RestKit/*", RKLogLevelOff);
     
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://api.duiai.com"];
     [objectManager.client setValue:@"Application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -266,21 +266,21 @@
 }
 
 #pragma mark - register apns
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
-    NSString *devTokenStr = [[[deviceToken description]
-                              stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
-                             stringByReplacingOccurrencesOfString:@" "
-                             withString:@""];
-    
-    NSLog(@"device token: %@", devTokenStr);
-    
-}
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+//{
+//    NSString *devTokenStr = [[[deviceToken description]
+//                              stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]]
+//                             stringByReplacingOccurrencesOfString:@" "
+//                             withString:@""];
+//    
+////    NSLog(@"device token: %@", devTokenStr);
+//    
+//}
 
-- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
-{
-    NSLog(@"Error in registration. Error: %@", error);
-}
+//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+//{
+//    NSLog(@"Error in registration. Error: %@", error);
+//}
 
 #pragma mark - networking request
 -(void)updateLocationAndUserInfo

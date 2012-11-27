@@ -298,13 +298,14 @@ static NSString *fileName = @"notifications.plist";
 #pragma mark save data to plist
 - (void)saveDataToPlist
 {
+    NSMutableDictionary *d = [NSMutableDictionary dictionaryWithDictionary:@{@"message" : self.message, @"feed": self.feed, @"notice": self.notice}];
 
-    NSDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
+//    NSDictionary *d = @{@"message" : self.message, @"feed": self.feed, @"notice": self.notice};
     if ([d writeToFile:self.filePath atomically:YES])
     {
         NSLog(@"save successfull.");
     }
-    }
+}
 
 #pragma mark Singleton Object Methods
 

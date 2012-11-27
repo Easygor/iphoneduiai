@@ -239,7 +239,7 @@
 {
 
     [[RKClient sharedClient] get:[@"/uc/black.api" stringByAppendingQueryParameters:params] usingBlock:^(RKRequest *request){
-        NSLog(@"url: %@", request.URL);
+//        NSLog(@"url: %@", request.URL);
         [request setOnDidLoadResponse:^(RKResponse *response){
             if (response.isOK && response.isJSON) {
                 NSDictionary *data = [[response bodyAsString] objectFromJSONString];
@@ -309,7 +309,7 @@
         [SVProgressHUD show];
         // cancel the block user
         [[RKClient sharedClient] get:[@"/common/delblack.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
-            NSLog(@"url: %@", request.URL);
+//            NSLog(@"url: %@", request.URL);
             [request setOnDidLoadResponse:^(RKResponse *response){
                 if (response.isOK && response.isJSON) {
                     NSDictionary *data = [[response bodyAsString] objectFromJSONString];
