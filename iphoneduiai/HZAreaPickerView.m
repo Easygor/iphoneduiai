@@ -180,7 +180,7 @@
             case 2:
 
                 if ([areas count] > 0) {
-                    [self.locate plusArea:[areas objectAtIndex:0]];
+                    [self.locate plusArea:[areas objectAtIndex:row]];
                 } else{
                     [self.locate plusArea:nil];
                 }
