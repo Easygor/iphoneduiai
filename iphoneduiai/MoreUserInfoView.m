@@ -67,14 +67,15 @@
     if (![_moreUserInfo isEqualToDictionary:moreUserInfo]) {
         _moreUserInfo = [moreUserInfo retain];
         
-        if (moreUserInfo[@"home_location"] && moreUserInfo[@"home_sublocation"]) {
-            self.homeLabel.text = [NSString stringWithFormat:@"%@ %@", moreUserInfo[@"home_location"][@"valdata"], moreUserInfo[@"home_sublocation"][@"valdata"]];
+        
+        if (moreUserInfo[@"home"]) {
+            self.homeLabel.text = [NSString stringWithFormat:@"%@ %@", self.userLife[@"home_location"], self.userLife[@"home_sublocation"]];
         } else{
             self.homeLabel.text = @"未填写";
         }
         
-        if (moreUserInfo[@"love_location"] && moreUserInfo[@"love_sublocation"]) {
-            self.loveLocationLabel.text = [NSString stringWithFormat:@"%@ %@", moreUserInfo[@"love_location"][@"valdata"], moreUserInfo[@"love_sublocation"][@"valdata"]];
+        if (moreUserInfo[@"love"]) {
+            self.loveLocationLabel.text = [NSString stringWithFormat:@"%@ %@", self.userLife[@"love_location"], self.userLife[@"love_sublocation"]];
         } else{
             self.loveLocationLabel.text = @"未填写";
         }
@@ -109,8 +110,8 @@
             self.mostCostLabel.text = @"未填写";
         }
         
-        if (moreUserInfo[@"best_par"]) {
-            self.bestParLabel.text = moreUserInfo[@"best_par"][@"valdata"];
+        if (moreUserInfo[@"best_part"]) {
+            self.bestParLabel.text = moreUserInfo[@"best_part"][@"valdata"];
         } else{
             self.bestParLabel.text = @"未填写";
         }
@@ -181,8 +182,8 @@
             self.nationLabel.text = @"未填写";
         }
         
-        if (moreUserInfo[@"blood_type"]) {
-            self.bloodTypeLabel.text = moreUserInfo[@"blood_type"][@"valdata"];
+        if (moreUserInfo[@"bloodtype"]) {
+            self.bloodTypeLabel.text = moreUserInfo[@"bloodtype"][@"valdata"];
         } else{
             self.bloodTypeLabel.text = @"未填写";
         }

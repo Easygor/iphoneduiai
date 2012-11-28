@@ -378,7 +378,9 @@ static NSInteger kDelWeiyuTag = 204;
     if (![_existedData isEqualToDictionary:existedData]) {
         _existedData = [existedData retain];
         
+        self.moreUserInfoView.userLife = self.userLife;
         self.moreUserInfoView.moreUserInfo = existedData;
+
         
         self.heightField.text = [NSString stringWithFormat:@"%@cm", existedData[@"height"][@"val"]];
         self.incomeField.text = existedData[@"income"][@"valdata"];
@@ -508,11 +510,11 @@ static NSInteger kDelWeiyuTag = 204;
         [self grabUserInfoDetailRequest];
     }
     
-    if (self.existedData == nil ||
-        abs([self.lastBasicInfoUpdateTime timeIntervalSinceNow]) > 300)
-    {
-        [self infoRequestFromRemote];
-    }
+//    if (self.existedData == nil ||
+//        abs([self.lastBasicInfoUpdateTime timeIntervalSinceNow]) > 300)
+//    {
+//        [self infoRequestFromRemote];
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -551,8 +553,8 @@ static NSInteger kDelWeiyuTag = 204;
             updateArgs[@"belief"] = self.existedData[@"belief"][@"val"];
         }
         
-        if(self.existedData[@"best_par"]){
-            updateArgs[@"best_par"] = self.existedData[@"best_par"][@"val"];
+        if(self.existedData[@"best_part"]){
+            updateArgs[@"best_part"] = self.existedData[@"best_part"][@"val"];
         }
         
         if(self.existedData[@"bloodtype"]){
@@ -595,11 +597,6 @@ static NSInteger kDelWeiyuTag = 204;
             updateArgs[@"university"] = self.existedData[@"university"][@"val"];
         }
         
-        if(updateArgs[@"home_location"] && updateArgs[@"home_sublocation"]){
-            updateArgs[@"home_location"] = self.existedData[@"home_location"][@"val"];
-            updateArgs[@"home_sublocation"] = self.existedData[@"home_sublocation"][@"val"];
-        }
-        
         if(self.existedData[@"child_want"]){
             updateArgs[@"child_want"] = self.existedData[@"child_want"][@"val"];
         }
@@ -608,8 +605,8 @@ static NSInteger kDelWeiyuTag = 204;
             updateArgs[@"marriage"] = self.existedData[@"marriage"][@"val"];
         }
         
-        if(self.existedData[@"smoke_typ"]){
-            updateArgs[@"smoke_typ"] = self.existedData[@"smoke_typ"][@"val"];
+        if(self.existedData[@"smoke_type"]){
+            updateArgs[@"smoke_type"] = self.existedData[@"smoke_type"][@"val"];
         }
         
         if(self.existedData[@"drink_type"]){
@@ -726,7 +723,7 @@ static NSInteger kDelWeiyuTag = 204;
                     
                     // relaod the info from server
                     [self grabUserInfoDetailRequest];
-                     [self infoRequestFromRemote];
+//                     [self infoRequestFromRemote];
                     
                     [SVProgressHUD showSuccessWithStatus:@"保存成功"];
                 } else{
@@ -1208,6 +1205,7 @@ static NSInteger kDelWeiyuTag = 204;
                     self.marrayReq = [dataData objectForKey:@"marray_req"];
                     self.searchIndex = [dataData objectForKey:@"searchindex"];
                     self.weiboList = dataData[@"bindlist"];
+                    [self infoRequestFromRemote];
                     self.lastUserInfoUpdateTime = [NSDate date];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];

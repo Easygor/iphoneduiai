@@ -10,7 +10,7 @@
 
 @interface MoreUserInfoView : UIView
 
-@property (strong, nonatomic) NSDictionary *moreUserInfo;
+@property (strong, nonatomic) NSDictionary *moreUserInfo, *userLife;
 
 - (void)showMeInView:(UIView *)view atPoint:(CGPoint)pos animated:(BOOL)animated;
 - (void)removeMeWithAnimated:(BOOL)animated;
