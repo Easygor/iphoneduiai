@@ -358,7 +358,7 @@
 #pragma mark Picker Delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    NSData *data = UIImageJPEGRepresentation(([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]), 0.9);
+    NSData *data = UIImageJPEGRepresentation([Utils thubImageFrom:[info objectForKey:UIImagePickerControllerOriginalImage]], 0.9);
     [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
         if (res) {
 //            [self.photos addObject:res]; // add pics

@@ -1516,7 +1516,9 @@ static NSInteger kDelWeiyuTag = 204;
 {
     /*添加处理选中图像代码*/
     if (self.isUploadPhoto) {
-         NSData *data = UIImageJPEGRepresentation(([Utils thumbnailWithImage:[info objectForKey:UIImagePickerControllerOriginalImage] size:CGSizeMake(640, 960)]), 0.9);
+        UIImage *smallOne = [Utils thubImageFrom:[info objectForKey:UIImagePickerControllerOriginalImage]];
+         NSData *data = UIImageJPEGRepresentation(smallOne, 0.9);
+         UIImageWriteToSavedPhotosAlbum(smallOne, nil, nil, nil);
         [Utils uploadImage:data type:@"userphoto" block:^(NSMutableDictionary *res){
             if (res) {
                 [self.showPhotoView insertPhoto:res atIndex:1];

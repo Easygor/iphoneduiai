@@ -347,6 +347,35 @@
     }
     // compute rect
     return [[self class] getImageFrom:scrimg withRect:CGRectMake(x, y, w, h)];
+    
+}
+
++ (UIImage*)thubImageFrom:(UIImage*)scrimg
+{
+    CGFloat w, h;
+    if (scrimg.size.height > 1300 || scrimg.size.width > 1300)
+    {
+        if (scrimg.size.width/scrimg.size.height < 1)
+        {
+            w = 1300.0*scrimg.size.width/scrimg.size.height;
+            h = 1300.0f;
+        }
+        else
+        {
+            h = 1300.0*scrimg.size.height/scrimg.size.width;
+            w = 1300.0f;
+        }
+        
+        return [[self class] thumbnailWithImage:scrimg size:CGSizeMake(w, h)];
+    }
+    else
+    {
+        return scrimg;
+    }
+    
+
+    // compute rect
+    
 
 }
 

@@ -33,4 +33,5 @@
 
 + (UIImage *)getImageFrom:(UIImage*)srcimg withRect:(CGRect)rect;
 + (UIImage*)cutImageFrom:(UIImage*)scrimg;
++ (UIImage*)thubImageFrom:(UIImage*)scrimg;
 @end

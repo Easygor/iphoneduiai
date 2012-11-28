@@ -187,7 +187,7 @@
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
             cell = [nib objectAtIndex:2];
             UILabel *bottomLine = [[[UILabel alloc] initWithFrame:CGRectMake(0, cell.frame.size.height-1, 320, 1)] autorelease];
-            bottomLine.backgroundColor = RGBCOLOR(201, 201, 201);
+            bottomLine.backgroundColor = RGBCOLOR(222, 222, 222);
             bottomLine.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
             [cell addSubview:bottomLine];
             cell.delegate = self;

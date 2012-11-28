@@ -79,7 +79,7 @@
         [self.contentView addSubview:self.timeLabel];
         
         UILabel *bottomLine = [[[UILabel alloc] initWithFrame:CGRectMake(0, self.contentView.frame.size.height-1, 320, 1)] autorelease];
-        bottomLine.backgroundColor = RGBCOLOR(201, 201, 201);
+        bottomLine.backgroundColor = RGBCOLOR(222, 222, 222);
         bottomLine.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         [self.contentView addSubview:bottomLine];
 
