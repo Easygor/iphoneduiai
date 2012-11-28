@@ -81,7 +81,7 @@
 			<key>text</key>
 			<string>魅力部位</string>
 			<key>label</key>
-			<string>best_par</string>
+			<string>best_part</string>
 			<key>haveNext</key>
 			<true/>
 		</dict>

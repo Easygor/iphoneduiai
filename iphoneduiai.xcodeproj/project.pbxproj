@@ -315,6 +315,7 @@
 		613AB4B3163255FC0045ED4E /* SSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613AB4B1163255FC0045ED4E /* SSViewController.xib */; };
 		613AE4431659DD9E0057F798 /* tips_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 613AE4411659DD9E0057F798 /* tips_bg.png */; };
 		613AE4441659DD9E0057F798 /* tips_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 613AE4421659DD9E0057F798 /* tips_bg@2x.png */; };
+		613FC80316667054009401B3 /* hangye.plist in Resources */ = {isa = PBXBuildFile; fileRef = 613FC80216667054009401B3 /* hangye.plist */; };
 		6141A6DA15FB68BA00985257 /* UIImage+mergeImages.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6D915FB68BA00985257 /* UIImage+mergeImages.m */; };
 		6141A6E415FB691A00985257 /* CustomBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6DC15FB691A00985257 /* CustomBarButtonItem.m */; };
 		6141A6E715FB691A00985257 /* HZNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 6141A6E215FB691A00985257 /* HZNavigationBar.m */; };
@@ -353,7 +354,6 @@
 		614F0A7C165919B800219B33 /* tips_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614F0A76165919B800219B33 /* tips_btn@2x.png */; };
 		614F0A7D165919B800219B33 /* tips_line.png in Resources */ = {isa = PBXBuildFile; fileRef = 614F0A77165919B800219B33 /* tips_line.png */; };
 		614F0A7E165919B800219B33 /* tips_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 614F0A78165919B800219B33 /* tips_line@2x.png */; };
-		6153D9AA16104E3100AC4A2D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6153D9A916104E3100AC4A2D /* Default-568h@2x.png */; };
 		6153D9BE1610941900AC4A2D /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6153D9BD1610941900AC4A2D /* CustomCell.xib */; };
 		6153D9C1161099BC00AC4A2D /* UserInfoTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */; };
 		6153D9D91610B49200AC4A2D /* UserCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6153D9D81610B49200AC4A2D /* UserCardView.m */; };
@@ -822,7 +822,7 @@
 		61BB2B6A15F9DB0800AA82CC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BB2B6915F9DB0800AA82CC /* AppDelegate.m */; };
 		61BB2B6D15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 61BB2B6B15F9DB0800AA82CC /* iphoneduiai.xcdatamodeld */; };
 		61BB2B7D15FA158100AA82CC /* HZTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BB2B7C15FA158100AA82CC /* HZTabBar.m */; };
-		61BEB05D1662028A00169B04 /* Defualt-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05C1662028A00169B04 /* Defualt-568h@2x.png */; };
+		61BEB05D1662028A00169B04 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05C1662028A00169B04 /* Default-568h@2x.png */; };
 		61BEB060166202A100169B04 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05E166202A100169B04 /* icon.png */; };
 		61BEB061166202A100169B04 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB05F166202A100169B04 /* icon@2x.png */; };
 		61BEB064166203B700169B04 /* weibo_icon_s.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BEB062166203B700169B04 /* weibo_icon_s.png */; };
@@ -1325,6 +1325,7 @@
 		613AB4B1163255FC0045ED4E /* SSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSViewController.xib; sourceTree = "<group>"; };
 		613AE4411659DD9E0057F798 /* tips_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tips_bg.png; sourceTree = "<group>"; };
 		613AE4421659DD9E0057F798 /* tips_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tips_bg@2x.png"; sourceTree = "<group>"; };
+		613FC80216667054009401B3 /* hangye.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = hangye.plist; sourceTree = "<group>"; };
 		6141A6D815FB68BA00985257 /* UIImage+mergeImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+mergeImages.h"; sourceTree = "<group>"; };
 		6141A6D915FB68BA00985257 /* UIImage+mergeImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+mergeImages.m"; sourceTree = "<group>"; };
 		6141A6DB15FB691A00985257 /* CustomBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBarButtonItem.h; sourceTree = "<group>"; };
@@ -1374,7 +1375,6 @@
 		614F0A76165919B800219B33 /* tips_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tips_btn@2x.png"; sourceTree = "<group>"; };
 		614F0A77165919B800219B33 /* tips_line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tips_line.png; sourceTree = "<group>"; };
 		614F0A78165919B800219B33 /* tips_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tips_line@2x.png"; sourceTree = "<group>"; };
-		6153D9A916104E3100AC4A2D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		6153D9BD1610941900AC4A2D /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
 		6153D9BF161099BC00AC4A2D /* UserInfoTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoTableCell.h; sourceTree = "<group>"; };
 		6153D9C0161099BC00AC4A2D /* UserInfoTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableCell.m; sourceTree = "<group>"; };
@@ -1877,7 +1877,7 @@
 		61BB2B6C15F9DB0800AA82CC /* iphoneduiai.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iphoneduiai.xcdatamodel; sourceTree = "<group>"; };
 		61BB2B7B15FA158100AA82CC /* HZTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZTabBar.h; sourceTree = "<group>"; };
 		61BB2B7C15FA158100AA82CC /* HZTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZTabBar.m; sourceTree = "<group>"; };
-		61BEB05C1662028A00169B04 /* Defualt-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Defualt-568h@2x.png"; sourceTree = "<group>"; };
+		61BEB05C1662028A00169B04 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		61BEB05E166202A100169B04 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		61BEB05F166202A100169B04 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		61BEB062166203B700169B04 /* weibo_icon_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weibo_icon_s.png; sourceTree = "<group>"; };
@@ -2889,7 +2889,6 @@
 				6159B17B16180F5200705835 /* Profile images */,
 				611CE70415FDE82B0066EEA2 /* login & regigster images */,
 				6141A6F315FB71EE00985257 /* navigation & tabbar  */,
-				6153D9A916104E3100AC4A2D /* Default-568h@2x.png */,
 				612F3FB5166472350017F8FB /* pic_status.png */,
 				612F3FB6166472350017F8FB /* pic_status@2x.png */,
 				61D5097B1658928400F7191B /* part_line.png */,
@@ -2911,7 +2910,7 @@
 				61265A88165BD08100BAF8E0 /* Default@2x.png */,
 				61BEB05E166202A100169B04 /* icon.png */,
 				61BEB05F166202A100169B04 /* icon@2x.png */,
-				61BEB05C1662028A00169B04 /* Defualt-568h@2x.png */,
+				61BEB05C1662028A00169B04 /* Default-568h@2x.png */,
 				6143858B1659148F00938883 /* duiai_about.png */,
 				6143858C1659148F00938883 /* duiai_about@2x.png */,
 				6143858F1659159000938883 /* list_cover_pic.png */,
@@ -2927,6 +2926,7 @@
 				5A07DF93161B201D00A50998 /* seniorEntries.plist */,
 				5ABA114C16216DE90043F51A /* settingBindingEntries.plist */,
 				61DCBE92162D185B0086294E /* jobs.plist */,
+				613FC80216667054009401B3 /* hangye.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -3530,7 +3530,6 @@
 				61CB40DD1604CB6600888317 /* city.plist in Resources */,
 				61CB40DE1604CB6600888317 /* area.plist in Resources */,
 				61397A921607FC2A009FDAF9 /* degree.plist in Resources */,
-				6153D9AA16104E3100AC4A2D /* Default-568h@2x.png in Resources */,
 				6153D9BE1610941900AC4A2D /* CustomCell.xib in Resources */,
 				6159B12B1615710600705835 /* ConditionViewController.xib in Resources */,
 				6159B13016158D6200705835 /* UserDetailViewController.xib in Resources */,
@@ -4196,7 +4195,7 @@
 				61265A86165BCDDA00BAF8E0 /* notice_unread_bg@2x.png in Resources */,
 				61265A89165BD08200BAF8E0 /* Default.png in Resources */,
 				61265A8A165BD08200BAF8E0 /* Default@2x.png in Resources */,
-				61BEB05D1662028A00169B04 /* Defualt-568h@2x.png in Resources */,
+				61BEB05D1662028A00169B04 /* Default-568h@2x.png in Resources */,
 				61BEB060166202A100169B04 /* icon.png in Resources */,
 				61BEB061166202A100169B04 /* icon@2x.png in Resources */,
 				61BEB064166203B700169B04 /* weibo_icon_s.png in Resources */,
@@ -4227,6 +4226,7 @@
 				612F3FB8166472350017F8FB /* pic_status@2x.png in Resources */,
 				612F3FBA166472E40017F8FB /* UserInfoTableCell.xib in Resources */,
 				6183B9341664EF400029EDE5 /* UserCardTableCell.xib in Resources */,
+				613FC80316667054009401B3 /* hangye.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

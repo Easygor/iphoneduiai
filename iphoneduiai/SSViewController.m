@@ -296,8 +296,8 @@
     self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"保存"
                                                                                                  target:self
                                                                                                  action:@selector(saveAction)] autorelease];
-    
-    [self infoRequestFromRemote];                                          
+    [self grabUserInfoDetailRequest];
+                                          
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -356,9 +356,9 @@
         }
         
         if (self.bestParNum) {
-            updateArgs[@"best_par"] = self.bestParNum;
-        } else if(self.existedData[@"best_par"]){
-            updateArgs[@"best_par"] = self.existedData[@"best_par"][@"val"];
+            updateArgs[@"best_part"] = self.bestParNum;
+        } else if(self.existedData[@"best_part"]){
+            updateArgs[@"best_part"] = self.existedData[@"best_part"][@"val"];
         }
         
         if (self.bloodtypeNum) {
@@ -413,9 +413,32 @@
             updateArgs[@"home_location"] = @(self.homeLocation.stateId);
             updateArgs[@"home_sublocation"] = @(self.homeLocation.cityId);
 
-        } else if(updateArgs[@"home_location"] && updateArgs[@"home_sublocation"]){
-            updateArgs[@"home_location"] = self.existedData[@"home_location"][@"val"];
-            updateArgs[@"home_sublocation"] = self.existedData[@"home_sublocation"][@"val"];
+        }
+        else if(self.existedData[@"home"])
+        {
+            NSArray *arry = [self.existedData[@"home"][@"objval"] componentsSeparatedByString:@","];
+            if (arry.count == 2)
+            {
+                updateArgs[@"home_location"] = arry[0];
+                updateArgs[@"home_sublocation"] = arry[1];
+            }
+    
+        }
+        
+        if (self.nativeLocaiton) {
+            updateArgs[@"love_location"] = @(self.nativeLocaiton.stateId);
+            updateArgs[@"love_sublocation"] = @(self.nativeLocaiton.cityId);
+            
+        }
+        else if(self.existedData[@"love"])
+        {
+            NSArray *arry = [self.existedData[@"love"][@"objval"] componentsSeparatedByString:@","];
+            if (arry.count == 2)
+            {
+                updateArgs[@"love_location"] = arry[0];
+                updateArgs[@"love_sublocation"] = arry[1];
+            }
+            
         }
         
         if (self.childWantNum) {
@@ -431,9 +454,9 @@
         }
         
         if (self.smokeTypeNum) {
-            updateArgs[@"smoke_typ"] = self.smokeTypeNum;
-        } else if(self.existedData[@"smoke_typ"]){
-            updateArgs[@"smoke_typ"] = self.existedData[@"smoke_typ"][@"val"];
+            updateArgs[@"smoke_type"] = self.smokeTypeNum;
+        } else if(self.existedData[@"smoke_type"]){
+            updateArgs[@"smoke_type"] = self.existedData[@"smoke_type"][@"val"];
         }
         
         if (self.companyName) {
@@ -515,7 +538,7 @@
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
                     
-                    
+                    [self.navigationController popViewControllerAnimated:YES];
                     [SVProgressHUD showSuccessWithStatus:@"保存成功"];
                 } else{
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
@@ -623,31 +646,30 @@
     if (data[@"value"]) {
         textField.text = data[@"value"];
     } else{
-        textField.text = nil;
-    }
-   
-    if ([data[@"label"] isEqualToString:@"home_location,home_sublocation"] ||
-        [data[@"label"] isEqualToString:@"love_location,love_sublocation"])
-    {
-        NSArray *farry  = [data[@"label"] componentsSeparatedByString:@","];
-        NSDictionary *f1 = self.existedData[farry[0]];
-        NSDictionary *f2 = self.existedData[farry[1]];
-        if (f1 && f2) {
-            textField.text = [NSString stringWithFormat:@"%@ %@", f1[@"valdata"], f2[@"valdata"]];
-        }
-        
-    } else{
-        NSDictionary *field = self.existedData[data[@"label"]];
 
-        if ([data[@"label"] isEqualToString:@"company_name"] ||
-            [data[@"label"] isEqualToString:@"university"]) {
-            textField.text = field[@"val"];
+        if ([data[@"label"] isEqualToString:@"home_location,home_sublocation"]){
+            
+            textField.text = [NSString stringWithFormat:@"%@ %@", self.userLife[@"home_location"], self.userLife[@"home_sublocation"]];
+            
+        } else if ([data[@"label"] isEqualToString:@"love_location,love_sublocation"]){
+            
+            textField.text = [NSString stringWithFormat:@"%@ %@", self.userLife[@"love_location"], self.userLife[@"love_sublocation"]];
+            
         } else{
-           textField.text = field[@"valdata"]; 
+            
+            NSDictionary *field = self.existedData[data[@"label"]];
+            
+            if ([data[@"label"] isEqualToString:@"company_name"] ||
+                [data[@"label"] isEqualToString:@"university"]) {
+                textField.text = field[@"val"];
+            } else{
+                textField.text = field[@"valdata"];
+            }
+            
+            
         }
-        
-
     }
+
     
     return cell;
 }
@@ -740,7 +762,7 @@
             [self.nationalPicker show];
         }else if([label isEqualToString:@"belief"]){
             [self.religiousPicker show];
-        }else if([label isEqualToString:@"best_par"]){
+        }else if([label isEqualToString:@"best_part"]){
             [self.bestParPicker show];
         }else if([label isEqualToString:@"bloodtype"]){
             [self.bloodtypePicker show];
@@ -768,8 +790,6 @@
             [self.mostCostPicker show];
         }
 
-
-        
         return NO;
     }
 }
@@ -786,7 +806,7 @@
     
     if ([picker isEqual:self.rankPicker]) {
         
-        NSURL *url = [[NSBundle mainBundle] URLForResource:@"jobs" withExtension:@"plist"];
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"hangye" withExtension:@"plist"];
         NSMutableArray *tmp = [NSMutableArray arrayWithContentsOfURL:url];
         [tmp removeObjectAtIndex:0];
         return tmp;
@@ -911,6 +931,7 @@
 {
     self.curField.text = desc;
     self.curEntry[@"value"] = desc;
+//    NSLog(@"every entry: %@", self.curEntry);
     if ([picker isEqual:self.rankPicker]) {
         self.rankNum = label;
  
@@ -956,9 +977,12 @@
 {
     self.curField.text = [NSString stringWithFormat:@"%@ %@", picker.locate.state, picker.locate.city];
     self.curEntry[@"value"] = self.curField.text;
-    if ([picker isEqual:self.homeLocation]) {
+    if ([picker isEqual:self.homePicker])
+    {
          self.homeLocation = picker.locate;
-    } else if ([picker isEqual:self.nativePicker]){
+    }
+    else if ([picker isEqual:self.nativePicker])
+    {
         self.nativeLocaiton = picker.locate;
     }
         
@@ -1011,6 +1035,45 @@
         }];
     }];
     
+}
+
+
+- (void)grabUserInfoDetailRequest
+{
+    NSMutableDictionary *dParams = [Utils queryParams];
+    NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+    
+    [dParams setObject:[info objectForKey:@"uid"] forKey:@"uid"];
+    
+    [[RKClient sharedClient] get:[@"/user" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
+        [request setOnDidLoadResponse:^(RKResponse *response){
+            if (response.isOK && response.isJSON) {
+                NSMutableDictionary *data = [[response bodyAsString] mutableObjectFromJSONString];
+                //                NSLog(@"user data: %@", data);
+                NSInteger code = [[data objectForKey:@"error"] integerValue];
+                if (code == 0) {
+                    NSDictionary *dataData = [data objectForKey:@"data"];
+
+                    self.userInfo = [dataData objectForKey:@"user_info"];
+                    self.userBody = [dataData objectForKey:@"user_body"];
+                    self.userLife = [dataData objectForKey:@"user_life"];
+                    self.userInterest = [dataData objectForKey:@"user_interest"];
+                    self.userWork = [dataData objectForKey:@"user_work"];
+
+                    self.searchIndex = [dataData objectForKey:@"searchindex"];
+                    [self infoRequestFromRemote];
+                } else{
+                    [SVProgressHUD showErrorWithStatus:data[@"message"]];
+                }
+                
+            }
+        }];
+        
+        [request setOnDidFailLoadWithError:^(NSError *error){
+            NSLog(@"error: %@", [error description]);
+        }];
+        
+    }];
 }
 
 @end

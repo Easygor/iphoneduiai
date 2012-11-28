@@ -10,4 +10,6 @@
 
 @interface SSViewController : UITableViewController
 
+@property (strong, nonatomic) NSDictionary *userInfo, *userBody, *userLife, *userInterest, *userWork, *searchIndex;
+
 @end
