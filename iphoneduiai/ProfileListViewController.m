@@ -663,7 +663,28 @@ static NSInteger kDelWeiyuTag = 204;
             updateArgs[@"weight"] = self.existedData[@"weight"][@"val"];
         }
         
-   
+        if(self.existedData[@"love"])
+        {
+            NSArray *arry = [self.existedData[@"love"][@"objval"] componentsSeparatedByString:@","];
+            if (arry.count == 2)
+            {
+                updateArgs[@"love_location"] = arry[0];
+                updateArgs[@"love_sublocation"] = arry[1];
+            }
+            
+        }
+        
+        if(self.existedData[@"home"])
+        {
+            NSArray *arry = [self.existedData[@"home"][@"objval"] componentsSeparatedByString:@","];
+            if (arry.count == 2)
+            {
+                updateArgs[@"home_location"] = arry[0];
+                updateArgs[@"home_sublocation"] = arry[1];
+            }
+            
+        }
+        
         updateArgs[@"constellation"] = self.existedData[@"constellation"][@"val"];
         updateArgs[@"marriage"] = self.existedData[@"marriage"][@"val"];
         updateArgs[@"zodiac"] = self.existedData[@"zodiac"][@"val"];
