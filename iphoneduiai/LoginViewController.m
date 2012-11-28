@@ -370,20 +370,31 @@
     CGRect containerFrame = self.contentView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - (frame.size.height + containerFrame.size.height);
     
-    [UIView animateWithDuration:0.35 animations:^{
-        self.contentView.frame = containerFrame;
-    }];
-    
-    [self.logoImgView setHidden:YES];
+    if (containerFrame.origin.y < self.contentView.frame.origin.y)
+    {
+        [UIView animateWithDuration:0.35 animations:^{
+            self.contentView.frame = containerFrame;
+        }];
+        
+        [self.logoImgView setHidden:YES];
+    }
+
     
 }
 
 - (void)keyboardWillHide:(NSNotification *)notif
 {
-    [UIView animateWithDuration:0.2 animations:^{
-        self.contentView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
-    }];
-    [self.logoImgView setHidden:NO];
+    NSValue *endingFrame = [[notif userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect frame;
+    [endingFrame getValue:&frame];
+    
+    if (self.contentView.frame.origin.y < 0) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.contentView.frame = CGRectMake(0, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height);
+        }];
+        [self.logoImgView setHidden:NO];
+    }
+
 }
 
 - (void)viewWillAppear:(BOOL)animated
