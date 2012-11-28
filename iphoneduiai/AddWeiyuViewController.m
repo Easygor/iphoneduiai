@@ -483,6 +483,7 @@
     contentTextView.selectedRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
     self.lastRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
     [self textViewDidChange:contentTextView];
+
 }
 
 - (void)viewDidUnload {

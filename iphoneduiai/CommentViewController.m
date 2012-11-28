@@ -165,6 +165,7 @@
                     // 成功提交的情况
                     // ....
                     [SVProgressHUD showSuccessWithStatus:@"评论成功"];
+                    [self.navigationController popViewControllerAnimated:YES];
                 } else{
                     // 失败的情况
                     [SVProgressHUD showErrorWithStatus:data[@"message"]];
@@ -263,6 +264,7 @@
     self.contentView.selectedRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
     self.lastRange = NSMakeRange(oldOne.location + [[emontion objectForKey:@"chs"] length], 0);
 //    [self textViewDidChange:self.contentView];
+    [self.contentView becomeFirstResponder];
 }
 
 #define UITextFieldDelegate

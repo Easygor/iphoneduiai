@@ -96,7 +96,7 @@ static NSInteger kDelWeiyuTag = 204;
 @property (strong, nonatomic) HZPopPickerView *incomePickerView, *degreePicker, *jobPicker;
 
 @property (strong, nonatomic) NSIndexPath *curIndexPath;
-@property (nonatomic) BOOL isEditing;
+@property (nonatomic) BOOL isEditing, isPushed;
 @property (strong, nonatomic) NSDictionary *existedData;
 
 @property (strong, nonatomic) NSMutableArray *digoList, *shitList;
@@ -205,15 +205,6 @@ static NSInteger kDelWeiyuTag = 204;
     }
 }
 
-- (void)setExistedData:(NSDictionary *)existedData
-{
-    if (![_existedData isEqualToDictionary:existedData]) {
-        _existedData = [existedData retain];
-        
-        self.moreUserInfoView.moreUserInfo = existedData;
-    }
-}
-
 - (NSMutableArray *)digoList
 {
     if (_digoList == nil) {
@@ -236,7 +227,7 @@ static NSInteger kDelWeiyuTag = 204;
 {
     if (_heightPicker == nil) {
         _heightPicker = [[HZNumberPickerView alloc] initWithMinNum:140 maxNum:250];
-        _heightPicker.titleLabel.text = @"你的身高(cm)";
+        _heightPicker.titleLabel.text = @"你的身高(CM)";
         _heightPicker.delegate = self;
     }
     
@@ -342,15 +333,6 @@ static NSInteger kDelWeiyuTag = 204;
     }
 }
 
-- (void)setUserInterest:(NSDictionary *)userInterest
-{
-    if (![_userInterest isEqualToDictionary:userInterest])
-    {
-        _userInterest = [userInterest retain];
-        self.moreUserInfoView.moreUserInfo = userInterest;
-    }
-}
-
 - (void)setPhotos:(NSMutableArray *)photos
 {
     if (![_photos isEqualToArray:photos])
@@ -371,28 +353,43 @@ static NSInteger kDelWeiyuTag = 204;
         [self.avatarView.imageView loadImage:[userInfo objectForKey:@"photo"]];
         self.nameAgeLabel.text = [NSString stringWithFormat:@"%@, %@岁", [userInfo objectForKey:@"niname"], [userInfo objectForKey:@"age"]];
         
-        self.heightField.text = [NSString stringWithFormat:@"%@cm", [userInfo objectForKey:@"height"]];
-
-        self.incomeField.text = [userInfo objectForKey:@"income"];
-        self.degreeField.text = [userInfo objectForKey:@"degree"];
-        self.careerField.text = [userInfo objectForKey:@"industry"];
-        
-        
-        if (![userInfo[@"area"] isEqualToString:@""])
+        // area process wtf
+        if (![self.userInfo[@"area"] isEqualToString:@""])
         {
-            self.areaField.text = [userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:userInfo[@"area"]]];
+            self.areaField.text = [self.userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:self.userInfo[@"area"]]];
+        }
+        else if(![self.userInfo[@"province"] isEqualToString:@""])
+        {
+            self.areaField.text = [self.userInfo[@"province"] stringByAppendingString:[@" " stringByAppendingString:self.userInfo[@"city"]]];
         }
         else
         {
-            self.areaField.text = userInfo[@"city"];
+            self.areaField.text = self.userInfo[@"city"];
         }
         
-        self.dySexLabel.text = @"我的动态"/*[NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]]*/;
+        self.dySexLabel.text = @"我的动态";
         
         self.navigationItem.titleView = [CustomBarButtonItem titleForNavigationItem:userInfo[@"niname"]];
     }
 }
 
+- (void)setExistedData:(NSDictionary *)existedData
+{
+    if (![_existedData isEqualToDictionary:existedData]) {
+        _existedData = [existedData retain];
+        
+        self.moreUserInfoView.moreUserInfo = existedData;
+        
+        self.heightField.text = [NSString stringWithFormat:@"%@cm", existedData[@"height"][@"val"]];
+        self.incomeField.text = existedData[@"income"][@"valdata"];
+        self.degreeField.text = existedData[@"degree"][@"valdata"];
+        self.careerField.text = existedData[@"industry"][@"valdata"];
+        self.weightField.text = [NSString stringWithFormat:@"%@kg", existedData[@"weight"][@"val"]];
+        
+    }
+}
+
+/*
 - (void)setUserBody:(NSDictionary *)userBody
 {
     if (![_userBody isEqualToDictionary:userBody]) {
@@ -401,11 +398,13 @@ static NSInteger kDelWeiyuTag = 204;
         if ([[userBody objectForKey:@"weight"] isEqualToString:@"未填"]) {
             self.weightField.text = [userBody objectForKey:@"weight"];
         } else{
+
             self.weightField.text = [NSString stringWithFormat:@"%@kg", [userBody objectForKey:@"weight"]];
         }
         
     }
 }
+ */
 
 -(void)setLocation:(HZLocation *)location
 {
@@ -624,8 +623,8 @@ static NSInteger kDelWeiyuTag = 204;
         if (self.heightNum) {
             updateArgs[@"height"] = @(self.heightNum);
 
-        } else{
-            updateArgs[@"height"] = self.searchIndex[@"height"];
+        } else if(self.existedData[@"height"]){
+            updateArgs[@"height"] = self.existedData[@"height"][@"val"];
         }
         
         if (self.location) {
@@ -633,38 +632,41 @@ static NSInteger kDelWeiyuTag = 204;
             updateArgs[@"city"] = @(self.location.cityId);
             updateArgs[@"area"] = @(self.location.areaId);
         } else{
-            updateArgs[@"province"] = self.searchIndex[@"province"];
-            updateArgs[@"city"] = self.searchIndex[@"city"];
-            updateArgs[@"area"] = self.searchIndex[@"area"];
+            NSDictionary *info = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] objectForKey:@"info"];
+            updateArgs[@"province"] = info[@"province"];
+            updateArgs[@"city"] = info[@"city"];
+            updateArgs[@"area"] = info[@"area"];
         }
         
         if (self.incomeNum) {
             updateArgs[@"income"] = self.incomeNum;
             
-        } else{
-            updateArgs[@"income"] = self.searchIndex[@"income"];
+        } else if(self.existedData[@"income"]){
+            updateArgs[@"income"] = self.existedData[@"income"][@"val"];
         }
         
         if (self.eduNum) {
             updateArgs[@"degree"] = self.eduNum;
-        } else{
-            updateArgs[@"degree"] = self.searchIndex[@"degree"];
+        } else if(self.existedData[@"degree"]){
+            updateArgs[@"degree"] = self.existedData[@"degree"][@"val"];
         }
         
         if (self.jobNum) {
             updateArgs[@"industry"] = self.jobNum;
-        } else{
-            updateArgs[@"industry"] = self.searchIndex[@"industry"];
+        } else if(self.existedData[@"industry"]){
+            updateArgs[@"industry"] = self.existedData[@"industry"][@"val"];
         }
         
         if (self.weightNum) {
             updateArgs[@"weight"] = @(self.weightNum);
+        } else if(self.existedData[@"weight"]){
+            updateArgs[@"weight"] = self.existedData[@"weight"][@"val"];
         }
         
    
-        updateArgs[@"constellation"] = self.searchIndex[@"constellation"];
-        updateArgs[@"marriage"] = self.searchIndex[@"marriage"];
-        updateArgs[@"zodiac"] = self.searchIndex[@"zodiac"];
+        updateArgs[@"constellation"] = self.existedData[@"constellation"][@"val"];
+        updateArgs[@"marriage"] = self.existedData[@"marriage"][@"val"];
+        updateArgs[@"zodiac"] = self.existedData[@"zodiac"][@"val"];
         updateArgs[@"submitupdate"] = @"true";
         
 
@@ -679,13 +681,31 @@ static NSInteger kDelWeiyuTag = 204;
                 NSDictionary *data = [response.bodyAsString objectFromJSONString];
                 NSInteger code = [data[@"error"] integerValue];
                 if (code == 0) {
-                    [self grabUserInfoDetailRequest];
-                    [self.tableView setEditing:NO animated:YES];
-                    
+                    self.isPushed = YES;
+//                    [self grabUserInfoDetailRequest];
+//                    [self.tableView setEditing:NO animated:YES];
+                    // back to normal
                     [self changeToNonEditingView];
                     
+                    // the province change
+                    if (self.location) {
+                        NSMutableDictionary *user = [[[NSUserDefaults standardUserDefaults] objectForKey:@"user"] mutableCopy];
+                        NSMutableDictionary *info = [user[@"info"] mutableCopy];
+                        info[@"province"] = @(self.location.stateId);
+                        info[@"city"] = @(self.location.cityId);
+                        info[@"area"] = @(self.location.areaId);
+                        user[@"info"] = info;
+                        [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+                    }
+                    
+                    // cahgne the bar button items
                     self.navigationItem.leftBarButtonItem = self.changeBaritem;
                     self.navigationItem.rightBarButtonItem = self.settingBarItem;
+                    
+                    // relaod the info from server
+                    [self grabUserInfoDetailRequest];
+                     [self infoRequestFromRemote];
                     
                     [SVProgressHUD showSuccessWithStatus:@"保存成功"];
                 } else{
@@ -725,12 +745,29 @@ static NSInteger kDelWeiyuTag = 204;
     self.navigationItem.rightBarButtonItem = self.settingBarItem;
     
     // reset from remote
-    self.heightField.text = [NSString stringWithFormat:@"%@cm", [self.userInfo objectForKey:@"height"]];
-    self.areaField.text = [self.userInfo objectForKey:@"area"];
-    self.incomeField.text = [self.userInfo objectForKey:@"income"];
-    self.degreeField.text = [self.userInfo objectForKey:@"degree"];
-    self.careerField.text = [self.userInfo objectForKey:@"industry"];
-    self.weightField.text = [NSString stringWithFormat:@"%@kg", [self.userBody objectForKey:@"weight"]];
+    if (!self.isPushed) {
+        self.heightField.text = [NSString stringWithFormat:@"%@CM", [self.userInfo objectForKey:@"height"]];
+        self.areaField.text = [self.userInfo objectForKey:@"area"];
+        
+        if (![self.userInfo[@"area"] isEqualToString:@""])
+        {
+            self.areaField.text = [self.userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:self.userInfo[@"area"]]];
+        }
+        else if(![self.userInfo[@"province"] isEqualToString:@""])
+        {
+            self.areaField.text = [self.userInfo[@"province"] stringByAppendingString:[@" " stringByAppendingString:self.userInfo[@"city"]]];
+        }
+        else
+        {
+            self.areaField.text = self.userInfo[@"city"];
+        }
+        
+        self.heightField.text = [NSString stringWithFormat:@"%@cm", self.existedData[@"height"][@"val"]];
+        self.incomeField.text = self.existedData[@"income"][@"valdata"];
+        self.degreeField.text = self.existedData[@"degree"][@"valdata"];
+        self.careerField.text = self.existedData[@"industry"][@"valdata"];
+        self.weightField.text = [NSString stringWithFormat:@"%@kg", self.existedData[@"weight"][@"val"]];
+    }
     
     self.isEditing = NO;
 }
@@ -805,6 +842,8 @@ static NSInteger kDelWeiyuTag = 204;
     self.avatarView.editing = YES;
     // show images
     self.showPhotoView.editing = YES;
+    
+    self.isPushed = NO;
 }
 
 - (void)changeToNonEditingView
@@ -1141,10 +1180,10 @@ static NSInteger kDelWeiyuTag = 204;
                     NSDictionary *dataData = [data objectForKey:@"data"];
                     self.photos = [dataData objectForKey:@"photo"];
                     self.userInfo = [dataData objectForKey:@"user_info"];
-                    self.userBody = [dataData objectForKey:@"user_body"];
-                    self.userLife = [dataData objectForKey:@"user_life"];
-                    self.userInterest = [dataData objectForKey:@"user_interest"];
-                    self.userWork = [dataData objectForKey:@"user_work"];
+//                    self.userBody = [dataData objectForKey:@"user_body"];
+//                    self.userLife = [dataData objectForKey:@"user_life"];
+//                    self.userInterest = [dataData objectForKey:@"user_interest"];
+//                    self.userWork = [dataData objectForKey:@"user_work"];
                     self.marrayReq = [dataData objectForKey:@"marray_req"];
                     self.searchIndex = [dataData objectForKey:@"searchindex"];
                     self.weiboList = dataData[@"bindlist"];
@@ -1610,11 +1649,14 @@ static NSInteger kDelWeiyuTag = 204;
 {
     if (picker.pickerStyle == HZAreaPickerWithStateAndCityAndDistrict) {
         self.location = picker.locate;
-        self.areaField.text = self.location.district;
-//        self.conditions[@"province"] = @(self.location.stateId);
-//        self.conditions[@"city"] = @(self.location.cityId);
-//        self.conditions[@"provincedesc"] = self.location.state;
-//        self.conditions[@"citydesc"] = self.location.city;
+//        self.areaField.text = self.location.district;
+//        if (self.location.district)
+//        {
+//            self.areaField.text = [self.location.city stringByAppendingString:self.location.district];
+//        }
+//        else
+//        {
+//            self.areaField.text = self.location.city;        }
     }
 }
 

@@ -107,7 +107,7 @@
 			<key>label</key>
 			<string>about</string>
 			<key>haveNext</key>
-			<false/>
+			<true/>
 		</dict>
 	</array>
 </array>

@@ -113,9 +113,9 @@
 {
     [super viewDidAppear:animated];
     
-    if (self.contents.count <= 1) {
+//    if (self.contents.count <= 1) {
         [self getCommentListWithPage:1];
-    }
+//    }
 }
 
 #pragma mark - Table view data source

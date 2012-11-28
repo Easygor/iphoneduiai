@@ -464,11 +464,42 @@
         updateArgs[@"province"] = info[@"province"];
         updateArgs[@"city"] = info[@"city"];
         updateArgs[@"area"] = info[@"area"];
-        updateArgs[@"height"] = self.existedData[@"height"][@"val"];
-        updateArgs[@"zodiac"] = self.existedData[@"zodiac"][@"val"];
-        updateArgs[@"degree"] = self.existedData[@"degree"][@"val"];
-        updateArgs[@"income"] = self.existedData[@"income"][@"val"];
-        updateArgs[@"constellation"] = self.existedData[@"constellation"][@"val"];
+        
+        if (self.existedData[@"height"])
+        {
+            updateArgs[@"height"] = self.existedData[@"height"][@"val"];
+        }
+        
+        if (self.existedData[@"zodiac"])
+        {
+            updateArgs[@"zodiac"] = self.existedData[@"zodiac"][@"val"];
+        }
+        
+        if (self.existedData[@"degree"])
+        {
+            updateArgs[@"degree"] = self.existedData[@"degree"][@"val"];
+        }
+        
+        if (self.existedData[@"income"])
+        {
+            updateArgs[@"income"] = self.existedData[@"income"][@"val"];
+        }
+        
+        if (self.existedData[@"weight"])
+        {
+            updateArgs[@"weight"] = self.existedData[@"weight"][@"val"];
+        }
+         
+        if (self.existedData[@"industry"])
+        {
+            updateArgs[@"industry"] = self.existedData[@"industry"][@"val"];
+        }
+        
+        if (self.existedData[@"constellation"])
+        {
+            updateArgs[@"constellation"] = self.existedData[@"constellation"][@"val"];
+        }
+
         updateArgs[@"submitupdate"] = @"true";
         
 
@@ -652,7 +683,8 @@
     label.font = [UIFont systemFontOfSize:16.0f];
     label.backgroundColor = [UIColor clearColor];
     
-    if (section==0) {
+    if (section==0)
+    {
         label.text = @"工作学习";
     }else if(section==1)
     {

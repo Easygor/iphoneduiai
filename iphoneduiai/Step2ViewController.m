@@ -141,15 +141,6 @@ static NSString *const wRegex = @"\\w+";
     }
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -169,19 +160,28 @@ static NSString *const wRegex = @"\\w+";
     NSDictionary *d = [[NSUserDefaults standardUserDefaults] objectForKey:@"step2"];
     if (d) {
         NSString *sex = [d objectForKey:@"sex"];
+
         if ([sex isEqualToString:@"m"]) {
             [self.sexSegemnter selectSegmentAtIndex:0];
         } else if ([sex isEqualToString:@"w"]) {
             [self.sexSegemnter selectSegmentAtIndex:1];
         }
+        self.sex = sex;
+        
         HZLocation *loc = [[[HZLocation alloc] init] autorelease];
         [loc fromDictionary:[d objectForKey:@"location"]];
         self.location =loc;
+        
         self.birthday = [d objectForKey:@"birthday"];
+        
         self.eduText.text = [d objectForKey:@"edu"];
         self.eduNum = [d objectForKey:@"degree"];
-        self.heighText.text = [d objectForKey:@"height"];
-        self.salaryText.text = [d objectForKey:@"income"];
+        
+        self.heighText.text = [[d objectForKey:@"height"] description];
+        self.heightNum = [[d objectForKey:@"height"] integerValue];
+        
+        self.salaryText.text = [[d objectForKey:@"income"] description];
+        self.incomeNum = [[d objectForKey:@"income"] description];
         
 //        self.navigationItem.rightBarButtonItem.enabled = YES;
     }

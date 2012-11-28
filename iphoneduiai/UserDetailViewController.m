@@ -193,14 +193,6 @@ static CGFloat dHeight2 = 0.0f;
     }
 }
 
-- (void)setUserInterest:(NSDictionary *)userInterest
-{
-    if (![_userInterest isEqualToDictionary:userInterest]) {
-        _userInterest = [userInterest retain];
-        self.moreUserInfoView.moreUserInfo = userInterest;
-    }
-}
-
 - (void)setPhotos:(NSMutableArray *)photos
 {
     if (![_photos isEqualToArray:photos]) {
@@ -282,19 +274,24 @@ static CGFloat dHeight2 = 0.0f;
         self.nameAgeLabel.text = [NSString stringWithFormat:@"%@, %@岁", [userInfo objectForKey:@"niname"], [userInfo objectForKey:@"age"]];
 
         
-        self.heightLabel.text = [NSString stringWithFormat:@"%@cm", [userInfo objectForKey:@"height"]];
+        self.heightLabel.text = [NSString stringWithFormat:@"%@CM", [userInfo objectForKey:@"height"]];
 
         self.incomeLabel.text = [userInfo objectForKey:@"income"];
         self.degreeLabel.text = [userInfo objectForKey:@"degree"];
         self.careerLabel.text = [userInfo objectForKey:@"industry"];
         
-        if (![userInfo[@"area"] isEqualToString:@""])
+        // area process wtf
+        if (![self.userInfo[@"area"] isEqualToString:@""])
         {
-            self.areaLabel.text = [userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:userInfo[@"area"]]];
+            self.areaLabel.text = [self.userInfo[@"city"] stringByAppendingString:[@" " stringByAppendingString:self.userInfo[@"area"]]];
+        }
+        else if(![self.userInfo[@"province"] isEqualToString:@""])
+        {
+            self.areaLabel.text = [self.userInfo[@"province"] stringByAppendingString:[@" " stringByAppendingString:self.userInfo[@"city"]]];
         }
         else
         {
-            self.areaLabel.text = userInfo[@"city"];
+            self.areaLabel.text = self.userInfo[@"city"];
         }
         
         self.dySexLabel.text = [NSString stringWithFormat:@"%@的动态", [userInfo objectForKey:@"ta"]];
