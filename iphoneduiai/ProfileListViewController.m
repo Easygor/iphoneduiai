@@ -780,11 +780,27 @@ static NSInteger kDelWeiyuTag = 204;
             self.areaField.text = self.userInfo[@"city"];
         }
         
-        self.heightField.text = [NSString stringWithFormat:@"%@cm", self.existedData[@"height"][@"val"]];
-        self.incomeField.text = self.existedData[@"income"][@"valdata"];
-        self.degreeField.text = self.existedData[@"degree"][@"valdata"];
-        self.careerField.text = self.existedData[@"industry"][@"valdata"];
-        self.weightField.text = [NSString stringWithFormat:@"%@kg", self.existedData[@"weight"][@"val"]];
+        if (self.existedData[@"height"]) {
+            self.heightField.text = [NSString stringWithFormat:@"%@cm", self.existedData[@"height"][@"val"]];
+        }
+        
+        if (self.existedData[@"income"]) {
+            self.incomeField.text = self.existedData[@"income"][@"valdata"];
+        }
+        
+        if (self.existedData[@"degree"]) {
+            self.degreeField.text = self.existedData[@"degree"][@"valdata"];
+        }
+        
+        if (self.existedData[@"industry"]) {
+            self.careerField.text = self.existedData[@"industry"][@"valdata"];
+        }
+        
+        if (self.existedData[@"weight"]) {
+            self.weightField.text = [NSString stringWithFormat:@"%@kg", self.existedData[@"weight"][@"val"]];
+        }
+        
+        
     }
     
     self.isEditing = NO;
