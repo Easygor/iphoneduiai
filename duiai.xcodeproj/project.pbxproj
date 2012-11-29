@@ -1863,15 +1863,15 @@
 		61BA60BF1623F293001D7448 /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
 		61BA60C01623F293001D7448 /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
 		61BA60C11623F293001D7448 /* HPTextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPTextViewInternal.m; sourceTree = "<group>"; };
-		61BB2B5315F9DB0800AA82CC /* iphoneduiai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iphoneduiai.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61BB2B5315F9DB0800AA82CC /* duiai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = duiai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BB2B5715F9DB0800AA82CC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		61BB2B5915F9DB0800AA82CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		61BB2B5B15F9DB0800AA82CC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		61BB2B5D15F9DB0800AA82CC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		61BB2B6115F9DB0800AA82CC /* iphoneduiai-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iphoneduiai-Info.plist"; sourceTree = "<group>"; };
+		61BB2B6115F9DB0800AA82CC /* duiai-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "duiai-Info.plist"; sourceTree = "<group>"; };
 		61BB2B6315F9DB0800AA82CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		61BB2B6515F9DB0800AA82CC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		61BB2B6715F9DB0800AA82CC /* iphoneduiai-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iphoneduiai-Prefix.pch"; sourceTree = "<group>"; };
+		61BB2B6715F9DB0800AA82CC /* duiai-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "duiai-Prefix.pch"; sourceTree = "<group>"; };
 		61BB2B6815F9DB0800AA82CC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		61BB2B6915F9DB0800AA82CC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		61BB2B6C15F9DB0800AA82CC /* iphoneduiai.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = iphoneduiai.xcdatamodel; sourceTree = "<group>"; };
@@ -2831,7 +2831,7 @@
 		61BB2B5415F9DB0800AA82CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				61BB2B5315F9DB0800AA82CC /* iphoneduiai.app */,
+				61BB2B5315F9DB0800AA82CC /* duiai.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2917,10 +2917,10 @@
 				614385901659159100938883 /* list_cover_pic@2x.png */,
 				614385931659159C00938883 /* red_btn.png */,
 				614385941659159C00938883 /* red_btn@2x.png */,
-				61BB2B6115F9DB0800AA82CC /* iphoneduiai-Info.plist */,
+				61BB2B6115F9DB0800AA82CC /* duiai-Info.plist */,
 				61BB2B6215F9DB0800AA82CC /* InfoPlist.strings */,
 				61BB2B6515F9DB0800AA82CC /* main.m */,
-				61BB2B6715F9DB0800AA82CC /* iphoneduiai-Prefix.pch */,
+				61BB2B6715F9DB0800AA82CC /* duiai-Prefix.pch */,
 				619CFAE515FCA4E0002A122D /* devices.plist */,
 				6159B1FB16193D0E00705835 /* settingEntries.plist */,
 				5A07DF93161B201D00A50998 /* seniorEntries.plist */,
@@ -3395,9 +3395,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		61BB2B5215F9DB0800AA82CC /* iphoneduiai */ = {
+		61BB2B5215F9DB0800AA82CC /* duiai */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 61BB2B7015F9DB0800AA82CC /* Build configuration list for PBXNativeTarget "iphoneduiai" */;
+			buildConfigurationList = 61BB2B7015F9DB0800AA82CC /* Build configuration list for PBXNativeTarget "duiai" */;
 			buildPhases = (
 				61BB2B4F15F9DB0800AA82CC /* Sources */,
 				61BB2B5015F9DB0800AA82CC /* Frameworks */,
@@ -3408,9 +3408,9 @@
 			dependencies = (
 				6199D68715FEA82900BEBD00 /* PBXTargetDependency */,
 			);
-			name = iphoneduiai;
+			name = duiai;
 			productName = iphoneduiai;
-			productReference = 61BB2B5315F9DB0800AA82CC /* iphoneduiai.app */;
+			productReference = 61BB2B5315F9DB0800AA82CC /* duiai.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -3422,7 +3422,7 @@
 				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = duiai.com;
 			};
-			buildConfigurationList = 61BB2B4D15F9DB0800AA82CC /* Build configuration list for PBXProject "iphoneduiai" */;
+			buildConfigurationList = 61BB2B4D15F9DB0800AA82CC /* Build configuration list for PBXProject "duiai" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -3442,7 +3442,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				61BB2B5215F9DB0800AA82CC /* iphoneduiai */,
+				61BB2B5215F9DB0800AA82CC /* duiai */,
 			);
 		};
 /* End PBXProject section */
@@ -4466,9 +4466,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iphoneduiai/iphoneduiai-Prefix.pch";
+				GCC_PREFIX_HEADER = "iphoneduiai/duiai-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
-				INFOPLIST_FILE = "iphoneduiai/iphoneduiai-Info.plist";
+				INFOPLIST_FILE = "iphoneduiai/duiai-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4478,7 +4478,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = duiai;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -4487,9 +4487,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iphoneduiai/iphoneduiai-Prefix.pch";
+				GCC_PREFIX_HEADER = "iphoneduiai/duiai-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
-				INFOPLIST_FILE = "iphoneduiai/iphoneduiai-Info.plist";
+				INFOPLIST_FILE = "iphoneduiai/duiai-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4499,7 +4499,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = duiai;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -4507,7 +4507,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		61BB2B4D15F9DB0800AA82CC /* Build configuration list for PBXProject "iphoneduiai" */ = {
+		61BB2B4D15F9DB0800AA82CC /* Build configuration list for PBXProject "duiai" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61BB2B6E15F9DB0800AA82CC /* Debug */,
@@ -4516,7 +4516,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		61BB2B7015F9DB0800AA82CC /* Build configuration list for PBXNativeTarget "iphoneduiai" */ = {
+		61BB2B7015F9DB0800AA82CC /* Build configuration list for PBXNativeTarget "duiai" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				61BB2B7115F9DB0800AA82CC /* Debug */,
