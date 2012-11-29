@@ -212,10 +212,15 @@
         [self.showPicView loadImage:picUrl];
         
         CGFloat totalH = self.showPicView.frame.origin.y+ self.showPicView.frame.size.height + 15 + 80;
-        if (![self.weiyu[@"address"] isEqualToString:@""]) {
+        if (![self.weiyu[@"address"] isEqualToString:@""])
+        {
             self.addressView.hidden = NO;
             self.addressLabel.text = self.weiyu[@"address"];
             totalH += self.addressLabel.frame.size.height+10;
+        }
+        else
+        {
+            self.addressView.hidden = YES;
         }
         
         

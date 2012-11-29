@@ -165,10 +165,15 @@
         self.contentLabel.frame = contentFrame;
 
         CGFloat totalH = self.contentLabel.frame.origin.y + self.contentLabel.frame.size.height + 80 + 15;
-        if (![self.weiyu[@"address"] isEqualToString:@""]) {
+        if (![self.weiyu[@"address"] isEqualToString:@""])
+        {
             self.addressView.hidden = NO;
             self.addressLabel.text = self.weiyu[@"address"];
             totalH += self.addressLabel.frame.size.height;
+        }
+        else
+        {
+            self.addressView.hidden = YES;
         }
         
         [self resizeFrameWithHeight:totalH];

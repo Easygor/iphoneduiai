@@ -619,7 +619,7 @@
 
         NSMutableDictionary *dParams = [Utils queryParams];
         [[RKClient sharedClient] post:[@"/uc/replymessage.api" stringByAppendingQueryParameters:dParams] usingBlock:^(RKRequest *request){
-            NSLog(@"send message url: %@", request.URL);
+     
             NSMutableDictionary *pd = [NSMutableDictionary dictionary];
             [pd setObject:@"true" forKey:@"submitupdate"];
             [pd setObject:content forKey:@"replycontent"];
