@@ -134,6 +134,7 @@
                                               destructiveButtonTitle:@"删除照片"
                                                    otherButtonTitles:nil];
     [actionsheet showInView:self];
+    [actionsheet release];
    
 }
 

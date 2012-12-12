@@ -792,10 +792,12 @@
                             tmp[@"content"] = @"";
                             tmp[@"senduid"] = [self.senduid copy];
                             tmp[@"tid"] = @"";
-                            tmp[@"uinfo"] = [self.messageData[@"uinfo"] mutableCopy];
-                            tmp[@"uid"] = [self.messages[0][@"senduid"] copy];
+                            tmp[@"uinfo"] = [[self.messageData[@"uinfo"] mutableCopy] autorelease];
+                            tmp[@"uid"] = [[self.messages[0][@"senduid"] copy] autorelease];
                             
                             [[Notification sharedInstance] updateMessage:tmp];
+                            
+                            [tmp release];
                         }
                     }
                     

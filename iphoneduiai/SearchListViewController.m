@@ -354,11 +354,11 @@
                                    [user objectForKey:@"height"]];
         
 //        NSDate *actime = [NSDate dateWithTimeIntervalSince1970:[[user objectForKey:@"acctime"] integerValue]];
-        NSInteger d = [[user objectForKey:@"distance"] integerValue];
-        NSString *desc = @"";
-        if (d > 0) {
-            desc = [[Utils descriptionForDistance:d] stringByAppendingString:@"·"];
-        }
+//        NSInteger d = [[user objectForKey:@"distance"] integerValue];
+//        NSString *desc = @"";
+//        if (d > 0) {
+//            desc = [[Utils descriptionForDistance:d] stringByAppendingString:@"·"];
+//        }
         cell.timeDistanceLabel.text = user[@"acctime_text"]/*[actime stringForHuman]*/;
         if([user[@"photocount"] integerValue] > 0 && [user[@"photocount"] integerValue] < 10){
             cell.xLabel.hidden = NO;

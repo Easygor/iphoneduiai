@@ -426,6 +426,8 @@ static int behindImgTag = 103;
             [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
+            [user release];
+            
         }
     }];
     

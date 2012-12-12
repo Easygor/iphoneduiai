@@ -289,6 +289,7 @@
                                                   destructiveButtonTitle:@"移出黑名单"
                                                        otherButtonTitles:nil];
         [actionsheet showInView:self.view.window];
+        [actionsheet release];
     }
 //    else{
 //        UserDetailViewController *udvc = [[UserDetailViewController alloc] initWithNibName:@"UserDetailViewController" bundle:nil];

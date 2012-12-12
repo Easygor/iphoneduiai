@@ -102,7 +102,9 @@
 {
     SendSuggestViewController *sendSuggestViewController = [[SendSuggestViewController alloc]init];
     [self.navigationController pushViewController:sendSuggestViewController animated:YES];
+    [sendSuggestViewController release];
 }
+
 -(void)testPress
 {
     NSMutableDictionary *dParams = [Utils queryParams];

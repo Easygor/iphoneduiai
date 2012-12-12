@@ -13,8 +13,6 @@
 @property (retain, nonatomic) IBOutlet UIImageView *bottomLineImgView;
 @property (retain, nonatomic) IBOutlet UIImageView *graphBgImgView;
 
-
-
 @end
 
 @implementation UserInfoTableCell

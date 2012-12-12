@@ -360,7 +360,7 @@ static CGFloat dHeight2 = 0.0f;
     self.navigationItem.rightBarButtonItem = [[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"etc"]
                                                                                           target:self
                                                                                           action:@selector(moreAction)];
-    [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
+    [self.countView addGestureRecognizer:[[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease] autorelease]];
 
     [self grabUserInfoDetailRequest];
     [self infoRequestFromRemote];
@@ -1066,7 +1066,7 @@ static CGFloat dHeight2 = 0.0f;
 - (IBAction)snsBtnAction:(UIButton*)btn
 {
     NSDictionary *t = self.weiboList[btn.tag];
-    NSString *urlString;
+    NSString *urlString = nil;
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
         urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }

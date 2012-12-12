@@ -36,7 +36,7 @@
     if (_readBgView == nil) {
         _readBgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, CELLH)];
         _readBgView.backgroundColor = RGBCOLOR(251, 251, 251);
-        UILabel *lbl = [[UILabel alloc] initWithFrame:CGRectMake(0, CELLH-1, 320, 1)];
+        UILabel *lbl = [[[UILabel alloc] initWithFrame:CGRectMake(0, CELLH-1, 320, 1)] autorelease];
         lbl.backgroundColor = RGBCOLOR(216, 216, 216);
         [_readBgView addSubview:lbl];
     }
@@ -91,7 +91,7 @@
         self.contentLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:self.contentLabel];
         
-        self.arrowImgView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_more"]];
+        self.arrowImgView = [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"arrow_more"]] autorelease];
         self.arrowImgView.frame = CGRectMake(0, 0, 9, 16);
 //        [self.contentView addSubview:arrowImgView];
         self.accessoryView = self.arrowImgView;

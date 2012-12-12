@@ -715,6 +715,9 @@ static NSInteger kDelWeiyuTag = 204;
                         user[@"info"] = info;
                         [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
                         [[NSUserDefaults standardUserDefaults] synchronize];
+                        
+                        [user release];
+                        [info release];
                     }
                     
                     // cahgne the bar button items
@@ -1613,6 +1616,7 @@ static NSInteger kDelWeiyuTag = 204;
                 user[@"avatar"] = data;
                 [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                [user release];
             }
         }];
     }
@@ -1798,7 +1802,7 @@ static NSInteger kDelWeiyuTag = 204;
 {
     
     NSDictionary *t = self.weiboList[btn.tag];
-    NSString *urlString;
+    NSString *urlString = nil;
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
         urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }

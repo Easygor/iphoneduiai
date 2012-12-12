@@ -73,9 +73,9 @@
                                                                            action:@selector(backAction)] autorelease];
     
     
-    self.navigationItem.rightBarButtonItem = [[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initRightBarButtonWithTitle:@"编辑"
                                                                                                target:self
-                                                                                               action:@selector(editAction)];
+                                                                                               action:@selector(editAction)] autorelease];
 
     self.navigationItem.leftBarButtonItem = self.backBarItem;
     
