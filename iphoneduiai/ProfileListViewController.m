@@ -1801,7 +1801,7 @@ static NSInteger kDelWeiyuTag = 204;
 {
     
     NSDictionary *t = self.weiboList[btn.tag];
-    NSString *aUrlString;
+    NSString *aUrlString = @"";
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
         aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }

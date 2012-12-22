@@ -283,11 +283,11 @@
     NSDictionary *user = [self.users objectAtIndex:index];
     self.curUser = user;
     if (self.editing) {
-        UIActionSheet *actionsheet = [[UIActionSheet alloc]initWithTitle:nil
+        UIActionSheet *actionsheet = [[[UIActionSheet alloc]initWithTitle:nil
                                                                 delegate:self
                                                        cancelButtonTitle:@"取消"
                                                   destructiveButtonTitle:@"移出黑名单"
-                                                       otherButtonTitles:nil];
+                                                       otherButtonTitles:nil] autorelease];
         [actionsheet showInView:self.view.window];
     }
 //    else{

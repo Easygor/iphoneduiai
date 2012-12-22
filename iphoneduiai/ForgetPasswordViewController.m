@@ -17,6 +17,8 @@
 
 @implementation ForgetPasswordViewController
 
+@synthesize urlString=_urlString;
+
 - (void)dealloc {
     [_webView release];
     [_urlString release];

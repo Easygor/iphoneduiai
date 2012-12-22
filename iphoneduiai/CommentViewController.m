@@ -49,17 +49,17 @@
 -(void)loadView
 {
     [super loadView];
-    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 165)];
+    self.bgView = [[[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 165)] autorelease];
     self.bgView.backgroundColor = [UIColor clearColor];
     self.bgView.opaque = YES;
     
-    self.contentView = [[UITextView alloc]initWithFrame:CGRectMake(5, 5, 310, 125)];
+    self.contentView = [[[UITextView alloc]initWithFrame:CGRectMake(5, 5, 310, 125)] autorelease];
     self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     self.contentView.backgroundColor = [UIColor clearColor];
     self.contentView.opaque = YES;
     [self.bgView addSubview:self.contentView];
     
-    self.toolView = [[UIView alloc]initWithFrame:CGRectMake(0, 125, 320, 40)];
+    self.toolView = [[[UIView alloc]initWithFrame:CGRectMake(0, 125, 320, 40)] autorelease];
     self.toolView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     self.toolView.backgroundColor = RGBCOLOR(246, 246, 246);
     [self.bgView addSubview:self.toolView];
