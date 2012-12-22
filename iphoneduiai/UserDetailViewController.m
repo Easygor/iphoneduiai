@@ -1066,7 +1066,7 @@ static CGFloat dHeight2 = 0.0f;
 - (IBAction)snsBtnAction:(UIButton*)btn
 {
     NSDictionary *t = self.weiboList[btn.tag];
-    NSString *aUrlString;
+    NSString *aUrlString = @"";
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
         aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }
