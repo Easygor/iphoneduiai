@@ -790,13 +790,16 @@
                         {
                             NSMutableDictionary *tmp = [self.messages[0] mutableCopy];
                             tmp[@"content"] = @"";
-                            tmp[@"senduid"] = [self.senduid copy];
+                            tmp[@"senduid"] = [[self.senduid copy] autorelease];
                             tmp[@"tid"] = @"";
                             tmp[@"uinfo"] = [[self.messageData[@"uinfo"] mutableCopy] autorelease];
                             tmp[@"uid"] = [[self.messages[0][@"senduid"] copy] autorelease];
                             
                             [[Notification sharedInstance] updateMessage:tmp];
+<<<<<<< HEAD
                             
+=======
+>>>>>>> hotfix
                             [tmp release];
                         }
                     }

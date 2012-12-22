@@ -722,7 +722,7 @@
 													<object class="IBUILabel" id="902357759">
 														<reference key="NSNextResponder" ref="440069271"/>
 														<int key="NSvFlags">292</int>
-														<string key="NSFrame">{{139, 18}, {139, 18}}</string>
+														<string key="NSFrame">{{100, 18}, {139, 18}}</string>
 														<reference key="NSSuperview" ref="440069271"/>
 														<reference key="NSWindow"/>
 														<reference key="NSNextKeyView" ref="749588875"/>
@@ -1326,6 +1326,10 @@
 												<string key="NSFrame">{{205, 10}, {92, 1}}</string>
 												<reference key="NSSuperview" ref="164643486"/>
 												<reference key="NSWindow"/>
+<<<<<<< HEAD
+=======
+												<reference key="NSNextKeyView" ref="1045392532"/>
+>>>>>>> hotfix
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<reference key="IBUIBackgroundColor" ref="274530109"/>
 												<bool key="IBUIOpaque">NO</bool>
@@ -1365,7 +1369,11 @@
 						<string key="NSFrameSize">{320, 416}</string>
 						<reference key="NSSuperview" ref="504564550"/>
 						<reference key="NSWindow"/>
+<<<<<<< HEAD
 						<reference key="NSNextKeyView" ref="1045392532"/>
+=======
+						<reference key="NSNextKeyView" ref="831320732"/>
+>>>>>>> hotfix
 						<reference key="IBUIBackgroundColor" ref="274530109"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -1498,6 +1506,10 @@
 								<string key="NSFrame">{{161, 2}, {159, 50}}</string>
 								<reference key="NSSuperview" ref="1045392532"/>
 								<reference key="NSWindow"/>
+<<<<<<< HEAD
+=======
+								<reference key="NSNextKeyView"/>
+>>>>>>> hotfix
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>

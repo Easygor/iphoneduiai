@@ -425,9 +425,13 @@ static int behindImgTag = 103;
             user[@"avatar"] = data;
             [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+<<<<<<< HEAD
             
             [user release];
             
+=======
+            [user release];
+>>>>>>> hotfix
         }
     }];
     
