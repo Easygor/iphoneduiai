@@ -1326,10 +1326,7 @@
 												<string key="NSFrame">{{205, 10}, {92, 1}}</string>
 												<reference key="NSSuperview" ref="164643486"/>
 												<reference key="NSWindow"/>
-<<<<<<< HEAD
-=======
 												<reference key="NSNextKeyView" ref="1045392532"/>
->>>>>>> hotfix
 												<string key="NSReuseIdentifierKey">_NS:9</string>
 												<reference key="IBUIBackgroundColor" ref="274530109"/>
 												<bool key="IBUIOpaque">NO</bool>

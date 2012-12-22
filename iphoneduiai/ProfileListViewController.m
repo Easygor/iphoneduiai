@@ -715,10 +715,6 @@ static NSInteger kDelWeiyuTag = 204;
                         user[@"info"] = info;
                         [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
                         [[NSUserDefaults standardUserDefaults] synchronize];
-<<<<<<< HEAD
-                        
-=======
->>>>>>> hotfix
                         [user release];
                         [info release];
                     }
@@ -1805,11 +1801,9 @@ static NSInteger kDelWeiyuTag = 204;
 {
     
     NSDictionary *t = self.weiboList[btn.tag];
-<<<<<<< HEAD
-    NSString *urlString = nil;
-=======
+
     NSString *aUrlString = @"";
->>>>>>> hotfix
+
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
         aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }

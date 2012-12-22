@@ -796,10 +796,6 @@
                             tmp[@"uid"] = [[self.messages[0][@"senduid"] copy] autorelease];
                             
                             [[Notification sharedInstance] updateMessage:tmp];
-<<<<<<< HEAD
-                            
-=======
->>>>>>> hotfix
                             [tmp release];
                         }
                     }
