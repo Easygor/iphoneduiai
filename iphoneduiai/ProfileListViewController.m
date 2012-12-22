@@ -715,6 +715,8 @@ static NSInteger kDelWeiyuTag = 204;
                         user[@"info"] = info;
                         [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
                         [[NSUserDefaults standardUserDefaults] synchronize];
+                        [user release];
+                        [info release];
                     }
                     
                     // cahgne the bar button items
@@ -1613,6 +1615,7 @@ static NSInteger kDelWeiyuTag = 204;
                 user[@"avatar"] = data;
                 [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"user"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                [user release];
             }
         }];
     }
@@ -1798,13 +1801,13 @@ static NSInteger kDelWeiyuTag = 204;
 {
     
     NSDictionary *t = self.weiboList[btn.tag];
-    NSString *urlString;
+    NSString *aUrlString;
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
-        urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
+        aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }
     else if ([t[@"bindtype"] isEqualToString:@"opentweibo"])
     {
-        urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"t.qq.com/" withString:@"ti.3g.qq.com/touch/iphone/#guest_home/u="];
+        aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"t.qq.com/" withString:@"ti.3g.qq.com/touch/iphone/#guest_home/u="];
     }
     
     //    NSURL *url = [NSURL URLWithString:urlString];
@@ -1813,7 +1816,7 @@ static NSInteger kDelWeiyuTag = 204;
     //    }
     
     ForgetPasswordViewController *fpvc = [[ForgetPasswordViewController alloc] initWithNibName:@"ForgetPasswordViewController" bundle:nil];
-    fpvc.urlString = urlString;
+    fpvc.urlString = aUrlString;
     [self.navigationController pushViewController:fpvc animated:YES];
     [fpvc release];
     

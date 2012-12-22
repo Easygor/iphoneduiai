@@ -357,9 +357,9 @@ static CGFloat dHeight2 = 0.0f;
     self.navigationItem.leftBarButtonItem = [[[CustomBarButtonItem alloc] initBackBarButtonWithTitle:@"返回"
                                                                                               target:self
                                                                                               action:@selector(backAction)] autorelease];
-    self.navigationItem.rightBarButtonItem = [[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"etc"]
+    self.navigationItem.rightBarButtonItem = [[[CustomBarButtonItem alloc] initBarButtonWithImage:[UIImage imageNamed:@"etc"]
                                                                                           target:self
-                                                                                          action:@selector(moreAction)];
+                                                                                          action:@selector(moreAction)] autorelease];
     [self.countView addGestureRecognizer:[[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scoreGestureAction:)] autorelease]];
 
     [self grabUserInfoDetailRequest];
@@ -1066,13 +1066,13 @@ static CGFloat dHeight2 = 0.0f;
 - (IBAction)snsBtnAction:(UIButton*)btn
 {
     NSDictionary *t = self.weiboList[btn.tag];
-    NSString *urlString;
+    NSString *aUrlString;
     if ([t[@"bindtype"] isEqualToString:@"opensinaweibo"]) {
-        urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
+        aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"weibo.com" withString:@"m.weibo.cn"];
     }
     else if ([t[@"bindtype"] isEqualToString:@"opentweibo"])
     {
-        urlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"t.qq.com/" withString:@"ti.3g.qq.com/touch/iphone/#guest_home/u="];
+        aUrlString = [t[@"url"] stringByReplacingOccurrencesOfString:@"t.qq.com/" withString:@"ti.3g.qq.com/touch/iphone/#guest_home/u="];
     }
     
 //    NSURL *url = [NSURL URLWithString:urlString];
@@ -1081,7 +1081,7 @@ static CGFloat dHeight2 = 0.0f;
 //    }
     
     ForgetPasswordViewController *fpvc = [[ForgetPasswordViewController alloc] initWithNibName:@"ForgetPasswordViewController" bundle:nil];
-    fpvc.urlString = urlString;
+    fpvc.urlString = aUrlString;
     [self.navigationController pushViewController:fpvc animated:YES];
     [fpvc release];
 

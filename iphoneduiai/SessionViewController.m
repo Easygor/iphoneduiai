@@ -796,6 +796,7 @@
                             tmp[@"uid"] = [self.messages[0][@"senduid"] copy];
                             
                             [[Notification sharedInstance] updateMessage:tmp];
+                            [tmp release];
                         }
                     }
                     
